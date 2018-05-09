@@ -31,21 +31,36 @@ public class ServletDiagramme extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
-		String nomImg = request.getQueryString();
+		
+		String nomImg = (String) request.getParameter("image");
 		System.out.println(nomImg);
-		String path = "D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\UML_DIAG\\"+nomImg;
+		System.out.println(request.getParameter("dossier"));
+		String path = "D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\UML_DIAG\\"+(String)request.getParameter("dossier")+"\\"+nomImg;
 		request.setAttribute("nomIllus", nomImg);
 		request.setAttribute("cheminIllus", path);
+		System.out.println(path);
+
 		//--je recupere la liste des images du dossier image
 		File repertoire = new File("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\UML_DIAG");
-		File[]listIllus = repertoire.listFiles();
-		System.out.println(listIllus.length);
+		File[]listDossier = repertoire.listFiles();
+		ArrayList<String> nomDossier = new ArrayList<String>();
 		ArrayList<String> nomIllus = new ArrayList<String>();
-		for (File f : listIllus) {
-			nomIllus.add(f.getName());
-		}
-		request.setAttribute("image", nomIllus);
 		
+		System.out.println(listDossier.length);
+		for (File rep : listDossier) {
+			nomDossier.add(rep.getName());
+			
+			File[]listIllus = rep.listFiles();
+			System.out.println(listIllus.length);
+			for (File f : listIllus) {
+				nomIllus.add(f.getName());
+			}
+			request.setAttribute("image", nomIllus);
+			
+		}
+		System.out.println(nomDossier);
+		request.setAttribute("dossier", nomDossier);
+
 		//--on envoie les infos à la JSP
 		this.getServletContext().getRequestDispatcher("/WEB-INF/diagramme.jsp").forward(request, response);
 	}
