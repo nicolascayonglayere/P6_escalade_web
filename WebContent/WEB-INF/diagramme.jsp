@@ -7,14 +7,11 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 		<title>Diagramme</title>
 		<style type="text/css">
-			.container {
-			 padding-top: 75px;
- 			 padding-left: 160px;
- 			 margin-left: 160px;
-			}
-			
+	
 			#monImg{
-			margin: 5,5,5,5px;
+			flex-direction : column;
+			float: none;
+			margin: 0 auto;
 			}
 
 		</style>
@@ -32,8 +29,7 @@
 					<h2>${nomIllus }</h2>
 					<!-- l'image a afficher par defaut package diag -->
 					<img alt="${nomIllus}" src="${cheminIllus }">
-				</div>
-						
+				</div>		
 			</div>
 	
 		</div>

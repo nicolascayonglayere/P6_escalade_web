@@ -36,18 +36,21 @@ public class Servlet extends HttpServlet {
 		File repertoire = new File("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\UML_DIAG");
 		File[]listDossier = repertoire.listFiles();
 		ArrayList<String> nomDossier = new ArrayList<String>();
-		ArrayList<String> nomIllus = new ArrayList<String>();
+		
 		
 		System.out.println(listDossier.length);
 		for (File rep : listDossier) {
-			nomDossier.add(rep.getName());
-			
-			File[]listIllus = rep.listFiles();
+			nomDossier.add(rep.getName());			
+			File[]listIllus = rep.listFiles();			
 			System.out.println(listIllus.length);
+			
+	
+			ArrayList<String> nomIllus = new ArrayList<String>();
 			for (File f : listIllus) {
 				nomIllus.add(f.getName());
 			}
 			request.setAttribute("image", nomIllus);
+	
 			
 		}
 		System.out.println(nomDossier);

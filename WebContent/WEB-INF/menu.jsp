@@ -14,7 +14,7 @@
 					<ul class="navbar-nav">
 						<c:forEach items="${dossier}" var="nomDossier">
 							<li class="nav-item dropdown">
-								<a href="/P6_escalade_web/servletMenu?${nomDossier}" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<a href="/P6_escalade_web/servlet?${nomDossier}" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 									${nomDossier} 
 								</a>
 								<!-- la liste des images ds le dossier -->

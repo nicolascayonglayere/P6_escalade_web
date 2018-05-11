@@ -28,12 +28,4 @@
     <url-pattern>/servletDiagramme</url-pattern>
   </servlet-mapping>
   
-  <servlet>
-    <servlet-name>servletMenu</servlet-name>
-    <servlet-class>servlets.ServletMenu</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>servletMenu</servlet-name>
-    <url-pattern>/servletMenu</url-pattern>
-  </servlet-mapping>
 </web-app>
