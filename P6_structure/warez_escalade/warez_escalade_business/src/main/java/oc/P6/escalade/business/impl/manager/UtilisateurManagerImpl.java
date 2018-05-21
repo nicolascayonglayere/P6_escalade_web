@@ -15,11 +15,12 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import oc.P6.escalade.business.contract.manager.UtilisateurManager;
+import oc.P6.escalade.business.impl.AbstractDAOManagerImpl;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
 
 @Named
-public class UtilisateurManagerImpl implements UtilisateurManager {
+public class UtilisateurManagerImpl extends AbstractDAOManagerImpl implements UtilisateurManager   {
 
     /** Logger pour la classe */
     private static final Log LOGGER = LogFactory.getLog(UtilisateurManagerImpl.class);
@@ -42,6 +43,8 @@ public class UtilisateurManagerImpl implements UtilisateurManager {
            // = this.searchUtilisateur(pPseudo);
            //       .orElseThrow(() -> new NotFoundException("Utilisateur non trouvé : PSEUDO=" + pPseudo));
         return utilisateur;
+        
+        
     }
 
 
