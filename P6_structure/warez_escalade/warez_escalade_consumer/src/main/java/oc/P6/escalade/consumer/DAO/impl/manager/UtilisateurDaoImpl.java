@@ -3,12 +3,15 @@ package oc.P6.escalade.consumer.DAO.impl.manager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.inject.Named;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
 import oc.P6.escalade.consumer.DAO.contract.manager.UtilisateurManagerDAO;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
+@Named("utilisateurDAO")
 public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManagerDAO  {
 
 	@Override

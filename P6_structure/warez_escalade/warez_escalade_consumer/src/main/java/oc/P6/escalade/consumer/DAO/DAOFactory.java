@@ -1,6 +1,8 @@
 package oc.P6.escalade.consumer.DAO;
 
-public interface DAOFactory<T> {
+import oc.P6.escalade.consumer.DAO.contract.manager.UtilisateurManagerDAO;
+
+public interface DAOFactory {
 	
-	
+	UtilisateurManagerDAO getUtilisateurManagerDAO();
 }

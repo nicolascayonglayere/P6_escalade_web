@@ -1,8 +1,19 @@
 package oc.P6.escalade.business.contract.manager;
 
+
 import oc.P6.escalade.consumer.DAO.DAOFactory;
 
-public interface AbstractDAOManager<T> {
+public abstract class AbstractDAOManager {
 	
-	DAOFactory<T> getDAOFactory<T>();
+	private DAOFactory daoFacto;
+	
+	
+	public DAOFactory getDAOFactory() {
+		return this.daoFacto;
+	}
+	
+	public void setDAOFactory(DAOFactory pDaoFacto) {
+		this.daoFacto=pDaoFacto;
+	}
+	
 }

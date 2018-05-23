@@ -14,7 +14,9 @@
 		<s:else>
 			<p>
 				Utilisateur connecté : inconnu
-				<s:a href="jsp/_include/login.jsp" class="btn btn-default btn-sm "><s:text name="CONNEXION" /></s:a>
+				<!--<s:a href="jsp/_include/login.jsp" class="btn btn-default btn-sm "><s:text name="CONNEXION" /></s:a>-->
+				<!-- un bouton pour ouvrir la fenetre modale -->
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">CONNEXION</button>
 				<%@include file="login.jsp" %>
 			</p>
 		</s:else>

@@ -5,6 +5,11 @@
         http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+
+	<bean id="dataSourceP6" class="org.springframework.jndi.JndiObjectFactoryBean">
+	    <property name="jndiName" value="java:comp/env/jdbc/P6_TEST"/>
+	</bean>
+
     <!-- ==== WebappHelper ===== -->
     <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
         <property name="targetClass" value="oc.P6.escalade.WebappHelper.WebappHelper"/>
