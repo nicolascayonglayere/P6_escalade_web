@@ -12,12 +12,24 @@
 
 
     <!-- Scanne les packages pour trouver les beans qui se déclarent (@Named...) -->
-    <context:component-scan base-package="org.example.demo.ticket"/>
-
-	<bean id="dataSourceTicket" class="org.springframework.jndi.JndiObjectFactoryBean">
-	    <property name="jndiName" value="java:comp/env/jdbc/DB_TICKET"/>
+    <context:component-scan base-package="oc.P6.escalade"/>
+	
+	<!-- Initialization for data source -->
+	<bean id="dataSourceP6" class="org.springframework.jndi.JndiObjectFactoryBean">
+	    <property name="jndiName" value="java:comp/env/jdbc/P6_escalade_web"/>
 	</bean>
-
+	
+	<!-- Initialization for TransactionManager -->
+	<bean id="platformTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	    <property name="dataSourceP6" ref="dataSourceP6"/>
+	</bean>
+	
+	<!-- Definition for UtilisateurManagerImpl bean -->
+   	<bean id = "utilisateurManagerImpl" class = "oc.P6.escalade.business.impl.manager">
+      <property name = "dataSourceP6" ref = "dataSourceP6" />
+      <property name = "platformTransactionManager" ref = "platformTransactionManager" />    
+   </bean>
+	
     <!-- ==== WebappHelper ===== -->
     <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
         <property name="targetClass" value="oc.P6.escalade.business.contract.manager.AbstractDAOManager"/>

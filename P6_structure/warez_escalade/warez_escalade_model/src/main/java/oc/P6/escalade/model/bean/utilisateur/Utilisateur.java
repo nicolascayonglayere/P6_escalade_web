@@ -117,9 +117,7 @@ public class Utilisateur {
     @Override
     public String toString() {
         final StringBuilder vStB = new StringBuilder(this.getClass().getSimpleName());
-        vStB.append(" {")
-            .append("pseudo=").append(pseudo)
-            .append("}");
+        vStB.append(" {").append("pseudo=").append(pseudo).append("}");
         return vStB.toString();
     }
 

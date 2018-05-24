@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context>
-    <Resource name="jdbc/P6_TEST"
+    <Resource name="jdbc/P6_escalade_web"
               auth="Container"
               type="javax.sql.DataSource"
 
-              url="jdbc:postgresql://localhost:5432/P6_TEST"
+              url="jdbc:postgresql://localhost:5432/P6_escalade_web"
               driverClassName="org.postgresql.Driver"
               username="postgres"
               password="ajx6tix"

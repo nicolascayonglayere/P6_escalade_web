@@ -9,6 +9,7 @@ import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+import oc.P6.escalade.WebappHelper.WebappHelper;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
 public class LoginAction extends ActionSupport implements SessionAware, ServletRequestAware {
@@ -39,13 +40,25 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
 
 	public String loginRegisterUser() {
 		System.out.println(utilisateur.getPseudo()+" - "+utilisateur.getPassword());
-		if (utilisateur.getPseudo().equals("yogj") && utilisateur.getPassword().equals("admin")) {
+		Utilisateur vUser = WebappHelper.getManagerFactory().getUtilisateurManager().getUtilisateur(utilisateur.getPseudo());
+		
+		if ((utilisateur.getPseudo().equals(vUser.getPseudo()))&&(utilisateur.getPassword().equals(vUser.getPassword()))) {
 			session.put("utilisateur", utilisateur);
 			return SUCCESS;
-		} else {
+		}
+		else {
 			addActionError("Please Enter Valid emailId or Password");
 			return LOGIN;
 		}
+		
+		
+		//if (utilisateur.getPseudo().equals("yogj") && utilisateur.getPassword().equals("admin")) {
+		//	session.put("utilisateur", utilisateur);
+		//	return SUCCESS;
+		//} else {
+		//	addActionError("Please Enter Valid emailId or Password");
+		//	return LOGIN;
+		//}
 	}
 
 

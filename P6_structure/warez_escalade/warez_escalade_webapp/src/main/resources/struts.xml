@@ -44,6 +44,9 @@
 		    	 <interceptor-ref name="defaultStack" />
 			<result name="success" type="redirectAction">/index</result>
 			<result name="login">/jsp/_include/login.jsp</result>
+			<!--<result name="login" type="redirectAction">
+				<param name="actionName">loginUser</param>
+			</result>-->	
 		</action>
 
 		<!-- home link action -->
@@ -87,9 +90,14 @@
         </action>
         
         <action name="creer_user" class="oc.P6.escalade.actions.InscriptionAction" method="creerUser">
+       			 <interceptor-ref name="store">
+					<param name="operationMode">STORE</param>
+		    	 </interceptor-ref>
+		    	 <interceptor-ref name="defaultStack" />        
         	<result name="input">/jsp/creer_user.jsp</result>
         	<result name="success" type="redirectAction">
         		<param name="actionName">index</param>
+        		<param name="pseudo">${session.utilisateur.pseudo}</param>
           	</result>
         </action>
 	</package>

@@ -13,6 +13,10 @@ import javax.validation.ConstraintViolationException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import oc.P6.escalade.business.contract.manager.AbstractDAOManager;
 import oc.P6.escalade.business.contract.manager.UtilisateurManager;
@@ -41,17 +45,35 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
     //@Named("utilisateurDAO")
     private UtilisateurDaoImpl userDAO;// = (UtilisateurDaoImpl) getDAOFactory().getUtilisateurManagerDAO();
     
+    
+    //@Inject
+    //@Named("platformTransactionManager")
+    private PlatformTransactionManager platformTransactionManager;
+    
+    public void setPlatformTransactionManager(PlatformTransactionManager transactionManager) {
+        this.platformTransactionManager = transactionManager;
+     }
+    
     @Override
     public Utilisateur getUtilisateur(String pPseudo) {//throws NotFoundException {
     	//--chercher l'utilisateur ds la bdd
-    	LOGGER.debug(userDAO.find(pPseudo).getPseudo());
-    	System.out.println(userDAO.find(pPseudo).getPseudo());
+
     	if(userDAO.find(pPseudo) != null) { 
+        	LOGGER.debug(userDAO.find(pPseudo).getPseudo());
+        	System.out.println(userDAO.find(pPseudo).getPseudo());
     	        utilisateur.setPseudo(pPseudo);
     			utilisateur.setPassword(userDAO.find(pPseudo).getPassword());
            // = this.searchUtilisateur(pPseudo);
            //       .orElseThrow(() -> new NotFoundException("Utilisateur non trouvé : PSEUDO=" + pPseudo));
         
+    	} 
+    	else {
+			try {
+				throw new Exception("Utilisateur non trouvé : PSEUDO=" + pPseudo);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
     	}
     	LOGGER.debug("CTRL "+utilisateur.getPseudo()+" - "+utilisateur.getPassword());
     	System.out.println("CTRL "+utilisateur.getPseudo()+" - "+utilisateur.getPassword());
@@ -59,6 +81,48 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
         
         
     }
+
+	@Override
+	public void creerUtilisateur(Utilisateur pUtilisateur) {
+		TransactionDefinition vDefinition = new DefaultTransactionDefinition();
+		//vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+		//vDefinition.setTimeout(30); // 30 secondes
+        TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
+		//TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(new DefaultTransactionDefinition());
+		System.out.println("CTRL "+pUtilisateur.getPseudo());
+		if (userDAO.find(pUtilisateur.getPseudo())!= null) {
+			System.out.println("trace-");
+			try {
+				throw new Exception("Le pseudo est deja utilisé. Choisissez un autre pseudo.");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else {
+			System.out.println("trace+");
+			try {
+				//utilisateur.setId(id);
+				utilisateur.setNom(pUtilisateur.getNom());
+				utilisateur.setPrenom(pUtilisateur.getPrenom());
+				utilisateur.setPseudo(pUtilisateur.getPseudo());
+				utilisateur.setPassword(pUtilisateur.getPassword());
+				utilisateur.setEmail(pUtilisateur.getEmail());
+				utilisateur.setStatut("user");
+				userDAO.create(pUtilisateur);
+				
+			    TransactionStatus vTScommit = vTransactionStatus;
+			    vTransactionStatus = null;
+			    platformTransactionManager.commit(vTScommit);
+			} finally {
+				if (vTransactionStatus != null) {
+					platformTransactionManager.rollback(vTransactionStatus);
+			    }
+			}
+
+		}
+			
+	}
 
 
 

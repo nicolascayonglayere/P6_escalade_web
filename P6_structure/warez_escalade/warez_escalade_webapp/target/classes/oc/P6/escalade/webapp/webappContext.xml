@@ -7,7 +7,7 @@
 
 
 	<bean id="dataSourceP6" class="org.springframework.jndi.JndiObjectFactoryBean">
-	    <property name="jndiName" value="java:comp/env/jdbc/P6_TEST"/>
+	    <property name="jndiName" value="java:comp/env/jdbc/P6_escalade_web"/>
 	</bean>
 
     <!-- ==== WebappHelper ===== -->

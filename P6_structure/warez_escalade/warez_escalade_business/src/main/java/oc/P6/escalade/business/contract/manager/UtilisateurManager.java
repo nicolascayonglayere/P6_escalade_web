@@ -34,7 +34,7 @@ import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 	     * @param pUtilisateur -
 	     * @throws FunctionalException Si le pseudo est déjà utilisé
 	     */
-	   // void addUtilisateur(Utilisateur pUtilisateur); // throws FunctionalException;
+	    void creerUtilisateur(Utilisateur pUtilisateur); // throws FunctionalException;
 
 	    /**
 	     * Supprime un {@link Utilisateur}

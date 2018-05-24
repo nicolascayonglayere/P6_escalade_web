@@ -14,17 +14,17 @@
 		<div class="container-fluid text-center">
 			<h3>INSCRIPTION</h3>
 			<s:form action="creer_user">
-				<s:textfield name="nom" placeholder="nom" label="nom" requiredLabel="true"/>
-				<s:textfield name="prenom" placeholder="prenom" label="prenom" requiredLabel="true"/>
-				<s:textfield name="pseudo" placeholder="pseudo" label="pseudo" requiredLabel="true"/>
-				<s:textfield name="password" placeholder="password" label="password" requiredLabel="true"/>
-				<s:textfield name="email" placeholder="email" label="email" requiredLabel="true"/>
+				<s:textfield name="utilisateur.nom" placeholder="nom" label="nom" requiredLabel="true"/>
+				<s:textfield name="utilisateur.prenom" placeholder="prenom" label="prenom" requiredLabel="true"/>
+				<s:textfield name="utilisateur.pseudo" placeholder="pseudo" label="pseudo" requiredLabel="true"/>
+				<s:textfield name="utilisateur.password" placeholder="password" label="password" requiredLabel="true"/>
+				<s:textfield name="utilisateur.email" placeholder="email" label="email" requiredLabel="true"/>
 				<input class="btn btn-default" type="submit" value="VALIDER">
-      				<s:param name="nom">${nom}</s:param>
-      				<s:param name="prenom">${prenom}</s:param>
-      				<s:param name="pseudo">${pseudo}</s:param>
-      				<s:param name="password">${password}</s:param>
-      				<s:param name="email">${email}</s:param>
+      				<s:param name="nom">${utilisateur.nom}</s:param>
+      				<s:param name="prenom">${utilisateur.prenom}</s:param>
+      				<s:param name="pseudo">${utilisateur.pseudo}</s:param>
+      				<s:param name="password">${utilisateur.password}</s:param>
+      				<s:param name="email">${utilisateur.email}</s:param>
      			 </input>
 			
 			</s:form>
