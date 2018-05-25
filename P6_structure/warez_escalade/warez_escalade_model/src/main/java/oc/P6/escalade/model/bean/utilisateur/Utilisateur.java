@@ -1,10 +1,14 @@
 package oc.P6.escalade.model.bean.utilisateur;
 
+import java.util.ArrayList;
+
 import javax.inject.Named;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.StringUtils;
+
+import oc.P6.escalade.model.bean.emprunt.TopoEmprunt;
 
 
 
@@ -21,9 +25,10 @@ public class Utilisateur {
     private String nom;
     private String prenom;
     private String password;
-    private String email;
+    private CoordonneeUtilisateur coordonnee;
     private int id;
-    private String statut;
+    private RoleUtilisateur statut;
+    private ArrayList<TopoEmprunt> topoEmprunt;
 
 
     // ==================== Constructeurs ====================
@@ -82,17 +87,6 @@ public class Utilisateur {
 		this.password = password;
 	}
 
-
-	public String getEmail() {
-		return email;
-	}
-
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-
 	public int getId() {
 		return id;
 	}
@@ -103,13 +97,33 @@ public class Utilisateur {
 	}
 
 
-	public String getStatut() {
+	public RoleUtilisateur getRoleUtilisateur() {
 		return statut;
 	}
 
 
-	public void setStatut(String statut) {
+	public void setRoleUtilisateur(RoleUtilisateur statut) {
 		this.statut = statut;
+	}
+	
+	public CoordonneeUtilisateur getCoordonnee() {
+		return coordonnee;
+	}
+
+
+	public void setCoordonnee(CoordonneeUtilisateur coordonnee) {
+		this.coordonnee = coordonnee;
+	}
+	
+	
+
+	public ArrayList<TopoEmprunt> getTopoEmprunt() {
+		return topoEmprunt;
+	}
+
+
+	public void setTopoEmprunt(ArrayList<TopoEmprunt> topoEmprunt) {
+		this.topoEmprunt = topoEmprunt;
 	}
 
 

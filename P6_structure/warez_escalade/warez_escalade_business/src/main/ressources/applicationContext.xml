@@ -29,7 +29,54 @@
       <property name = "dataSourceP6" ref = "dataSourceP6" />
       <property name = "platformTransactionManager" ref = "platformTransactionManager" />    
    </bean>
+   
+   	<!-- Definition for CommentaireSecteurImpl bean -->
+   	<bean id = "commentaireSecteurImpl" class = "oc.P6.escalade.business.impl.manager">
+      <property name = "dataSourceP6" ref = "dataSourceP6" />
+      <property name = "platformTransactionManager" ref = "platformTransactionManager" />    
+   </bean>
+   
+   	<!-- Definition for CommentaireSiteImpl bean -->
+   	<bean id = "commentaireSiteImpl" class = "oc.P6.escalade.business.impl.manager">
+      <property name = "dataSourceP6" ref = "dataSourceP6" />
+      <property name = "platformTransactionManager" ref = "platformTransactionManager" />    
+   </bean>
+   
+   	<!-- Definition for CommentaireTopoManagerImpl bean -->
+   	<bean id = "commentaireTopoManagerImpl" class = "oc.P6.escalade.business.impl.manager">
+      <property name = "dataSourceP6" ref = "dataSourceP6" />
+      <property name = "platformTransactionManager" ref = "platformTransactionManager" />    
+   </bean>
+   
+   	<!-- Definition for CommentaireVoieImpl bean -->
+   	<bean id = "commentaireVoieImpl" class = "oc.P6.escalade.business.impl.manager">
+      <property name = "dataSourceP6" ref = "dataSourceP6" />
+      <property name = "platformTransactionManager" ref = "platformTransactionManager" />    
+   </bean>
 	
+	<!-- Definition for SecteurManagerImpl bean -->
+   	<bean id = "secteurManagerImpl" class = "oc.P6.escalade.business.impl.manager">
+      <property name = "dataSourceP6" ref = "dataSourceP6" />
+      <property name = "platformTransactionManager" ref = "platformTransactionManager" />    
+   </bean>
+   
+	<!-- Definition for SiteManagerImpl bean -->
+   	<bean id = "siteManagerImpl" class = "oc.P6.escalade.business.impl.manager">
+      <property name = "dataSourceP6" ref = "dataSourceP6" />
+      <property name = "platformTransactionManager" ref = "platformTransactionManager" />    
+   </bean>
+   
+	<!-- Definition for TopoManagerImpl bean -->
+   	<bean id = "topoManagerImpl" class = "oc.P6.escalade.business.impl.manager">
+      <property name = "dataSourceP6" ref = "dataSourceP6" />
+      <property name = "platformTransactionManager" ref = "platformTransactionManager" />    
+   </bean>      
+   
+   	<!-- Definition for VoieManagerImpl bean -->
+   	<bean id = "voieManagerImpl" class = "oc.P6.escalade.business.impl.manager">
+      <property name = "dataSourceP6" ref = "dataSourceP6" />
+      <property name = "platformTransactionManager" ref = "platformTransactionManager" />    
+   </bean>
     <!-- ==== WebappHelper ===== -->
     <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
         <property name="targetClass" value="oc.P6.escalade.business.contract.manager.AbstractDAOManager"/>
