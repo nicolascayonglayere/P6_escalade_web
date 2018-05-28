@@ -12,7 +12,7 @@ public class TopoEmprunt {
 
 	private int id;
 	private Topo topo;
-	private Utilisateur emprunteur;
+	//private Utilisateur emprunteur;
 	private Date dateEmprunt;
 	
 	public TopoEmprunt() {}
@@ -33,13 +33,13 @@ public class TopoEmprunt {
 		this.topo = topo;
 	}
 
-	public Utilisateur getEmprunteur() {
-		return emprunteur;
-	}
-
-	public void setEmprunteur(Utilisateur emprunteur) {
-		this.emprunteur = emprunteur;
-	}
+//public Utilisateur getEmprunteur() {
+//	return emprunteur;
+//}
+//
+//public void setEmprunteur(Utilisateur emprunteur) {
+//	this.emprunteur = emprunteur;
+//}
 
 	public Date getDateEmprunt() {
 		return dateEmprunt;

@@ -27,8 +27,9 @@ public class Utilisateur {
     private String password;
     private CoordonneeUtilisateur coordonnee;
     private int id;
-    private RoleUtilisateur statut;
-    private ArrayList<TopoEmprunt> topoEmprunt;
+    //private RoleUtilisateur statut;
+    private int id_role;
+    //private ArrayList<TopoEmprunt> topoEmprunt;
 
 
     // ==================== Constructeurs ====================
@@ -58,7 +59,17 @@ public class Utilisateur {
     }
 
 
-    public String getNom() {
+    public int getId_role() {
+		return id_role;
+	}
+
+
+	public void setId_role(int id_role) {
+		this.id_role = id_role;
+	}
+
+
+	public String getNom() {
 		return nom;
 	}
 
@@ -95,16 +106,6 @@ public class Utilisateur {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-
-	public RoleUtilisateur getRoleUtilisateur() {
-		return statut;
-	}
-
-
-	public void setRoleUtilisateur(RoleUtilisateur statut) {
-		this.statut = statut;
-	}
 	
 	public CoordonneeUtilisateur getCoordonnee() {
 		return coordonnee;
@@ -117,14 +118,14 @@ public class Utilisateur {
 	
 	
 
-	public ArrayList<TopoEmprunt> getTopoEmprunt() {
-		return topoEmprunt;
-	}
-
-
-	public void setTopoEmprunt(ArrayList<TopoEmprunt> topoEmprunt) {
-		this.topoEmprunt = topoEmprunt;
-	}
+//public ArrayList<TopoEmprunt> getTopoEmprunt() {
+//	return topoEmprunt;
+//}
+//
+//
+//public void setTopoEmprunt(ArrayList<TopoEmprunt> topoEmprunt) {
+//	this.topoEmprunt = topoEmprunt;
+//}
 
 
 	// ==================== Méthodes ====================

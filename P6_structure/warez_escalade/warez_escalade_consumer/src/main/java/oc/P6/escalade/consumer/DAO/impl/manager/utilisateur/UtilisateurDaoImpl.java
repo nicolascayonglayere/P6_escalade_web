@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.springframework.dao.DuplicateKeyException;
@@ -14,6 +15,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import oc.P6.escalade.consumer.DAO.contract.manager.utilisateur.UtilisateurManagerDAO;
+import oc.P6.escalade.consumer.DAO.impl.DAOFactoryImpl;
 import oc.P6.escalade.consumer.DAO.impl.manager.AbstractDAO;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
@@ -22,24 +24,27 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 
 	@Override
 	public boolean create(Utilisateur pUtilisateur) {
-		String vSQL = "INSERT INTO utilisateur(id_utilisateur, nom, prenom, pseudo, password, id_role) VALUES (:id, :nom, :prenom, :pseudo, :password, :id_role)";
+		
+		String vSQL = "INSERT INTO utilisateur(nom, prenom, pseudo, password, id_role) VALUES ( :nom, :prenom, :pseudo, :password, :id_role)";
 	    
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
-
-	    BeanPropertySqlParameterSource vParams = new BeanPropertySqlParameterSource(pUtilisateur);
-	    vParams.registerSqlType("id", Types.INTEGER);
+		pUtilisateur.setId_role(3);
+		BeanPropertySqlParameterSource vParams = new BeanPropertySqlParameterSource(pUtilisateur);
 	    vParams.registerSqlType("nom", Types.VARCHAR);
 	    vParams.registerSqlType("prenom", Types.VARCHAR);
 	    vParams.registerSqlType("pseudo", Types.VARCHAR);
 	    vParams.registerSqlType("password", Types.VARCHAR);
 	    vParams.registerSqlType("id_role", Types.INTEGER);
+
 	    
 	    try {
 	        vJdbcTemplate.update(vSQL, vParams);
 	    } catch (DuplicateKeyException vEx) {
 	        System.out.println("L'utilisateur existe déjà ! pseudo=" + pUtilisateur.getPseudo());
 	        return false;
-	    }		
+	    }
+	    
+	    
 		return true;
 	}
 
@@ -70,6 +75,7 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 			public Utilisateur mapRow(ResultSet rs, int rowNum) throws SQLException {
 				Utilisateur vUtilisateur = new Utilisateur(rs.getString("pseudo"));
 				vUtilisateur.setPassword(rs.getString("password"));
+				vUtilisateur.setId(rs.getInt("id_utilisateur"));
 				return vUtilisateur;
 			}
 			

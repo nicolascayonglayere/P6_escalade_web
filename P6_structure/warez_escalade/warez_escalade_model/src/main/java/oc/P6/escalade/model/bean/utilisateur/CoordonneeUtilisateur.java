@@ -9,6 +9,7 @@ public class CoordonneeUtilisateur {
 	private String email;
 	private String adresse;
 	private Utilisateur utilisateur;
+	private int idUtilisateur;
 	
 	public CoordonneeUtilisateur() {}
 
@@ -42,6 +43,14 @@ public class CoordonneeUtilisateur {
 
 	public void setUtilisateur(Utilisateur utilisateur) {
 		this.utilisateur = utilisateur;
+	}
+
+	public int getIdUtilisateur() {
+		return idUtilisateur;
+	}
+
+	public void setIdUtilisateur(int idUtilisateur) {
+		this.idUtilisateur = idUtilisateur;
 	}
 	
 	

@@ -18,13 +18,15 @@
 				<s:textfield name="utilisateur.prenom" placeholder="prenom" label="prenom" requiredLabel="true"/>
 				<s:textfield name="utilisateur.pseudo" placeholder="pseudo" label="pseudo" requiredLabel="true"/>
 				<s:textfield name="utilisateur.password" placeholder="password" label="password" requiredLabel="true"/>
-				<s:textfield name="utilisateur.email" placeholder="email" label="email" requiredLabel="true"/>
+				<s:textfield name="coordonnee.email" placeholder="email" label="email" requiredLabel="true"/>
+				<s:textfield name="coordonnee.adresse" placeholder="adresse" label="adresse" requiredLabel="true"/>
 				<input class="btn btn-default" type="submit" value="VALIDER">
       				<s:param name="nom">${utilisateur.nom}</s:param>
       				<s:param name="prenom">${utilisateur.prenom}</s:param>
       				<s:param name="pseudo">${utilisateur.pseudo}</s:param>
       				<s:param name="password">${utilisateur.password}</s:param>
-      				<s:param name="email">${utilisateur.email}</s:param>
+      				<s:param name="email">${coordonnee.email}</s:param>
+      				<s:param name="adresse">${coordonnee.adresse}</s:param>
      			 </input>
 			
 			</s:form>

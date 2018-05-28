@@ -1,6 +1,12 @@
 package oc.P6.escalade.consumer.DAO.impl.manager.utilisateur;
 
+import java.sql.Types;
+
 import javax.inject.Named;
+
+import org.springframework.dao.DuplicateKeyException;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import oc.P6.escalade.consumer.DAO.contract.manager.utilisateur.CoordonneeUtilisateurDao;
 import oc.P6.escalade.consumer.DAO.impl.manager.AbstractDAO;
@@ -12,7 +18,22 @@ public class CoordonneeUtilisateurDaoImpl extends AbstractDAO implements Coordon
 
 	@Override
 	public boolean create(CoordonneeUtilisateur pCoordonneeUtilisateur) {
-		// TODO Auto-generated method stub
+		String vSQLCoordonnee = "INSERT INTO coordonnee_utilisateur (email, adresse_postale, id_utilisateur) VALUES (:email, :adresse, :idUtilisateur)";
+		//--recuperer l'id de l'utilisateur
+		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
+		
+		pCoordonneeUtilisateur.setIdUtilisateur(pCoordonneeUtilisateur.getUtilisateur().getId());
+	    BeanPropertySqlParameterSource vParamsCoordonnee = new BeanPropertySqlParameterSource(pCoordonneeUtilisateur);
+	    vParamsCoordonnee.registerSqlType("email", Types.VARCHAR);
+	    vParamsCoordonnee.registerSqlType("adresse", Types.VARCHAR);
+	    vParamsCoordonnee.registerSqlType("idUtilisateur", Types.INTEGER);
+		
+	    try {
+	        vJdbcTemplate.update(vSQLCoordonnee, vParamsCoordonnee);
+	    } catch (DuplicateKeyException vEx) {
+	        System.out.println("Coordonnee invalide email=" + pCoordonneeUtilisateur.getEmail());
+	        return false;
+	    }
 		return false;
 	}
 

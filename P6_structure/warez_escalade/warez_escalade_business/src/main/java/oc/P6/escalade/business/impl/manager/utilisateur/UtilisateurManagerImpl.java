@@ -20,6 +20,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import oc.P6.escalade.business.contract.manager.AbstractDAOManager;
 import oc.P6.escalade.business.contract.manager.utilisateur.UtilisateurManager;
+import oc.P6.escalade.consumer.DAO.impl.manager.utilisateur.CoordonneeUtilisateurDaoImpl;
 import oc.P6.escalade.consumer.DAO.impl.manager.utilisateur.UtilisateurDaoImpl;
 import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateur;
 import oc.P6.escalade.model.bean.utilisateur.RoleUtilisateur;
@@ -40,6 +41,9 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
     @Inject
     //@Named("refUtilisateur")
     private Utilisateur utilisateur;
+    
+    @Inject
+    private CoordonneeUtilisateur coordonnee;
 
    // private Optional<Utilisateur> searchUtilisateur(String pPseudo) {
      //   return this.listUtilisateur.stream().filter(u -> StringUtils.equals(u.getPseudo(), pPseudo)).findFirst();
@@ -48,14 +52,16 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
     //@Named("utilisateurDAO")
     private UtilisateurDaoImpl userDAO;// = (UtilisateurDaoImpl) getDAOFactory().getUtilisateurManagerDAO();
     
+    @Inject
+    private CoordonneeUtilisateurDaoImpl coordUserDAO;
     
     //@Inject
     //@Named("platformTransactionManager")
-    private PlatformTransactionManager platformTransactionManager;
-    
-    public void setPlatformTransactionManager(PlatformTransactionManager transactionManager) {
-        this.platformTransactionManager = transactionManager;
-     }
+ // private PlatformTransactionManager platformTransactionManager;
+ // 
+ // public void setPlatformTransactionManager(PlatformTransactionManager transactionManager) {
+ //     this.platformTransactionManager = transactionManager;
+ //  }
     
     @Override
     public Utilisateur getUtilisateur(String pPseudo) {//throws NotFoundException {
@@ -66,6 +72,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
         	System.out.println(userDAO.find(pPseudo).getPseudo());
     	        utilisateur.setPseudo(pPseudo);
     			utilisateur.setPassword(userDAO.find(pPseudo).getPassword());
+    			utilisateur.setId(userDAO.find(pPseudo).getId());
            // = this.searchUtilisateur(pPseudo);
            //       .orElseThrow(() -> new NotFoundException("Utilisateur non trouvé : PSEUDO=" + pPseudo));
         
@@ -79,7 +86,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 			}
     	}
     	LOGGER.debug("CTRL "+utilisateur.getPseudo()+" - "+utilisateur.getPassword());
-    	System.out.println("CTRL "+utilisateur.getPseudo()+" - "+utilisateur.getPassword());
+    	System.out.println("CTRL "+utilisateur.getPseudo()+" - "+utilisateur.getPassword()+" - "+utilisateur.getId());
     	return utilisateur;
         
         
@@ -87,10 +94,10 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 
 	@Override
 	public void creerUtilisateur(Utilisateur pUtilisateur) {
-		TransactionDefinition vDefinition = new DefaultTransactionDefinition();
+		//TransactionDefinition vDefinition = new DefaultTransactionDefinition();
 		//vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		//vDefinition.setTimeout(30); // 30 secondes
-        TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
+        //TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
 		//TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(new DefaultTransactionDefinition());
 		System.out.println("CTRL "+pUtilisateur.getPseudo());
 		if (userDAO.find(pUtilisateur.getPseudo())!= null) {
@@ -110,17 +117,17 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 				utilisateur.setPrenom(pUtilisateur.getPrenom());
 				utilisateur.setPseudo(pUtilisateur.getPseudo());
 				utilisateur.setPassword(pUtilisateur.getPassword());
-				utilisateur.setCoordonnee(pUtilisateur.getCoordonnee());
-				utilisateur.setRoleUtilisateur(RoleUtilisateur.Utilisateur);
+				//utilisateur.setCoordonnee(pUtilisateur.getCoordonnee());
+				utilisateur.setId_role(3);//(RoleUtilisateur.Utilisateur.getId());
 				userDAO.create(pUtilisateur);
 				
-			    TransactionStatus vTScommit = vTransactionStatus;
-			    vTransactionStatus = null;
-			    platformTransactionManager.commit(vTScommit);
+			    //TransactionStatus vTScommit = vTransactionStatus;
+			    //vTransactionStatus = null;
+			    //platformTransactionManager.commit(vTScommit);
 			} finally {
-				if (vTransactionStatus != null) {
-					platformTransactionManager.rollback(vTransactionStatus);
-			    }
+				//if (vTransactionStatus != null) {
+					//platformTransactionManager.rollback(vTransactionStatus);
+			    //}
 			}
 
 		}

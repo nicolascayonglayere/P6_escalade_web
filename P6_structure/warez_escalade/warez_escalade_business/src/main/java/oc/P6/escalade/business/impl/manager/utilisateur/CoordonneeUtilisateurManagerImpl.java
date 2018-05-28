@@ -9,12 +9,15 @@ import oc.P6.escalade.business.contract.manager.AbstractDAOManager;
 import oc.P6.escalade.business.contract.manager.utilisateur.CoordonneeUtilisateurManager;
 import oc.P6.escalade.consumer.DAO.impl.manager.utilisateur.CoordonneeUtilisateurDaoImpl;
 import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateur;
+import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
 @Named
 public class CoordonneeUtilisateurManagerImpl extends AbstractDAOManager implements CoordonneeUtilisateurManager{
 
 	@Inject
 	private CoordonneeUtilisateur coordonnee;
+	@Inject
+	private Utilisateur utilisateur;
 	
 	@Inject
 	private CoordonneeUtilisateurDaoImpl coordonneeDao;
@@ -29,7 +32,16 @@ public class CoordonneeUtilisateurManagerImpl extends AbstractDAOManager impleme
 
 	@Override
 	public void creerCoordonnee(CoordonneeUtilisateur pCoordinneeUtilisateur) {
-		// TODO Auto-generated method stub
+		
+		System.out.println("CTRL "+pCoordinneeUtilisateur.getEmail()+" - "+pCoordinneeUtilisateur.getUtilisateur().getId());
+		try {
+			coordonnee.setEmail(pCoordinneeUtilisateur.getEmail());
+			coordonnee.setAdresse(pCoordinneeUtilisateur.getAdresse());
+			coordonnee.setIdUtilisateur(pCoordinneeUtilisateur.getUtilisateur().getId());
+			coordonneeDao.create(pCoordinneeUtilisateur);
+		}finally {
+			
+		}
 		
 	}
 
