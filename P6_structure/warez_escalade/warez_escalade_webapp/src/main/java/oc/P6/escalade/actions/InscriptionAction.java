@@ -4,13 +4,15 @@ package oc.P6.escalade.actions;
 
 import java.util.Map;
 
+import org.apache.struts2.interceptor.SessionAware;
+
 import com.opensymphony.xwork2.ActionSupport;
 
 import oc.P6.escalade.WebappHelper.WebappHelper;
 import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateur;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
-public class InscriptionAction extends ActionSupport {
+public class InscriptionAction extends ActionSupport implements SessionAware {
 
 	/**
 	 * 
@@ -69,7 +71,7 @@ public class InscriptionAction extends ActionSupport {
 		
 		if (vResult != ActionSupport.INPUT) {
 			WebappHelper.getManagerFactory().getUtilisateurManager().creerUtilisateur(utilisateur);
-
+			session.put("utilisateur", utilisateur);
 			//System.out.println("pseudo : "+utilisateur.getPseudo());
 			//session.put("utilisateur", WebappHelper.getManagerFactory().getUtilisateurManager().getUtilisateur(utilisateur.getPseudo()));
 			vResult = ActionSupport.SUCCESS;

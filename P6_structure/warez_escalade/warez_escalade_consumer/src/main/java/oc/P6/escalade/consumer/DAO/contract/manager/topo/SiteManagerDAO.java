@@ -12,4 +12,6 @@ public interface SiteManagerDAO {
 	boolean update (Site pSite);
 	
 	Site find(String pNom);
+	
+	Site find(int pId);
 }

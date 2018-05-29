@@ -61,11 +61,15 @@
 		
         <!-- Actions de lister les topos -->
         <action name="lister_topo" class="oc.P6.escalade.actions.SelectTopoAction" method="doListTopo">
-        	<result type="redirectAction">index</result>
+        	<result name="success">/jsp/index.jsp</result>
         </action>
         
         <!--Construction et affichage du topo-->
         <action name="go_topo" class="oc.P6.escalade.actions.GoTopoAction" method="execute">
+            <interceptor-ref name="store">
+				<param name="operationMode">STORE</param>
+		   	</interceptor-ref> 
+		   	<interceptor-ref name="defaultStack" />
         	<result name="input" type="redirectAction">index</result>
         	<result name="success">/jsp/topo.jsp</result>
         </action>

@@ -8,7 +8,7 @@ public interface TopoManager {
 
 	ArrayList<Topo> getListTopo();
 	
-	Topo getTopo();
+	Topo getTopo(String pNom);
 	
 	void creerTopo(Topo pTopo);
 	

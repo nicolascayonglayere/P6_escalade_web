@@ -10,7 +10,35 @@
 	</head>
 	<body>
 		<%@include file="_include/entete.jsp" %>
+		<h2><s:property value="topo.nom"/></h2>
+		<h3><s:property value="site.nom"/></h3>
 		
+		<!-- google map -->
+		
+		<!-- tableau voie/secteur -->
+		<table>
+			<s:iterator value="listSecteur">
+				<tr>
+					<td style="text-align:center;"><s:property value="secteur.nom"/></td>
+				</tr>
+				<tr>
+					<td>
+						<table class="table table-bordered table-striped">
+								<s:iterator value="listVoie">
+									<tr>
+								    	<td style="text-align:right;"><s:property value="voie.nom"/></td>
+								    	<td style="text-align:right;"><s:property value="voie.cotation" /></td>
+								    	<td style="text-align:right;"><s:property value="voie.nbreLongueur" /></td>
+								    	<td style="text-align:right;"><s:property value="voie.nbrePoint" /></td>
+								   	</tr>
+							 	</s:iterator>
+						</table>					
+					</td>
+				</tr>
+		
+
+			</s:iterator>
+		</table>
 		
 		
 		

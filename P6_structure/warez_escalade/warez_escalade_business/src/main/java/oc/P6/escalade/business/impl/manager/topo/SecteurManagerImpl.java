@@ -11,6 +11,7 @@ import oc.P6.escalade.business.contract.manager.AbstractDAOManager;
 import oc.P6.escalade.business.contract.manager.topo.SecteurManager;
 import oc.P6.escalade.consumer.DAO.impl.manager.topo.SecteurDaoImpl;
 import oc.P6.escalade.model.bean.topo.Secteur;
+import oc.P6.escalade.model.bean.topo.Site;
 
 @Named
 public class SecteurManagerImpl extends AbstractDAOManager implements SecteurManager{
@@ -24,7 +25,7 @@ public class SecteurManagerImpl extends AbstractDAOManager implements SecteurMan
 	private PlatformTransactionManager platformTransactionManager;
 	
 	@Override
-	public ArrayList<Secteur> getListSecteur() {
+	public ArrayList<Secteur> getListSecteur(Site pSite) {
 		// TODO Auto-generated method stub
 		return null;
 	}

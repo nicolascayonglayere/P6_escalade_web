@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN" "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+	
+	<constant name="struts.devMode" value="true" />
+	<!--<package name="login" extends="struts-default" namespace="/LoginUser">-->
+	<package name="default" extends="struts-default">
+		
+
+	
+		
+		<interceptors>
+			<interceptor class="oc.P6.escalade.interceptor.LoginInterceptor" name="loginInterceptor">
+			</interceptor>
+			<interceptor-stack name="loginStack">
+				<interceptor-ref name="loginInterceptor" />
+				<interceptor-ref name="defaultStack" />
+       			 <interceptor-ref name="store">
+					<param name="operationMode">RETRIEVE</param>
+		    	 </interceptor-ref>				
+			</interceptor-stack>
+		</interceptors>
+
+
+        <!-- Action par défaut -->
+        <default-action-ref name="index" />
+
+		<global-results>
+			<result name="login">/jsp/_include/login.jsp</result>
+		</global-results>
+
+        <!-- Action "index" -->
+        <action name="index">
+            <result>/jsp/index.jsp</result>
+        </action>
+
+		<!--   login action  -->
+		<action name="loginUser" class="oc.P6.escalade.actions.LoginAction" method="loginRegisterUser">
+			<!--<interceptor-ref name="loginStack" />-->
+       			 <interceptor-ref name="store">
+					<param name="operationMode">STORE</param>
+		    	 </interceptor-ref>
+		    	 <interceptor-ref name="defaultStack" />
+			<result name="success" type="redirectAction">/index</result>
+			<result name="login">/jsp/_include/login.jsp</result>
+			<!--<result name="login" type="redirectAction">
+				<param name="actionName">loginUser</param>
+			</result>-->	
+		</action>
+
+		<!-- home link action -->
+		<action name="homeAction" class="oc.P6.escalade.actions.LoginAction" method="home">
+			<interceptor-ref name="loginStack" />
+			<result name="success">/jsp/index.jsp</result>
+		</action>
+		<!--   logout action  -->
+		<action name="logOut" class="oc.P6.escalade.actions.LoginAction" method="logOut">
+			<result name="success">/jsp/index.jsp</result>
+		</action>
+		
+        <!-- Actions de lister les topos -->
+        <action name="lister_topo" class="oc.P6.escalade.actions.SelectTopoAction" method="doListTopo">
+        	<result name="success">/jsp/index.jsp</result>
+        </action>
+        
+        <!--Construction et affichage du topo-->
+        <action name="go_topo" class="oc.P6.escalade.actions.GoTopoAction" method="execute">
+        	<result name="input" type="redirectAction">index</result>
+        	<result name="success">/jsp/topo.jsp</result>
+        </action>
+        
+        <!-- page contact-->
+        <action name="contact" class="oc.P6.escalade.actions.ContactAction" method="execute">
+        	<result name = "success">/jsp/contact.jsp</result>
+        </action>
+        
+        <action name="envoi_message" class="oc.P6.escalade.actions.ContactAction" method="envoi">
+        	<result name = "success" type="redirectAction">index</result>
+        </action>        
+        
+        <!-- page presentation-->
+        <action name="presentation" class="oc.P6.escalade.actions.PresentationAction" method="execute">
+        	<result name = "success">/jsp/presentation.jsp</result>
+        </action>
+        
+        <!-- page d'inscription -->
+        <action name="inscription" class="oc.P6.escalade.actions.InscriptionAction" method="execute">
+        	<result name="success">/jsp/creer_user.jsp</result>
+        </action>
+        
+        <action name="creer_user" class="oc.P6.escalade.actions.InscriptionAction" method="creerUser">
+       			 <interceptor-ref name="store">
+					<param name="operationMode">STORE</param>
+		    	 </interceptor-ref>
+		    	 <interceptor-ref name="defaultStack" />        
+        	<result name="input">/jsp/creer_user.jsp</result>
+        	<result name="success" type="redirectAction">
+        		<param name="actionName">index</param>
+        		<param name="pseudo">${session.utilisateur.pseudo}</param>
+          	</result>
+        </action>
+	</package>
+</struts>
+
+

@@ -1,0 +1,13 @@
+oc\P6\escalade\model\bean\commentaire\Commentaire.class
+oc\P6\escalade\model\bean\commentaire\CommentaireSite.class
+oc\P6\escalade\model\bean\topo\Voie.class
+oc\P6\escalade\model\bean\commentaire\CommentaireVoie.class
+oc\P6\escalade\model\bean\utilisateur\CoordonneeUtilisateur.class
+oc\P6\escalade\model\bean\utilisateur\RoleUtilisateur.class
+oc\P6\escalade\model\bean\topo\Secteur.class
+oc\P6\escalade\model\bean\topo\Site.class
+oc\P6\escalade\model\bean\emprunt\TopoEmprunt.class
+oc\P6\escalade\model\bean\commentaire\CommentaireTopo.class
+oc\P6\escalade\model\bean\commentaire\CommentaireSecteur.class
+oc\P6\escalade\model\bean\utilisateur\Utilisateur.class
+oc\P6\escalade\model\bean\topo\Topo.class

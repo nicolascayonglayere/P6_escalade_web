@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.springframework.jdbc.core.RowMapper;
@@ -11,12 +12,15 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import oc.P6.escalade.consumer.DAO.contract.manager.topo.SiteManagerDAO;
+import oc.P6.escalade.consumer.DAO.impl.DAOFactoryImpl;
 import oc.P6.escalade.consumer.DAO.impl.manager.AbstractDAO;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
 
 @Named
 public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
+	@Inject
+	TopoDaoImpl topoDAO;
 
 	@Override
 	public boolean create(Site pSite) {
@@ -67,6 +71,37 @@ public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 		
 		
 		return site;
+	}
+
+	@Override
+	public Site find(int pId) {
+
+		String vSQL = "SELECT * FROM site WHERE id_topo = :id_topo";
+		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
+		MapSqlParameterSource vParams = new MapSqlParameterSource();
+        vParams.addValue("id_topo", pId, Types.INTEGER);
+		
+		RowMapper<Site> vRowMapper = new RowMapper<Site>() {
+
+			@Override
+			public Site mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Topo vTopo = topoDAO.find(pId);
+				Site vSite = new Site(rs.getString("nom"));
+				vSite.setId(rs.getInt("id_site"));
+				vSite.setTopo(vTopo);
+				return vSite;
+			}
+			
+		};
+		Site site;
+		if (vJdbcTemplate.query(vSQL,vParams,vRowMapper).size() != 0)
+			site = vJdbcTemplate.query(vSQL,vParams,vRowMapper).get(0);
+		else
+			site = null;
+		
+		
+		return site;
+		
 	}
 
 }

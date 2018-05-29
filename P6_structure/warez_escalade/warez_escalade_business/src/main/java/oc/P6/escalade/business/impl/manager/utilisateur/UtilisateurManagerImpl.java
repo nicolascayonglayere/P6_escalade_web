@@ -41,9 +41,6 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
     @Inject
     //@Named("refUtilisateur")
     private Utilisateur utilisateur;
-    
-    @Inject
-    private CoordonneeUtilisateur coordonnee;
 
    // private Optional<Utilisateur> searchUtilisateur(String pPseudo) {
      //   return this.listUtilisateur.stream().filter(u -> StringUtils.equals(u.getPseudo(), pPseudo)).findFirst();
@@ -51,9 +48,6 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
     @Inject
     //@Named("utilisateurDAO")
     private UtilisateurDaoImpl userDAO;// = (UtilisateurDaoImpl) getDAOFactory().getUtilisateurManagerDAO();
-    
-    @Inject
-    private CoordonneeUtilisateurDaoImpl coordUserDAO;
     
     //@Inject
     //@Named("platformTransactionManager")

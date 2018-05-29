@@ -41,6 +41,7 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 	        vJdbcTemplate.update(vSQL, vParams);
 	    } catch (DuplicateKeyException vEx) {
 	        System.out.println("L'utilisateur existe déjà ! pseudo=" + pUtilisateur.getPseudo());
+	        //throw runtimeException
 	        return false;
 	    }
 	    
@@ -76,6 +77,35 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 				Utilisateur vUtilisateur = new Utilisateur(rs.getString("pseudo"));
 				vUtilisateur.setPassword(rs.getString("password"));
 				vUtilisateur.setId(rs.getInt("id_utilisateur"));
+				return vUtilisateur;
+			}
+			
+		};
+		Utilisateur user;
+		if (vJdbcTemplate.query(vSQL,vParams,vRowMapper).size() != 0)
+			user = vJdbcTemplate.query(vSQL,vParams,vRowMapper).get(0);
+		else
+			user = null;
+		
+		
+		return user;
+	}
+
+	@Override
+	public Utilisateur find(int pId) {
+		String vSQL = "SELECT * FROM utilisateur WHERE id_utilisateur = :id";
+        NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
+		MapSqlParameterSource vParams = new MapSqlParameterSource();
+        vParams.addValue("id", pId, Types.INTEGER);
+		
+		RowMapper<Utilisateur> vRowMapper = new RowMapper<Utilisateur>() {
+
+			@Override
+			public Utilisateur mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Utilisateur vUtilisateur = new Utilisateur();
+				vUtilisateur.setPassword(rs.getString("password"));
+				vUtilisateur.setId(pId);
+				vUtilisateur.setPseudo(rs.getString("pseudo"));
 				return vUtilisateur;
 			}
 			

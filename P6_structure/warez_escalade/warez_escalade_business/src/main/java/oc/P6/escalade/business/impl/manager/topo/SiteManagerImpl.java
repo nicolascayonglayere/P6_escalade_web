@@ -11,6 +11,7 @@ import oc.P6.escalade.business.contract.manager.AbstractDAOManager;
 import oc.P6.escalade.business.contract.manager.topo.SiteManager;
 import oc.P6.escalade.consumer.DAO.impl.manager.topo.SiteDaoImpl;
 import oc.P6.escalade.model.bean.topo.Site;
+import oc.P6.escalade.model.bean.topo.Topo;
 
 @Named
 public class SiteManagerImpl extends AbstractDAOManager implements SiteManager{
@@ -30,7 +31,7 @@ public class SiteManagerImpl extends AbstractDAOManager implements SiteManager{
 	}
 
 	@Override
-	public Site getSite() {
+	public Site getSite(String pNom) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -39,6 +40,22 @@ public class SiteManagerImpl extends AbstractDAOManager implements SiteManager{
 	public void creerSite(String pNom) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Site getSite(Topo pTopo) {
+		Site vSite = null;
+		
+		if (siteDAO.find(pTopo.getId()) != null) {
+			vSite = siteDAO.find(pTopo.getId());
+		}
+		else
+			try {
+				throw new Exception ("Le topo n'a aucun site.");
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		return vSite;
 	}
 
 }

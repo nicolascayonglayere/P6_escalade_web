@@ -21,23 +21,45 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 	@Inject
 	private TopoDaoImpl topoDAO;// = (TopoDaoImpl) getDAOFactory().getTopoManagerDao();
 	
-	private PlatformTransactionManager platformTransactionManager;
+	//private PlatformTransactionManager platformTransactionManager;
 	
 	@Override
 	public ArrayList<Topo> getListTopo() {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Topo> listeTopo = topoDAO.listerTopo();
+		return listeTopo;
 	}
 
 	@Override
-	public Topo getTopo() {
-		// TODO Auto-generated method stub
-		return null;
+	public Topo getTopo(String pNom) {
+		Topo vTopo = null;
+		if (topoDAO.find(pNom) != null) {
+			vTopo = topoDAO.find(pNom);
+		}
+		else
+			try {
+				throw new Exception ("Le topo n'existe pas.");
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		return vTopo;
 	}
 
 	@Override
 	public void creerTopo(Topo pTopo) {
-		// TODO Auto-generated method stub
+		System.out.println("CTRL "+pTopo.getNom());
+		if (topoDAO.find(pTopo.getNom()) != null) {
+			try {
+				throw new Exception("Le topo existe deja.");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else {
+			topo.setNom(pTopo.getNom());
+			topo.setAuteur(pTopo.getAuteur());
+			topoDAO.create(pTopo);
+		}
 		
 	}
 

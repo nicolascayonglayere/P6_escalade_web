@@ -12,6 +12,8 @@ public interface UtilisateurManagerDAO {
 	
 	Utilisateur find(String pPseudo);
 	
+	Utilisateur find(int pId);
+	
 	
 
 }
