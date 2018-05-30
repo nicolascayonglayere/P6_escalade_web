@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
 
-	<div class="modal" id="myModal" tabindex="-1" role="dialog">
-	  <div class="modal-dialog" role="document">
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+	  <div class="modal-dialog modal-dialog-centered" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <h5 class="modal-title">AUTHENTIFICATION</h5>
@@ -14,7 +15,7 @@
 	       	<s:actionmessage/>
 			<s:actionerror/>
 			
-			<s:form id="idLoginForm" action="loginUser" namespace="/LoginUser">
+			<s:form id="idLoginForm" action="loginUser" namespace="/LoginUser" cssClass="form-vertical">
 				<s:textfield name="utilisateur.pseudo" placeholder="pseudo" label="pseudo" requiredLabel="true"/>
 				<s:password name="utilisateur.password" placeholder="password" label="password" requiredLabel="true"/>
       			<input class="btn btn-default" type="submit" value="S'AUTHENTIFIER">
@@ -25,5 +26,5 @@
 	      </div>
 	    </div>
 	  </div>
-</div>
+	</div>
 

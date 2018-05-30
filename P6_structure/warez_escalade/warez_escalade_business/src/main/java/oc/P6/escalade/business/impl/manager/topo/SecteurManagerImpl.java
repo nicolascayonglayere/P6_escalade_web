@@ -26,8 +26,8 @@ public class SecteurManagerImpl extends AbstractDAOManager implements SecteurMan
 	
 	@Override
 	public ArrayList<Secteur> getListSecteur(Site pSite) {
-		// TODO Auto-generated method stub
-		return null;
+		ArrayList<Secteur> listSecteur = secteurDAO.getListeSecteur(pSite);
+		return listSecteur;
 	}
 
 	@Override

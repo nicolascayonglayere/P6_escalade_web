@@ -77,6 +77,10 @@ public class GoTopoAction extends ActionSupport {
         if (topo != null) {
         	site = (Site) WebappHelper.getManagerFactory().getSiteManager().getSite(topo);
         	listSecteur = (ArrayList<Secteur>) WebappHelper.getManagerFactory().getSecteurManager().getListSecteur(site);
+        	for (Secteur s : listSecteur) {
+        		listVoie = (ArrayList<Voie>) WebappHelper.getManagerFactory().getVoieManager().getListVoie(s);
+        	}
+
         	return SUCCESS;
         }
         else 

@@ -10,6 +10,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import oc.P6.escalade.business.contract.manager.AbstractDAOManager;
 import oc.P6.escalade.business.contract.manager.topo.VoieManager;
 import oc.P6.escalade.consumer.DAO.impl.manager.topo.VoieDaoImpl;
+import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Voie;
 
 @Named
@@ -24,9 +25,9 @@ public class VoieManagerImpl extends AbstractDAOManager implements VoieManager{
 	private PlatformTransactionManager platformTransactionManager;
 	
 	@Override
-	public ArrayList<Voie> getListVoie() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Voie> getListVoie(Secteur pSecteur) {
+		ArrayList<Voie> listVoie = voieDao.getlistVoie(pSecteur);
+		return listVoie;
 	}
 
 	@Override

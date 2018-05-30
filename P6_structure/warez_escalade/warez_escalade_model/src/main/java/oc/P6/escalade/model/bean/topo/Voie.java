@@ -14,6 +14,10 @@ public class Voie {
 	private Secteur secteur;
 	
 	public Voie() {}
+	
+	public Voie(String pNom) {
+		this.nom = pNom;
+	}
 
 	public int getId() {
 		return id;

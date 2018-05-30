@@ -4,12 +4,11 @@
 <struts>
 	
 	<constant name="struts.devMode" value="true" />
-	<!--<package name="login" extends="struts-default" namespace="/LoginUser">-->
-	<package name="default" extends="struts-default">
-		
-
+	<constant name="struts.ui.theme" value="bootstrap" />
 	
-		
+	<package name="default" extends="struts-default">
+	<!--<package name="login" extends="struts-default" namespace="/loginUser">-->
+			
 		<interceptors>
 			<interceptor class="oc.P6.escalade.interceptor.LoginInterceptor" name="loginInterceptor">
 			</interceptor>
@@ -54,6 +53,7 @@
 			<interceptor-ref name="loginStack" />
 			<result name="success">/jsp/index.jsp</result>
 		</action>
+		
 		<!--   logout action  -->
 		<action name="logOut" class="oc.P6.escalade.actions.LoginAction" method="logOut">
 			<result name="success">/jsp/index.jsp</result>
@@ -92,7 +92,7 @@
         <action name="inscription" class="oc.P6.escalade.actions.InscriptionAction" method="execute">
         	<result name="success">/jsp/creer_user.jsp</result>
         </action>
-        
+ 	        
         <action name="creer_user" class="oc.P6.escalade.actions.InscriptionAction" method="creerUser">
        			 <interceptor-ref name="store">
 					<param name="operationMode">STORE</param>
@@ -104,6 +104,17 @@
         		<param name="pseudo">${session.utilisateur.pseudo}</param>
           	</result>
         </action>
+    </package>
+
+	<package name="moderateur" extends="struts-default, default" namespace="/moderateur">    
+		<!--Toutes les actions de gestion de commentaires -->
+				   
+	</package>
+        
+	<package name="admin" extends="struts-default, default, moderateur" namespace="/admin">    
+		<!--Toutes les actions de suppression de topo/site/secteur/voie -->
+		<!-- Action de ban -->
+		   
 	</package>
 </struts>
 

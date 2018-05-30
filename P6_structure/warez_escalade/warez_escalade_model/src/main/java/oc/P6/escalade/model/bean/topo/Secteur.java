@@ -10,6 +10,10 @@ public class Secteur {
 		private Site site;
 		
 		public Secteur() {}
+		
+		public Secteur(String pNom) {
+			this.nom = pNom;
+		}
 
 		public int getId() {
 			return id;
