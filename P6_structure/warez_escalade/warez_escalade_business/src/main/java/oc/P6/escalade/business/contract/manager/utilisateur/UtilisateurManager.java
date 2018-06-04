@@ -1,5 +1,6 @@
 package oc.P6.escalade.business.contract.manager.utilisateur;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
@@ -41,5 +42,11 @@ import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 	     *
 	     * @param pUtilisateur -
 	     */
-	  //  void deleteUtilisateur(Utilisateur pUtilisateur);
+	    void deleteUtilisateur(Utilisateur pUtilisateur);
+	    
+	    ArrayList<Utilisateur> getListAdmin();
+	    
+	    ArrayList<Utilisateur> getListModo();
+	    
+	    void modifierUtilisateur(Utilisateur pUtilisateur);
 }

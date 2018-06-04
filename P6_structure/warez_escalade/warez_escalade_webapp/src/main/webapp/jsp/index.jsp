@@ -26,14 +26,22 @@
 			<table class="table table-bordered table-striped">
 				<s:iterator value="listTopo">
 					<tr>
-				    	<td style="text-align:right;">
+				    	<td style="text-align:left;">
 				    		<s:a action="go_topo">
 				            	<s:property value="nom"/>
 			                    <s:param name="nom" value="nom" />	
 			               	</s:a>
 				    	</td>
-				    	<!-- <td style="text-align:right;"><s:property value="site" /></td>-->
+				    	<td style="text-align:right;"><s:property value="site.nom" /></td>
 				    	<!-- <td style="text-align:right;"><s:property value="voie" /></td>-->
+				    	<td>
+
+				    		<s:a action="emprunt_topo">
+				    			<input type="submit" class="cssButton btn btn-primary" value="EMPRUNT"/>
+				    			<s:param name="nom" value="nom"/>
+				    		</s:a>
+				    		
+				    	</td>
 				   	</tr>
 			 	</s:iterator>
 			</table>		

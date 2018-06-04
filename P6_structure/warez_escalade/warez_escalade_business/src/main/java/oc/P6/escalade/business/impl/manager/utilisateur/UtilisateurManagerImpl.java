@@ -1,5 +1,6 @@
 package oc.P6.escalade.business.impl.manager.utilisateur;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -64,23 +65,26 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
     	if(userDAO.find(pPseudo) != null) { 
         	LOGGER.debug(userDAO.find(pPseudo).getPseudo());
         	System.out.println(userDAO.find(pPseudo).getPseudo());
+        		utilisateur.setNom(userDAO.find(pPseudo).getNom());
+        		utilisateur.setPrenom(userDAO.find(pPseudo).getPrenom());
     	        utilisateur.setPseudo(pPseudo);
     			utilisateur.setPassword(userDAO.find(pPseudo).getPassword());
+    			utilisateur.setId_role(userDAO.find(pPseudo).getId_role());
+    			utilisateur.setRole(userDAO.find(pPseudo).getRole());
     			utilisateur.setId(userDAO.find(pPseudo).getId());
-           // = this.searchUtilisateur(pPseudo);
-           //       .orElseThrow(() -> new NotFoundException("Utilisateur non trouvé : PSEUDO=" + pPseudo));
         
     	} 
     	else {
+    		utilisateur = null;
 			try {
 				throw new Exception("Utilisateur non trouvé : PSEUDO=" + pPseudo);
+				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
     	}
-    	LOGGER.debug("CTRL "+utilisateur.getPseudo()+" - "+utilisateur.getPassword());
-    	System.out.println("CTRL "+utilisateur.getPseudo()+" - "+utilisateur.getPassword()+" - "+utilisateur.getId());
+    	//System.out.println("CTRL "+utilisateur.getPseudo()+" - "+utilisateur.getPassword()+" - "+utilisateur.getId());
     	return utilisateur;
         
         
@@ -126,6 +130,91 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 
 		}
 			
+	}
+
+	@Override
+	public ArrayList<Utilisateur> getListAdmin() {
+		ArrayList<Utilisateur> listAdmin = userDAO.getList(1);
+		return listAdmin;
+	}
+
+	@Override
+	public ArrayList<Utilisateur> getListModo() {
+		ArrayList<Utilisateur> listModo = userDAO.getList(2);
+		return listModo;
+	}
+
+	@Override
+	public void modifierUtilisateur(Utilisateur pUtilisateur) {
+		System.out.println("CTRL "+pUtilisateur.getPseudo());
+		if (userDAO.find(pUtilisateur.getPseudo())!= null) {
+			System.out.println("trace-");
+			try {
+				throw new Exception("Le pseudo est deja utilisé. Choisissez un autre pseudo.");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else {
+			System.out.println("trace+");
+			try {
+				utilisateur.setId(pUtilisateur.getId());
+				utilisateur.setNom(pUtilisateur.getNom());
+				utilisateur.setPrenom(pUtilisateur.getPrenom());
+				utilisateur.setPseudo(pUtilisateur.getPseudo());
+				utilisateur.setPassword(pUtilisateur.getPassword());
+				//utilisateur.setCoordonnee(pUtilisateur.getCoordonnee());
+				utilisateur.setId_role(userDAO.find(pUtilisateur.getId()).getId_role());//(RoleUtilisateur.Utilisateur.getId());
+				userDAO.update(pUtilisateur);
+				
+			    //TransactionStatus vTScommit = vTransactionStatus;
+			    //vTransactionStatus = null;
+			    //platformTransactionManager.commit(vTScommit);
+			} finally {
+				//if (vTransactionStatus != null) {
+					//platformTransactionManager.rollback(vTransactionStatus);
+			    //}
+			}
+
+		}
+	}
+
+	@Override
+	public void deleteUtilisateur(Utilisateur pUtilisateur) {
+		System.out.println("CTRL "+pUtilisateur.getPseudo());
+		if (userDAO.find(pUtilisateur.getPseudo())== null) {
+			System.out.println("trace-");
+			try {
+				throw new Exception("L'utilisateur n'existe pas.");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else {
+			System.out.println("trace+");
+			try {
+				utilisateur.setId(pUtilisateur.getId());
+				utilisateur.setNom(pUtilisateur.getNom());
+				utilisateur.setPrenom(pUtilisateur.getPrenom());
+				utilisateur.setPseudo(pUtilisateur.getPseudo());
+				utilisateur.setPassword(pUtilisateur.getPassword());
+				//utilisateur.setCoordonnee(pUtilisateur.getCoordonnee());
+				utilisateur.setId_role(3);//(RoleUtilisateur.Utilisateur.getId());
+				userDAO.delete(pUtilisateur);
+				
+			    //TransactionStatus vTScommit = vTransactionStatus;
+			    //vTransactionStatus = null;
+			    //platformTransactionManager.commit(vTScommit);
+			} finally {
+				//if (vTransactionStatus != null) {
+					//platformTransactionManager.rollback(vTransactionStatus);
+			    //}
+			}
+
+		}
+		
 	}
 
 

@@ -4,9 +4,11 @@ import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateur;
 
 public interface CoordonneeUtilisateurManager {
 
-	CoordonneeUtilisateur getCoordonnee();
+	CoordonneeUtilisateur getCoordonnee(int pId);
 	
 	void creerCoordonnee(CoordonneeUtilisateur pCoordinneeUtilisateur);
 	
-	void majCoordonnee(CoordonneeUtilisateur pCoordinneeUtilisateur);
+	void modifierCoordonnee(CoordonneeUtilisateur pCoordinneeUtilisateur);
+	
+	void supprimerCoordonnee(CoordonneeUtilisateur pCoordonneeUtilisateur);
 }

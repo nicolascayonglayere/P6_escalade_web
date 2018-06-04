@@ -28,15 +28,17 @@
 				<h3>L'équipe</h3>
 				<p>Les administrateurs</p>
 				<ul>
-					<!-- la liste des admins avec un s:iterator -->
-					<li>un admin</li>
+					<s:iterator value="listAdmin" var="utilisateur">
+						<li><s:property value="#utilisateur.pseudo"/></li>
+					</s:iterator>
 				</ul>
 				<p>Les adminsitrateurs ont tous les droits !</br></p>
 				
 				<p>Les modérateurs</p>
 				<ul>
-					<!-- la liste des modo avec un s:iterator -->
-					<li>un modérateur</li>
+					<s:iterator value="listModo" var="utilisateur">
+						<li><s:property value="#utilisateur.pseudo"/></li>
+					</s:iterator>
 				</ul>
 				<p>Les modérateurs controllent les commentaires et peuvent ajouter des topos dans la base de donnée</p>
 				

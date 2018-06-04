@@ -2,7 +2,6 @@ package oc.P6.escalade.actions;
 
 import java.util.ArrayList;
 
-import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import oc.P6.escalade.WebappHelper.WebappHelper;
@@ -15,7 +14,6 @@ public class SelectTopoAction extends ActionSupport {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private Topo topo;
 	private ArrayList<Topo> listTopo;
 	
 
@@ -25,17 +23,6 @@ public class SelectTopoAction extends ActionSupport {
         System.out.println(listTopo.get(0).getNom());
         return SUCCESS;
     }
-
-
-	public Topo getTopo() {
-		return topo;
-	}
-
-
-	public void setTopo(Topo topo) {
-		this.topo = topo;
-	}
-
 
 	public ArrayList<Topo> getListTopo() {
 		return listTopo;

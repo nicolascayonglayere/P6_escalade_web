@@ -6,8 +6,14 @@
 	<div class="container center">
 		<div class="row">
 			<s:if test="#session.utilisateur">
-				<p> Utilisateur connecté : <s:property value="#session.utilisateur.pseudo"/></p>
-				<p> Topo à retourner : </p>
+				<p>
+					<s:a action="go_monCompte">
+						Utilisateur connecté : <s:property value="#session.utilisateur.pseudo"/>
+						<s:param name="pseudo" value="#session.utilisateur.pseudo"/>
+					</s:a>
+				</p>
+				
+				<!--  <p> Topo à retourner : <s:property value="topo.nom"/></p>-->
 				<s:a action="logOut" class="btn btn-default btn-sm "><s:text name="DECONNEXION" />
 					<s:param name="pseudo" value="userName"> #session.utilisateur</s:param>
 				</s:a>

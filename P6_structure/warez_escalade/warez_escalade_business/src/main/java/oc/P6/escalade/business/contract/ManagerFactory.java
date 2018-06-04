@@ -1,5 +1,6 @@
 package oc.P6.escalade.business.contract;
 
+import oc.P6.escalade.business.contract.manager.TopoEmpruntManager;
 import oc.P6.escalade.business.contract.manager.commentaire.CommentaireSecteurManager;
 import oc.P6.escalade.business.contract.manager.commentaire.CommentaireSiteManager;
 import oc.P6.escalade.business.contract.manager.commentaire.CommentaireTopoManager;
@@ -26,5 +27,5 @@ public interface ManagerFactory {
 	CommentaireSecteurManager getCommentaireSecteurManager();
 	CommentaireVoieManager getCommentaireVoieManager();
 	
-	
+	TopoEmpruntManager getTopoEmpruntManager();
 }

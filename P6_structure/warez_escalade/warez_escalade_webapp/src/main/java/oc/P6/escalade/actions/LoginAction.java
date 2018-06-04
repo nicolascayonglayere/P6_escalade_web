@@ -39,18 +39,22 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
 	// ---------------------------- Login register user
 
 	public String loginRegisterUser() {
+		String vResult="";
 		System.out.println(utilisateur.getPseudo()+" - "+utilisateur.getPassword());
 		Utilisateur vUser = WebappHelper.getManagerFactory().getUtilisateurManager().getUtilisateur(utilisateur.getPseudo());
-		
-		if ((utilisateur.getPseudo().equals(vUser.getPseudo()))&&(utilisateur.getPassword().equals(vUser.getPassword()))) {
-			session.put("utilisateur", utilisateur);
-			return SUCCESS;
+		if(vUser != null) {
+			if ((utilisateur.getPseudo().equals(vUser.getPseudo()))&&(utilisateur.getPassword().equals(vUser.getPassword()))) {
+				session.put("utilisateur", utilisateur);
+				vResult = ActionSupport.SUCCESS;
+			}		
 		}
+		
+
 		else {
 			addActionError("Please Enter Valid emailId or Password");
-			return LOGIN;
+			vResult = ActionSupport.LOGIN;
 		}
-		
+		return vResult;
 		
 		//if (utilisateur.getPseudo().equals("yogj") && utilisateur.getPassword().equals("admin")) {
 		//	session.put("utilisateur", utilisateur);

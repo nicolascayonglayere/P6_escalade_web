@@ -29,6 +29,7 @@ public class Utilisateur {
     private int id;
     //private RoleUtilisateur statut;
     private int id_role;
+    private String role;
     //private ArrayList<TopoEmprunt> topoEmprunt;
 
 
@@ -126,6 +127,16 @@ public class Utilisateur {
 //public void setTopoEmprunt(ArrayList<TopoEmprunt> topoEmprunt) {
 //	this.topoEmprunt = topoEmprunt;
 //}
+
+
+	public String getRole() {
+		return role;
+	}
+
+
+	public void setRole(String role) {
+		this.role = role;
+	}
 
 
 	// ==================== Méthodes ====================

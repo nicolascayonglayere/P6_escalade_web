@@ -4,6 +4,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import oc.P6.escalade.business.contract.ManagerFactory;
+import oc.P6.escalade.business.contract.manager.TopoEmpruntManager;
 import oc.P6.escalade.business.contract.manager.commentaire.CommentaireSecteurManager;
 import oc.P6.escalade.business.contract.manager.commentaire.CommentaireSiteManager;
 import oc.P6.escalade.business.contract.manager.commentaire.CommentaireTopoManager;
@@ -91,6 +92,13 @@ public class ManagerFactoryImpl implements ManagerFactory {
 	@Override
 	public CoordonneeUtilisateurManager getCoordonneeUtilisateurManager() {
 		return this.coordonneeUtilisateur;
+	}
+	
+	@Inject
+	private TopoEmpruntManager topoEmprunt;
+	@Override
+	public TopoEmpruntManager getTopoEmpruntManager() {
+		return this.topoEmprunt;
 	}
 
 }

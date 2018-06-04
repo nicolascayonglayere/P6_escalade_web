@@ -104,10 +104,43 @@
         		<param name="pseudo">${session.utilisateur.pseudo}</param>
           	</result>
         </action>
+        
+        <!-- page compte utilisateur -->
+        <action name="go_monCompte" class="oc.P6.escalade.actions.MonCompteAction" method="execute">
+        	<result name="success">/jsp/compte_utilisateur.jsp</result>
+        </action> 
+        
+        <action name="retour_topo" class="oc.P6.escalade.actions.GestionPretAction" method="retourner">
+        	<result name="success">/jsp/compte_utilisateur.jsp</result>
+        </action>
+               
+        <action name="emprunt_topo" class="oc.P6.escalade.actions.GestionPretAction" method="emprunter">
+        	<result name="success" type="redirectAction">index</result>
+        </action>
+        
+        <action name="modifier_user" class="oc.P6.escalade.actions.ModifierUserAction" method="execute">
+       			 <interceptor-ref name="store">
+					<param name="operationMode">STORE</param>
+		    	 </interceptor-ref>
+		    	 <interceptor-ref name="defaultStack" />        
+        	<result name="input" type="redirectAction">
+        		<param name="actionName">modifier_user</param>
+        		<param name="pseudo">${session.utilisateur.pseudo}</param>
+        	</result>        
+        	<result name="success" type="redirectAction">
+        		<param name="actionName">go_monCompte</param>
+        		<param name="pseudo">${session.utilisateur.pseudo}</param>
+        	</result>	
+        </action>
+        
+        <action name="supprimer_compte" class="oc.P6.escalade.actions.SupprimerUserAction" method="execute">
+        	<result name="success" type="redirectAction">index</result>
+        </action>       
     </package>
 
 	<package name="moderateur" extends="struts-default, default" namespace="/moderateur">    
 		<!--Toutes les actions de gestion de commentaires -->
+		<!--Toutes les actions d'ajout/modif de topo -->
 				   
 	</package>
         

@@ -48,37 +48,27 @@ public class InscriptionAction extends ActionSupport implements SessionAware {
 	public String creerUser() {
 		String vResult = "";
 		System.out.println("pseudo : "+utilisateur.getPseudo());
-		//--controle de la nullite du pseudo
-		if (utilisateur.getPseudo().length() == 0) {
-			addFieldError("utilisateur.pseudo", "Un pseudo est requis.");
+		//--ctrl du pseudo
+		if (WebappHelper.getManagerFactory().getUtilisateurManager().getUtilisateur(utilisateur.getPseudo()).getPseudo() != null) {
+			addFieldError("utilisateur.pseudo", "Veuillez choisir un autre pseudo.");
+			vResult = ActionSupport.INPUT;
+		}
+		//--ctrl du nom/prenom -> eviter les doubles comptes
+		else if(WebappHelper.getManagerFactory().getUtilisateurManager().getUtilisateur(utilisateur.getNom()).getNom() != null &&
+				WebappHelper.getManagerFactory().getUtilisateurManager().getUtilisateur(utilisateur.getPrenom()).getPrenom() != null) {
+			addFieldError("utilisateur.nom", "Vous avez deja un compte.");
 			vResult = ActionSupport.INPUT;
 		}
 		
-		if (utilisateur.getPassword().length() == 0) {
-			addFieldError("utilisateur.password", "Un mot de passe est requis.");
-			vResult = ActionSupport.INPUT;			
-		}
-		
-		if(coordonnee.getEmail().length() == 0) {
-			addFieldError ("coordonnee.email", "Un email est requis.");
-			vResult = ActionSupport.INPUT;	
-		}
-		
-		if(coordonnee.getAdresse().length() == 0) {
-			addFieldError("coordonnee.adresse", "Une adresse est requise.");
-			vResult = ActionSupport.INPUT;	
-		}
-		
-		if (vResult != ActionSupport.INPUT) {
+		else {//if (vResult != ActionSupport.INPUT) {
 			WebappHelper.getManagerFactory().getUtilisateurManager().creerUtilisateur(utilisateur);
+			coordonnee.setUtilisateur(WebappHelper.getManagerFactory().getUtilisateurManager().getUtilisateur(utilisateur.getPseudo()));
+			System.out.println(utilisateur.getPseudo()+" - "+ coordonnee.getIdUtilisateur());
+			WebappHelper.getManagerFactory().getCoordonneeUtilisateurManager().creerCoordonnee(coordonnee);
 			session.put("utilisateur", utilisateur);
-			//System.out.println("pseudo : "+utilisateur.getPseudo());
-			//session.put("utilisateur", WebappHelper.getManagerFactory().getUtilisateurManager().getUtilisateur(utilisateur.getPseudo()));
 			vResult = ActionSupport.SUCCESS;
 		}
-		coordonnee.setUtilisateur(WebappHelper.getManagerFactory().getUtilisateurManager().getUtilisateur(utilisateur.getPseudo()));
-		System.out.println(utilisateur.getPseudo()+" - "+ coordonnee.getIdUtilisateur());
-		WebappHelper.getManagerFactory().getCoordonneeUtilisateurManager().creerCoordonnee(coordonnee);
+
 		
 		System.out.println(vResult);
 		return vResult;
