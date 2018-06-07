@@ -1,6 +1,7 @@
 package oc.P6.escalade.business.impl.manager.commentaire;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -37,8 +38,22 @@ public class CommentaireTopoManagerImpl extends AbstractDAOManager implements Co
 
 	@Override
 	public void creerCommentaireTopo(CommentaireTopo pCommTopo) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("CTRL "+pCommTopo.getAuteur().getNom());
+			try {
+				commTopo.setAuteur(pCommTopo.getAuteur());
+				commTopo.setTopo(pCommTopo.getTopo());
+				commTopo.setvCommentaire(pCommTopo.getvCommentaire());
+				commTopo.setDate(Calendar.getInstance().getTime());
+				commTopoDao.create(pCommTopo);
+				
+			    //TransactionStatus vTScommit = vTransactionStatus;
+			    //vTransactionStatus = null;
+			    //platformTransactionManager.commit(vTScommit);
+			} finally {
+				//if (vTransactionStatus != null) {
+					//platformTransactionManager.rollback(vTransactionStatus);
+			    //}
+			}
 	}
 
 }

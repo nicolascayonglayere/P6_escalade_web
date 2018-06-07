@@ -9,11 +9,15 @@
 	<bean id="dataSourceP6" class="org.springframework.jndi.JndiObjectFactoryBean">
 	    <property name="jndiName" value="java:comp/env/jdbc/P6_escalade_web"/>
 	</bean>
-
+	
+	<bean id="InscriptionAction" class="oc.P6.escalade.actions.InscriptionAction" scope="prototype">
+	</bean>
+	
     <!-- ==== WebappHelper ===== -->
     <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
         <property name="targetClass" value="oc.P6.escalade.WebappHelper.WebappHelper"/>
         <property name="targetMethod" value="setManagerFactory"/>
         <property name="arguments" ref="managerFactory"/>
     </bean>
+    
 </beans>

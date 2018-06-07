@@ -13,7 +13,6 @@
 					</s:a>
 				</p>
 				
-				<!--  <p> Topo à retourner : <s:property value="topo.nom"/></p>-->
 				<s:a action="logOut" class="btn btn-default btn-sm "><s:text name="DECONNEXION" />
 					<s:param name="pseudo" value="userName"> #session.utilisateur</s:param>
 				</s:a>
@@ -24,7 +23,7 @@
 					Utilisateur connecté : inconnu
 					<!--<s:a href="jsp/_include/login.jsp" class="btn btn-default btn-sm "><s:text name="CONNEXION" /></s:a>-->
 					<!-- un bouton pour ouvrir la fenetre modale -->
-					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-backdrop="true">CONNEXION</button>
+					<button id="btCo" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-backdrop="true">CONNEXION</button>
 					<%@include file="login.jsp" %>
 				</p>
 			</s:else>
@@ -37,5 +36,7 @@
 </footer>
 
 	<script type="text/javascript">
-		$('#myModal').modal('show')
+    $('#btCo').click(function(){
+    	$('#myModal').modal('show');
+    });
 	</script>

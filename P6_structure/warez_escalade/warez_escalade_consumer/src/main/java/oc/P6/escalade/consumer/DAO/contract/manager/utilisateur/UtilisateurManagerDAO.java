@@ -18,6 +18,6 @@ public interface UtilisateurManagerDAO {
 	
 	ArrayList<Utilisateur> getList(int pIdRole);
 	
-	
+	ArrayList<Utilisateur> getList(String pPseudo);
 
 }

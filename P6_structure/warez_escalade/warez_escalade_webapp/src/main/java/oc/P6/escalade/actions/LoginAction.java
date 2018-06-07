@@ -65,7 +65,10 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
 		//}
 	}
 
-
+	public String input() {
+		return ActionSupport.INPUT;
+	}
+	
 	public Utilisateur getUtilisateur() {
 		return utilisateur;
 	}

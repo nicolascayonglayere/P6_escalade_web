@@ -217,6 +217,12 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 		
 	}
 
+	@Override
+	public ArrayList<Utilisateur> getListUtilisateur(String pPseudo) {
+		ArrayList<Utilisateur> listUtilisateur = userDAO.getList(pPseudo);
+		return listUtilisateur;
+	}
+
 
 
   // @Override

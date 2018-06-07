@@ -25,6 +25,7 @@ public class MonCompteAction extends ActionSupport implements SessionAware, Serv
 
 	private Utilisateur utilisateur;
 	private String pseudo;
+	private String role;
 	private ArrayList<TopoEmprunt> listTopoEmprunt;
 	private CoordonneeUtilisateur coordonneeUtilisateur;
 	private Map<String, Object> session;
@@ -63,6 +64,14 @@ public class MonCompteAction extends ActionSupport implements SessionAware, Serv
 		this.coordonneeUtilisateur = coordonneeUtilisateur;
 	}
 
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
 	public String execute() {
 		HttpServletRequest request = ServletActionContext.getRequest();
 		String username = request.getParameter("utilisateur.pseudo");
@@ -74,6 +83,7 @@ public class MonCompteAction extends ActionSupport implements SessionAware, Serv
 			utilisateur = WebappHelper.getManagerFactory().getUtilisateurManager().getUtilisateur(username);
 		listTopoEmprunt = WebappHelper.getManagerFactory().getTopoEmpruntManager().getListTopoEmprunt(utilisateur.getId());
 		coordonneeUtilisateur = WebappHelper.getManagerFactory().getCoordonneeUtilisateurManager().getCoordonnee(utilisateur.getId());
+		role = utilisateur.getRole();
 		System.out.println("Compte : "+pseudo+" - "+utilisateur.getRole()+" - "+utilisateur.getNom()+" - "+listTopoEmprunt.size()+" - "+coordonneeUtilisateur.getEmail());
 		return SUCCESS;
 	}

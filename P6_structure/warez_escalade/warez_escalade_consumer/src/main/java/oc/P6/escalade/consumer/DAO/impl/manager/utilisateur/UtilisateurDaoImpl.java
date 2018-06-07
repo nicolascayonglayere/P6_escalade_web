@@ -178,6 +178,33 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 		vListRole = (ArrayList<Utilisateur>) vJdbcTemplate.query(vSQL, vParams, vRowMapper);
 		return vListRole;
 	}
+
+	@Override
+	public ArrayList<Utilisateur> getList(String pPseudo) {
+		ArrayList<Utilisateur> vListUtilisateur = new ArrayList<Utilisateur>();
+		String vSQL = "SELECT * FROM utilisateur WHERE pseudo LIKE ':pseudo'";
+        NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
+		MapSqlParameterSource vParams = new MapSqlParameterSource();
+        vParams.addValue("pseudo", pPseudo.substring(0, 1)+"%", Types.VARCHAR);	
+        
+		RowMapper<Utilisateur> vRowMapper = new RowMapper<Utilisateur>() {
+
+			@Override
+			public Utilisateur mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Utilisateur vUtilisateur = new Utilisateur();
+				vUtilisateur.setPseudo(rs.getString("pseudo"));
+				vUtilisateur.setNom(rs.getString("nom"));
+				vUtilisateur.setPrenom(rs.getString("prenom"));
+				vUtilisateur.setPassword(rs.getString("password"));
+				vUtilisateur.setId(rs.getInt("id_utilisateur"));
+				vUtilisateur.setRole(rs.getString("role"));
+				return vUtilisateur;
+			}
+			
+		};        
+		vListUtilisateur = (ArrayList<Utilisateur>) vJdbcTemplate.query(vSQL, vParams, vRowMapper);
+		return vListUtilisateur;
+	}
 	
 	
 	

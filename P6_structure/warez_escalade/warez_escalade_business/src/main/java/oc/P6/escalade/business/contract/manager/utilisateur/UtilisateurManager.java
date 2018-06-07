@@ -18,7 +18,7 @@ import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 	     *
 	     * @return List
 	     */
-	  //  List<Utilisateur> getListUtilisateur();
+		ArrayList<Utilisateur> getListUtilisateur(String pPseudo);
 
 	    /**
 	     * Renvoie l'{@link Utilisateur} demandé

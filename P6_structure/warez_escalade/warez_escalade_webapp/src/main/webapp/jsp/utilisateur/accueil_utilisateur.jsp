@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -14,13 +14,11 @@
 	        body {
 	            padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
 	        }
-    	</style>		
+    	</style>
 	</head>
-
-
+	
 	<body>
-		<%@include file="_include/entete.jsp" %>
-		<h2>Hello World!</h2>
+		<%@include file="../_include/entete.jsp" %>
 		<!-- liste des topo ds la bdd -->
 		<div class = "container">
 			<table class="table table-bordered table-striped">
@@ -32,7 +30,7 @@
 			                    <s:param name="nom" value="nom" />	
 			               	</s:a>
 				    	</td>
-				    	<td style="text-align:right;"><s:property value="site.nom" /></td>
+				    	<td style="text-align:right;"><s:property value="topo.site.nom" /></td>
 				    	<!-- <td style="text-align:right;"><s:property value="voie" /></td>-->
 				    	<td>
 
@@ -50,7 +48,7 @@
 		</div>
 
 		
-		<%@include file="_include/footer.jsp" %>
+		<%@include file="../_include/footer.jsp" %>
 
 	  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>

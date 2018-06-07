@@ -42,7 +42,7 @@ public class GestionPretAction extends ActionSupport implements SessionAware, Se
 	
 	public String emprunter() {
 		HttpServletRequest request = ServletActionContext.getRequest();
-		String username = request.getParameter("utilisateur.pseudo");
+		String username = request.getParameter("pseudo");
 
 		System.out.println("nom topo emprunter "+nom+" nom emprunteur "+username);
 		Topo vTopo = WebappHelper.getManagerFactory().getTopoManager().getTopo(nom);

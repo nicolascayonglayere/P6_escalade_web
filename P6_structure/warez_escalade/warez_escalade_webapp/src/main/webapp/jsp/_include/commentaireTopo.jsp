@@ -2,11 +2,11 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
 
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+	<div class="modal fade" id="myCommModalTopo" tabindex="-1" role="dialog">
 	  <div class="modal-dialog modal-dialog-centered" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h5 class="modal-title">AUTHENTIFICATION</h5>
+	        <h5 class="modal-title">COMMENTAIRE DU TOPO <s:property value="topo.nom"/></h5>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
@@ -15,12 +15,14 @@
 	       	<s:actionmessage/>
 			<s:actionerror/>
 			
-			<s:form id="idLoginForm" action="loginUser" namespace="/LoginUser" cssClass="form-vertical">
+			<s:form id="idCommForm" action="commenterTopo" namespace="/LoginUser" cssClass="form-vertical">
 				<s:textfield name="utilisateur.pseudo" placeholder="pseudo" label="pseudo" requiredLabel="true"/>
-				<s:password name="utilisateur.password" placeholder="password" label="password" requiredLabel="true"/>
-      			<input id="btOK" class="btn btn-default" type="submit" value="S'AUTHENTIFIER">
+				<s:textarea name="message" placeholder="message" label="votre message" requiredLabel="true"  cols="50" rows="10"/>	
+      			<input id="btCommOK" class="cssButton btn btn-default" type="submit" value="ENVOYER">
       				<s:param name="pseudo">${utilisateur.pseudo }</s:param>
-      				<s:param name="password">${utilisateur.password }</s:param>
+
+      				<s:param name="nom" >${topo.nom}</s:param>
+      				<s:param name="message">${commentaire.message}</s:param>
      			 </input>		
 			</s:form>
 	      </div>
@@ -29,7 +31,7 @@
 	</div>
 	
 	<script type="text/javascript">
-	$('#btOK').click(function(){
-		$('#myModal').modal('hide');
+	$('#btCommOK').click(function(){
+		$('#myCommModalTopo').modal('hide');
 	});
 	</script>

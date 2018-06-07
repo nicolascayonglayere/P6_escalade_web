@@ -12,7 +12,7 @@
       	/* Always set the map height explicitly to define the size of the div
        	* element that contains the map. */
       	#map {
-        	height: 100%;
+        	height: auto;
     	 }
     	html, body {
         	height: 100%;
@@ -27,25 +27,37 @@
 		<%@include file="_include/entete.jsp" %>
 		<div class="container">
 			<div class="row">
-				<div class="container">
+				<div class="col-sm">
 					<h2><s:property value="topo.nom"/></h2>
-					<h3><s:property value="site.nom"/></h3>			
+					<button id="btCommTopo" type="button" class="cssButton btn btn-primary" data-toggle="modal" data-target="#myCommModalTopo" data-backdrop="true">
+						COMMENTER
+						<!--<s:param name="nom" value="#topo.nom" />-->	
+					</button>
+					<%@include file="_include/commentaireTopo.jsp" %>
+					<h3><s:property value="site.nom"/></h3>
+					<button id="btCommSite" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myCommModal" data-backdrop="true">COMMENTER</button>
+					<%@include file="_include/commentaireSite.jsp" %>			
 				</div>
 
 				
 				<!-- google map -->
-				<div id="map"></div>			
+				<div id="map" class="col-sm"></div>			
 			</div>
 			
 
 			
 			<!-- tableau voie/secteur -->
 			<div class="row">
-				<div class="container">
+				<div class="col-sm">
 					<table>
 						<s:iterator value="listSecteur" var="secteur">
 							<tr>
-								<td style="text-align:center;">Secteur : <s:property value="#secteur.nom"/></td>
+								<td style="text-align:center;">
+									Secteur : <s:property value="#secteur.nom"/>
+									<button id="btCommSecteur" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myCommModal" data-backdrop="true">COMMENTER</button>
+									<%@include file="_include/commentaireSecteur.jsp" %>
+								</td>
+								
 							</tr>
 							<tr>
 								<td>
@@ -66,6 +78,8 @@
 											    	<td style="text-align:right;"><s:property value="#voie.hauteur" /></td>
 											    	<td style="text-align:right;"><s:property value="#voie.nbLgueur" /></td>
 											    	<td style="text-align:right;"><s:property value="#voie.nbPoint" /></td>
+											    	<td><button id="btCommVoie" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myCommModal" data-backdrop="true">COMMENTER</button></td>
+											   		<%@include file="_include/commentaireVoie.jsp" %>
 											   	</tr>
 										 	</s:iterator>
 									</table>					
@@ -78,6 +92,17 @@
 		</div>
 		
 		<%@include file="_include/footer.jsp" %>
+		
+		
+	    
+
+		
+		
+		
+	  	<script  src="https://code.jquery.com/jquery-3.3.1.min.js"  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="  crossorigin="anonymous"></script>
+	  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+	  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+	  	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBW9tdPhwEC0knxkB11uwv1p8ehQpB3BaY&callback=initMap"></script>
 		
 		<!-- les scripts google Map API -->
 		<script>
@@ -139,13 +164,21 @@
 	            TILE_SIZE * (0.5 - Math.log((1 + siny) / (1 - siny)) / (4 * Math.PI)));
 	      }
 	    </script>
-	    
-	    <script async defer src="https://maps.googleapis.com/maps/api/js?key= AIzaSyBW9tdPhwEC0knxkB11uwv1p8ehQpB3BaY &callback=initMap"></script>
 		
-		
-		
-	  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
-	  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+		<!-- script de la modale commentaire -->	    
+		<script type="text/javascript">
+	    $('#btCommTopo').click(function(){
+	    	$('#myCommModalTopo').modal('show');
+	    });
+	    $('#btCommSite').click(function(){
+	    	$('#myCommModal').modal('show');
+	    });	    
+	    $('#btCommSecteur').click(function(){
+	    	$('#myCommModal').modal('show');
+	    });
+	    $('#btCommVoie').click(function(){
+	    	$('#myCommModal').modal('show');
+	    });	    
+		</script>	    	  	
 	</body>
 </html>

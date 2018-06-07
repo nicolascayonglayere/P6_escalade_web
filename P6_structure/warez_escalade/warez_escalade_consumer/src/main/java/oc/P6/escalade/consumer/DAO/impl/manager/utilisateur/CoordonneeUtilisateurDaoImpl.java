@@ -42,7 +42,7 @@ public class CoordonneeUtilisateurDaoImpl extends AbstractDAO implements Coordon
 	        vEx.printStackTrace();
 	        return false;
 	    }
-		return false;
+		return true;
 	}
 
 	@Override

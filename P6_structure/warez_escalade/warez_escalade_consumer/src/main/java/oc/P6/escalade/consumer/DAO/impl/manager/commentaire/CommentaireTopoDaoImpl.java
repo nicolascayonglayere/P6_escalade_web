@@ -1,6 +1,13 @@
 package oc.P6.escalade.consumer.DAO.impl.manager.commentaire;
 
+import java.sql.Types;
+
 import javax.inject.Named;
+
+import org.springframework.dao.DuplicateKeyException;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import oc.P6.escalade.consumer.DAO.contract.manager.commentaire.CommentaireTopoDao;
 import oc.P6.escalade.consumer.DAO.impl.manager.AbstractDAO;
@@ -12,8 +19,24 @@ public class CommentaireTopoDaoImpl  extends AbstractDAO implements CommentaireT
 
 	@Override
 	public boolean create(CommentaireTopo pCommentaireTopo) {
-		// TODO Auto-generated method stub
-		return false;
+		String vSQLCoordonnee = "INSERT INTO commentaire_topo (id_topo, id_utilisateur, date, commentaire) VALUES (:id_topo, :id_utilisateur, :date, :commentaire)";
+		//--recuperer l'id de l'utilisateur
+		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
+
+		MapSqlParameterSource vParams = new MapSqlParameterSource();
+		vParams.addValue("id_topo", pCommentaireTopo.getTopo().getId(), Types.INTEGER);
+		vParams.addValue("id_utilisateur", pCommentaireTopo.getAuteur().getId(), Types.INTEGER);
+		vParams.addValue("date", pCommentaireTopo.getDate(), Types.DATE);
+		vParams.addValue("commentaire", pCommentaireTopo.getvCommentaire(), Types.LONGVARCHAR);
+		
+	    try {
+	        vJdbcTemplate.update(vSQLCoordonnee, vParams);
+	    } catch (Exception vEx) {
+	        System.out.println("erreur" + pCommentaireTopo.getAuteur().getNom());
+	        vEx.printStackTrace();
+	        return false;
+	    }
+		return true;
 	}
 
 	@Override
