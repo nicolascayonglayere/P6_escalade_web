@@ -73,14 +73,9 @@ public class MonCompteAction extends ActionSupport implements SessionAware, Serv
 	}
 
 	public String execute() {
-		HttpServletRequest request = ServletActionContext.getRequest();
-		String username = request.getParameter("utilisateur.pseudo");
-		System.out.println("Compte de "+pseudo+" - "+username);
-		
-		if (pseudo.length() > 0)
-			utilisateur = WebappHelper.getManagerFactory().getUtilisateurManager().getUtilisateur(pseudo);
-		else
-			utilisateur = WebappHelper.getManagerFactory().getUtilisateurManager().getUtilisateur(username);
+		String username1 = ((Utilisateur) session.get("utilisateur")).getPseudo();
+		System.out.println("Compte de "+username1);
+		utilisateur = WebappHelper.getManagerFactory().getUtilisateurManager().getUtilisateur(username1);
 		listTopoEmprunt = WebappHelper.getManagerFactory().getTopoEmpruntManager().getListTopoEmprunt(utilisateur.getId());
 		coordonneeUtilisateur = WebappHelper.getManagerFactory().getCoordonneeUtilisateurManager().getCoordonnee(utilisateur.getId());
 		role = utilisateur.getRole();

@@ -83,8 +83,12 @@ public class GoTopoAction extends ActionSupport {
 
         	return SUCCESS;
         }
-        else 
+        else {
+        	addActionMessage("Le topo n'existe pas !");
         	return INPUT;
+        }
+        	
+        	
     }
 	
 

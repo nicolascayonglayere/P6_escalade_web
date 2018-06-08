@@ -49,7 +49,7 @@ public class InscriptionAction extends ActionSupport implements SessionAware {
 		String vResult = "";
 		System.out.println("pseudo : "+utilisateur.getPseudo());
 		//--ctrl du pseudo
-		if (WebappHelper.getManagerFactory().getUtilisateurManager().getUtilisateur(utilisateur.getPseudo()).getPseudo() != null) {
+		if (WebappHelper.getManagerFactory().getUtilisateurManager().getUtilisateur(utilisateur.getPseudo()).getNom()!=null) {
 			addFieldError("utilisateur.pseudo", "Veuillez choisir un autre pseudo.");
 			vResult = ActionSupport.INPUT;
 		}
@@ -66,6 +66,7 @@ public class InscriptionAction extends ActionSupport implements SessionAware {
 			System.out.println(utilisateur.getPseudo()+" - "+ coordonnee.getIdUtilisateur());
 			WebappHelper.getManagerFactory().getCoordonneeUtilisateurManager().creerCoordonnee(coordonnee);
 			session.put("utilisateur", utilisateur);
+			addActionMessage("Vous etes correctement inscrit et connecté.");
 			vResult = ActionSupport.SUCCESS;
 		}
 

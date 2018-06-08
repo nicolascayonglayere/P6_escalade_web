@@ -58,6 +58,7 @@ public class ModifierUserAction extends ActionSupport implements SessionAware {
 			WebappHelper.getManagerFactory().getCoordonneeUtilisateurManager().modifierCoordonnee(coordonneeUtilisateur);
 			utilisateur = WebappHelper.getManagerFactory().getUtilisateurManager().getUtilisateur(utilisateur.getPseudo());
 			session.put("utilisateur", utilisateur);
+			addActionMessage("Les modifications ont été correctement enregistrées.");
 			vResult = ActionSupport.SUCCESS;
 		}
 

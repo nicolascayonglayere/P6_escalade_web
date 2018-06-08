@@ -37,6 +37,7 @@ public class GestionPretAction extends ActionSupport implements SessionAware, Se
 		if (vTopoEmp != null)
 			WebappHelper.getManagerFactory().getTopoEmpruntManager().retourTopoEmprunt(vTopoEmp, WebappHelper.getManagerFactory().getUtilisateurManager().getUtilisateur(pseudo));
 		
+		addActionMessage("Vous avez rendu le topo "+vTopoEmp.getNom());
 		return SUCCESS;
 	}
 	
@@ -48,7 +49,7 @@ public class GestionPretAction extends ActionSupport implements SessionAware, Se
 		Topo vTopo = WebappHelper.getManagerFactory().getTopoManager().getTopo(nom);
 		if (vTopo != null)
 			WebappHelper.getManagerFactory().getTopoEmpruntManager().creerTopoEmprunt(vTopo, WebappHelper.getManagerFactory().getUtilisateurManager().getUtilisateur(username));
-		
+		addActionMessage("Votre emprunt est bien enregistré");		
 		return SUCCESS;
 	}
 

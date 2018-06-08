@@ -11,7 +11,7 @@
       			<div class="container-fluid">
       				<div class="row">
 						<!-- <div class="navbar-header">-->
-	      					<a class="navbar-brand" href="#page-top">WAREZ GRIMPE</a>	
+	      					<a class="navbar-brand" href="#page-top"><s:text name="entete.titre"/></a>	
 	      				<!--  </div>-->
 	      			
 			      		<div class="collapse navbar-collapse"  >
@@ -19,19 +19,19 @@
 					     	   <li class="hidden"><a href="#page-top"></a></li>
 					     	   <li class="nav-item active">
 					     	   		<s:url var="listTopoURL" action="lister_topo"/>
-					     	   		<s:a href="%{listTopoURL}" cssClass="nav-link">TOPO</s:a>
+					     	   		<s:a href="%{listTopoURL}" cssClass="nav-link"><s:text name="entete.topo"/></s:a>
 					     	   </li>
 					     	   <li class="nav-item active">
 					     	   		<s:url var="presentationURL" action="presentation"/>
-					     	   		<s:a href="%{presentationURL}" cssClass="nav-link">QUI SOMMES-NOUS</s:a>
+					     	   		<s:a href="%{presentationURL}" cssClass="nav-link"><s:text name="entete.qui"/></s:a>
 					     	   </li>
 					     	   <li class="nav-item active">
 					     	   		<s:url var="contactURL" action="contact"/>
-					     	   		<s:a href="%{contactURL}" cssClass="nav-link">CONTACT</s:a>
+					     	   		<s:a href="%{contactURL}" cssClass="nav-link"><s:text name="entete.contact"/></s:a>
 					     	   </li>
 					     	   <li class="nav-item active">
 					     	   		<s:url var="inscriptionURL" action="inscription"/>
-					     	   		<s:a href="%{inscriptionURL}" cssClass="nav-link">S'INSCRIRE</s:a>
+					     	   		<s:a href="%{inscriptionURL}" cssClass="nav-link"><s:text name="entete.inscription"/></s:a>
 					     	   </li>
 				      		</ul>
 			      		</div>

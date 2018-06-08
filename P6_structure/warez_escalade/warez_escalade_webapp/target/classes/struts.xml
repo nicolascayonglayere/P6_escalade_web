@@ -42,9 +42,6 @@
         </action>
 
 		<!--   login action  -->
-		<!--<action name="inputLogin" class="oc.P6.escalade.actions.LoginAction" method="input">
-			<result name="input">/jsp/_include/login.jsp</result> 
-		</action>-->
 		
 		<action name="loginUser" class="oc.P6.escalade.actions.LoginAction" method="loginRegisterUser">
 			<!--<interceptor-ref name="loginStack" />-->
@@ -52,20 +49,15 @@
 					<param name="operationMode">STORE</param>
 		    	 </interceptor-ref>
 		    	 <interceptor-ref name="defaultStack" />
-			<result name="success" type="redirectAction">/utilisateur/accueil_utilisateur.jsp</result>
+			<result name="success">/jsp/utilisateur/accueil_utilisateur.jsp</result>
 			<result name="login">/jsp/_include/login.jsp</result>
-			<result name="input" type="redirectAction">
-				<param name="actionName">loginUser</param>
-			</result>			
-			<!--<result name="login" type="redirectAction">
-				<param name="actionName">loginUser</param>
-			</result>-->	
+			<result name="input">/jsp/_include/login.jsp</result>			
 		</action>
 
 		<!-- home link action -->
 		<action name="homeAction" class="oc.P6.escalade.actions.LoginAction" method="home">
 			<interceptor-ref name="loginStack" />
-			<result name="success">/jsp/index.jsp</result>
+			<result name="success">index</result>
 		</action>
 
         <!-- Actions de lister les topos -->
@@ -75,11 +67,8 @@
         
         <!--Construction et affichage du topo-->
         <action name="go_topo" class="oc.P6.escalade.actions.GoTopoAction" method="execute">
-            <interceptor-ref name="store">
-				<param name="operationMode">STORE</param>
-		   	</interceptor-ref> 
 		   	<interceptor-ref name="defaultStack" />
-        	<result name="input" type="redirectAction">index</result>
+        	<result name="input">/jsp/index.jsp</result>
         	<result name="success">/jsp/topo.jsp</result>
         </action>
         
@@ -89,7 +78,7 @@
         </action>
         
         <action name="envoi_message" class="oc.P6.escalade.actions.ContactAction" method="envoi">
-        	<result name = "success" type="redirectAction">index</result>
+        	<result name = "success">/jsp/index.jsp</result>
         </action>        
         
         <!-- page presentation-->
@@ -103,24 +92,19 @@
         </action>
  	        
         <action name="creer_user" class="InscriptionAction" method="creerUser">
-       			 <interceptor-ref name="store">
-					<param name="operationMode">STORE</param>
-		    	 </interceptor-ref>
-		    	 <interceptor-ref name="defaultStack" />        
+       		<interceptor-ref name="store">
+				<param name="operationMode">STORE</param>
+		    </interceptor-ref>
+		    <interceptor-ref name="defaultStack" />        
         	<result name="input">/jsp/creer_user.jsp</result>
-        	<result name="success" type="redirectAction">
-        		<!--<param name="actionName">lister_topo</param>-->
-        		<param name="nameSpace">/utilisateur</param>
-        		<param name="pseudo">${session.utilisateur.pseudo}</param>
-        		/utilisateur/accueil_utilisateur.jsp
-          	</result>
+        	<result name="success">/jsp/utilisateur/accueil_utilisateur.jsp</result>
         </action>
-    </package>
+    <!--</package>-->
         
-	<package name="utilisateur" extends="struts-default, default" namespace="/utilisateur">   
+	<!--<package name="utilisateur" extends="struts-default, default" namespace="/utilisateur">-->   
 		<!--   logout action  -->
 		<action name="logOut" class="oc.P6.escalade.actions.LoginAction" method="logOut">
-			<result name="success">../jsp/index.jsp</result>
+			<result name="success">/jsp/index.jsp</result>
 		</action>
 			      
         <!-- page compte utilisateur -->
@@ -133,43 +117,25 @@
         </action>
                
         <action name="emprunt_topo" class="oc.P6.escalade.actions.GestionPretAction" method="emprunter">
-        	<result name="success" type="redirectAction">index</result>
+        	<result name="success">/jsp/index.jsp</result>
         </action>
         
         <action name="modifier_user" class="oc.P6.escalade.actions.ModifierUserAction" method="execute">
-       			 <interceptor-ref name="store">
-					<param name="operationMode">STORE</param>
-		    	 </interceptor-ref>
-		    	 <interceptor-ref name="defaultStack" />        
-        	<result name="input" type="redirectAction">
-        		<param name="actionName">modifier_user</param>
-        		<param name="pseudo">${session.utilisateur.pseudo}</param>
-        	</result>        
-        	<result name="success" type="redirectAction">
-        		<param name="actionName">go_monCompte</param>
-        		<param name="pseudo">${session.utilisateur.pseudo}</param>
-        	</result>	
+        	<result name="input">/jsp/utilisateur/compte_utilisateur.jsp</result>        
+        	<result name="success">/jsp/utilisateur/compte_utilisateur.jsp</result>	
         </action>
         
         <action name="supprimer_compte" class="oc.P6.escalade.actions.SupprimerUserAction" method="execute">
-        	<result name="success" type="redirectAction">index</result>
+        	<result name="success">/jsp/index.jsp</result>
         </action>
         
         <action name="commenterTopo" class="oc.P6.escalade.actions.CommenterAction" method="commenterTopo">
-       			 <interceptor-ref name="store">
-					<param name="operationMode">STORE</param>
-		    	 </interceptor-ref>
-		    	 <interceptor-ref name="defaultStack" /> 
-        	<result name="success" type="redirectAction">
-        		<param name="actionName">go_topo</param>
-        	</result>
-        	<result name="input" type="redirectAction">
-        		<param name="actionName">go_topo</param>
-        	</result>
+        	<result name="success">/jsp/topo.jsp</result>
+        	<result name="input">/jsp/utilisateur/commentaireTopo.jsp</result>
         </action>      
     </package>
 
-	<package name="moderateur" extends="struts-default, default, utilisateur" namespace="/moderateur">    
+	<package name="moderateur" extends="struts-default, default" namespace="/moderateur">    
 		<!--Toutes les actions de gestion de commentaires -->
 		<action name="validerCommentaire" class="oc.P6.escalade.actions.ValidationCommentaireAction" method="valider">
     		<result name="success" type="redirectAction">
@@ -181,18 +147,12 @@
 				   
 	</package>
         
-	<package name="admin" extends="struts-default, default, utilisateur, moderateur" namespace="/admin">    
+	<package name="admin" extends="struts-default, default, moderateur" namespace="/admin">    
 		<!--Toutes les actions de suppression de topo/site/secteur/voie -->
 		
 		<!-- Action de ban -->
 		<action name="recherche_utilisateur" class="oc.P6.escalade.actions.RechercheUtilisateurAction" method="execute">
-       			 <interceptor-ref name="store">
-					<param name="operationMode">STORE</param>
-		    	 </interceptor-ref>
-		    	 <interceptor-ref name="defaultStack" /> 		
-			<result name="sucess">
-				<param name="pseudo">${utilisateur.pseudo}</param>
-				/ban.jsp</result>
+			<result name="sucess">jsp/admin/ban.jsp</result>
 		</action>
 		
   

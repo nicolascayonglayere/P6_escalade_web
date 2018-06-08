@@ -19,28 +19,28 @@
 	<body>
 		<%@include file="_include/entete.jsp" %>
 		<div class="container-fluid">
-			<h2>QUI SOMMES-NOUS ?</h2>
+			<h2><s:text name="presentation.titre"/></h2>
 			<section>
-				<h3>Un groupe de partage</h3>
-				<p>Passionné d'escalade en plein air, nous avons décidé de créer ce site de partage de topo.</br></p>
+				<h3><s:text name="presentation.sousTitre"/></h3>
+				<p><s:text name="presentation.description"/></br></p>
 			</section>
 			<section>	
-				<h3>L'équipe</h3>
-				<p>Les administrateurs</p>
+				<h3><s:text name="presentation.equipe"/></h3>
+				<p><s:text name="presentation.administrateur"/></p>
 				<ul>
 					<s:iterator value="listAdmin" var="utilisateur">
 						<li><s:property value="#utilisateur.pseudo"/></li>
 					</s:iterator>
 				</ul>
-				<p>Les adminsitrateurs ont tous les droits !</br></p>
+				<p><s:text name="presentation.administrateurDescr"/></br></p>
 				
-				<p>Les modérateurs</p>
+				<p><s:text name="presentation.moderateur"/></p>
 				<ul>
 					<s:iterator value="listModo" var="utilisateur">
 						<li><s:property value="#utilisateur.pseudo"/></li>
 					</s:iterator>
 				</ul>
-				<p>Les modérateurs controllent les commentaires et peuvent ajouter des topos dans la base de donnée</p>
+				<p><s:text name="presentation.moderateurDescr"/></p>
 				
 			</section>		
 		</div>
@@ -50,9 +50,10 @@
 		
 		
 		
-		<%@include file="_include/footer.jsp" %>
+		
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 	  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+	  	<%@include file="_include/footer.jsp" %>
 	</body>
 </html>

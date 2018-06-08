@@ -22,10 +22,10 @@
 		<%@include file="../_include/entete.jsp" %>	
 		<div class="container">
 
-			<h2>COMPTE UTILISATEUR : <s:property value="#session.utilisateur.pseudo"/></h2>
-			<h3>Bonjour <s:property value="utilisateur.nom"/> <s:property value="utilisateur.prenom"/></h3>
-			<h4>role : <s:property value="utilisateur.role"/></h4>
-			
+			<h2><s:text name="compteUser.titre"/><s:property value="#session.utilisateur.pseudo"/></h2>
+			<h3><s:text name="compteUser.bonjour"/><s:property value="utilisateur.nom"/> <s:property value="utilisateur.prenom"/></h3>
+			<h4><s:text name="compteUser.role"/><s:property value="utilisateur.role"/></h4>
+			<s:actionmessage/>			
 			<!-- pour les modérateurs, une liste des commentaires à valider -->
 			<s:if test="%{utilisateur.role == 'moderateur'}">
 				<s:iterator value="listCommentaire" var="commentaire">
@@ -52,7 +52,7 @@
 			<!-- pour les admin, des liens vers les actions réservées -->
 			<s:elseif test="%{utilisateur.role =='administrateur'}">
 				<h5>Utilisateur</h5>
-				<s:a href="../jsp/admin/ban.jsp">
+				<s:a href="jsp/admin/ban.jsp">
 					Bannir un utilisateur
 	    		</s:a>
 	    		<h5>Topo</h5>
@@ -71,10 +71,10 @@
 			<table class="table table-bordered table-striped">
 				<thead>
 					<tr>
-						<th>Nom</th>
-						<th>Date d'emprunt</th>
-						<th>Date de retour</th>
-						<th>Retour</th>
+						<th><s:text name="compteUser.nom"/></th>
+						<th><s:text name="compteUser.dateEmprunt"/></th>
+						<th><s:text name="compteUser.dateRetour"/></th>
+						<th><s:text name="compteUser.retour"/></th>
 					</tr>
 				</thead>
 					<s:iterator value="listTopoEmprunt" var="topoEmprunt">
@@ -98,7 +98,7 @@
 		
 		<!-- un formulaire pour modifier ses param pseudo et mdp et coordonnee -->
 		<div class="container" style="border-color: gray; border-style: solid; border-width: medium">
-			<h5>MODIFIER MON COMPTE</h5>
+			<h5><s:text name="compteUser.modifier"/></h5>
 			<s:form action="modifier_user" cssClass="form-vertical">
 				<s:textfield name="utilisateur.pseudo" placeholder="pseudo" label="pseudo" requiredLabel="true"/>
 				<s:textfield name="utilisateur.password" placeholder="password" label="password" requiredLabel="true"/>
@@ -116,11 +116,10 @@
 		</br>
 	
 		<div class="container" style="border-color: gray; border-style: solid; border-width: medium">
-			<h5>SUPPRIMER MON COMPTE</h5>
-			<p>Vous souhaitez supprimer votre compte, cliquez sur le bouton  ---> 
+			<h5><s:text name="compteUser.supprimer"/></h5>
+			<p><s:text name="compteUser.supprMessage"/> 
 				<s:a action = "supprimer_compte">			
 					<input class="btn btn-default" type="submit" value="SUPPRIMER">
-						<s:param name="pseudo" value="#session.utilisateur.pseudo"/>
 					</input>
 				</s:a>
 			</p>		
@@ -128,9 +127,10 @@
 			
 		
 	
-		<%@include file="../_include/footer.jsp" %>			
+					
 	  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 	  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+	  	<%@include file="../_include/footer.jsp" %>
 	</body>
 </html>

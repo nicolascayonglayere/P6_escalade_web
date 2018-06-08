@@ -53,7 +53,7 @@
 						<s:iterator value="listSecteur" var="secteur">
 							<tr>
 								<td style="text-align:center;">
-									Secteur : <s:property value="#secteur.nom"/>
+									<s:text name="topo.secteur"/> <s:property value="#secteur.nom"/>
 									<button id="btCommSecteur" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myCommModal" data-backdrop="true">COMMENTER</button>
 									<%@include file="_include/commentaireSecteur.jsp" %>
 								</td>
@@ -64,11 +64,11 @@
 									<table class="table table-bordered table-striped">
 										<thead>
 											<tr>
-												<th>Nom</th>
-												<th>Cotation</th>
-												<th>Hauteur</th>
-												<th>Nombre de longueurs</th>
-												<th>Nombre de points</th>
+												<th><s:text name="topo.nom"/></th>
+												<th><s:text name="topo.cotation"/></th>
+												<th><s:text name="topo.hauteur"/></th>
+												<th><s:text name="topo.longueur"/></th>
+												<th><s:text name="topo.point"/></th>
 											</tr>
 										</thead>
 											<s:iterator value="listVoie" var="voie">
@@ -91,7 +91,7 @@
 			</div>
 		</div>
 		
-		<%@include file="_include/footer.jsp" %>
+		
 		
 		
 	    
@@ -102,6 +102,7 @@
 	  	<script  src="https://code.jquery.com/jquery-3.3.1.min.js"  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="  crossorigin="anonymous"></script>
 	  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 	  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+	  	<%@include file="_include/footer.jsp" %>
 	  	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBW9tdPhwEC0knxkB11uwv1p8ehQpB3BaY&callback=initMap"></script>
 		
 		<!-- les scripts google Map API -->

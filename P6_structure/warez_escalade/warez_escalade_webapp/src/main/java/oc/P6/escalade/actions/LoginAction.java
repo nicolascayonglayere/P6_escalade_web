@@ -4,6 +4,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 
@@ -18,6 +19,7 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
 	 */
 	private static final long serialVersionUID = 1L;
 	private Utilisateur utilisateur;
+	private String pseudo;
 	private Map<String, Object> session;
 	private HttpServletRequest servletRequest;
 
@@ -31,7 +33,11 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
 
 	
 	public String logOut() {
+		String username1 = ((Utilisateur) this.session.get("utilisateur")).getPseudo();
+		System.out.println("deco - "+username1);
+		utilisateur = WebappHelper.getManagerFactory().getUtilisateurManager().getUtilisateur(username1);
 		session.remove("utilisateur");
+		this.servletRequest.getSession().invalidate();
 		addActionMessage("You Have Been Successfully Logged Out");
 		return SUCCESS;
 	}
@@ -42,7 +48,7 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
 		String vResult="";
 		System.out.println(utilisateur.getPseudo()+" - "+utilisateur.getPassword());
 		Utilisateur vUser = WebappHelper.getManagerFactory().getUtilisateurManager().getUtilisateur(utilisateur.getPseudo());
-		if(vUser != null) {
+		if(vUser.getNom() != null) {
 			if ((utilisateur.getPseudo().equals(vUser.getPseudo()))&&(utilisateur.getPassword().equals(vUser.getPassword()))) {
 				session.put("utilisateur", utilisateur);
 				vResult = ActionSupport.SUCCESS;
@@ -55,14 +61,6 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
 			vResult = ActionSupport.LOGIN;
 		}
 		return vResult;
-		
-		//if (utilisateur.getPseudo().equals("yogj") && utilisateur.getPassword().equals("admin")) {
-		//	session.put("utilisateur", utilisateur);
-		//	return SUCCESS;
-		//} else {
-		//	addActionError("Please Enter Valid emailId or Password");
-		//	return LOGIN;
-		//}
 	}
 
 	public String input() {
@@ -75,6 +73,14 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
 
 	public void setUtilisateur(Utilisateur utilisateur) {
 		this.utilisateur = utilisateur;
+	}
+	
+	public String getPseudo() {
+		return pseudo;
+	}
+
+	public void setPseudo(String pseudo) {
+		this.pseudo = pseudo;
 	}
 
 	public void setSession(Map<String, Object> map) {

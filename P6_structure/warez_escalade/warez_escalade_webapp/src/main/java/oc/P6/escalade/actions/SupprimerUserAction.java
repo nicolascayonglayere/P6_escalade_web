@@ -35,6 +35,8 @@ public class SupprimerUserAction extends ActionSupport implements SessionAware, 
 		WebappHelper.getManagerFactory().getCoordonneeUtilisateurManager().supprimerCoordonnee(coordonneeUtilisateur);
 		WebappHelper.getManagerFactory().getUtilisateurManager().deleteUtilisateur(utilisateur);
 		session.remove("utilisateur");
+		this.servletRequest.getSession().invalidate();
+		addActionMessage("Votre compte a bien été supprimé.");
 		return SUCCESS;
 	}
 	

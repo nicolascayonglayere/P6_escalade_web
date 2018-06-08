@@ -19,6 +19,8 @@
 	
 	<body>
 		<%@include file="../_include/entete.jsp" %>
+		<s:text name="index.bienvenue"></s:text>
+		<s:actionmessage/>		
 		<!-- liste des topo ds la bdd -->
 		<div class = "container">
 			<table class="table table-bordered table-striped">
@@ -48,10 +50,11 @@
 		</div>
 
 		
-		<%@include file="../_include/footer.jsp" %>
+		
 
 	  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 	  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+	  	<%@include file="../_include/footer.jsp" %>
 	</body>
 </html>

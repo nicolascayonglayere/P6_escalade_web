@@ -20,7 +20,7 @@
 	<body>
 		<%@include file="_include/entete.jsp" %>
 		<div class="container text-center">
-			<h3>INSCRIPTION</h3>
+			<h3><s:text name="creerUser.titre"/></h3>
 			<s:form action="creer_user" cssClass="form-horizontal">
 				<s:textfield name="utilisateur.nom" placeholder="nom" label="nom" requiredLabel="true"/>
 				<s:textfield name="utilisateur.prenom" placeholder="prenom" label="prenom" requiredLabel="true"/>
@@ -43,8 +43,9 @@
 		
 		
 		
-		<%@include file="_include/footer.jsp" %>
+
 	  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 	  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>	</body>
+		<%@include file="_include/footer.jsp" %>	  	
 </html>

@@ -20,7 +20,8 @@
 
 	<body>
 		<%@include file="_include/entete.jsp" %>
-		<h2>Hello World!</h2>
+		<h2><s:text name="index.bienvenue"/></h2>
+		<s:actionmessage/>
 		<!-- liste des topo ds la bdd -->
 		<div class = "container">
 			<table class="table table-bordered table-striped">
@@ -50,10 +51,11 @@
 		</div>
 
 		
-		<%@include file="_include/footer.jsp" %>
+		
 
-	  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	  	<script  src="https://code.jquery.com/jquery-3.3.1.min.js"  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="  crossorigin="anonymous"></script>
 	  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 	  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+	  	<%@include file="_include/footer.jsp" %>
 	</body>
 </html>

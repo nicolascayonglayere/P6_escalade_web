@@ -6,7 +6,7 @@
 	  <div class="modal-dialog modal-dialog-centered" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h5 class="modal-title">AUTHENTIFICATION</h5>
+	        <h5 class="modal-title"><s:text name="login.titre"/></h5>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
@@ -18,7 +18,7 @@
 			<s:form id="idLoginForm" action="loginUser" namespace="/LoginUser" cssClass="form-vertical">
 				<s:textfield name="utilisateur.pseudo" placeholder="pseudo" label="pseudo" requiredLabel="true"/>
 				<s:password name="utilisateur.password" placeholder="password" label="password" requiredLabel="true"/>
-      			<input id="btOK" class="btn btn-default" type="submit" value="S'AUTHENTIFIER">
+      			<input id="btOK" class="btn btn-default" type="submit">
       				<s:param name="pseudo">${utilisateur.pseudo }</s:param>
       				<s:param name="password">${utilisateur.password }</s:param>
      			 </input>		

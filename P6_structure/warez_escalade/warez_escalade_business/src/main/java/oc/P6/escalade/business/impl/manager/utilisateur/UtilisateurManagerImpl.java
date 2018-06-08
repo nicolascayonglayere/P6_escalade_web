@@ -75,7 +75,8 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
         
     	} 
     	else {
-    		utilisateur = null;
+    		utilisateur.setNom(null); 
+    		//utilisateur.setPseudo(pPseudo);
 			try {
 				throw new Exception("Utilisateur non trouvé : PSEUDO=" + pPseudo);
 				

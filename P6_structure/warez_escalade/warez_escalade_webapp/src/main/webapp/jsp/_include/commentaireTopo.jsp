@@ -6,7 +6,7 @@
 	  <div class="modal-dialog modal-dialog-centered" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h5 class="modal-title">COMMENTAIRE DU TOPO <s:property value="topo.nom"/></h5>
+	        <h5 class="modal-title"><s:text name="commTopo.titre"/><s:property value="topo.nom"/></h5>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>
@@ -18,7 +18,7 @@
 			<s:form id="idCommForm" action="commenterTopo" namespace="/LoginUser" cssClass="form-vertical">
 				<s:textfield name="utilisateur.pseudo" placeholder="pseudo" label="pseudo" requiredLabel="true"/>
 				<s:textarea name="message" placeholder="message" label="votre message" requiredLabel="true"  cols="50" rows="10"/>	
-      			<input id="btCommOK" class="cssButton btn btn-default" type="submit" value="ENVOYER">
+      			<input id="btCommOK" class="cssButton btn btn-default" type="submit" value="bouton.envoi">
       				<s:param name="pseudo">${utilisateur.pseudo }</s:param>
 
       				<s:param name="nom" >${topo.nom}</s:param>
