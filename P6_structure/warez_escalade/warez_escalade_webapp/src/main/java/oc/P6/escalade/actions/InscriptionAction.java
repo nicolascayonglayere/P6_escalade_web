@@ -62,6 +62,7 @@ public class InscriptionAction extends ActionSupport implements SessionAware {
 		
 		else {//if (vResult != ActionSupport.INPUT) {
 			WebappHelper.getManagerFactory().getUtilisateurManager().creerUtilisateur(utilisateur);
+			WebappHelper.getManagerFactory().getUtilisateurManager().modifierUtilisateur(utilisateur);
 			coordonnee.setUtilisateur(WebappHelper.getManagerFactory().getUtilisateurManager().getUtilisateur(utilisateur.getPseudo()));
 			System.out.println(utilisateur.getPseudo()+" - "+ coordonnee.getIdUtilisateur());
 			WebappHelper.getManagerFactory().getCoordonneeUtilisateurManager().creerCoordonnee(coordonnee);

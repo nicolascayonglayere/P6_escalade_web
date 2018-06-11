@@ -148,7 +148,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 	@Override
 	public void modifierUtilisateur(Utilisateur pUtilisateur) {
 		System.out.println("CTRL "+pUtilisateur.getPseudo());
-		if (userDAO.find(pUtilisateur.getPseudo())!= null) {
+		if (userDAO.find(pUtilisateur.getPseudo())!= null && userDAO.find(pUtilisateur.getPseudo()).getPassword() != pUtilisateur.getPassword()) {
 			System.out.println("trace-");
 			try {
 				throw new Exception("Le pseudo est deja utilisé. Choisissez un autre pseudo.");
@@ -222,6 +222,36 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 	public ArrayList<Utilisateur> getListUtilisateur(String pPseudo) {
 		ArrayList<Utilisateur> listUtilisateur = userDAO.getList(pPseudo);
 		return listUtilisateur;
+	}
+
+	@Override
+	public Utilisateur getUtilisateurPass(String pPassword) {
+    	//--chercher l'utilisateur ds la bdd
+
+    	if(userDAO.findPass(pPassword) != null) { 
+        	System.out.println(userDAO.findPass(pPassword).getPseudo());
+        		utilisateur.setNom(userDAO.findPass(pPassword).getNom());
+        		utilisateur.setPrenom(userDAO.findPass(pPassword).getPrenom());
+    	        utilisateur.setPseudo(userDAO.findPass(pPassword).getPseudo());
+    			utilisateur.setPassword(pPassword);
+    			utilisateur.setId_role(userDAO.findPass(pPassword).getId_role());
+    			utilisateur.setRole(userDAO.findPass(pPassword).getRole());
+    			utilisateur.setId(userDAO.findPass(pPassword).getId());
+        
+    	} 
+    	else {
+    		utilisateur.setNom(null); 
+    		//utilisateur.setPseudo(pPseudo);
+			try {
+				throw new Exception("Utilisateur non trouvé : PSEUDO=" + utilisateur.getPseudo());
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
+    	//System.out.println("CTRL "+utilisateur.getPseudo()+" - "+utilisateur.getPassword()+" - "+utilisateur.getId());
+    	return utilisateur;
 	}
 
 

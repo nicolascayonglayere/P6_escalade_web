@@ -75,7 +75,7 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 
 	@Override
 	public boolean update(Utilisateur pUtilisateur) {
-		String vSQL = "UPDATE utilisateur SET pseudo = :pseudo, password = :password WHERE id_utilisateur = :id_utilisateur";
+		String vSQL = "UPDATE utilisateur SET pseudo = :pseudo, password = crypt(:password, gen_salt('bf',8)) WHERE id_utilisateur = :id_utilisateur";
 		
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
@@ -182,7 +182,7 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 	@Override
 	public ArrayList<Utilisateur> getList(String pPseudo) {
 		ArrayList<Utilisateur> vListUtilisateur = new ArrayList<Utilisateur>();
-		String vSQL = "SELECT * FROM utilisateur WHERE pseudo LIKE ':pseudo'";
+		String vSQL = "SELECT * FROM utilisateur WHERE pseudo LIKE :pseudo";
         NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
         vParams.addValue("pseudo", pPseudo.substring(0, 1)+"%", Types.VARCHAR);	
@@ -204,6 +204,39 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 		};        
 		vListUtilisateur = (ArrayList<Utilisateur>) vJdbcTemplate.query(vSQL, vParams, vRowMapper);
 		return vListUtilisateur;
+	}
+
+	@Override
+	public Utilisateur findPass(String pPassword) {
+		String vSQL = "SELECT * FROM utilisateur INNER JOIN role_utilisateur ON utilisateur.id_role = role_utilisateur.id_role WHERE  password = crypt(:password, password); ";
+		
+		//JdbcTemplate vJdbcTemplate = new JdbcTemplate(getDataSource());
+        NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
+		MapSqlParameterSource vParams = new MapSqlParameterSource();
+        vParams.addValue("password", pPassword, Types.VARCHAR);
+		
+		RowMapper<Utilisateur> vRowMapper = new RowMapper<Utilisateur>() {
+
+			@Override
+			public Utilisateur mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Utilisateur vUtilisateur = new Utilisateur(rs.getString("pseudo"));
+				vUtilisateur.setNom(rs.getString("nom"));
+				vUtilisateur.setPrenom(rs.getString("prenom"));
+				//vUtilisateur.setPassword(rs.getString("password"));
+				vUtilisateur.setId(rs.getInt("id_utilisateur"));
+				vUtilisateur.setRole(rs.getString("role"));
+				return vUtilisateur;
+			}
+			
+		};
+		Utilisateur user;
+		if (vJdbcTemplate.query(vSQL,vParams,vRowMapper).size() != 0)
+			user = vJdbcTemplate.query(vSQL,vParams,vRowMapper).get(0);
+		else
+			user = null;
+		
+		
+		return user;
 	}
 	
 	

@@ -28,6 +28,8 @@ import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 	     * @throws NotFoundException Si l'Utilisateur n'est pas trouvé
 	     */
 	    Utilisateur getUtilisateur(String pPseudo); //throws NotFoundException;
+	    
+	    Utilisateur getUtilisateurPass(String pPassword);
 
 	    /**
 	     * Ajoute un nouvel {@link Utilisateur}
