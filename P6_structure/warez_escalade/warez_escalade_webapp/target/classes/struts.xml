@@ -99,9 +99,9 @@
         	<result name="input">/jsp/creer_user.jsp</result>
         	<result name="success">/jsp/utilisateur/accueil_utilisateur.jsp</result>
         </action>
-    <!--</package>-->
+ 	</package>
         
-	<!--<package name="utilisateur" extends="struts-default, default" namespace="/utilisateur">-->   
+	<package name="utilisateur" extends="default" >   
 		<!--   logout action  -->
 		<action name="logOut" class="oc.P6.escalade.actions.LoginAction" method="logOut">
 			<result name="success">/jsp/index.jsp</result>
@@ -113,7 +113,7 @@
         </action> 
         
         <action name="retour_topo" class="oc.P6.escalade.actions.GestionPretAction" method="retourner">
-        	<result name="success">/jsp/utilisateur/compte_utilisateur.jsp</result>
+        	<result name="success" type="redirectAction">go_monCompte</result>
         </action>
                
         <action name="emprunt_topo" class="oc.P6.escalade.actions.GestionPretAction" method="emprunter">
@@ -129,13 +129,13 @@
         	<result name="success">/jsp/index.jsp</result>
         </action>
         
-        <action name="commenterTopo" class="oc.P6.escalade.actions.CommenterAction" method="commenterTopo">
-        	<result name="success">/jsp/topo.jsp</result>
-        	<result name="input">/jsp/utilisateur/commentaireTopo.jsp</result>
+        <action name="commenter" class="oc.P6.escalade.actions.CommenterAction" method="commenter">
+        	<result name="success" type="redirectAction">go_topo</result>
+        	<result name="input">/jsp/topo.jsp</result>
         </action>      
-    </package>
+    <!--</package>-->
 
-	<package name="moderateur" extends="struts-default, default" namespace="/moderateur">    
+	<!--<package name="moderateur" extends="struts-default, default" namespace="/moderateur"> -->   
 		<!--Toutes les actions de gestion de commentaires -->
 		<action name="validerCommentaire" class="oc.P6.escalade.actions.ValidationCommentaireAction" method="valider">
     		<result name="success" type="redirectAction">
@@ -145,14 +145,18 @@
 		</action>
 		<!--Toutes les actions d'ajout/modif de topo -->
 				   
-	</package>
+	<!--</package>-->
         
-	<package name="admin" extends="struts-default, default, moderateur" namespace="/admin">    
+	<!--<package name="admin" extends="struts-default, default, moderateur" namespace="/admin">-->    
 		<!--Toutes les actions de suppression de topo/site/secteur/voie -->
 		
 		<!-- Action de ban -->
 		<action name="recherche_utilisateur" class="oc.P6.escalade.actions.RechercheUtilisateurAction" method="execute">
-			<result name="sucess">jsp/admin/ban.jsp</result>
+			<result name="success">ban.jsp</result>
+		</action>
+		
+		<action name="bannir" class="oc.P6.escalade.actions.BanUtilisateurAction" method="execute">
+			<result name="success" type="redirectAction">go_monCompte</result>
 		</action>
 		
   

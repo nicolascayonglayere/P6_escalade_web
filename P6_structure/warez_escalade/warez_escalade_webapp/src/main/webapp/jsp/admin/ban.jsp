@@ -18,29 +18,37 @@
 
 	<body>
 		<%@include file="../_include/entete.jsp" %>
-			
-		<s:form id="rechercheUtilisateur" action="recherche_utilisateur" theme="bootstrap" cssClass="form-horizontal">
-			<s:textfield name="utilisateur.pseudo" placeholder="pseudo" label="pseudo" requiredLabel="true"/>
-			<input class="btn btn-default" type="submit" value="RECHERCHER">
-		  		<s:param name="pseudo">${utilisateur.pseudo}</s:param>
-		 	 </input>
-		</s:form>		
-			
-		<ul>
-			<s:iterator value="listUtilisateur" var="utilisateur">
-				<li><s:property value="#utilisateur.pseudo"/> <s:property value="#utilisateur.nom"/> <s:property value="#utilisateur.prenom"/></li>
-				<ul>
-				<s:iterator value="listTopoEmprunt" var="topoEmprunt">
-					<li><s:property value="#topoEmprunt.nom"/> <s:property value="#topoEmprunt.date"/></li>
-				</s:iterator>
-				</ul>
-			</s:iterator>
-			<s:a action="bannir">
-				<input class="btn btn-default" type="submit" value="BANNIR">
+		<div class="container">
+			<s:form id="rechercheUtilisateur" action="recherche_utilisateur" theme="bootstrap" cssClass="form-horizontal">
+				<s:textfield name="utilisateur.pseudo" placeholder="pseudo" label="pseudo" requiredLabel="true"/>
+				<input class="btn btn-default" type="submit" value="RECHERCHER" align="right">
 			  		<s:param name="pseudo">${utilisateur.pseudo}</s:param>
-			 	 </input>			
-			</s:a>
-		</ul>
+			 	 </input>
+			</s:form>		
+			
+			<s:form action="bannir" theme="bootstrap" cssClass="form-vertical">
+				<ul>
+					<s:iterator value="listUtilisateur" var="utilisateur">
+						<li>
+							<s:checkbox name="checkMe" fieldValue="%{#utilisateur.pseudo}" label="%{#utilisateur.pseudo+' '+#utilisateur.nom+' '+#utilisateur.prenom}"/>
+						</li>
+						<ul>
+						<s:iterator value="%{#utilisateur.getlistTopoEmprunt}" var="topoEmprunt">
+							<li>
+								<s:property value="#topoEmprunt.nom"/> <s:property value="#topoEmprunt.dateRetour"/>
+							</li>
+						</s:iterator>
+						</ul>
+					</s:iterator>
+				</ul>
+				<s:submit class="btn btn-default" value="BANNIR"/>				
+				<!-- <input class="btn btn-default" type="submit" value="BANNIR">
+					<s:param name="pseudo"><s:property value="checkMe"/></s:param>
+				</input>-->			
+			</s:form>		
+		</div>	
+	
+
 		
 				
 	  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

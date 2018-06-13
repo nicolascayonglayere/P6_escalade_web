@@ -51,4 +51,6 @@ import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 	    ArrayList<Utilisateur> getListModo();
 	    
 	    void modifierUtilisateur(Utilisateur pUtilisateur);
+	    
+	    void banUtilisateur(Utilisateur pUtilisateur);
 }

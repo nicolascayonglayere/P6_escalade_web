@@ -12,6 +12,7 @@ public class Voie {
 	private int nbLgueur;
 	private int nbPoint;
 	private Secteur secteur;
+	private String description;
 	
 	public Voie() {}
 	
@@ -73,6 +74,14 @@ public class Voie {
 
 	public void setSecteur(Secteur secteur) {
 		this.secteur = secteur;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 	

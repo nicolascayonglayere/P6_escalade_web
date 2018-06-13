@@ -34,12 +34,11 @@ CREATE TABLE public.topo (
                 id_utilisateur INTEGER NOT NULL,
                 nombre_exemplaires INTEGER,
                 description TEXT,
-                longitude VARCHAR(30) NOT NULL,
-                latitude VARCHAR(30) NOT NULL,
+                longitude NUMERIC(8,3) NOT NULL,
+                latitude NUMERIC(8,3) NOT NULL,
                 image VARCHAR(60),
                 CONSTRAINT topo_pk PRIMARY KEY (id_topo)
 );
-
 
 ALTER SEQUENCE public.topo_id_topo_seq_1 OWNED BY public.topo.id_topo;
 

@@ -42,7 +42,7 @@ public class CommentaireTopoManagerImpl extends AbstractDAOManager implements Co
 			try {
 				commTopo.setAuteur(pCommTopo.getAuteur());
 				commTopo.setTopo(pCommTopo.getTopo());
-				commTopo.setvCommentaire(pCommTopo.getvCommentaire());
+				commTopo.setMessage(pCommTopo.getMessage());
 				commTopo.setDate(Calendar.getInstance().getTime());
 				commTopoDao.create(pCommTopo);
 				

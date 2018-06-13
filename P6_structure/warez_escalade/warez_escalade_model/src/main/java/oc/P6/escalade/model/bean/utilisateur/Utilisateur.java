@@ -30,7 +30,7 @@ public class Utilisateur {
     //private RoleUtilisateur statut;
     private int id_role;
     private String role;
-    //private ArrayList<TopoEmprunt> topoEmprunt;
+    private ArrayList<TopoEmprunt> listTopoEmprunt;
 
 
     // ==================== Constructeurs ====================
@@ -117,16 +117,15 @@ public class Utilisateur {
 		this.coordonnee = coordonnee;
 	}
 	
-	
 
-//public ArrayList<TopoEmprunt> getTopoEmprunt() {
-//	return topoEmprunt;
-//}
-//
-//
-//public void setTopoEmprunt(ArrayList<TopoEmprunt> topoEmprunt) {
-//	this.topoEmprunt = topoEmprunt;
-//}
+	public ArrayList<TopoEmprunt> getListTopoEmprunt() {
+		return listTopoEmprunt;
+	}
+
+
+	public void setListTopoEmprunt(ArrayList<TopoEmprunt> listTopoEmprunt) {
+		this.listTopoEmprunt = listTopoEmprunt;
+	}
 
 
 	public String getRole() {

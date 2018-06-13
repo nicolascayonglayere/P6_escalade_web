@@ -29,9 +29,8 @@ public class GestionPretAction extends ActionSupport implements SessionAware, Se
 	private HttpServletRequest servletRequest;
 	
 	public String retourner() {
-		HttpServletRequest request = ServletActionContext.getRequest();
-		String username = request.getParameter("pseudo");
-		
+		pseudo = ((Utilisateur) session.get("utilisateur")).getPseudo();
+		utilisateur = WebappHelper.getManagerFactory().getUtilisateurManager().getUtilisateur(pseudo);
 		System.out.println("nom topo retourner "+nom+" nom emprunteur "+pseudo);
 		TopoEmprunt vTopoEmp = WebappHelper.getManagerFactory().getTopoEmpruntManager().getTopoEmprunt(nom);
 		if (vTopoEmp != null)
@@ -42,13 +41,12 @@ public class GestionPretAction extends ActionSupport implements SessionAware, Se
 	}
 	
 	public String emprunter() {
-		HttpServletRequest request = ServletActionContext.getRequest();
-		String username = request.getParameter("pseudo");
-
-		System.out.println("nom topo emprunter "+nom+" nom emprunteur "+username);
+		pseudo = ((Utilisateur) session.get("utilisateur")).getPseudo();
+		utilisateur = WebappHelper.getManagerFactory().getUtilisateurManager().getUtilisateur(pseudo);
+		System.out.println("nom topo emprunter "+nom+" nom emprunteur "+pseudo);
 		Topo vTopo = WebappHelper.getManagerFactory().getTopoManager().getTopo(nom);
 		if (vTopo != null)
-			WebappHelper.getManagerFactory().getTopoEmpruntManager().creerTopoEmprunt(vTopo, WebappHelper.getManagerFactory().getUtilisateurManager().getUtilisateur(username));
+			WebappHelper.getManagerFactory().getTopoEmpruntManager().creerTopoEmprunt(vTopo, WebappHelper.getManagerFactory().getUtilisateurManager().getUtilisateur(pseudo));
 		addActionMessage("Votre emprunt est bien enregistré");		
 		return SUCCESS;
 	}

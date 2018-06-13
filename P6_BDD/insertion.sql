@@ -36,7 +36,7 @@ BEGIN TRANSACTION;
 INSERT INTO topo (id_topo, nom, id_utilisateur, nombre_exemplaires, description, longitude, latitude, image) VALUES (1, 'Falaise de Voreppe', 1, 3, 
 'Seul site de La Cuvette permettant de profiter d’un parfait coucher de soleil sur l’horizon, particulièrement appréciable les après midis d’hiver.
 Derrière le ronronnement paisible de la nationale en contrebas se cachent des grandes envolées techniques et exigeantes sur du rocher étonnamment sculpté',
-  '45°18''41""N', '5°37''29""E', 'images/falaisedevoreppe/' );
+ 5.624, 45.311, 'images/falaisedevoreppe/' );
 COMMIT;
 
 --table site--

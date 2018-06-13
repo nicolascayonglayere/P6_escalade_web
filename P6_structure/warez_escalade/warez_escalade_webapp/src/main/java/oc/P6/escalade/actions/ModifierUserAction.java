@@ -45,7 +45,7 @@ public class ModifierUserAction extends ActionSupport implements SessionAware {
 		String vResult = "";
 		System.out.println("pseudo : "+utilisateur.getPseudo());
 		//--ctrl du pseudo
-		if (WebappHelper.getManagerFactory().getUtilisateurManager().getUtilisateur(utilisateur.getPseudo()).getPseudo().equals(utilisateur.getPseudo())) {
+		if (WebappHelper.getManagerFactory().getUtilisateurManager().getUtilisateur(utilisateur.getPseudo()).getPseudo().equals(utilisateur.getPseudo())) {// et si le pseudo actuel != 
 			addFieldError("utilisateur.pseudo", "Veuillez choisir un autre pseudo.");
 			vResult = ActionSupport.INPUT;
 		}

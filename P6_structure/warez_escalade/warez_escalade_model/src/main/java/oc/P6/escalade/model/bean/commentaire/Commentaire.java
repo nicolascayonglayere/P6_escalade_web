@@ -9,7 +9,7 @@ public abstract class Commentaire {
 	private int id;
 	private Utilisateur auteur;
 	private Date date;
-	private String vCommentaire;
+	private String message;
 	
 	public Commentaire() {}
 
@@ -37,13 +37,15 @@ public abstract class Commentaire {
 		this.date = date;
 	}
 
-	public String getvCommentaire() {
-		return vCommentaire;
+	public String getMessage() {
+		return message;
 	}
 
-	public void setvCommentaire(String vCommentaire) {
-		this.vCommentaire = vCommentaire;
+	public void setMessage(String message) {
+		this.message = message;
 	}
+
+
 	
 	
 }

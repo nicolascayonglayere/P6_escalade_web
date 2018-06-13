@@ -7,11 +7,12 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 		<title>TOPO</title>
 		<style>
       	/* Always set the map height explicitly to define the size of the div
        	* element that contains the map. */
-      	#map {
+      	#map, img {
         	height: auto;
     	 }
     	html, body {
@@ -29,17 +30,40 @@
 			<div class="row">
 				<div class="col-sm">
 					<h2><s:property value="topo.nom"/></h2>
-					<button id="btCommTopo" type="button" class="cssButton btn btn-primary" data-toggle="modal" data-target="#myCommModalTopo" data-backdrop="true">
-						COMMENTER
-						<!--<s:param name="nom" value="#topo.nom" />-->	
-					</button>
-					<%@include file="_include/commentaireTopo.jsp" %>
+					<p><s:property value="topo.description"/></p>
 					<h3><s:property value="site.nom"/></h3>
-					<button id="btCommSite" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myCommModal" data-backdrop="true">COMMENTER</button>
-					<%@include file="_include/commentaireSite.jsp" %>			
+					<p><s:property value="site.description"/></p>			
 				</div>
-
-				
+			</div>
+			<s:actionmessage/>
+			<div class="row">
+			    <!-- Caroussel -->
+			    <div id="monCarousel" class="carousel slide col-sm" data-ride="carousel">
+			      <!-- Indicateurs -->
+			      <ol class="carousel-indicators">
+			      	<s:iterator var="listImage" status="status">
+			      		<li data-target="#monCarousel" data-slide-to="${status.index}" class="active"></li>
+			      	</s:iterator>
+			      </ol>
+			      <!-- Diapositives -->
+			      <div class="carousel-inner">
+			        <div class="item active">
+			        	<img src="<s:property value="image"/>"/>
+				     </div>
+				     <div class="item">
+				      	<s:iterator value="listImage" var="imgURL">
+				          	<img src="<s:property value="imgURL"/>"/>
+				      	</s:iterator>
+				     </div>				      	
+			      </div>
+			      <!-- Contrôles -->
+			      <a class="left carousel-control" href="#monCarousel" data-slide="prev">
+			        <span class="glyphicon glyphicon-chevron-left"></span>
+			      </a>
+			      <a class="right carousel-control" href="#monCarousel" data-slide="next">
+			        <span class="glyphicon glyphicon-chevron-right"></span>
+			      </a>  
+			    </div>							
 				<!-- google map -->
 				<div id="map" class="col-sm"></div>			
 			</div>
@@ -54,8 +78,7 @@
 							<tr>
 								<td style="text-align:center;">
 									<s:text name="topo.secteur"/> <s:property value="#secteur.nom"/>
-									<button id="btCommSecteur" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myCommModal" data-backdrop="true">COMMENTER</button>
-									<%@include file="_include/commentaireSecteur.jsp" %>
+									<p><s:property value="#secteur.description"/></p>
 								</td>
 								
 							</tr>
@@ -69,6 +92,7 @@
 												<th><s:text name="topo.hauteur"/></th>
 												<th><s:text name="topo.longueur"/></th>
 												<th><s:text name="topo.point"/></th>
+												<th><s:text name="topo.description"/></th>
 											</tr>
 										</thead>
 											<s:iterator value="listVoie" var="voie">
@@ -78,6 +102,7 @@
 											    	<td style="text-align:right;"><s:property value="#voie.hauteur" /></td>
 											    	<td style="text-align:right;"><s:property value="#voie.nbLgueur" /></td>
 											    	<td style="text-align:right;"><s:property value="#voie.nbPoint" /></td>
+											    	<td style="text-align:left;"><s:property value="#voie.description" /></td>
 											    	<td><button id="btCommVoie" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myCommModal" data-backdrop="true">COMMENTER</button></td>
 											   		<%@include file="_include/commentaireVoie.jsp" %>
 											   	</tr>
@@ -89,10 +114,20 @@
 					</table>				
 				</div>
 			</div>
-		</div>
+
 		
-		
-		
+			<!-- commentaire Topo/secteur/site -->
+			<h3><s:text name="topo.commentaire"></s:text></h3>		
+			<div class="row">
+	
+				<s:form id="commentaireForm" action="commenterAction">
+					<s:textarea name="commentaireTopo.message" placeholder="commentaire" label="votre commentaire" requiredLabel="true"  cols="100" rows="10"/>		
+					<input class="btn btn-default" type="submit" value="ENVOYER">
+		      			<s:param name="message">${commentaireTopo.message }</s:param>
+		     		 </input>
+		     	</s:form>
+			</div>
+		</div>		
 		
 	    
 
@@ -168,15 +203,6 @@
 		
 		<!-- script de la modale commentaire -->	    
 		<script type="text/javascript">
-	    $('#btCommTopo').click(function(){
-	    	$('#myCommModalTopo').modal('show');
-	    });
-	    $('#btCommSite').click(function(){
-	    	$('#myCommModal').modal('show');
-	    });	    
-	    $('#btCommSecteur').click(function(){
-	    	$('#myCommModal').modal('show');
-	    });
 	    $('#btCommVoie').click(function(){
 	    	$('#myCommModal').modal('show');
 	    });	    

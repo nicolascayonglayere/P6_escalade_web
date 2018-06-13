@@ -67,6 +67,7 @@ public class VoieDaoImpl extends AbstractDAO implements VoieManagerDao{
 				vVoie.setHauteur(rs.getInt("hauteur"));
 				vVoie.setNbLgueur(rs.getInt("nombre_longueur"));
 				vVoie.setNbPoint(rs.getInt("nombre_point"));
+				vVoie.setDescription(rs.getString("description"));
 				vVoie.setSecteur(vSecteur);
 				return vVoie;
 			}

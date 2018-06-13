@@ -81,6 +81,10 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 				vTopo.setId(rs.getInt("id_topo"));
 				Utilisateur vAuteur = userDAO.find(rs.getString("id_utilisateur"));
 				vTopo.setAuteur(vAuteur);
+				vTopo.setImage(rs.getString("image"));
+				vTopo.setLongitude(rs.getDouble("longitude"));
+				vTopo.setLatitude(rs.getDouble("latitude"));
+				vTopo.setDescription(rs.getString("description"));
 				return vTopo;
 			}
 			

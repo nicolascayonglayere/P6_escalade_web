@@ -75,13 +75,14 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 
 	@Override
 	public boolean update(Utilisateur pUtilisateur) {
-		String vSQL = "UPDATE utilisateur SET pseudo = :pseudo, password = crypt(:password, gen_salt('bf',8)) WHERE id_utilisateur = :id_utilisateur";
+		String vSQL = "UPDATE utilisateur SET pseudo = :pseudo, password = crypt(:password, gen_salt('bf',8)), id_role = :id_role WHERE id_utilisateur = :id_utilisateur";
 		
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
 		vParams.addValue("pseudo", pUtilisateur.getPseudo(), Types.VARCHAR);
 		vParams.addValue("password", pUtilisateur.getPassword(), Types.VARCHAR);
 		vParams.addValue("id_utilisateur", pUtilisateur.getId(), Types.INTEGER);
+		vParams.addValue("id_role",pUtilisateur.getId_role(), Types.INTEGER);
 	    
 	    try {
 	        vJdbcTemplate.update(vSQL, vParams);
@@ -142,6 +143,9 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 				vUtilisateur.setPassword(rs.getString("password"));
 				vUtilisateur.setId(pId);
 				vUtilisateur.setPseudo(rs.getString("pseudo"));
+				vUtilisateur.setNom(rs.getString("nom"));
+				vUtilisateur.setPrenom(rs.getString("prenom"));
+				
 				return vUtilisateur;
 			}
 			
@@ -182,10 +186,10 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 	@Override
 	public ArrayList<Utilisateur> getList(String pPseudo) {
 		ArrayList<Utilisateur> vListUtilisateur = new ArrayList<Utilisateur>();
-		String vSQL = "SELECT * FROM utilisateur WHERE pseudo LIKE :pseudo";
+		String vSQL = "SELECT * FROM utilisateur INNER JOIN role_utilisateur ON utilisateur.id_role = role_utilisateur.id_role WHERE pseudo LIKE :pseudo";
         NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
-        vParams.addValue("pseudo", pPseudo.substring(0, 1)+"%", Types.VARCHAR);	
+        vParams.addValue("pseudo", pPseudo+"%", Types.VARCHAR);	
         
 		RowMapper<Utilisateur> vRowMapper = new RowMapper<Utilisateur>() {
 

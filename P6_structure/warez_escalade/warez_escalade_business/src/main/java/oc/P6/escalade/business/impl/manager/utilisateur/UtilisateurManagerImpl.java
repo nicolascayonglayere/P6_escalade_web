@@ -21,8 +21,10 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import oc.P6.escalade.business.contract.manager.AbstractDAOManager;
 import oc.P6.escalade.business.contract.manager.utilisateur.UtilisateurManager;
+import oc.P6.escalade.consumer.DAO.impl.manager.TopoEmpruntDaoImpl;
 import oc.P6.escalade.consumer.DAO.impl.manager.utilisateur.CoordonneeUtilisateurDaoImpl;
 import oc.P6.escalade.consumer.DAO.impl.manager.utilisateur.UtilisateurDaoImpl;
+import oc.P6.escalade.model.bean.emprunt.TopoEmprunt;
 import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateur;
 import oc.P6.escalade.model.bean.utilisateur.RoleUtilisateur;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
@@ -50,6 +52,8 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
     //@Named("utilisateurDAO")
     private UtilisateurDaoImpl userDAO;// = (UtilisateurDaoImpl) getDAOFactory().getUtilisateurManagerDAO();
     
+    @Inject
+    private TopoEmpruntDaoImpl topoEmpDAO;
     //@Inject
     //@Named("platformTransactionManager")
  // private PlatformTransactionManager platformTransactionManager;
@@ -65,13 +69,15 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
     	if(userDAO.find(pPseudo) != null) { 
         	LOGGER.debug(userDAO.find(pPseudo).getPseudo());
         	System.out.println(userDAO.find(pPseudo).getPseudo());
-        		utilisateur.setNom(userDAO.find(pPseudo).getNom());
-        		utilisateur.setPrenom(userDAO.find(pPseudo).getPrenom());
-    	        utilisateur.setPseudo(pPseudo);
-    			utilisateur.setPassword(userDAO.find(pPseudo).getPassword());
-    			utilisateur.setId_role(userDAO.find(pPseudo).getId_role());
-    			utilisateur.setRole(userDAO.find(pPseudo).getRole());
-    			utilisateur.setId(userDAO.find(pPseudo).getId());
+	       	utilisateur.setNom(userDAO.find(pPseudo).getNom());
+	       	utilisateur.setPrenom(userDAO.find(pPseudo).getPrenom());
+	    	utilisateur.setPseudo(pPseudo);
+	    	utilisateur.setPassword(userDAO.find(pPseudo).getPassword());
+	    	utilisateur.setId_role(userDAO.find(pPseudo).getId_role());
+	    	utilisateur.setRole(userDAO.find(pPseudo).getRole());
+	    	utilisateur.setId(userDAO.find(pPseudo).getId());
+	    	
+	    	utilisateur.setListTopoEmprunt(topoEmpDAO.getListTopoEmprunt(userDAO.find(pPseudo).getId()));
         
     	} 
     	else {
@@ -221,6 +227,10 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 	@Override
 	public ArrayList<Utilisateur> getListUtilisateur(String pPseudo) {
 		ArrayList<Utilisateur> listUtilisateur = userDAO.getList(pPseudo);
+		for (Utilisateur u : listUtilisateur) {
+			System.out.println(userDAO.find(u.getPseudo()).getId());
+			u.setListTopoEmprunt(topoEmpDAO.getListTopoEmprunt(userDAO.find(u.getPseudo()).getId()));
+		}
 		return listUtilisateur;
 	}
 
@@ -252,6 +262,32 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
     	}
     	//System.out.println("CTRL "+utilisateur.getPseudo()+" - "+utilisateur.getPassword()+" - "+utilisateur.getId());
     	return utilisateur;
+	}
+
+	@Override
+	public void banUtilisateur(Utilisateur pUtilisateur) {
+		System.out.println("CTRL "+pUtilisateur.getPseudo());
+			try {
+				utilisateur.setId(pUtilisateur.getId());
+				utilisateur.setNom(pUtilisateur.getNom());
+				utilisateur.setPrenom(pUtilisateur.getPrenom());
+				utilisateur.setPseudo(pUtilisateur.getPseudo());
+				utilisateur.setPassword(pUtilisateur.getPassword());
+				//utilisateur.setCoordonnee(pUtilisateur.getCoordonnee());
+				utilisateur.setId_role(4);//(RoleUtilisateur.Utilisateur.getId());
+				userDAO.update(pUtilisateur);
+				
+			    //TransactionStatus vTScommit = vTransactionStatus;
+			    //vTransactionStatus = null;
+			    //platformTransactionManager.commit(vTScommit);
+			} finally {
+				//if (vTransactionStatus != null) {
+					//platformTransactionManager.rollback(vTransactionStatus);
+			    //}
+			}
+
+		
+		
 	}
 
 

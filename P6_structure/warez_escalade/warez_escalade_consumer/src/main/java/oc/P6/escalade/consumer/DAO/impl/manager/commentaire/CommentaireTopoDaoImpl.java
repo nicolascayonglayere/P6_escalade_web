@@ -27,7 +27,7 @@ public class CommentaireTopoDaoImpl  extends AbstractDAO implements CommentaireT
 		vParams.addValue("id_topo", pCommentaireTopo.getTopo().getId(), Types.INTEGER);
 		vParams.addValue("id_utilisateur", pCommentaireTopo.getAuteur().getId(), Types.INTEGER);
 		vParams.addValue("date", pCommentaireTopo.getDate(), Types.DATE);
-		vParams.addValue("commentaire", pCommentaireTopo.getvCommentaire(), Types.LONGVARCHAR);
+		vParams.addValue("commentaire", pCommentaireTopo.getMessage(), Types.LONGVARCHAR);
 		
 	    try {
 	        vJdbcTemplate.update(vSQLCoordonnee, vParams);

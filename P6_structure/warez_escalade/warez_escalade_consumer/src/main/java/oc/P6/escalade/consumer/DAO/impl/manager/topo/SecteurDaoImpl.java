@@ -92,6 +92,8 @@ public class SecteurDaoImpl extends AbstractDAO implements SecteurManagerDao{
 				
 				vSecteur.setId(id);
 				vSecteur.setSite(vSite);
+				vSecteur.setDescritpion(rs.getString("description"));
+				vSecteur.setImage(rs.getString("image"));
 				return vSecteur;
 			}
 			

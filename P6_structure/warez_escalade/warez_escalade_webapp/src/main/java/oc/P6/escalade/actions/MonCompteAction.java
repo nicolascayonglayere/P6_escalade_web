@@ -79,7 +79,7 @@ public class MonCompteAction extends ActionSupport implements SessionAware, Serv
 		listTopoEmprunt = WebappHelper.getManagerFactory().getTopoEmpruntManager().getListTopoEmprunt(utilisateur.getId());
 		coordonneeUtilisateur = WebappHelper.getManagerFactory().getCoordonneeUtilisateurManager().getCoordonnee(utilisateur.getId());
 		role = utilisateur.getRole();
-		System.out.println("Compte : "+pseudo+" - "+utilisateur.getRole()+" - "+utilisateur.getNom()+" - "+listTopoEmprunt.size()+" - "+coordonneeUtilisateur.getEmail());
+		System.out.println("Compte : "+username1+" - "+utilisateur.getRole()+" - "+utilisateur.getNom()+" - "+listTopoEmprunt.size()+" - "+coordonneeUtilisateur.getEmail());
 		return SUCCESS;
 	}
 

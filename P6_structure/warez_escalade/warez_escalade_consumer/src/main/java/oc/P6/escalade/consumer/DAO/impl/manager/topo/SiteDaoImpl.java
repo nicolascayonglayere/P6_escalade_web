@@ -59,6 +59,8 @@ public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 				//--recupere ici le topo ds la bdd
 				vSite.setId(rs.getInt("id_site"));
 				vSite.setTopo(vTopo);
+				vSite.setDescription(rs.getString("description"));
+				vSite.setImage(rs.getString("image"));
 				return vSite;
 			}
 			

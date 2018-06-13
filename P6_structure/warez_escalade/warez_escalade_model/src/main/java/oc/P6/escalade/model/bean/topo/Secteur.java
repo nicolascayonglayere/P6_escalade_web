@@ -8,6 +8,8 @@ public class Secteur {
 		private int id;
 		private String nom;
 		private Site site;
+		private String descritpion;
+		private String image;
 		
 		public Secteur() {}
 		
@@ -37,6 +39,22 @@ public class Secteur {
 
 		public void setSite(Site site) {
 			this.site = site;
+		}
+
+		public String getDescritpion() {
+			return descritpion;
+		}
+
+		public void setDescritpion(String descritpion) {
+			this.descritpion = descritpion;
+		}
+
+		public String getImage() {
+			return image;
+		}
+
+		public void setImage(String image) {
+			this.image = image;
 		}
 		
 		

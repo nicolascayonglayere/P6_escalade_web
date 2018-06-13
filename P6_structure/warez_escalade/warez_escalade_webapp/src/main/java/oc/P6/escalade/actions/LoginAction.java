@@ -53,7 +53,11 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
 			if ((utilisateur.getPseudo().equals(vUser.getPseudo()))&&(utilisateur.getPassword().equals(vUser.getPassword()))) {
 				session.put("utilisateur", utilisateur);
 				vResult = ActionSupport.SUCCESS;
-			}		
+			}
+			else {
+				addActionError("Entrer un mot de passe valide !");
+				vResult = ActionSupport.LOGIN;
+			}
 		}
 		
 

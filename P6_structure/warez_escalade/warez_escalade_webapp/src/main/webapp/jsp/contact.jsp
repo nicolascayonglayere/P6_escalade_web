@@ -20,8 +20,8 @@
 		<%@include file="_include/entete.jsp" %>
 		<div class="container text-center">
 			<s:form id="contactForm" action="envoi_message" theme="bootstrap" cssClass="form-vertical">
-				<s:textfield name="email" placeholder="email" label="email" requiredLabel="true"/>
-				<s:textfield name="userName" placeholder="UserName" label="UserName" requiredLabel="true"/>
+				<s:textfield name="coordonneeUtilisateur.email" placeholder="email" label="email" requiredLabel="true"/>
+				<s:textfield name="utilisateur.pseudo" placeholder="UserName" label="UserName" requiredLabel="true"/>
 				<s:textarea name="message" placeholder="message" label="votre message" requiredLabel="true"  cols="50" rows="10"/>		
 				<input class="btn btn-default" type="submit" value="ENVOYER">
 	      			<s:param name="message"><!--le message en param--></s:param>
