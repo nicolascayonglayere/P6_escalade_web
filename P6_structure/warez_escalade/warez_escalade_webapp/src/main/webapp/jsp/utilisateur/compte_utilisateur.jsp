@@ -33,17 +33,17 @@
 						<li>
 							<i class="fas fa-user"> <s:property value="#commentaire.auteur.pseudo"/></i>
 							<s:property value="#commentaire.message"/>
-							<s:a action="valider_commentaire">
-				    			<input type="submit" class="cssButton btn btn-primary" value="VALIDER">
+							<s:a action="valider_commentaire" namespace="/jsp/utilisateur">
+								<s:submit class="btn btn-default" value="%{getText('bouton.valider')}">
 				    				<s:param name="commentaire" value="#commentaire.message"/>
 				    				<s:param name="pseudo" value="#commentaire.auteur.pseudo"/>
-				    			</input>
+				    			</s:submit>
 				    		</s:a>
-							<s:a action="rejeter_commentaire">
-				    			<input type="submit" class="cssButton btn btn-primary" value="REJETER">
+							<s:a action="rejeter_commentaire" namespace="/jsp/utilisateur">
+								<s:submit class="btn btn-default" value="%{getText('bouton.rejeter')}">
 				    				<s:param name="commentaire" value="#commentaire.message"/>
 				    				<s:param name="pseudo" value="#commentaire.auteur.pseudo"/>
-				    			</input>
+				    			</s:submit>
 				    		</s:a>				    		
 						</li>
 					</ul>
@@ -51,19 +51,19 @@
 			</s:if>
 			<!-- pour les admin, des liens vers les actions réservées -->
 			<s:elseif test="%{utilisateur.role =='administrateur'}">
-				<h5>Utilisateur</h5>
-				<s:a href="jsp/admin/ban.jsp">
-					Bannir un utilisateur
+				<h5><s:text name=""></s:text></h5>
+				<s:a action="go_ban" namespace="/jsp/utilisateur">
+					<s:text name="compteUser.ban"/>
 	    		</s:a>
-	    		<h5>Topo</h5>
-	    		<s:a action="creer_topo">
-	    			Créer un topo
+	    		<h5><s:text name="compteUser.topo"/></h5>
+	    		<s:a action="go_creerTopo" namespace="/jsp/utilisateur">
+	    			<s:text name="compteUser.creerTopo"/>
 	    		</s:a>
-	    		<s:a action="modifier_topo">
-	    			Modifier un topo
+	    		<s:a action="modifier_topo" namespace="/jsp/utilisateur">
+	    			<s:text name="compteUser.modifTopo"/>
 	    		</s:a>
-	    		<s:a action="supprimer_topo">
-	    			Supprimer un topo
+	    		<s:a action="supprimer_topo" namespace="/jsp/utilisateur">
+	    			<s:text name="compteUser.supprTopo"/>
 	    		</s:a>				
 			</s:elseif>
 			
@@ -83,11 +83,11 @@
 					    	<td style="text-align:right;"><s:property value="#topoEmprunt.dateEmprunt" /></td>
 					    	<td style="text-align:right;"><s:property value="#topoEmprunt.dateRetour" /></td>
 					    	<td>
-					    		<s:a action="retour_topo">
-					    			<input type="submit" class="cssButton btn btn-primary" value="RETOUR">
+					    		<s:a action="retour_topo" namespace="/jsp/utilisateur">
+					    			<s:submit class="btn btn-default" value="%{getText('bouton.retour')}">
 					    				<s:param name="nom" value="#topoEmprunt.nom"/>
 					    				<s:param name="pseudo" value="#session.utilisateur.pseudo"/>
-					    			</input>
+					    			</s:submit>
 					    		</s:a>	
 					    	</td>
 					   	</tr>
@@ -99,17 +99,17 @@
 		<!-- un formulaire pour modifier ses param pseudo et mdp et coordonnee -->
 		<div class="container" style="border-color: gray; border-style: solid; border-width: medium">
 			<h5><s:text name="compteUser.modifier"/></h5>
-			<s:form action="modifier_user" cssClass="form-vertical">
-				<s:textfield name="utilisateur.pseudo" placeholder="pseudo" label="pseudo" requiredLabel="true"/>
-				<s:textfield name="utilisateur.password" placeholder="password" label="password" requiredLabel="true"/>
-				<s:textfield name="coordonneeUtilisateur.email" placeholder="email" label="email" requiredLabel="true"/>
-				<s:textfield name="coordonneeUtilisateur.adresse" placeholder="adresse" label="adresse" requiredLabel="true"/>
-				<input class="btn btn-default" type="submit" value="MODIFIER">
+			<s:form action="modifier_user" cssClass="form-vertical" namespace="/jsp/utilisateur">
+				<s:textfield name="utilisateur.pseudo" placeholder="pseudo" label="%{getText('form.pseudo')}" requiredLabel="true"/>
+				<s:textfield name="utilisateur.password" placeholder="password" label="%{getText('form.mdp')}" requiredLabel="true"/>
+				<s:textfield name="coordonneeUtilisateur.email" placeholder="email" label="%{getText('form.email')}" requiredLabel="true"/>
+				<s:textfield name="coordonneeUtilisateur.adresse" placeholder="adresse" label="%{getText('form.adresse')}" requiredLabel="true"/>
+				<s:submit class="btn btn-default" value="%{getText('bouton.modifier')}">
 					<s:param name="pseudo">${utilisateur.pseudo}</s:param>
 					<s:param name="password">${utilisateur.password}</s:param>
 					<s:param name="email">${coordonneeUtilisateur.email}</s:param>
 					<s:param name="adresse">${coordonneeUtilisateur.adresse}</s:param>
-				</input>			
+				</s:submit>
 			</s:form>
 		</div>
 
@@ -118,9 +118,8 @@
 		<div class="container" style="border-color: gray; border-style: solid; border-width: medium">
 			<h5><s:text name="compteUser.supprimer"/></h5>
 			<p><s:text name="compteUser.supprMessage"/> 
-				<s:a action = "supprimer_compte">			
-					<input class="btn btn-default" type="submit" value="SUPPRIMER">
-					</input>
+				<s:a action = "supprimer_compte" namespace="/jsp/utilisateur">
+					<s:submit class="btn btn-default" value="%{getText('bouton.supprimer')}"/>			
 				</s:a>
 			</p>		
 		</div>

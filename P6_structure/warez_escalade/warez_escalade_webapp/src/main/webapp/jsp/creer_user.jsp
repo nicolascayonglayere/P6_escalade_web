@@ -21,22 +21,22 @@
 		<%@include file="_include/entete.jsp" %>
 		<div class="container text-center">
 			<h3><s:text name="creerUser.titre"/></h3>
-			<s:form action="creer_user" cssClass="form-horizontal">
-				<s:textfield name="utilisateur.nom" placeholder="nom" label="nom" requiredLabel="true"/>
-				<s:textfield name="utilisateur.prenom" placeholder="prenom" label="prenom" requiredLabel="true"/>
-				<s:textfield name="utilisateur.pseudo" placeholder="pseudo" label="pseudo" requiredLabel="true"/>
-				<s:textfield name="utilisateur.password" placeholder="password" label="password" requiredLabel="true"/>
-				<s:textfield name="coordonnee.email" placeholder="email" label="email" requiredLabel="true"/>
-				<s:textfield name="coordonnee.adresse" placeholder="adresse" label="adresse" requiredLabel="true"/>
-				<input class="btn btn-default" type="submit" value="VALIDER">
+			<s:form action="creer_user" cssClass="form-horizontal" namespace="/">
+				<s:textfield name="utilisateur.nom" placeholder="nom" label="%{getText('form.nom')}" requiredLabel="true"/>
+				<s:textfield name="utilisateur.prenom" placeholder="prenom" label="%{getText('form.prenom')}" requiredLabel="true"/>
+				<s:textfield name="utilisateur.pseudo" placeholder="pseudo" label="%{getText('form.pseudo')}" requiredLabel="true"/>
+				<s:textfield name="utilisateur.password" placeholder="password" label="%{getText('form.mdp')}" requiredLabel="true"/>
+				<s:textfield name="coordonnee.email" placeholder="email" label="%{getText('form.email')}" requiredLabel="true"/>
+				<s:textfield name="coordonnee.adresse" placeholder="adresse" label="%{getText('form.adresse')}" requiredLabel="true"/>
+				<s:submit class="btn btn-default" value="%{getText('bouton.valider')}">
       				<s:param name="nom">${utilisateur.nom}</s:param>
       				<s:param name="prenom">${utilisateur.prenom}</s:param>
       				<s:param name="pseudo">${utilisateur.pseudo}</s:param>
       				<s:param name="password">${utilisateur.password}</s:param>
       				<s:param name="email">${coordonnee.email}</s:param>
       				<s:param name="adresse">${coordonnee.adresse}</s:param>
-     			 </input>
-			
+     			 </s:submit>
+				<s:token/>
 			</s:form>
 		
 		</div>

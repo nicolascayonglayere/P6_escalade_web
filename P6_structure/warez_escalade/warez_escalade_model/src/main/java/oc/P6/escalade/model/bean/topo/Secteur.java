@@ -8,7 +8,7 @@ public class Secteur {
 		private int id;
 		private String nom;
 		private Site site;
-		private String descritpion;
+		private String description;
 		private String image;
 		
 		public Secteur() {}
@@ -41,12 +41,12 @@ public class Secteur {
 			this.site = site;
 		}
 
-		public String getDescritpion() {
-			return descritpion;
+		public String getDescription() {
+			return description;
 		}
 
-		public void setDescritpion(String descritpion) {
-			this.descritpion = descritpion;
+		public void setDescription(String description) {
+			this.description = description;
 		}
 
 		public String getImage() {

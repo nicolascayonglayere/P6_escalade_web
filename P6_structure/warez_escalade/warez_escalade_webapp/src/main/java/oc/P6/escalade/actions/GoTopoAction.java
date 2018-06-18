@@ -24,7 +24,7 @@ public class GoTopoAction extends ActionSupport {
 	private Site site;
 	private Voie voie;
 	private String image;
-	
+	private ArrayList<Site> listSite;
 	private ArrayList<Secteur> listSecteur;
 	private ArrayList<Voie> listVoie;
 	private ArrayList<String>listImage;
@@ -93,6 +93,14 @@ public class GoTopoAction extends ActionSupport {
 	public void setListLieux(String[] listLieux) {
 		this.listLieux = listLieux;
 	}
+		
+	public ArrayList<Site> getListSite() {
+		return listSite;
+	}
+	public void setListSite(ArrayList<Site> listSite) {
+		this.listSite = listSite;
+	}
+	
 	public String execute() throws Exception {
         //call Service class to store personBean's state in database
 		//--recupe le nom du topo dans la requete
@@ -109,10 +117,11 @@ public class GoTopoAction extends ActionSupport {
 		image = listImage.get(0);
 		System.out.println(image);
         if (topo != null) {
-        	site = (Site) WebappHelper.getManagerFactory().getSiteManager().getSite(topo);
-        	listSecteur = (ArrayList<Secteur>) WebappHelper.getManagerFactory().getSecteurManager().getListSecteur(site);
-        	for (Secteur s : listSecteur) {
-        		listVoie = (ArrayList<Voie>) WebappHelper.getManagerFactory().getVoieManager().getListVoie(s);
+        	listSite = (ArrayList<Site>) WebappHelper.getManagerFactory().getSiteManager().getSite(topo);
+        	for (Site s : listSite) {
+        		listSecteur = (ArrayList<Secteur>) WebappHelper.getManagerFactory().getSecteurManager().getListSecteur(s);
+        		for (Secteur sect : listSecteur) 
+        			listVoie = (ArrayList<Voie>) WebappHelper.getManagerFactory().getVoieManager().getListVoie(sect);
         	}
 
         	return SUCCESS;

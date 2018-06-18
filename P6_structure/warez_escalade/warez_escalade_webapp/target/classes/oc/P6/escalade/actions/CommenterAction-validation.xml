@@ -5,12 +5,12 @@
 <validators>
     <field name="utilisateur.pseudo">
         <field-validator type="requiredstring">
-        	<message>Veuillez saisir un pseudo.</message>
+        	<message key="required.pseudo"/>
         </field-validator>
     </field>    
     <field name="commentaire.message">
         <field-validator type="requiredstring">
-        	<message>Veuillez saisir un commentaire.</message>
+        	<message key="required.commentaire"/>
         </field-validator>
     </field>        
 </validators>

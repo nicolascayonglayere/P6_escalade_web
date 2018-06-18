@@ -5,35 +5,35 @@
 <validators>
     <field name="utilisateur.nom">
         <field-validator type="requiredstring">
-        	<message>Veuillez saisir votre nom.</message>
+        	<message key="required.nom"/>
         </field-validator>
     </field>
     <field name="utilisateur.prenom">
         <field-validator type="requiredstring">
-        	<message>Veuillez saisir votre prenom.</message>
+        	<message key="required.prenom"/>
         </field-validator>
     </field>  
     <field name="utilisateur.pseudo">
         <field-validator type="requiredstring">
-        	<message>Veuillez saisir un pseudo.</message>
+        	<message key="required.pseudo"/>
         </field-validator>
     </field>  
     <field name="utilisateur.password">
         <field-validator type="requiredstring">
-        	<message> Un mot de passe est requis.</message>
+        	<message key="required.mdp"/>
         </field-validator>
     </field>
     <field name="coordonnee.email">
         <field-validator type="requiredstring">
-        	<message>Veuillez saisir votre adresse mail.</message>
+        	<message key="required.email"/>
         </field-validator>
         <field-validator type="email">
-    		<message>Veuillez saisir une adresse email valide.</message>
+    		<message key="invalid.email"/>
 		</field-validator>
     </field>
     <field name="coordonnee.adresse">
         <field-validator type="requiredstring">
-        	<message>Veuillez saisir votre adresse.</message>
+        	<message key="required.adresse"/>
         </field-validator>
     </field>        
 </validators>

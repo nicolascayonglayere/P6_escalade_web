@@ -19,14 +19,15 @@
 	<body>
 		<%@include file="_include/entete.jsp" %>
 		<div class="container text-center">
-			<s:form id="contactForm" action="envoi_message" theme="bootstrap" cssClass="form-vertical">
-				<s:textfield name="coordonneeUtilisateur.email" placeholder="email" label="email" requiredLabel="true"/>
-				<s:textfield name="utilisateur.pseudo" placeholder="UserName" label="UserName" requiredLabel="true"/>
-				<s:textarea name="message" placeholder="message" label="votre message" requiredLabel="true"  cols="50" rows="10"/>		
-				<input class="btn btn-default" type="submit" value="ENVOYER">
+			<s:form id="contactForm" action="envoi_message" cssClass="form-vertical" namespace="/">
+				<s:textfield name="coordonneeUtilisateur.email" placeholder="email" label="%{getText('form.email')}" requiredLabel="true"/>
+				<s:textfield name="utilisateur.pseudo" placeholder="pseudo" label="%{getText('form.pseudo')}" requiredLabel="true"/>
+				<s:textarea name="message" placeholder="message" label="%{getText('form.message')}" requiredLabel="true"  cols="50" rows="10"/>
+				<s:submit class="btn btn-default" value="%{getText('bouton.envoi')}">		
 	      			<s:param name="message"><!--le message en param--></s:param>
-	     		 </input>
-			</s:form>		
+	     		 </s:submit>
+			</s:form>	
+			<s:token/>	
 		</div>
 
 		

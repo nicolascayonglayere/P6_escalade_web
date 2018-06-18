@@ -15,20 +15,26 @@
 	       	<s:actionmessage/>
 			<s:actionerror/>
 			
-			<s:form id="idLoginForm" action="loginUser" namespace="/LoginUser" cssClass="form-vertical">
-				<s:textfield name="utilisateur.pseudo" placeholder="pseudo" label="pseudo" requiredLabel="true"/>
-				<s:password name="utilisateur.password" placeholder="password" label="password" requiredLabel="true"/>
-      			<input id="btOK" class="btn btn-default" type="submit">
-      				<s:param name="pseudo">${utilisateur.pseudo }</s:param>
+			<s:form id="idLoginForm" action="loginUser" cssClass="form-vertical" namespace="/">
+				<s:textfield name="utilisateur.pseudo" placeholder="pseudo" label="%{getText('form.pseudo')}" requiredLabel="true"/>
+				<s:password name="utilisateur.password" placeholder="password" label="%{getText('form.mdp')}" requiredLabel="true"/>
+				<s:submit id="btOK" class="btn btn-default" value="%{getText('login.titre')}">	
+       				<s:param name="pseudo">${utilisateur.pseudo }</s:param>
       				<s:param name="password">${utilisateur.password }</s:param>
-     			 </input>		
+     			 </s:submit>
+     			 <s:token/>		
 			</s:form>
 	      </div>
 	    </div>
 	  </div>
 	</div>
 	
+	
 	<script type="text/javascript">
+    $('#btCo').click(function(){
+    	$('#myModal').modal('show');
+    });
+    
 	$('#btOK').click(function(){
 		$('#myModal').modal('hide');
 	});

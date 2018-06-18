@@ -2,6 +2,9 @@ package oc.P6.escalade.actions;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -9,7 +12,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import oc.P6.escalade.WebappHelper.WebappHelper;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
-public class BanUtilisateurAction extends ActionSupport implements SessionAware{
+public class BanUtilisateurAction extends ActionSupport implements SessionAware, ServletRequestAware{
 
 	/**
 	 * 
@@ -18,6 +21,7 @@ public class BanUtilisateurAction extends ActionSupport implements SessionAware{
 	private String checkMe;
 	private Utilisateur utilisateur;
 	private Map<String, Object> session;
+	private HttpServletRequest servletRequest;
 
 	
 	public String getCheckMe() {
@@ -45,8 +49,14 @@ public class BanUtilisateurAction extends ActionSupport implements SessionAware{
 		System.out.println(checkMe);
 		utilisateur = WebappHelper.getManagerFactory().getUtilisateurManager().getUtilisateur(checkMe);
 		WebappHelper.getManagerFactory().getUtilisateurManager().banUtilisateur(utilisateur);
+		this.session.remove("utilisateur");
 		addActionMessage("Vous avez banni l'utilisateur "+utilisateur.getPseudo());
+		this.servletRequest.getSession().invalidate();
 		return ActionSupport.SUCCESS;
+	}
+	@Override
+	public void setServletRequest(HttpServletRequest request) {
+		this.servletRequest = request;		
 	}
 
 }

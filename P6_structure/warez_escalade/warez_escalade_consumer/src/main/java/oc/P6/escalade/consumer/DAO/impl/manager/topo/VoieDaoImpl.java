@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -25,8 +26,28 @@ public class VoieDaoImpl extends AbstractDAO implements VoieManagerDao{
 
 	@Override
 	public boolean create(Voie pVoie) {
-		// TODO Auto-generated method stub
-		return false;
+		String vSQL = "INSERT INTO voie (nom, cotation, hauteur, nombre_longueur, nombre_point, id_secteur, description)"
+				+ " VALUES (:nom, :cotation, :hauteur, :nbLongueur, :nbPoint, :id_secteur, :description)";
+
+		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
+		MapSqlParameterSource vParams = new MapSqlParameterSource();
+		vParams.addValue("nom", pVoie.getNom(), Types.VARCHAR);
+		vParams.addValue("cotation", pVoie.getCotation(), Types.VARCHAR);
+		vParams.addValue("hauteur", pVoie.getHauteur(), Types.INTEGER);
+		vParams.addValue("nbLongueur", pVoie.getNbLgueur(), Types.INTEGER);
+		vParams.addValue("nbPoint", pVoie.getNbPoint(), Types.INTEGER);
+		vParams.addValue("id_secteur", pVoie.getSecteur().getId(), Types.INTEGER);
+		vParams.addValue("description", pVoie.getDescription(), Types.LONGVARCHAR);
+
+	    try {
+	        vJdbcTemplate.update(vSQL, vParams);
+	    } catch (DuplicateKeyException vEx) {
+	        System.out.println("La voie existe déjà ! voie=" + pVoie.getNom()+" dans le secteur "+pVoie.getSecteur().getNom());
+	        return false;
+	    }
+	    
+	    
+		return true;
 	}
 
 	@Override
@@ -42,9 +63,39 @@ public class VoieDaoImpl extends AbstractDAO implements VoieManagerDao{
 	}
 
 	@Override
-	public Voie find(String pNom) {
-		// TODO Auto-generated method stub
-		return null;
+	public Voie find(String pNom, int pIdSecteur) {
+		String vSQL = "SELECT * FROM voie WHERE id_secteur = :id_secteur AND nom = :nom";
+		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
+		MapSqlParameterSource vParams = new MapSqlParameterSource();
+        vParams.addValue("id_secteur", pIdSecteur, Types.INTEGER);
+        vParams.addValue("nom", pNom, Types.VARCHAR);
+		
+		RowMapper<Voie> vRowMapper = new RowMapper<Voie>() {
+
+			@Override
+			public Voie mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Secteur vSecteur = secteurDAO.find(pIdSecteur);
+				Voie vVoie = new Voie(pNom);
+				vVoie.setId(rs.getInt("id_voie"));
+				vVoie.setSecteur(vSecteur);
+				vVoie.setCotation(rs.getString("cotation"));
+				vVoie.setHauteur(rs.getInt("hauteur"));
+				vVoie.setNbLgueur(rs.getInt("nombre_longueur"));
+				vVoie.setNbPoint(rs.getInt("nombre_point"));
+				vVoie.setSecteur(vSecteur);
+				vVoie.setDescription(rs.getString("description"));
+				return vVoie;
+			}
+			
+		};
+		Voie voie;
+		if (vJdbcTemplate.query(vSQL,vParams,vRowMapper).size() != 0)
+			voie = vJdbcTemplate.query(vSQL,vParams,vRowMapper).get(0);
+		else
+			voie = null;
+		
+		
+		return voie;
 	}
 
 	@Override

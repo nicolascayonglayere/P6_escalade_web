@@ -30,9 +30,12 @@
 			<div class="row">
 				<div class="col-sm">
 					<h2><s:property value="topo.nom"/></h2>
-					<p><s:property value="topo.description"/></p>
-					<h3><s:property value="site.nom"/></h3>
-					<p><s:property value="site.description"/></p>			
+					<p><s:property value="topo.description"/></br></p>
+					<s:iterator value="listSite" var="site">
+						<h3><s:property value="#site.nom"/></h3>
+						<p><s:property value="#site.description"/></p>				
+					</s:iterator>
+			
 				</div>
 			</div>
 			<s:actionmessage/>
@@ -120,11 +123,12 @@
 			<h3><s:text name="topo.commentaire"></s:text></h3>		
 			<div class="row">
 	
-				<s:form id="commentaireForm" action="commenterAction">
-					<s:textarea name="commentaireTopo.message" placeholder="commentaire" label="votre commentaire" requiredLabel="true"  cols="100" rows="10"/>		
-					<input class="btn btn-default" type="submit" value="ENVOYER">
+				<s:form id="commentaireForm" action="commenter" namespace="/jsp/utilisateur">
+					<s:textarea name="commentaireTopo.message" placeholder="commentaire" label="%{getText('form.commentaire')}" requiredLabel="true"  cols="100" rows="10"/>		
+					<s:submit id="btEnvoi" class="btn btn-default" value="%{getText('bouton.envoi')}">
 		      			<s:param name="message">${commentaireTopo.message }</s:param>
-		     		 </input>
+		     		 </s:submit>
+		     		 <s:token/>
 		     	</s:form>
 			</div>
 		</div>		

@@ -13,7 +13,7 @@ public interface VoieManagerDao {
 	
 	boolean update (Voie pVoie);
 	
-	Voie find(String pNom);
+	Voie find(String pNom, int pIdSecteur);
 	
 	ArrayList<Voie> getlistVoie(Secteur pSecteur);
 }

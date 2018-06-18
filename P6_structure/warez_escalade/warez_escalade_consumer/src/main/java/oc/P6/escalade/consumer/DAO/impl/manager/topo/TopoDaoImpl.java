@@ -28,17 +28,18 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 	
 	@Override
 	public boolean create(Topo pTopo) {
-		String vSQL = "INSERT INTO topo (nom, id_utilisateur) VALUES (:nom, :id)";
+		String vSQL = "INSERT INTO topo (nom, id_utilisateur, nombre_exemplaires, description, longitude, latitude, image) VALUES (:nom, :id, :nbreEx, :description, :longitude, :latitude, :image)";
 		Utilisateur auteur = userDAO.find(pTopo.getAuteur().getPseudo());
 		
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
 		vParams.addValue("nom", pTopo.getNom(), Types.VARCHAR);
 		vParams.addValue("id", auteur.getId(), Types.INTEGER);
-		
-	//	BeanPropertySqlParameterSource vParams = new BeanPropertySqlParameterSource(pTopo);
-	//  vParams.registerSqlType("nom", Types.VARCHAR);
-	//  vParams.registerSqlType("id", Types.INTEGER);
+		vParams.addValue("nbreEx", pTopo.getNbreEx(), Types.INTEGER);
+		vParams.addValue("description", pTopo.getDescription(), Types.LONGVARCHAR);
+		vParams.addValue("longitude", pTopo.getLongitude(), Types.DECIMAL);
+		vParams.addValue("latitude", pTopo.getLatitude(), Types.DECIMAL);
+		vParams.addValue("image", pTopo.getImage(), Types.VARCHAR);
 
 	    
 	    try {

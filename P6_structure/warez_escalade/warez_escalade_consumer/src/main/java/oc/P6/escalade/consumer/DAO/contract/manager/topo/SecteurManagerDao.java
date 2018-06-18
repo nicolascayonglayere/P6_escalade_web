@@ -13,7 +13,7 @@ public interface SecteurManagerDao {
 	
 	boolean update (Secteur pSecteur);
 	
-	Secteur find(String pNom);
+	Secteur find(String pNom, int pIdSite);
 	
 	Secteur find(int id);
 	

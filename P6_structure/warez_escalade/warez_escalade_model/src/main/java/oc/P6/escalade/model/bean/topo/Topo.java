@@ -14,6 +14,8 @@ public class Topo {
 	private double longitude;
 	private double latitude;
 	private String description;
+	private int nbreEx;
+	private int nombreSite, nombreSecteur, nombreVoie;
 	
 	public Topo() {}
 	
@@ -57,16 +59,24 @@ public class Topo {
 		return longitude;
 	}
 
-	public void setLongitude(double longitude) {
-		this.longitude = longitude;
+	public void setLongitude(String longitude) {
+		try {
+			this.longitude = Double.parseDouble(longitude);
+		}catch (Exception e){
+			System.out.println(this.getClass().toString() + e);
+		} 
 	}
 
 	public double getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(double latitude) {
-		this.latitude = latitude;
+	public void setLatitude(String latitude) {
+		try {
+			this.latitude = Double.parseDouble(latitude);
+		}catch (Exception e){
+			System.out.println(this.getClass().toString() + e);
+		}
 	}
 
 	public String getDescription() {
@@ -75,6 +85,42 @@ public class Topo {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public int getNbreEx() {
+		return nbreEx;
+	}
+
+	public void setNbreEx(String nbreEx) {
+		try {
+			this.nbreEx = Integer.parseInt(nbreEx);
+		}catch (Exception e){
+			System.out.println(this.getClass().toString() + e);
+		}
+	}
+
+	public int getNombreSite() {
+		return nombreSite;
+	}
+
+	public void setNombreSite(int nombreSite) {
+		this.nombreSite = nombreSite;
+	}
+
+	public int getNombreSecteur() {
+		return nombreSecteur;
+	}
+
+	public void setNombreSecteur(int nombreSecteur) {
+		this.nombreSecteur = nombreSecteur;
+	}
+
+	public int getNombreVoie() {
+		return nombreVoie;
+	}
+
+	public void setNombreVoie(int nombreVoie) {
+		this.nombreVoie = nombreVoie;
 	}
 	
 	

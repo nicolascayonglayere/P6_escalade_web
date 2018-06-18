@@ -15,15 +15,14 @@
 	       	<s:actionmessage/>
 			<s:actionerror/>
 			
-			<s:form id="idCommForm" action="commenterTopo" namespace="/LoginUser" cssClass="form-vertical">
+			<s:form id="idCommForm" action="commenterTopo" namespace="/jsp/utilisateur" cssClass="form-vertical">
 				<s:textfield name="utilisateur.pseudo" placeholder="pseudo" label="pseudo" requiredLabel="true"/>
 				<s:textarea name="message" placeholder="message" label="votre message" requiredLabel="true"  cols="50" rows="10"/>	
-      			<input id="btCommOK" class="cssButton btn btn-default" type="submit" value="bouton.envoi">
+				<s:submit id="btCommOK" class="btn btn-default" value="%{getText('bouton.envoi')}">
       				<s:param name="pseudo">${utilisateur.pseudo }</s:param>
-
       				<s:param name="nom" >${topo.nom}</s:param>
       				<s:param name="message">${commentaire.message}</s:param>
-     			 </input>		
+      			</s:submit>	
 			</s:form>
 	      </div>
 	    </div>

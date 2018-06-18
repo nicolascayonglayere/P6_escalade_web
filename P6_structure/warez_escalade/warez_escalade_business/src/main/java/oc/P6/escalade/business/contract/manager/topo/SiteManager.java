@@ -9,9 +9,9 @@ public interface SiteManager {
 
 	ArrayList<Site> getListSite();
 	
-	Site getSite(String pNom);
+	Site getSite(String pNom, Topo pTopo);
 	
-	Site getSite (Topo pTopo);
+	ArrayList<Site> getSite (Topo pTopo);
 	
-	void creerSite(String pNom);
+	void creerSite(Site pSite);
 }

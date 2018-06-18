@@ -38,7 +38,25 @@ public class VoieManagerImpl extends AbstractDAOManager implements VoieManager{
 
 	@Override
 	public void creerVoie(Voie pVoie) {
-		// TODO Auto-generated method stub
+		System.out.println("CTRL "+pVoie.getNom());
+		if (voieDao.find(pVoie.getNom(),pVoie.getSecteur().getId()) != null) {
+			try {
+				throw new Exception("La voie existe deja.");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else {
+			voie.setCotation(pVoie.getCotation());
+			voie.setDescription(pVoie.getDescription());
+			voie.setHauteur(pVoie.getHauteur());
+			voie.setNbLgueur(pVoie.getNbLgueur());
+			voie.setNbPoint(pVoie.getNbPoint());
+			voie.setNom(pVoie.getNom());
+			voie.setSecteur(pVoie.getSecteur());
+			voieDao.create(pVoie);
+		}
 		
 	}
 

@@ -5,20 +5,20 @@
 <validators>
     <field name="coordonneeUtilisateur.email">
         <field-validator type="requiredstring">
-        	<message>Veuillez saisir votre email.</message>
+        	<message key="required.email"/>
         </field-validator>
         <field-validator type="email">
-    		<message>Veuillez saisir une adresse email valide.</message>
+    		<message key="invalid.email"/>
 		</field-validator>        
     </field>
     <field name="utilisateur.pseudo">
         <field-validator type="requiredstring">
-        	<message>Veuillez saisir un pseudo.</message>
+        	<message key="required.pseudo"/>
         </field-validator>
     </field>        
     <field name="message">
         <field-validator type="requiredstring">
-        	<message>Veuillez saisir un message.</message>
+        	<message key="required.message"/>
         </field-validator>
     </field>        
 </validators>

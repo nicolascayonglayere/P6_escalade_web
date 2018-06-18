@@ -22,11 +22,11 @@ public class LoginInterceptor implements Interceptor {
 	@Override
 	public String intercept(ActionInvocation invocation) throws Exception {
 		Map<String, Object> sessionAttributes = invocation.getInvocationContext().getSession();
-		System.out.println(sessionAttributes.get("userName"));
-		if (sessionAttributes == null || sessionAttributes.get("loginId") == null) {
+		System.out.println(sessionAttributes.get("utilisateur"));
+		if (sessionAttributes == null || sessionAttributes.get("utilisateur") == null) {
 			return "login";
 		} else {
-			if (!((String) sessionAttributes.get("loginId")).equals(null)) {
+			if (! (sessionAttributes.get("utilisateur") == null)) {
 				return invocation.invoke();
 			} else {
 				return "login";

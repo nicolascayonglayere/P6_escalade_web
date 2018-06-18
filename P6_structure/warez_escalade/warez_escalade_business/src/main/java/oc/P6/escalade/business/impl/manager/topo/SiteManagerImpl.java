@@ -31,20 +31,45 @@ public class SiteManagerImpl extends AbstractDAOManager implements SiteManager{
 	}
 
 	@Override
-	public Site getSite(String pNom) {
-		// TODO Auto-generated method stub
-		return null;
+	public Site getSite(String pNom, Topo pTopo) {
+		Site site = null;
+		if (siteDAO.find(pNom, pTopo.getId()) != null) {
+			site = siteDAO.find(pNom, pTopo.getId());
+		}
+		else {
+			try {
+				throw new Exception("Le site n'existe pas.");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return site;
 	}
 
 	@Override
-	public void creerSite(String pNom) {
-		// TODO Auto-generated method stub
+	public void creerSite(Site pSite) {
+		System.out.println("CTRL "+pSite.getNom());
+		if (siteDAO.find(pSite.getNom(), pSite.getTopo().getId()) != null) {
+			try {
+				throw new Exception("Le site existe deja.");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else {
+			site.setNom(pSite.getNom());
+			site.setDescription(pSite.getDescription());
+			site.setTopo(pSite.getTopo());
+			siteDAO.create(pSite);
+		}
 		
 	}
 
 	@Override
-	public Site getSite(Topo pTopo) {
-		Site vSite = null;
+	public ArrayList<Site> getSite(Topo pTopo) {
+		ArrayList<Site> vSite = new ArrayList<Site>();
 		
 		if (siteDAO.find(pTopo.getId()) != null) {
 			vSite = siteDAO.find(pTopo.getId());

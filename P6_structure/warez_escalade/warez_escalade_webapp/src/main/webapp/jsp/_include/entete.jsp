@@ -11,26 +11,27 @@
       			<div class="container-fluid">
       				<div class="row">
 						<!-- <div class="navbar-header">-->
-	      					<a class="navbar-brand" href="#page-top"><s:text name="entete.titre"/></a>	
+							<s:url var="homeURL" action="homeAction" namespace="/"/>
+	      					<a class="navbar-brand" href="%{homeURL}"><s:text name="entete.titre"/></a>	
 	      				<!--  </div>-->
 	      			
 			      		<div class="collapse navbar-collapse"  >
 				      		<ul class="navbar-nav mr-auto">
 					     	   <li class="hidden"><a href="#page-top"></a></li>
 					     	   <li class="nav-item active">
-					     	   		<s:url var="listTopoURL" action="lister_topo"/>
+					     	   		<s:url var="listTopoURL" action="lister_topo" namespace="/"/>
 					     	   		<s:a href="%{listTopoURL}" cssClass="nav-link"><s:text name="entete.topo"/></s:a>
 					     	   </li>
 					     	   <li class="nav-item active">
-					     	   		<s:url var="presentationURL" action="presentation"/>
+					     	   		<s:url var="presentationURL" action="presentation" namespace="/"/>
 					     	   		<s:a href="%{presentationURL}" cssClass="nav-link"><s:text name="entete.qui"/></s:a>
 					     	   </li>
 					     	   <li class="nav-item active">
-					     	   		<s:url var="contactURL" action="contact"/>
+					     	   		<s:url var="contactURL" action="contact" namespace="/"/>
 					     	   		<s:a href="%{contactURL}" cssClass="nav-link"><s:text name="entete.contact"/></s:a>
 					     	   </li>
 					     	   <li class="nav-item active">
-					     	   		<s:url var="inscriptionURL" action="inscription"/>
+					     	   		<s:url var="inscriptionURL" action="inscription" namespace="/"/>
 					     	   		<s:a href="%{inscriptionURL}" cssClass="nav-link"><s:text name="entete.inscription"/></s:a>
 					     	   </li>
 				      		</ul>

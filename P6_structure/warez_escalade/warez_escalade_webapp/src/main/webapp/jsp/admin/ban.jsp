@@ -19,14 +19,14 @@
 	<body>
 		<%@include file="../_include/entete.jsp" %>
 		<div class="container">
-			<s:form id="rechercheUtilisateur" action="recherche_utilisateur" theme="bootstrap" cssClass="form-horizontal">
-				<s:textfield name="utilisateur.pseudo" placeholder="pseudo" label="pseudo" requiredLabel="true"/>
-				<input class="btn btn-default" type="submit" value="RECHERCHER" align="right">
+			<s:form id="rechercheUtilisateur" action="recherche_utilisateur" cssClass="form-horizontal" namespace="/jsp/utilisateur">
+				<s:textfield name="utilisateur.pseudo" placeholder="pseudo" label="%{getText('form.pseudo')}" requiredLabel="true"/>
+				<s:submit class="btn btn-default" value="%{getText('bouton.rechercher')}">
 			  		<s:param name="pseudo">${utilisateur.pseudo}</s:param>
-			 	 </input>
+			 	 </s:submit>
 			</s:form>		
 			
-			<s:form action="bannir" theme="bootstrap" cssClass="form-vertical">
+			<s:form action="bannir" cssClass="form-vertical" namespace="/jsp/utilisateur">
 				<ul>
 					<s:iterator value="listUtilisateur" var="utilisateur">
 						<li>
@@ -41,10 +41,8 @@
 						</ul>
 					</s:iterator>
 				</ul>
-				<s:submit class="btn btn-default" value="BANNIR"/>				
-				<!-- <input class="btn btn-default" type="submit" value="BANNIR">
-					<s:param name="pseudo"><s:property value="checkMe"/></s:param>
-				</input>-->			
+				<s:submit class="btn btn-default" value="%{getText('bouton.bannir')}"/>	
+				<s:token/>			
 			</s:form>		
 		</div>	
 	

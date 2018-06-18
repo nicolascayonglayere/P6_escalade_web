@@ -9,7 +9,7 @@ public interface SecteurManager {
 
 	ArrayList<Secteur> getListSecteur(Site pSite);
 	
-	Secteur getSecteur();
+	Secteur getSecteur(String pNom, Site pSite);
 	
-	void creerSecteur(String pNom);
+	void creerSecteur(Secteur pSecteur);
 }

@@ -48,8 +48,8 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
 		String vResult="";
 		System.out.println(utilisateur.getPseudo()+" - "+utilisateur.getPassword());
 		Utilisateur vUser = WebappHelper.getManagerFactory().getUtilisateurManager().getUtilisateurPass(utilisateur.getPassword());
-		//Utilisateur vUser = WebappHelper.getManagerFactory().getUtilisateurManager().getUtilisateur(utilisateur.getPseudo());
-		if(vUser.getNom() != null) {
+
+		if(vUser.getNom() != null && !(vUser.getRole()).equals("banni")) {
 			if ((utilisateur.getPseudo().equals(vUser.getPseudo()))&&(utilisateur.getPassword().equals(vUser.getPassword()))) {
 				session.put("utilisateur", utilisateur);
 				vResult = ActionSupport.SUCCESS;
@@ -62,7 +62,7 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
 		
 
 		else {
-			addActionError("Please Enter Valid emailId or Password");
+			addActionError("Vous avez été banni de ce site.");
 			vResult = ActionSupport.LOGIN;
 		}
 		return vResult;

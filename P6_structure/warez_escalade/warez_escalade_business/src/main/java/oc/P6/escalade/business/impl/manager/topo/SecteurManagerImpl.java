@@ -31,14 +31,39 @@ public class SecteurManagerImpl extends AbstractDAOManager implements SecteurMan
 	}
 
 	@Override
-	public Secteur getSecteur() {
-		// TODO Auto-generated method stub
-		return null;
+	public Secteur getSecteur(String pNom, Site pSite) {
+		Secteur secteur = null;
+		if (secteurDAO.find(pNom, pSite.getId()) != null) {
+			secteur = secteurDAO.find(pNom, pSite.getId());
+		}
+		else {
+			try {
+				throw new Exception("Le secteur n'existe pas.");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return secteur;
 	}
 
 	@Override
-	public void creerSecteur(String pNom) {
-		// TODO Auto-generated method stub
+	public void creerSecteur(Secteur pSecteur) {
+		System.out.println("CTRL "+pSecteur.getNom());
+		if (secteurDAO.find(pSecteur.getNom(), pSecteur.getSite().getId()) != null) {
+			try {
+				throw new Exception("Le secteur existe deja.");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else {
+			secteur.setNom(pSecteur.getNom());
+			secteur.setDescription(pSecteur.getDescription());
+			secteur.setSite(pSecteur.getSite());
+			secteurDAO.create(pSecteur);
+		}
 		
 	}
 

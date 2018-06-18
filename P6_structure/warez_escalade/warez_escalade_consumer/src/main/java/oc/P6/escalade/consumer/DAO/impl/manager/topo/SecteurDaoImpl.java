@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -27,8 +28,25 @@ public class SecteurDaoImpl extends AbstractDAO implements SecteurManagerDao{
 
 	@Override
 	public boolean create(Secteur pSecteur) {
-		// TODO Auto-generated method stub
-		return false;
+		String vSQL = "INSERT INTO secteur (nom, description, id_site, image) VALUES (:nom, :description, :id_site, :image)";
+
+		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
+		MapSqlParameterSource vParams = new MapSqlParameterSource();
+		vParams.addValue("nom", pSecteur.getNom(), Types.VARCHAR);
+		vParams.addValue("description", pSecteur.getDescription(), Types.LONGVARCHAR);
+		vParams.addValue("id_topo", pSecteur.getSite().getId(), Types.INTEGER);
+		vParams.addValue("image", pSecteur.getImage(), Types.VARCHAR);
+
+	    
+	    try {
+	        vJdbcTemplate.update(vSQL, vParams);
+	    } catch (DuplicateKeyException vEx) {
+	        System.out.println("Le secteur existe déjà ! secteur=" + pSecteur.getNom()+" dans le site "+pSecteur.getSite().getNom());
+	        return false;
+	    }
+	    
+	    
+		return true;
 	}
 
 	@Override
@@ -44,9 +62,35 @@ public class SecteurDaoImpl extends AbstractDAO implements SecteurManagerDao{
 	}
 
 	@Override
-	public Secteur find(String pNom) {
-		// TODO Auto-generated method stub
-		return null;
+	public Secteur find(String pNom, int pIdSite) {
+		String vSQL = "SELECT * FROM secteur WHERE id_site = :id_site AND nom = :nom";
+		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
+		MapSqlParameterSource vParams = new MapSqlParameterSource();
+        vParams.addValue("id_site", pIdSite, Types.INTEGER);
+        vParams.addValue("nom", pNom, Types.VARCHAR);
+		
+		RowMapper<Secteur> vRowMapper = new RowMapper<Secteur>() {
+
+			@Override
+			public Secteur mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Site vSite = siteDAO.get(pIdSite);
+				Secteur vSecteur = new Secteur(pNom);
+				vSecteur.setId(rs.getInt("id_secteur"));
+				vSecteur.setSite(vSite);
+				vSecteur.setDescription(rs.getString("description"));
+				vSecteur.setImage(rs.getString("image"));
+				return vSecteur;
+			}
+			
+		};
+		Secteur secteur;
+		if (vJdbcTemplate.query(vSQL,vParams,vRowMapper).size() != 0)
+			secteur = vJdbcTemplate.query(vSQL,vParams,vRowMapper).get(0);
+		else
+			secteur = null;
+		
+		
+		return secteur;
 	}
 
 	@Override
@@ -55,17 +99,15 @@ public class SecteurDaoImpl extends AbstractDAO implements SecteurManagerDao{
 		String vSQL = "SELECT * FROM secteur WHERE id_site = :id_site";
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
-        vParams.addValue("id_site", siteDAO.find(pSite.getNom()).getId(), Types.INTEGER);
+        vParams.addValue("id_site", pSite.getId(), Types.INTEGER);
 		
 		RowMapper<Secteur> vRowMapper = new RowMapper<Secteur>() {
 
 			@Override
 			public Secteur mapRow(ResultSet rs, int rowNum) throws SQLException {
 				Secteur vSecteur = new Secteur (rs.getString("nom"));
-				Site vSite = siteDAO.find(rs.getInt("id_site"));
-				
 				vSecteur.setId(rs.getInt("id_secteur"));
-				vSecteur.setSite(vSite);
+				vSecteur.setSite(pSite);
 				return vSecteur;
 			}
 			
@@ -88,11 +130,11 @@ public class SecteurDaoImpl extends AbstractDAO implements SecteurManagerDao{
 			@Override
 			public Secteur mapRow(ResultSet rs, int rowNum) throws SQLException {
 				Secteur vSecteur = new Secteur (rs.getString("nom"));
-				Site vSite = siteDAO.find(rs.getInt("id_site"));
+				Site vSite = siteDAO.find(rs.getInt("id_site")).get(0);
 				
 				vSecteur.setId(id);
 				vSecteur.setSite(vSite);
-				vSecteur.setDescritpion(rs.getString("description"));
+				vSecteur.setDescription(rs.getString("description"));
 				vSecteur.setImage(rs.getString("image"));
 				return vSecteur;
 			}

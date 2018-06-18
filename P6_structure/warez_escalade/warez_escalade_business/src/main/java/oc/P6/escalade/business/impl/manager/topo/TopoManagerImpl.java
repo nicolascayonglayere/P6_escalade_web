@@ -58,6 +58,11 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 		else {
 			topo.setNom(pTopo.getNom());
 			topo.setAuteur(pTopo.getAuteur());
+			topo.setNbreEx(pTopo.getNbreEx());
+			topo.setDescription(pTopo.getDescription());
+			topo.setLatitude(pTopo.getLatitude());
+			topo.setLongitude(pTopo.getLongitude());
+			topo.setImage(pTopo.getNom().replaceAll("\\p{Space}", ""));
 			topoDAO.create(pTopo);
 		}
 		

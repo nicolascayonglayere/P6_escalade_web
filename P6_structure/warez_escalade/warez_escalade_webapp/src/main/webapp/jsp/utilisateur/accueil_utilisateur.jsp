@@ -27,7 +27,7 @@
 				<s:iterator value="listTopo">
 					<tr>
 				    	<td style="text-align:left;">
-				    		<s:a action="go_topo">
+				    		<s:a action="go_topo" namespace="/">
 				            	<s:property value="nom"/>
 			                    <s:param name="nom" value="nom" />	
 			               	</s:a>
@@ -36,11 +36,11 @@
 				    	<!-- <td style="text-align:right;"><s:property value="voie" /></td>-->
 				    	<td>
 
-				    		<s:a action="emprunt_topo">
-				    			<input type="submit" class="cssButton btn btn-primary" value="EMPRUNT">
+				    		<s:a action="emprunt_topo" namespace="/jsp/utilisateur">
+				    			<s:submit class="btn btn-default" value="%{getText('bouton.emprunt')}">
 				    				<s:param name="nom" value="nom"/>
 				    				<s:param name="pseudo" value="#session.utilisateur.pseudo"/>
-				    			</input>
+				    			</s:submit>
 				    		</s:a>
 				    		
 				    	</td>

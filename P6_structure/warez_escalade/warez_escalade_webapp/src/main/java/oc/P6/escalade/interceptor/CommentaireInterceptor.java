@@ -30,14 +30,19 @@ public class CommentaireInterceptor implements Interceptor {
 		System.out.println(message);
 		String vResult = "";
 		//ici je souhaite filtrer les messages injurieux, qui contiennent des string non souhaitees
-		for (String s :motsClefs) {
-			if (knuthMorrisPratt(s, message) < 0)
-				vResult = invocation.invoke(); 			
-			else {
-				vResult = "INPUT";
-				break;
+		if(message != null) {
+			for (String s :motsClefs) {
+				if (knuthMorrisPratt(s, message) < 0)
+					vResult = invocation.invoke(); 			
+				else {
+					vResult = "INPUT";
+					break;
+				}
 			}
 		}
+		else
+			vResult = invocation.invoke();
+
 		return vResult;
 
 	}

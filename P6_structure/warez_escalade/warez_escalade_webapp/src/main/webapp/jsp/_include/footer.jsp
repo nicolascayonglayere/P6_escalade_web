@@ -7,13 +7,13 @@
 		<div class="row">
 			<s:if test="#session.utilisateur">
 				<p>
-					<s:url var="goCompteURL" action="go_monCompte"/>				
+					<s:url var="goCompteURL" action="go_monCompte" namespace="/jsp/utilisateur"/>				
 					<s:a href="%{goCompteURL}">
 						<s:text name="footer.utilisateur"/><s:property value="#session.utilisateur.pseudo"/>
 					</s:a>
 				</p>
 				
-				<s:url var="decoURL" action="logOut"/>
+				<s:url var="decoURL" action="logOut" namespace="/jsp/utilisateur"/>
 				<s:a href="%{decoURL}" class="btn btn-default btn-sm ">
 					<s:text name="footer.deconnexion" />
 				</s:a>
