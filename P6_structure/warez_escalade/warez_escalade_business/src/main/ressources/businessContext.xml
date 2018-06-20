@@ -12,7 +12,7 @@
 
 
     <!-- Scanne les packages pour trouver les beans qui se déclarent (@Named...) -->
-    <context:component-scan base-package="oc.P6.escalade"/>
+    <context:component-scan base-package="oc.P6.escalade.business.impl"/>
 	
 	<!-- Initialization for data source 
 	<bean id="dataSourceP6" class="org.springframework.jndi.JndiObjectFactoryBean">
@@ -24,7 +24,7 @@
 	    <property name="dataSourceP6" ref="dataSourceP6"/>
 	</bean>
 	
-	<!-- ==== Helper ===== -->
+	<!-- ==== WebappHelper ===== -->
     <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
         <property name="targetClass" value="oc.P6.escalade.business.contract.manager.AbstractDAOManager"/>
         <property name="targetMethod" value="setDAOFactory"/>

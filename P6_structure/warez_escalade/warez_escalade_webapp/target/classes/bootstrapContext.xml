@@ -16,4 +16,7 @@
 
     <!-- Inclusion d'autres fichiers de contexte Spring -->
     <import resource="classpath:/oc/P6/escalade/webapp/webappContext.xml" />
+    <import resource="classpath:/oc/P6/escalade/consumer/consumerContext.xml" />
+    <import resource="classpath:/oc/P6/escalade/business/businessContext.xml" />
+    <import resource="classpath:/oc/P6/escalade/model/modelContext.xml" />
 </beans>

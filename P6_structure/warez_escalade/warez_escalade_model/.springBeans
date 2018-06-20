@@ -7,7 +7,7 @@
 	</configSuffixes>
 	<enableImports><![CDATA[false]]></enableImports>
 	<configs>
-		<config>src/main/ressources/businessContext.xml</config>
+		<config>src/main/ressources/modelContext.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>
