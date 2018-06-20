@@ -48,36 +48,24 @@ public class Voie {
 		return hauteur;
 	}
 
-	public void setHauteur(String hauteur) {
-		try {
-			this.hauteur = Integer.parseInt(hauteur);
-		}catch (Exception e){
-			System.out.println(this.getClass().toString() + e);
-		}
+	public void setHauteur(int hauteur) {
+		this.hauteur = hauteur;
 	}
 
 	public int getNbLgueur() {
 		return nbLgueur;
 	}
 
-	public void setNbLgueur(String nbLgueur) {
-		try {
-			this.nbLgueur = Integer.parseInt(nbLgueur);
-		}catch (Exception e){
-			System.out.println(this.getClass().toString() + e);
-		}
+	public void setNbLgueur(int nbLgueur) {
+		this.nbLgueur = nbLgueur;
 	}
 
 	public int getNbPoint() {
 		return nbPoint;
 	}
 
-	public void setNbPoint(String nbPoint) {
-		try {
-			this.nbPoint = Integer.parseInt(nbPoint);
-		}catch (Exception e){
-			System.out.println(this.getClass().toString() + e);
-		};
+	public void setNbPoint(int nbPoint) {
+		this.nbPoint = nbPoint;
 	}
 
 	public Secteur getSecteur() {

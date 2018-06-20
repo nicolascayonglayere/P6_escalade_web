@@ -10,11 +10,11 @@ public interface TopoEmpruntManager {
 
 	ArrayList<TopoEmprunt> getListTopoEmprunt(int pId_utilisateur);
 	
-	TopoEmprunt getTopoEmprunt(String pNom);
+	TopoEmprunt getTopoEmprunt(String pNom, Utilisateur pEmprunteur);
 	
 	void creerTopoEmprunt(Topo topo, Utilisateur pEmprunteur);
 	
 	void ajoutTopoEmprunt(Topo topo);
 	
-	void retourTopoEmprunt(TopoEmprunt topoEmprunt, Utilisateur pEmprunteur);
+	void retourTopoEmprunt(TopoEmprunt pTopoEmprunt, Utilisateur pEmprunteur);
 }

@@ -13,7 +13,7 @@ public interface TopoEmpruntDao {
 	
 	boolean update (TopoEmprunt pTopoEmprunt);
 	
-	TopoEmprunt find(int pId);
+	TopoEmprunt find(int pIdTopo, int pIdEmprunteur);
 	
-	ArrayList<TopoEmprunt> getListTopoEmprunt (int pid_utilisateur);
+	ArrayList<TopoEmprunt> getListTopoEmprunt (int pId_utilisateur);
 }

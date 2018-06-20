@@ -33,14 +33,13 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 		String vSQL = "INSERT INTO utilisateur(nom, prenom, pseudo, password, id_role) VALUES ( :nom, :prenom, :pseudo, :password, :id_role)";
 	    
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
-		pUtilisateur.setId_role(3);
-		BeanPropertySqlParameterSource vParams = new BeanPropertySqlParameterSource(pUtilisateur);
-	    vParams.registerSqlType("nom", Types.VARCHAR);
-	    vParams.registerSqlType("prenom", Types.VARCHAR);
-	    vParams.registerSqlType("pseudo", Types.VARCHAR);
-	    vParams.registerSqlType("password", Types.VARCHAR);
-	    vParams.registerSqlType("id_role", Types.INTEGER);
-
+		MapSqlParameterSource vParams = new MapSqlParameterSource();
+		vParams.addValue("nom", pUtilisateur.getNom(), Types.VARCHAR);
+		vParams.addValue("prenom", pUtilisateur.getPrenom(), Types.VARCHAR);
+		vParams.addValue("pseudo", pUtilisateur.getPseudo(), Types.VARCHAR);
+		vParams.addValue("password", pUtilisateur.getPassword(), Types.VARCHAR);
+		vParams.addValue("id_role",pUtilisateur.getId_role(), Types.INTEGER);
+	    System.out.println("ctrlDAO : "+pUtilisateur.getNom());
 	    
 	    try {
 	        vJdbcTemplate.update(vSQL, vParams);
@@ -113,6 +112,7 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 				vUtilisateur.setPrenom(rs.getString("prenom"));
 				vUtilisateur.setPassword(rs.getString("password"));
 				vUtilisateur.setId(rs.getInt("id_utilisateur"));
+				vUtilisateur.setId_role(rs.getInt("id_role"));
 				vUtilisateur.setRole(rs.getString("role"));
 				return vUtilisateur;
 			}
@@ -211,19 +211,20 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 	}
 
 	@Override
-	public Utilisateur findPass(String pPassword) {
-		String vSQL = "SELECT * FROM utilisateur INNER JOIN role_utilisateur ON utilisateur.id_role = role_utilisateur.id_role WHERE  password = crypt(:password, password); ";
+	public Utilisateur findPass(String pPassword, String pPseudo) {
+		String vSQL = "SELECT * FROM utilisateur INNER JOIN role_utilisateur ON utilisateur.id_role = role_utilisateur.id_role WHERE  password = crypt(:password, password) AND pseudo = :pseudo; ";
 		
 		//JdbcTemplate vJdbcTemplate = new JdbcTemplate(getDataSource());
         NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
         vParams.addValue("password", pPassword, Types.VARCHAR);
+        vParams.addValue("pseudo", pPseudo, Types.VARCHAR);
 		
 		RowMapper<Utilisateur> vRowMapper = new RowMapper<Utilisateur>() {
 
 			@Override
 			public Utilisateur mapRow(ResultSet rs, int rowNum) throws SQLException {
-				Utilisateur vUtilisateur = new Utilisateur(rs.getString("pseudo"));
+				Utilisateur vUtilisateur = new Utilisateur(pPseudo);
 				vUtilisateur.setNom(rs.getString("nom"));
 				vUtilisateur.setPrenom(rs.getString("prenom"));
 				//vUtilisateur.setPassword(rs.getString("password"));

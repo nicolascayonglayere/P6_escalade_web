@@ -12,11 +12,11 @@
 		<interceptors>
 			<interceptor class="oc.P6.escalade.interceptor.LoginInterceptor" name="loginInterceptor"/>
 			<interceptor-stack name="loginStack">
-				<interceptor-ref name="loginInterceptor" />
+				<interceptor-ref name="loginInterceptor"/>
 				<interceptor-ref name="defaultStack" />
-       			<interceptor-ref name="store">
+       			<!--<interceptor-ref name="store">
 					<param name="operationMode">RETRIEVE</param>
-		    	</interceptor-ref>				
+		    	</interceptor-ref>-->				
 			</interceptor-stack>
 			
 			<interceptor class="oc.P6.escalade.interceptor.CommentaireInterceptor" name="commentaireInterceptor"/>
@@ -29,7 +29,6 @@
 			</interceptor-stack>			
 		</interceptors>
 
-		<!--<default-interceptor-ref name="commentaireInterceptor" />-->
 
         <!-- Action par défaut -->
         <default-action-ref name="index" />
@@ -44,21 +43,28 @@
         </action>
 
 	
-		<!--   login action  -->
-		
+		<!--   login action  -->		
 		<action name="loginUser" class="oc.P6.escalade.actions.LoginAction" method="loginRegisterUser">
-       			 <interceptor-ref name="store">
-					<param name="operationMode">STORE</param>
-		    	 </interceptor-ref>
-		    	 <interceptor-ref name="defaultStack" />
-			<result name="success">/jsp/utilisateur/accueil_utilisateur.jsp</result>
+       	 	<interceptor-ref name="store">
+				<param name="operationMode">STORE</param>
+			</interceptor-ref>
+			 <interceptor-ref name="defaultStack">
+			 	<param name="params.excludeParams">dojo..*,^struts..*,^session..*,^request..*,^application..*,^servlet(Request|Response)..*,parameters...*,submit,token,struts.token.name</param>
+			</interceptor-ref>
+			<result name="success" type="redirectAction">
+				<param name="actionName">lister_topo</param>
+				<param name="namespace">/</param>
+			</result>
 			<result name="login">/jsp/_include/login.jsp</result>
 			<result name="input">/jsp/_include/login.jsp</result>			
 		</action>
 
 		<!-- home link action -->
 		<action name="homeAction" class="oc.P6.escalade.actions.LoginAction" method="home">
-			<result name="success">index</result>
+			<result name="success" type="redirectAction">
+				<param name="actionName">index</param>
+				<param name="namespace">/</param>
+			</result>
 		</action>
 
         <!-- Actions de lister les topos -->
@@ -68,19 +74,41 @@
         
         <!--Construction et affichage du topo-->
         <action name="go_topo" class="oc.P6.escalade.actions.GoTopoAction" method="execute">
+       	 	<interceptor-ref name="store">
+				<param name="operationMode">STORE</param>
+			</interceptor-ref>        
 		   	<interceptor-ref name="defaultStack" />
-        	<result name="input">index</result>
+        	<result name="input" type="redirectAction">
+        		<param name="actionName">index</param>
+        		<param name="namespace">/</param>
+        	</result>
         	<result name="success">/jsp/topo.jsp</result>
         </action>
         
         <!-- page contact-->
         <action name="contact" class="oc.P6.escalade.actions.ContactAction" method="execute">
-        	<result name="input">index</result>
+        	<result name="input" type="redirectAction">
+        		<param name="actionName">index</param>
+        		<param name="namespace">/</param>
+        	</result>
         	<result name="success">/jsp/contact.jsp</result>
         </action>
         
         <action name="envoi_message" class="oc.P6.escalade.actions.ContactAction" method="envoi">
-        	<result name = "success">index</result>
+      	 	<interceptor-ref name="store">
+				<param name="operationMode">STORE</param>
+			</interceptor-ref>        
+		   	<interceptor-ref name="commentaireStack">
+		   		<param name="params.excludeParams">dojo..*,^struts..*,^session..*,^request..*,^application..*,^servlet(Request|Response)..*,parameters...*,submit,token,struts.token.name</param>
+		   	</interceptor-ref>
+        	<result name="success" type="redirectAction">
+        		<param name="actionName">index</param>
+        		<param name="namespace">/</param>
+        	</result>
+        	<result name="input" type="redirectAction">
+        		<param name="actionName">index</param>
+        		<param name="namespace">/</param>
+        	</result>        	
         </action>        
         
         <!-- page presentation-->
@@ -97,14 +125,16 @@
        		<interceptor-ref name="store">
 				<param name="operationMode">STORE</param>
 		    </interceptor-ref>
-		    <interceptor-ref name="defaultStack" />        
+		    <interceptor-ref name="defaultStack" >
+		   		<param name="params.excludeParams">dojo..*,^struts..*,^session..*,^request..*,^application..*,^servlet(Request|Response)..*,parameters...*,submit,token,struts.token.name</param>
+		   	</interceptor-ref>		            
         	<result name="input">/jsp/creer_user.jsp</result>
         	<result name="success">/jsp/utilisateur/accueil_utilisateur.jsp</result>
         </action>
  	</package>
         
 	<package name="utilisateur" extends="default" namespace="/jsp/utilisateur">   
-		<!--<default-interceptor-ref name="loginInterceptor" />-->
+		<default-interceptor-ref name="loginStack" />
 		
 		<!--   logout action  -->
 		<action name="logOut" class="oc.P6.escalade.actions.LoginAction" method="logOut">
@@ -120,35 +150,63 @@
         </action> 
         
         <action name="retour_topo" class="oc.P6.escalade.actions.GestionPretAction" method="retourner">
+       		<interceptor-ref name="store">
+				<param name="operationMode">STORE</param>
+		    </interceptor-ref>
+		    <interceptor-ref name="defaultStack" />        
         	<result name="success" type="redirectAction">
         		<param name="actionName">go_monCompte</param>
-        		<param name="namespace">/jsp/utilisateur</param>
-        	</result>
+         	</result>
         </action>
                
         <action name="emprunt_topo" class="oc.P6.escalade.actions.GestionPretAction" method="emprunter">
-        	<result name="success">../jsp/index.jsp</result>
+       		<interceptor-ref name="store">
+				<param name="operationMode">STORE</param>
+		    </interceptor-ref>
+		    <interceptor-ref name="defaultStack" />        
+			<result name="success" type="redirectAction">
+				<param name="actionName">go_monCompte</param>
+			</result>
+			<result name="input" type="redirectAction">
+				<param name="actionName">go_monCompte</param>
+			</result>
         </action>
         
         <action name="modifier_user" class="oc.P6.escalade.actions.ModifierUserAction" method="execute">
+        	<interceptor-ref name="commentaireStack" />
         	<result name="input">compte_utilisateur.jsp</result>        
         	<result name="success">compte_utilisateur.jsp</result>	
         </action>
         
         <action name="supprimer_compte" class="oc.P6.escalade.actions.SupprimerUserAction" method="execute">
-        	<result name="success">../jsp/index.jsp</result>
+       		<interceptor-ref name="store">
+				<param name="operationMode">STORE</param>
+		    </interceptor-ref>
+		    <interceptor-ref name="defaultStack" />        
+			<result name="success">/jsp/index.jsp</result>
         </action>
         
         <action name="commenter" class="oc.P6.escalade.actions.CommenterAction" method="commenter">
+       		<interceptor-ref name="store">
+				<param name="operationMode">STORE</param>
+		    </interceptor-ref>
+		    <interceptor-ref name="commentaireStack" />        
         	<result name="success" type="redirectAction">
         		<param name="actionName">go_topo</param>
-        		<param name="namespace">../</param>
+        		<param name="namespace">/</param>
         	</result>
-        	<result name="input">../jsp/topo.jsp</result>
+        	<result name="input">
+        		<param name="actionName">commenter</param>
+       	<!--../jsp/topo.jsp-->
+        	</result>
         </action>      
    
 		<!--Toutes les actions de gestion de commentaires -->
 		<action name="validerCommentaire" class="oc.P6.escalade.actions.ValidationCommentaireAction" method="valider">
+       		<interceptor-ref name="store">
+				<param name="operationMode">STORE</param>
+		    </interceptor-ref>
+		    <interceptor-ref name="defaultStack" />		
     		<result name="success" type="redirectAction">
     			<param name="actionName">go_monCompte</param>
     			<param name="namespace">/jsp/utilisateur</param>
@@ -194,6 +252,10 @@
 		</action>
 		
 		<action name="bannir" class="oc.P6.escalade.actions.BanUtilisateurAction" method="execute">
+       		<interceptor-ref name="store">
+				<param name="operationMode">STORE</param>
+		    </interceptor-ref>
+		    <interceptor-ref name="defaultStack" />		
 			<result name="success" type="redirectAction">
 				<param name="actionName">go_monCompte</param>
 				<param name="namespace">/jsp/utilisateur</param>

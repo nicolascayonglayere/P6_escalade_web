@@ -59,24 +59,16 @@ public class Topo {
 		return longitude;
 	}
 
-	public void setLongitude(String longitude) {
-		try {
-			this.longitude = Double.parseDouble(longitude);
-		}catch (Exception e){
-			System.out.println(this.getClass().toString() + e);
-		} 
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude; 
 	}
 
 	public double getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(String latitude) {
-		try {
-			this.latitude = Double.parseDouble(latitude);
-		}catch (Exception e){
-			System.out.println(this.getClass().toString() + e);
-		}
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
 	}
 
 	public String getDescription() {
@@ -91,12 +83,8 @@ public class Topo {
 		return nbreEx;
 	}
 
-	public void setNbreEx(String nbreEx) {
-		try {
-			this.nbreEx = Integer.parseInt(nbreEx);
-		}catch (Exception e){
-			System.out.println(this.getClass().toString() + e);
-		}
+	public void setNbreEx(int nbreEx) {
+		this.nbreEx = nbreEx;
 	}
 
 	public int getNombreSite() {

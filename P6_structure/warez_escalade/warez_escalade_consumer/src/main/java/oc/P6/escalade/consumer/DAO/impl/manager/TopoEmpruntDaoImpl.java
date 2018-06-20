@@ -85,13 +85,13 @@ public class TopoEmpruntDaoImpl extends AbstractDAO implements TopoEmpruntDao{
 	}
 
 	@Override
-	public TopoEmprunt find(int pId) {
-		String vSQL = "SELECT * FROM topo_emprunt WHERE id_topo = :id_topo ";
-		
-		//JdbcTemplate vJdbcTemplate = new JdbcTemplate(getDataSource());
+	public TopoEmprunt find(int pIdTopo, int pIdEmprunteur) {
+		String vSQL = "SELECT * FROM topo_emprunt WHERE id_topo = :id_topo AND id_utilisateur = :id_utilisateur";
+
         NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
-        vParams.addValue("id_topo", pId, Types.INTEGER);
+        vParams.addValue("id_topo", pIdTopo, Types.INTEGER);
+        vParams.addValue("id_utilisateur", pIdEmprunteur, Types.INTEGER);
 		
 		RowMapper<TopoEmprunt> vRowMapper = new RowMapper<TopoEmprunt>() {
 
@@ -102,9 +102,9 @@ public class TopoEmpruntDaoImpl extends AbstractDAO implements TopoEmpruntDao{
 				vTopoEmp.setDateEmprunt(rs.getDate("date_retrait"));
 				cal.setTime(rs.getDate("date_retrait"));
 				cal.add(Calendar.DATE, 20);
-				Topo vTopo = topoDAO.find(pId);
+				Topo vTopo = topoDAO.find(pIdTopo);
 				vTopoEmp.setTopo(vTopo);
-				Utilisateur vUser = userDAO.find(rs.getInt("id_utilisateur"));
+				Utilisateur vUser = userDAO.find(pIdEmprunteur);
 				vTopoEmp.setEmprunteur(vUser);
 				vTopoEmp.setNom(vTopo.getNom());
 				vTopoEmp.setDateRetour(cal.getTime());

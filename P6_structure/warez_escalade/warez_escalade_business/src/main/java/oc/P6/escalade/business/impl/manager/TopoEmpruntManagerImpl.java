@@ -42,37 +42,43 @@ public class TopoEmpruntManagerImpl extends AbstractDAOManager implements TopoEm
 	}
 
 	@Override
-	public TopoEmprunt getTopoEmprunt(String pNom) {
+	public TopoEmprunt getTopoEmprunt(String pNom, Utilisateur pEmprunteur) {
 		System.out.println("topo : "+topoDAO.find(pNom).getNom()+" - "+topoDAO.find(pNom).getId());
-    	if(topoDAO.find(pNom) != null) { 
+		Calendar cal = Calendar.getInstance();
+		Topo vTopo = topoDAO.find(pNom);
+    	if(topoEmpruntDao.find(vTopo.getId(), pEmprunteur.getId()) != null) { 
     			topoEmprunt.setNom(pNom);
-    			System.out.println("topoEmp id : "+topoEmpruntDao.find(topoDAO.find(pNom).getId()).getId());
-    			topoEmprunt.setId(topoEmpruntDao.find(topoDAO.find(pNom).getId()).getId());
-    			topoEmprunt.setDateEmprunt(topoEmpruntDao.find(topoDAO.find(pNom).getId()).getDateEmprunt());
-    			topoEmprunt.setEmprunteur(topoEmpruntDao.find(topoDAO.find(pNom).getId()).getEmprunteur());
-    			topoEmprunt.setDateRetour(topoEmpruntDao.find(topoDAO.find(pNom).getId()).getDateRetour());
-    			topoEmprunt.setTopo(topoDAO.find(pNom));
-        
+    			System.out.println("topoEmp id : "+topoEmpruntDao.find(vTopo.getId(), pEmprunteur.getId()).getId());
+    			topoEmprunt.setId(topoEmpruntDao.find(vTopo.getId(), pEmprunteur.getId()).getId());
+    			topoEmprunt.setDateEmprunt(topoEmpruntDao.find(vTopo.getId(), pEmprunteur.getId()).getDateEmprunt());
+    			topoEmprunt.setEmprunteur(topoEmpruntDao.find(vTopo.getId(), pEmprunteur.getId()).getEmprunteur());
+    			cal.setTime(cal.getTime());
+    			cal.add(Calendar.DATE, 20);
+    			topoEmprunt.setDateRetour(cal.getTime());
+    			topoEmprunt.setTopo(vTopo);
+    			System.out.println("CTRL "+topoEmprunt.getNom()+" - "+topoEmprunt.getEmprunteur().getPseudo()+" - "+topoEmprunt.getTopo().getNom());
     	} 
     	else {
 			try {
-				throw new Exception("topo non trouve : NOM=" + pNom);
+				topoEmprunt = null ;
+				throw new Exception("Cet emprunt n'existe pas : NOM=" + pNom);
+				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
     	}
-    	System.out.println("CTRL "+topoEmprunt.getNom()+" - "+topoEmprunt.getEmprunteur().getPseudo()+" - "+topoEmprunt.getTopo().getNom());
+    	
     	return topoEmprunt;
 	}
 
 	@Override
 	public void creerTopoEmprunt(Topo topo, Utilisateur pEmprunteur) {
-		Calendar cal = Calendar.getInstance();
 		System.out.println(topo.getNom()+" - "+pEmprunteur.getPseudo());
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(cal.getTime());
 		if (topoDAO.find(topo.getNom()) != null && userDAO.find(pEmprunteur.getPseudo())!= null) {
 			topoEmprunt.setDateEmprunt(cal.getTime());
-			cal.setTime(cal.getTime());
 			cal.add(Calendar.DATE, 20);
 			topoEmprunt.setEmprunteur(pEmprunteur);
 			topoEmprunt.setTopo(topo);
@@ -90,17 +96,18 @@ public class TopoEmpruntManagerImpl extends AbstractDAOManager implements TopoEm
 	}
 
 	@Override
-	public void retourTopoEmprunt(TopoEmprunt topoEmprunt, Utilisateur pEmprunteur) {
+	public void retourTopoEmprunt(TopoEmprunt pTopoEmprunt, Utilisateur pEmprunteur) {
+		int idTopo = topoDAO.find(pTopoEmprunt.getNom()).getId();
+		int idEmprunteur = userDAO.find(pEmprunteur.getPseudo()).getId();
 		Calendar cal = Calendar.getInstance();
-		int id = topoDAO.find(topoEmprunt.getNom()).getId();
-		System.out.println(topoEmprunt.getNom()+" - "+pEmprunteur.getPseudo()+" - "+topoEmpruntDao.find(id).getId());
-		if (topoEmpruntDao.find(id) != null && userDAO.find(pEmprunteur.getPseudo())!= null) {
-			topoEmprunt.setId(topoEmpruntDao.find(id).getId());
-			topoEmprunt.setDateRetour(cal.getTime());
-			topoEmprunt.setEmprunteur(pEmprunteur);
-			topoEmprunt.setTopo(topoEmprunt.getTopo());
-			topoEmprunt.setNom(topoEmprunt.getNom());
-			topoEmpruntDao.delete(topoEmprunt);
+		System.out.println(pTopoEmprunt.getNom()+" - "+pEmprunteur.getPseudo()+" - "+topoEmpruntDao.find(idTopo, idEmprunteur).getId());
+		if (topoEmpruntDao.find(idTopo, idEmprunteur) != null) {
+			pTopoEmprunt.setId(topoEmpruntDao.find(idTopo, idEmprunteur).getId());
+			pTopoEmprunt.setDateRetour(cal.getTime());
+			pTopoEmprunt.setEmprunteur(pEmprunteur);
+			pTopoEmprunt.setTopo(pTopoEmprunt.getTopo());
+			pTopoEmprunt.setNom(pTopoEmprunt.getNom());
+			topoEmpruntDao.delete(pTopoEmprunt);
 		}
 		
 	}

@@ -24,23 +24,24 @@
 		<!-- liste des topo ds la bdd -->
 		<div class = "container">
 			<table class="table table-bordered table-striped">
-				<s:iterator value="listTopo">
+				<s:iterator value="listTopo" var="topo" status="status">
 					<tr>
 				    	<td style="text-align:left;">
 				    		<s:a action="go_topo" namespace="/">
-				            	<s:property value="nom"/>
-			                    <s:param name="nom" value="nom" />	
+				            	<s:property value="#topo.nom"/>
+			                    <s:param name="nom" value="topo.nom" />	
 			               	</s:a>
 				    	</td>
 				    	<td style="text-align:right;"><s:property value="topo.site.nom" /></td>
 				    	<!-- <td style="text-align:right;"><s:property value="voie" /></td>-->
 				    	<td>
-
+											    			
 				    		<s:a action="emprunt_topo" namespace="/jsp/utilisateur">
-				    			<s:submit class="btn btn-default" value="%{getText('bouton.emprunt')}">
-				    				<s:param name="nom" value="nom"/>
-				    				<s:param name="pseudo" value="#session.utilisateur.pseudo"/>
-				    			</s:submit>
+									<s:property value="Emprunter #topo.nom"/>
+				    				<s:param name="nom" value="topo.nom"/>
+				    			<!--<s:submit class="btn btn-default" value="%{getText('bouton.emprunt')}">
+				    				
+				    			</s:submit>-->
 				    		</s:a>
 				    		
 				    	</td>

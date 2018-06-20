@@ -84,10 +84,8 @@
 					    	<td style="text-align:right;"><s:property value="#topoEmprunt.dateRetour" /></td>
 					    	<td>
 					    		<s:a action="retour_topo" namespace="/jsp/utilisateur">
-					    			<s:submit class="btn btn-default" value="%{getText('bouton.retour')}">
-					    				<s:param name="nom" value="#topoEmprunt.nom"/>
-					    				<s:param name="pseudo" value="#session.utilisateur.pseudo"/>
-					    			</s:submit>
+					    			<s:param name="nom" value="#topoEmprunt.nom"/>
+					    			<s:submit class="btn btn-default" value="%{getText('bouton.retour')}"/>
 					    		</s:a>	
 					    	</td>
 					   	</tr>

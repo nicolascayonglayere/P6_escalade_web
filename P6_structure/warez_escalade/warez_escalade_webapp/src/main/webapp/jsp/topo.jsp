@@ -120,17 +120,20 @@
 
 		
 			<!-- commentaire Topo/secteur/site -->
-			<h3><s:text name="topo.commentaire"></s:text></h3>		
-			<div class="row">
-	
-				<s:form id="commentaireForm" action="commenter" namespace="/jsp/utilisateur">
-					<s:textarea name="commentaireTopo.message" placeholder="commentaire" label="%{getText('form.commentaire')}" requiredLabel="true"  cols="100" rows="10"/>		
-					<s:submit id="btEnvoi" class="btn btn-default" value="%{getText('bouton.envoi')}">
-		      			<s:param name="message">${commentaireTopo.message }</s:param>
-		     		 </s:submit>
-		     		 <s:token/>
-		     	</s:form>
-			</div>
+			<s:if test="#session.utilisateur">
+				<h3><s:text name="topo.commentaire"></s:text></h3>		
+				<div class="row">
+		
+					<s:form id="commentaireForm" action="commenter" namespace="/jsp/utilisateur">
+						<s:textarea name="commentaireTopo.message" placeholder="commentaire" label="%{getText('form.commentaire')}" requiredLabel="true"  cols="100" rows="10"/>		
+						<s:submit id="btEnvoi" class="btn btn-default" value="%{getText('bouton.envoi')}">
+			      			<s:param name="message">${commentaireTopo.message }</s:param>
+			     		 </s:submit>
+			     		 <s:token/>
+			     	</s:form>
+				</div>			
+			</s:if>
+
 		</div>		
 		
 	    

@@ -24,7 +24,7 @@
 	    <property name="dataSourceP6" ref="dataSourceP6"/>
 	</bean>
 	
-	<!-- ==== WebappHelper ===== -->
+	<!-- ==== Helper ===== -->
     <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
         <property name="targetClass" value="oc.P6.escalade.business.contract.manager.AbstractDAOManager"/>
         <property name="targetMethod" value="setDAOFactory"/>

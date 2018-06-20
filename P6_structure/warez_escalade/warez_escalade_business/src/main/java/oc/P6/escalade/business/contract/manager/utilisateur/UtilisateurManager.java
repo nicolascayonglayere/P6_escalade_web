@@ -29,7 +29,7 @@ import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 	     */
 	    Utilisateur getUtilisateur(String pPseudo); //throws NotFoundException;
 	    
-	    Utilisateur getUtilisateurPass(String pPassword);
+	    Utilisateur getUtilisateurPass(String pPassword, String pPseudo);
 
 	    /**
 	     * Ajoute un nouvel {@link Utilisateur}
@@ -51,6 +51,8 @@ import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 	    ArrayList<Utilisateur> getListModo();
 	    
 	    void modifierUtilisateur(Utilisateur pUtilisateur);
+	    
+	    void modifierPassUtilisateur(Utilisateur pUtilisateur);
 	    
 	    void banUtilisateur(Utilisateur pUtilisateur);
 }

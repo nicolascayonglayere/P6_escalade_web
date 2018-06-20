@@ -38,10 +38,8 @@
 				    	<td>
 
 				    		<s:a action="emprunt_topo" namespace="/jsp/utilisateur">
-				    			<s:submit class="btn btn-default" value="%{getText('bouton.emprunt')}">
-				    				<s:param name="nom" value="nom"/>
-				    				<s:param name="pseudo" value="#session.utilisateur.pseudo"/>
-				    			</s:submit>
+			    				<s:param name="nom" value="nom"/>
+				    			<s:submit class="btn btn-default" value="%{getText('bouton.emprunt')}"/>
 				    		</s:a>
 				    		
 				    	</td>

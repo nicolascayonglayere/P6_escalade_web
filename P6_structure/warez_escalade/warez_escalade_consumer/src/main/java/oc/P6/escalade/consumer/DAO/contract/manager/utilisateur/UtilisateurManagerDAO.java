@@ -16,7 +16,7 @@ public interface UtilisateurManagerDAO {
 	
 	Utilisateur find(int pId);
 	
-	Utilisateur findPass(String pPassword);
+	Utilisateur findPass(String pPassword, String pPseudo);
 	
 	ArrayList<Utilisateur> getList(int pIdRole);
 	

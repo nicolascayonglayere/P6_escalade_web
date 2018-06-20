@@ -47,7 +47,7 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
 	public String loginRegisterUser() {
 		String vResult="";
 		System.out.println(utilisateur.getPseudo()+" - "+utilisateur.getPassword());
-		Utilisateur vUser = WebappHelper.getManagerFactory().getUtilisateurManager().getUtilisateurPass(utilisateur.getPassword());
+		Utilisateur vUser = WebappHelper.getManagerFactory().getUtilisateurManager().getUtilisateurPass(utilisateur.getPassword(), utilisateur.getPseudo());
 
 		if(vUser.getNom() != null && !(vUser.getRole()).equals("banni")) {
 			if ((utilisateur.getPseudo().equals(vUser.getPseudo()))&&(utilisateur.getPassword().equals(vUser.getPassword()))) {
@@ -55,7 +55,7 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
 				vResult = ActionSupport.SUCCESS;
 			}
 			else {
-				addActionError("Entrer un mot de passe valide !");
+				addActionError("Entrer un pseudo et un mot de passe valide !");
 				vResult = ActionSupport.LOGIN;
 			}
 		}

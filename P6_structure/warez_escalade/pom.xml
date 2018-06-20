@@ -123,8 +123,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-
-
+			
             <!-- JSR-250 -->
             <dependency>
                 <groupId>javax.annotation</groupId>

@@ -11,28 +11,23 @@
       			<div class="container-fluid">
       				<div class="row">
 						<!-- <div class="navbar-header">-->
-							<s:url var="homeURL" action="homeAction" namespace="/"/>
-	      					<a class="navbar-brand" href="%{homeURL}"><s:text name="entete.titre"/></a>	
+	      					<s:a class="navbar-brand" action="homeAction" namespace="/"><s:text name="entete.titre"/></s:a>	
 	      				<!--  </div>-->
 	      			
 			      		<div class="collapse navbar-collapse"  >
 				      		<ul class="navbar-nav mr-auto">
 					     	   <li class="hidden"><a href="#page-top"></a></li>
 					     	   <li class="nav-item active">
-					     	   		<s:url var="listTopoURL" action="lister_topo" namespace="/"/>
-					     	   		<s:a href="%{listTopoURL}" cssClass="nav-link"><s:text name="entete.topo"/></s:a>
+					     	   		<s:a action="lister_topo" namespace="/" cssClass="nav-link"><s:text name="entete.topo"/></s:a>
 					     	   </li>
 					     	   <li class="nav-item active">
-					     	   		<s:url var="presentationURL" action="presentation" namespace="/"/>
-					     	   		<s:a href="%{presentationURL}" cssClass="nav-link"><s:text name="entete.qui"/></s:a>
+					     	   		<s:a action="presentation" namespace="/" cssClass="nav-link"><s:text name="entete.qui"/></s:a>
 					     	   </li>
 					     	   <li class="nav-item active">
-					     	   		<s:url var="contactURL" action="contact" namespace="/"/>
-					     	   		<s:a href="%{contactURL}" cssClass="nav-link"><s:text name="entete.contact"/></s:a>
+					     	   		<s:a action="contact" namespace="/" cssClass="nav-link"><s:text name="entete.contact"/></s:a>
 					     	   </li>
 					     	   <li class="nav-item active">
-					     	   		<s:url var="inscriptionURL" action="inscription" namespace="/"/>
-					     	   		<s:a href="%{inscriptionURL}" cssClass="nav-link"><s:text name="entete.inscription"/></s:a>
+					     	   		<s:a action="inscription" namespace="/" cssClass="nav-link"><s:text name="entete.inscription"/></s:a>
 					     	   </li>
 				      		</ul>
 			      		</div>

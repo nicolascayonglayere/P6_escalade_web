@@ -52,5 +52,10 @@
         	<groupId>javax.inject</groupId>
         	<artifactId>javax.inject</artifactId>
         </dependency>
+        <dependency>
+    		<groupId>net.java.dev.spring-annotation</groupId>
+    		<artifactId>spring-annotation-base</artifactId>
+    		<version>1.0.2</version>
+		</dependency>
   </dependencies>
 </project>

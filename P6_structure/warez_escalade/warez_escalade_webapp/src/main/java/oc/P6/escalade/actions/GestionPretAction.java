@@ -31,10 +31,12 @@ public class GestionPretAction extends ActionSupport implements SessionAware, Se
 	public String retourner() {
 		pseudo = ((Utilisateur) session.get("utilisateur")).getPseudo();
 		utilisateur = WebappHelper.getManagerFactory().getUtilisateurManager().getUtilisateur(pseudo);
+		HttpServletRequest request = ServletActionContext.getRequest();
+		nom = request.getParameter("nom");
 		System.out.println("nom topo retourner "+nom+" nom emprunteur "+pseudo);
-		TopoEmprunt vTopoEmp = WebappHelper.getManagerFactory().getTopoEmpruntManager().getTopoEmprunt(nom);
+		TopoEmprunt vTopoEmp = WebappHelper.getManagerFactory().getTopoEmpruntManager().getTopoEmprunt(nom, utilisateur);//ajouter un param utilisateur.pseudo ds la methode getTopoEmprunt
 		if (vTopoEmp != null)
-			WebappHelper.getManagerFactory().getTopoEmpruntManager().retourTopoEmprunt(vTopoEmp, WebappHelper.getManagerFactory().getUtilisateurManager().getUtilisateur(pseudo));
+			WebappHelper.getManagerFactory().getTopoEmpruntManager().retourTopoEmprunt(vTopoEmp, utilisateur);
 		
 		addActionMessage("Vous avez rendu le topo "+vTopoEmp.getNom());
 		return SUCCESS;
@@ -43,12 +45,18 @@ public class GestionPretAction extends ActionSupport implements SessionAware, Se
 	public String emprunter() {
 		pseudo = ((Utilisateur) session.get("utilisateur")).getPseudo();
 		utilisateur = WebappHelper.getManagerFactory().getUtilisateurManager().getUtilisateur(pseudo);
-		System.out.println("nom topo emprunter "+nom+" nom emprunteur "+pseudo);
+		HttpServletRequest request = ServletActionContext.getRequest();
+		nom = request.getParameter("nom");
 		Topo vTopo = WebappHelper.getManagerFactory().getTopoManager().getTopo(nom);
-		if (vTopo != null)
-			WebappHelper.getManagerFactory().getTopoEmpruntManager().creerTopoEmprunt(vTopo, WebappHelper.getManagerFactory().getUtilisateurManager().getUtilisateur(pseudo));
-		addActionMessage("Votre emprunt est bien enregistré");		
-		return SUCCESS;
+		//ajouter un ctrl pour pas emprunter +sieurs fois le meme topo + ctrl du nb d'ex dispo
+		if (WebappHelper.getManagerFactory().getTopoEmpruntManager().getTopoEmprunt(nom, utilisateur) == null) {
+			WebappHelper.getManagerFactory().getTopoEmpruntManager().creerTopoEmprunt(vTopo, utilisateur);
+			addActionMessage("Votre emprunt est bien enregistré");		
+			return SUCCESS;
+		}
+		else
+			addActionMessage("Vous avez deja emprunté ce topo.");
+			return ActionSupport.INPUT;
 	}
 
 	public String getNom() {
@@ -69,8 +77,15 @@ public class GestionPretAction extends ActionSupport implements SessionAware, Se
 
 	@Override
 	public void setSession(Map<String, Object> session) {
-		this.session = session;
-		
+		this.session = session;	
+	}
+	
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
+	}
+
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
 	}
 
 	@Override
