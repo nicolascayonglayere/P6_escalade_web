@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE validators PUBLIC "-//Apache Struts//XWork Validator 1.0.3//EN"
+		"http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd">
+
+<validators>
+    <field name="voie.cotation">
+        <field-validator type="requiredstring">
+        	<message key="required.cotation"/>
+        </field-validator>
+    </field>
+    <field name="voie.hauteur">
+        <field-validator type="required" short-circuit="true">
+        	<message key="required.hauteur"/>
+        </field-validator>
+        <field-validator type="int" short-circuit="true">
+            <param name="min">0</param>
+        	<message key="invalid.hauteur"/>
+        </field-validator>
+    </field>
+    <field name="voie.nbLongueur">
+        <field-validator type="required" short-circuit="true">
+        	<message key="required.nbLongueur"/>
+        </field-validator>
+        <field-validator type="int" short-circuit="true">
+       		<param name="min">0</param>        
+        	<message key="invalid.nbLongueur"/>
+        </field-validator>
+    </field>           
+    <field name="voie.nbPoint">
+        <field-validator type="required" short-circuit="true">
+        	<message key="required.nbPoint"/>
+        </field-validator>
+        <field-validator type="int" short-circuit="true">
+       		<param name="min">0</param>        
+        	<message key="invalid.nbPoint"/>
+        </field-validator>        
+    </field>     
+    <field name="secteur.nom" >
+        <field-validator type="requiredstring" short-circuit="true">
+        	<message key="required.nomSecteur"/>
+        </field-validator>
+    </field>    
+    <field name="site.nom">
+        <field-validator type="requiredstring" short-circuit="true">
+        	<message key="required.nomSite"/>
+        </field-validator>
+    </field> 
+    <field name="topo.nom">
+        <field-validator type="requiredstring" short-circuit="true">
+        	<message key="required.nomTopo"/>
+        </field-validator>
+    </field>    
+</validators>

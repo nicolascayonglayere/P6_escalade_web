@@ -112,4 +112,11 @@ public class TopoEmpruntManagerImpl extends AbstractDAOManager implements TopoEm
 		
 	}
 
+	@Override
+	public int getNbExemplaire(Topo pTopo) {
+		int nbEx = topoDAO.find(pTopo.getNom()).getNbreEx() - topoEmpruntDao.getListTopoEmprunt(pTopo).size();
+		
+		return nbEx;
+	}
+
 }

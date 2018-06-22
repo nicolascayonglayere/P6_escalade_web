@@ -9,7 +9,7 @@
         </field-validator>
     </field>    
     <field name="commentaire.message">
-        <field-validator type="requiredstring">
+        <field-validator type="requiredstring" short-circuit="true">
         	<message key="required.commentaire"/>
         </field-validator>
     </field>        

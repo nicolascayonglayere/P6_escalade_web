@@ -4,10 +4,13 @@ import java.util.Date;
 
 import javax.inject.Named;
 
+import org.springframework.context.annotation.Scope;
+
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
 @Named("topoEmprunt")
+@Scope("prototype")
 public class TopoEmprunt {
 
 	private int id;

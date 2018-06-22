@@ -17,4 +17,6 @@ public interface TopoEmpruntManager {
 	void ajoutTopoEmprunt(Topo topo);
 	
 	void retourTopoEmprunt(TopoEmprunt pTopoEmprunt, Utilisateur pEmprunteur);
+	
+	int getNbExemplaire(Topo pTopo);
 }

@@ -3,7 +3,7 @@ package oc.P6.escalade.consumer.DAO.contract.manager;
 import java.util.ArrayList;
 
 import oc.P6.escalade.model.bean.emprunt.TopoEmprunt;
-import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
+import oc.P6.escalade.model.bean.topo.Topo;
 
 public interface TopoEmpruntDao {
 
@@ -16,4 +16,6 @@ public interface TopoEmpruntDao {
 	TopoEmprunt find(int pIdTopo, int pIdEmprunteur);
 	
 	ArrayList<TopoEmprunt> getListTopoEmprunt (int pId_utilisateur);
+	
+	ArrayList<TopoEmprunt> getListTopoEmprunt (Topo pTopo);
 }

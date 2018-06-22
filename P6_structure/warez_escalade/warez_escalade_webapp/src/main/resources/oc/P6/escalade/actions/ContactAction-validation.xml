@@ -7,17 +7,17 @@
         <field-validator type="requiredstring">
         	<message key="required.email"/>
         </field-validator>
-        <field-validator type="email">
+        <field-validator type="email" short-circuit="true">
     		<message key="invalid.email"/>
 		</field-validator>        
     </field>
     <field name="utilisateur.pseudo">
-        <field-validator type="requiredstring">
+        <field-validator type="requiredstring" short-circuit="true">
         	<message key="required.pseudo"/>
         </field-validator>
     </field>        
     <field name="message">
-        <field-validator type="requiredstring">
+        <field-validator type="requiredstring" short-circuit="true">
         	<message key="required.message"/>
         </field-validator>
     </field>        

@@ -7,6 +7,9 @@
 	</configSuffixes>
 	<enableImports><![CDATA[false]]></enableImports>
 	<configs>
+		<config>src/main/resources/oc/P6/escalade/webapp/old-webappContext.xml</config>
+		<config>src/main/resources/old-bootstrapContext.xml</config>
+		<config>src/main/resources/bootstrapContext.xml</config>
 		<config>src/main/resources/oc/P6/escalade/webapp/webappContext.xml</config>
 	</configs>
 	<autoconfigs>

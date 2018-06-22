@@ -1,22 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xmlns="http://www.springframework.org/schema/beans"
-       xsi:schemaLocation="
-        http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context.xsd">
-
-	<!-- Prend en compte la configuration des injections (@Inject...) -->
-    <context:annotation-config/>
-    
-    <!-- Scanne les packages pour trouver les beans qui se déclarent (@Named...) -->
-    <context:component-scan base-package="oc.P6.escalade"/>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
 
     <!-- Inclusion d'autres fichiers de contexte Spring -->
     <import resource="classpath:/oc/P6/escalade/webapp/webappContext.xml" />
-    <import resource="classpath:/oc/P6/escalade/consumer/consumerContext.xml" />
     <import resource="classpath:/oc/P6/escalade/business/businessContext.xml" />
-    <import resource="classpath:/oc/P6/escalade/model/modelContext.xml" />
+    <import resource="classpath:/oc/P6/escalade/model/modelContext.xml" />    
+    <import resource="classpath:/oc/P6/escalade/consumer/consumerContext.xml" />
+
 </beans>

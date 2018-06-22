@@ -143,7 +143,7 @@ public class TopoEmpruntDaoImpl extends AbstractDAO implements TopoEmpruntDao{
 				cal.add(Calendar.DATE, 20);
 				Topo vTopo = topoDAO.find(rs.getInt("id_topo"));
 				vTopoEmp.setTopo(vTopo);
-				Utilisateur vUser = userDAO.find(rs.getInt("id_utilisateur"));
+				Utilisateur vUser = userDAO.find(pId_utilisateur);
 				vTopoEmp.setEmprunteur(vUser);
 				vTopoEmp.setNom(vTopo.getNom());
 				vTopoEmp.setDateRetour(cal.getTime());
@@ -155,6 +155,37 @@ public class TopoEmpruntDaoImpl extends AbstractDAO implements TopoEmpruntDao{
 		listTopoEmprunt = (ArrayList<TopoEmprunt>) vJdbcTemplate.query(vSQL, vParams, vRowMapper);
 		return listTopoEmprunt;
 
+	}
+
+	@Override
+	public ArrayList<TopoEmprunt> getListTopoEmprunt(Topo pTopo) {
+		ArrayList<TopoEmprunt> listTopoEmprunt = new ArrayList<TopoEmprunt>();
+		String vSQL = "SELECT * FROM topo_emprunt WHERE id_topo = :id_topo";
+		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
+		MapSqlParameterSource vParams = new MapSqlParameterSource();
+        vParams.addValue("id_topo", pTopo.getId(), Types.INTEGER);
+		
+        
+		RowMapper<TopoEmprunt> vRowMapper = new RowMapper<TopoEmprunt>() {
+
+			@Override
+			public TopoEmprunt mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Calendar cal = Calendar.getInstance();
+				TopoEmprunt vTopoEmp = new TopoEmprunt();
+				vTopoEmp.setDateEmprunt(rs.getDate("date_retrait"));
+				cal.setTime(rs.getDate("date_retrait"));
+				cal.add(Calendar.DATE, 20);
+				vTopoEmp.setTopo(pTopo);
+				vTopoEmp.setEmprunteur(userDAO.find(rs.getInt("id_utilisateur")));
+				vTopoEmp.setNom(vTopo.getNom());
+				vTopoEmp.setDateRetour(cal.getTime());
+				return vTopoEmp;
+			}
+			
+		};
+		
+		listTopoEmprunt = (ArrayList<TopoEmprunt>) vJdbcTemplate.query(vSQL, vParams, vRowMapper);
+		return listTopoEmprunt;
 	}
 
 }
