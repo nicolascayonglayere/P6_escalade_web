@@ -13,6 +13,11 @@ import oc.P6.escalade.consumer.DAO.impl.manager.topo.SiteDaoImpl;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
 
+/**
+ * Implémentation de {@link SiteManager}
+ * @author nicolas
+ *
+ */
 @Named
 public class SiteManagerImpl extends AbstractDAOManager implements SiteManager{
 
@@ -30,6 +35,9 @@ public class SiteManagerImpl extends AbstractDAOManager implements SiteManager{
 		return null;
 	}
 
+	/**
+	 * Méthode pour obtenir le {@link Site} nommé pNom du {@link Topo} donné en paramètre
+	 */
 	@Override
 	public Site getSite(String pNom, Topo pTopo) {
 		Site site = null;
@@ -47,6 +55,9 @@ public class SiteManagerImpl extends AbstractDAOManager implements SiteManager{
 		return site;
 	}
 
+	/**
+	 * Méthode pour créer le {@link Site} donné en paramètre
+	 */
 	@Override
 	public void creerSite(Site pSite) {
 		System.out.println("CTRL "+pSite.getNom());
@@ -67,6 +78,9 @@ public class SiteManagerImpl extends AbstractDAOManager implements SiteManager{
 		
 	}
 
+	/**
+	 * Méthode pour obtenir la liste des {@link Site} du {@link Topo} donné en paramètre
+	 */
 	@Override
 	public ArrayList<Site> getSite(Topo pTopo) {
 		ArrayList<Site> vSite = new ArrayList<Site>();

@@ -8,7 +8,11 @@ import org.springframework.context.annotation.Scope;
 
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
-
+/**
+ * Objet métier TopoEmprunt
+ * @author nicolas
+ *
+ */
 @Named("topoEmprunt")
 @Scope("prototype")
 public class TopoEmprunt {
@@ -20,12 +24,19 @@ public class TopoEmprunt {
 	private String nom;
 	private Date dateRetour;
 	
+	/**
+	 * Constructeurs
+	 */
 	public TopoEmprunt() {}
 
 	public int getId() {
 		return id;
 	}
 
+	/**
+	 * Getter et Setter
+	 * @param id
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}

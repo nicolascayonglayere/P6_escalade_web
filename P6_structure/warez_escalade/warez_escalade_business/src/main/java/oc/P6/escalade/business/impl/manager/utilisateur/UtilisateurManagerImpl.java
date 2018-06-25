@@ -29,8 +29,12 @@ import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateur;
 import oc.P6.escalade.model.bean.utilisateur.RoleUtilisateur;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
-
-@Named
+/**
+ * Classe UtilisateurManger implémentation de {@link UtilisateurManager}
+ * @author nicolas
+ *
+ */
+@Named("utilisateurManager")
 public class UtilisateurManagerImpl extends AbstractDAOManager implements UtilisateurManager   {
 
     /** Logger pour la classe */
@@ -61,7 +65,9 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
  // public void setPlatformTransactionManager(PlatformTransactionManager transactionManager) {
  //     this.platformTransactionManager = transactionManager;
  //  }
-    
+    /**
+     * Méthode retournant {@link Utilisateur} dont le pseudo est donné en paramètre
+     */
     @Override
     public Utilisateur getUtilisateur(String pPseudo) {//throws NotFoundException {
     	//--chercher l'utilisateur ds la bdd
@@ -96,7 +102,9 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
         
         
     }
-
+	/**
+	 * Méthode pour créer un {@link Utilisateur} donné en paramètre
+	 */
 	@Override
 	public void creerUtilisateur(Utilisateur pUtilisateur) {
 		//TransactionDefinition vDefinition = new DefaultTransactionDefinition();
@@ -139,18 +147,26 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 			
 	}
 
+	/**
+	 * Méthode pour obtenir la liste des administrateurs
+	 */
 	@Override
 	public ArrayList<Utilisateur> getListAdmin() {
 		ArrayList<Utilisateur> listAdmin = userDAO.getList(1);
 		return listAdmin;
 	}
-
+	/**
+	 * Méthode pour obtenir la liste des modérateurs
+	 */
 	@Override
 	public ArrayList<Utilisateur> getListModo() {
 		ArrayList<Utilisateur> listModo = userDAO.getList(2);
 		return listModo;
 	}
-
+	
+	/**
+	 * Méthode pour modifier {@link Utilisateur} donné en paramètre
+	 */
 	@Override
 	public void modifierUtilisateur(Utilisateur pUtilisateur) {
 		System.out.println("CTRL "+pUtilisateur.getPseudo());
@@ -186,7 +202,9 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 
 		}
 	}
-
+	/**
+	 * Méthode pour supprimmer {@link Utilisateur} donné en paramètre
+	 */
 	@Override
 	public void deleteUtilisateur(Utilisateur pUtilisateur) {
 		System.out.println("CTRL "+pUtilisateur.getPseudo());
@@ -223,7 +241,10 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 		}
 		
 	}
-
+	
+	/**
+	 * Méthode pour obtenir la liste des ????
+	 */
 	@Override
 	public ArrayList<Utilisateur> getListUtilisateur(String pPseudo) {
 		ArrayList<Utilisateur> listUtilisateur = userDAO.getList(pPseudo);
@@ -234,6 +255,10 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 		return listUtilisateur;
 	}
 
+	
+	/**
+	 * Méthode pour obtenir {@link Utilisateur} à partir de son pseudo et son mot de passe
+	 */
 	@Override
 	public Utilisateur getUtilisateurPass(String pPassword, String pPseudo) {
     	//--chercher l'utilisateur ds la bdd
@@ -264,6 +289,9 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
     	return utilisateur;
 	}
 
+	/**
+	 * Méthode pour ban {@link Utilisateur} donné en paramètre	
+	 */
 	@Override
 	public void banUtilisateur(Utilisateur pUtilisateur) {
 		System.out.println("CTRL "+pUtilisateur.getPseudo());
@@ -289,7 +317,11 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 		
 		
 	}
-
+	
+	/**
+	 * Méthode pour modifier le mot de passe de {@link Utilisateur} donné en paramètre
+	 * Cryptage
+	 */
 	@Override
 	public void modifierPassUtilisateur(Utilisateur pUtilisateur) {
 		System.out.println("CTRL "+pUtilisateur.getPseudo()+" - "+userDAO.find(pUtilisateur.getPseudo()).getId()+" - "+userDAO.find(pUtilisateur.getPseudo()).getId_role());

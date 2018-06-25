@@ -24,6 +24,11 @@ import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
+/**
+ * Implémentation de {@link TopoEmpruntDao}
+ * @author nicolas
+ *
+ */
 @Named
 public class TopoEmpruntDaoImpl extends AbstractDAO implements TopoEmpruntDao{
 
@@ -36,6 +41,9 @@ public class TopoEmpruntDaoImpl extends AbstractDAO implements TopoEmpruntDao{
 	@Inject
 	TopoEmpruntDaoImpl topoEmpruntDAO;
 	
+	/**
+	 * Méthode de création dans la base de donnée du {@link TopoEmprunt} donné en paramètre
+	 */
 	@Override
 	public boolean create(TopoEmprunt pTopoEmprunt) {
 		
@@ -59,6 +67,9 @@ public class TopoEmpruntDaoImpl extends AbstractDAO implements TopoEmpruntDao{
 		return true;
 	}
 
+	/**
+	 * Méthode de suppression dans la base de donnée de {@link TopoEmprunt} donné en paramètre
+	 */
 	@Override
 	public boolean delete(TopoEmprunt pTopoEmprunt) {
 		String vSQL = "DELETE FROM topo_emprunt WHERE id_topo_emprunt = :id_topo_emprunt";
@@ -84,6 +95,9 @@ public class TopoEmpruntDaoImpl extends AbstractDAO implements TopoEmpruntDao{
 		return false;
 	}
 
+	/**
+	 * Méthode pour trouver dans la base de donnée le {@link TopoEmprunt} du {@link Topo} donné en paramètre pour {@link Utilisateur} donné en paramètre
+	 */
 	@Override
 	public TopoEmprunt find(int pIdTopo, int pIdEmprunteur) {
 		String vSQL = "SELECT * FROM topo_emprunt WHERE id_topo = :id_topo AND id_utilisateur = :id_utilisateur";
@@ -123,6 +137,9 @@ public class TopoEmpruntDaoImpl extends AbstractDAO implements TopoEmpruntDao{
 		return topo;
 	}
 
+	/**
+	 * Méthode pour avoir dans la base de donnée la liste des {@link TopoEmprunt} de {@link Utilisateur} dont l'id est donné en paramètre
+	 */
 	@Override
 	public ArrayList<TopoEmprunt> getListTopoEmprunt(int pId_utilisateur) {
 		ArrayList<TopoEmprunt> listTopoEmprunt = new ArrayList<TopoEmprunt>();
@@ -157,6 +174,9 @@ public class TopoEmpruntDaoImpl extends AbstractDAO implements TopoEmpruntDao{
 
 	}
 
+	/**
+	 * Méthode pour avoir dans la base de donnée la liste des {@link TopoEmprunt} de {@link Topo} donné en paramètre
+	 */
 	@Override
 	public ArrayList<TopoEmprunt> getListTopoEmprunt(Topo pTopo) {
 		ArrayList<TopoEmprunt> listTopoEmprunt = new ArrayList<TopoEmprunt>();
@@ -177,7 +197,7 @@ public class TopoEmpruntDaoImpl extends AbstractDAO implements TopoEmpruntDao{
 				cal.add(Calendar.DATE, 20);
 				vTopoEmp.setTopo(pTopo);
 				vTopoEmp.setEmprunteur(userDAO.find(rs.getInt("id_utilisateur")));
-				vTopoEmp.setNom(vTopo.getNom());
+				vTopoEmp.setNom(pTopo.getNom());
 				vTopoEmp.setDateRetour(cal.getTime());
 				return vTopoEmp;
 			}

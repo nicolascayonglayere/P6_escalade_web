@@ -18,7 +18,7 @@
   <packaging>war</packaging>
 
   <!-- ===== Informations générales ===== -->
-  <name>${nomProjete}_Webapp</name>
+  <name>${nomProjet}_Webapp</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
 

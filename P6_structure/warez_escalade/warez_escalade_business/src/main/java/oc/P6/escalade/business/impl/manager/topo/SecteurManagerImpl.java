@@ -13,6 +13,11 @@ import oc.P6.escalade.consumer.DAO.impl.manager.topo.SecteurDaoImpl;
 import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Site;
 
+/**
+ * Implémentation de {@link SecteurManager}
+ * @author nicolas
+ *
+ */
 @Named
 public class SecteurManagerImpl extends AbstractDAOManager implements SecteurManager{
 
@@ -24,12 +29,18 @@ public class SecteurManagerImpl extends AbstractDAOManager implements SecteurMan
 	
 	private PlatformTransactionManager platformTransactionManager;
 	
+	/**
+	 * Méthode pour obtenir la liste des {@link Secteur} du {@link Site } donné en paramètre
+	 */
 	@Override
 	public ArrayList<Secteur> getListSecteur(Site pSite) {
 		ArrayList<Secteur> listSecteur = secteurDAO.getListeSecteur(pSite);
 		return listSecteur;
 	}
 
+	/**
+	 * Méthode pour obtenir le {@link Secteur} nommé pNom du {@link Site} donné en paramètre
+	 */
 	@Override
 	public Secteur getSecteur(String pNom, Site pSite) {
 		Secteur secteur = null;
@@ -47,6 +58,9 @@ public class SecteurManagerImpl extends AbstractDAOManager implements SecteurMan
 		return secteur;
 	}
 
+	/**
+	 * Méthode pour créer un {@link Secteur} donné en paramètre
+	 */
 	@Override
 	public void creerSecteur(Secteur pSecteur) {
 		System.out.println("CTRL "+pSecteur.getNom());

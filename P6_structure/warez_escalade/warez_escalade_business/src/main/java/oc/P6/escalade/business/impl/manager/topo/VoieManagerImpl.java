@@ -13,6 +13,11 @@ import oc.P6.escalade.consumer.DAO.impl.manager.topo.VoieDaoImpl;
 import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Voie;
 
+/**
+ * Implémentation de {@link VoieManager}
+ * @author nicolas
+ *
+ */
 @Named
 public class VoieManagerImpl extends AbstractDAOManager implements VoieManager{
 
@@ -24,6 +29,9 @@ public class VoieManagerImpl extends AbstractDAOManager implements VoieManager{
 	
 	private PlatformTransactionManager platformTransactionManager;
 	
+	/**
+	 * Méthode pour obtenir la liste des {@link Voie} du {@link Secteur} donné en paramètre
+	 */
 	@Override
 	public ArrayList<Voie> getListVoie(Secteur pSecteur) {
 		ArrayList<Voie> listVoie = voieDao.getlistVoie(pSecteur);
@@ -36,6 +44,9 @@ public class VoieManagerImpl extends AbstractDAOManager implements VoieManager{
 		return null;
 	}
 
+	/**
+	 * Méthode pour créer la {@link Voie} donnée en paramètre
+	 */
 	@Override
 	public void creerVoie(Voie pVoie) {
 		System.out.println("CTRL "+pVoie.getNom());
@@ -60,6 +71,9 @@ public class VoieManagerImpl extends AbstractDAOManager implements VoieManager{
 		
 	}
 
+	/**
+	 * Méthode pour modifier la {@link Voie} donnée en paramètre
+	 */
 	@Override
 	public void majVoie(Voie pVoie) {
 		// TODO Auto-generated method stub

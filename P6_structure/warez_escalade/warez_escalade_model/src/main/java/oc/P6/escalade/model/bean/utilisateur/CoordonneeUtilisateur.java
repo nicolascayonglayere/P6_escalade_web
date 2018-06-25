@@ -2,6 +2,11 @@ package oc.P6.escalade.model.bean.utilisateur;
 
 import javax.inject.Named;
 
+/**
+ * Objet métier représentant les coordonnées d'un utilisateur
+ * @author nicolas
+ *
+ */
 @Named ("coordonneeUtilisateur")
 public class CoordonneeUtilisateur {
 
@@ -11,8 +16,15 @@ public class CoordonneeUtilisateur {
 	private Utilisateur utilisateur;
 	private int idUtilisateur;
 	
+	/**
+	 * Constructeur sans paramètres
+	 */
 	public CoordonneeUtilisateur() {}
 
+	/**
+	 * Getter et Setter
+	 * @return
+	 */
 	public int getId() {
 		return id;
 	}

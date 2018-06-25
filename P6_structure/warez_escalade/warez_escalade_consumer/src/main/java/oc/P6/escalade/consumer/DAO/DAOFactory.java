@@ -11,6 +11,11 @@ import oc.P6.escalade.consumer.DAO.contract.manager.topo.VoieManagerDao;
 import oc.P6.escalade.consumer.DAO.contract.manager.utilisateur.CoordonneeUtilisateurDao;
 import oc.P6.escalade.consumer.DAO.contract.manager.utilisateur.UtilisateurManagerDAO;
 
+/**
+ * Interface DAOFactory et ses méthodes d'accès aux différents DAOManager
+ * @author nicolas
+ *
+ */
 public interface DAOFactory {
 	
 	UtilisateurManagerDAO getUtilisateurManagerDAO();

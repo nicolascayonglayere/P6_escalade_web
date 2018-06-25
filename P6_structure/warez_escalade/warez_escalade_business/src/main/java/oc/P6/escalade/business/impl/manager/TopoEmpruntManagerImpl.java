@@ -2,7 +2,6 @@ package oc.P6.escalade.business.impl.manager;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -18,6 +17,11 @@ import oc.P6.escalade.model.bean.emprunt.TopoEmprunt;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
+/**
+ * Implémentation de {@link TopoEmpruntManager}
+ * @author nicolas
+ *
+ */
 @Named
 public class TopoEmpruntManagerImpl extends AbstractDAOManager implements TopoEmpruntManager{
 
@@ -35,12 +39,18 @@ public class TopoEmpruntManagerImpl extends AbstractDAOManager implements TopoEm
 	
 	private PlatformTransactionManager platformTransactionManager;
 	
+	/**
+	 * Méthode pour obtenir la liste des {@link TopoEmprunt} de {@link Utilisateur} dont l'id est donné en paramètre
+	 */
 	@Override
 	public ArrayList<TopoEmprunt> getListTopoEmprunt(int pId_utilisateur) {
 		ArrayList<TopoEmprunt> listTopoEmprunt = topoEmpruntDao.getListTopoEmprunt(pId_utilisateur);
 		return listTopoEmprunt;
 	}
 
+	/**
+	 * Méthode pour obtenir le {@link TopoEmprunt} nommé pNom de {@link Utilisateur} donné en paramètre
+	 */
 	@Override
 	public TopoEmprunt getTopoEmprunt(String pNom, Utilisateur pEmprunteur) {
 		System.out.println("topo : "+topoDAO.find(pNom).getNom()+" - "+topoDAO.find(pNom).getId());
@@ -72,6 +82,9 @@ public class TopoEmpruntManagerImpl extends AbstractDAOManager implements TopoEm
     	return topoEmprunt;
 	}
 
+	/**
+	 * Méthode pour créer un {@link TopoEmprunt} avec un {@link Topo} donné en paramètre pour {@link Utilisateur} donné en paramètre
+	 */
 	@Override
 	public void creerTopoEmprunt(Topo topo, Utilisateur pEmprunteur) {
 		System.out.println(topo.getNom()+" - "+pEmprunteur.getPseudo());
@@ -95,6 +108,9 @@ public class TopoEmpruntManagerImpl extends AbstractDAOManager implements TopoEm
 		
 	}
 
+	/**
+	 * Méthode pour rendre un {@link TopoEmprunt} donné en param pour {@link Utilisateur} donné en paramètre
+	 */
 	@Override
 	public void retourTopoEmprunt(TopoEmprunt pTopoEmprunt, Utilisateur pEmprunteur) {
 		int idTopo = topoDAO.find(pTopoEmprunt.getNom()).getId();
@@ -112,6 +128,9 @@ public class TopoEmpruntManagerImpl extends AbstractDAOManager implements TopoEm
 		
 	}
 
+	/**
+	 * Méthode pour obtenir le nombre d'exemplaire restant d'un  {@link Topo}
+	 */
 	@Override
 	public int getNbExemplaire(Topo pTopo) {
 		int nbEx = topoDAO.find(pTopo.getNom()).getNbreEx() - topoEmpruntDao.getListTopoEmprunt(pTopo).size();

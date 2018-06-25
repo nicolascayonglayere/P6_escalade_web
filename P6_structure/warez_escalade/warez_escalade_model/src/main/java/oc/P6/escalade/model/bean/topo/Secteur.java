@@ -1,7 +1,11 @@
 package oc.P6.escalade.model.bean.topo;
 
 import javax.inject.Named;
-
+/**
+ * Objet métier représentant le secteur d'un topo
+ * @author nicolas
+ *
+ */
 @Named("secteur")
 public class Secteur {
 
@@ -11,12 +15,19 @@ public class Secteur {
 		private String description;
 		private String image;
 		
+		/**
+		 * Constructeurs
+		 */
 		public Secteur() {}
 		
 		public Secteur(String pNom) {
 			this.nom = pNom;
 		}
 
+		/**
+		 * Getter et Setter
+		 * @return
+		 */
 		public int getId() {
 			return id;
 		}

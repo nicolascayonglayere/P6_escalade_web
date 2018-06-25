@@ -4,6 +4,11 @@ import javax.inject.Named;
 
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
+/**
+ * Objet métier représentant un topo
+ * @author nicolas
+ *
+ */
 @Named("topo")
 public class Topo {
 	
@@ -17,6 +22,9 @@ public class Topo {
 	private int nbreEx;
 	private int nombreSite, nombreSecteur, nombreVoie;
 	
+	/**
+	 * Constructeur
+	 */
 	public Topo() {}
 	
 	public Topo(String pNom) {
@@ -27,6 +35,10 @@ public class Topo {
 		return nom;
 	}
 
+	/**
+	 * Getter et Setter
+	 * @param nom
+	 */
 	public void setNom(String nom) {
 		this.nom = nom;
 	}

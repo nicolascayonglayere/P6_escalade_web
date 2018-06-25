@@ -4,9 +4,9 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
 
     <!-- Inclusion d'autres fichiers de contexte Spring -->
-    <import resource="classpath:/oc/P6/escalade/webapp/webappContext.xml" />
-    <import resource="classpath:/oc/P6/escalade/business/businessContext.xml" />
-    <import resource="classpath:/oc/P6/escalade/model/modelContext.xml" />    
-    <import resource="classpath:/oc/P6/escalade/consumer/consumerContext.xml" />
+    <import resource="classpath:*/oc/P6/escalade/webapp/webappContext.xml" />
+    <import resource="classpath:*/oc/P6/escalade/business/businessContext.xml" />
+    <import resource="classpath:*/oc/P6/escalade/model/modelContext.xml" />    
+    <import resource="classpath:*/oc/P6/escalade/consumer/consumerContext.xml" />
 
 </beans>

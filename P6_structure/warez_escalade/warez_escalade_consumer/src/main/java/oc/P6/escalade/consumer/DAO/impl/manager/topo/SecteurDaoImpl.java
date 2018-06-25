@@ -20,12 +20,20 @@ import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
+/**
+ * Implémentation de SecteurManagerDao
+ * @author nicolas
+ *
+ */
 @Named
 public class SecteurDaoImpl extends AbstractDAO implements SecteurManagerDao{
 	
 	@Inject
 	SiteDaoImpl siteDAO;
 
+	/**
+	 * Méthode pour créer un {@link Secteur} donné en paramètre dans la base de donnée
+	 */
 	@Override
 	public boolean create(Secteur pSecteur) {
 		String vSQL = "INSERT INTO secteur (nom, description, id_site, image) VALUES (:nom, :description, :id_site, :image)";
@@ -49,18 +57,27 @@ public class SecteurDaoImpl extends AbstractDAO implements SecteurManagerDao{
 		return true;
 	}
 
+	/**
+	 * Méthode pour supprimer un {@link Secteur} donné en paramètre dans la base de donnée
+	 */
 	@Override
 	public boolean delete(Secteur pSecteur) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
+	/**
+	 * Méthode pour modifier un {@link Secteur} donné en paramètre dans la base de donnée
+	 */
 	@Override
 	public boolean update(Secteur pSecteur) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
+	/**
+	 * Méthode pour trouver un {@link Secteur} du {@link Site} dans la base de donnée avec son nom pNom et l'id du site pId
+	 */
 	@Override
 	public Secteur find(String pNom, int pIdSite) {
 		String vSQL = "SELECT * FROM secteur WHERE id_site = :id_site AND nom = :nom";
@@ -93,6 +110,9 @@ public class SecteurDaoImpl extends AbstractDAO implements SecteurManagerDao{
 		return secteur;
 	}
 
+	/**
+	 * Methode pour obtenir la liste des {@link Secteur} du {@link Site} donné en paramètre dans la base de donnée
+	 */
 	@Override
 	public ArrayList<Secteur> getListeSecteur(Site pSite) {
 		ArrayList<Secteur> listSecteur = new ArrayList<Secteur>();
@@ -118,6 +138,9 @@ public class SecteurDaoImpl extends AbstractDAO implements SecteurManagerDao{
 
 	}
 
+	/**
+	 * Methode pour obtenir 
+	 */
 	@Override
 	public Secteur find(int id) {
 		String vSQL = "SELECT * FROM secteur WHERE id_secteur = :id_secteur";

@@ -12,6 +12,11 @@ import oc.P6.escalade.business.contract.manager.topo.TopoManager;
 import oc.P6.escalade.consumer.DAO.impl.manager.topo.TopoDaoImpl;
 import oc.P6.escalade.model.bean.topo.Topo;
 
+/**
+ * Implémentation de {@link TopoManager}
+ * @author nicolas
+ *
+ */
 @Named
 public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 
@@ -23,12 +28,18 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 	
 	//private PlatformTransactionManager platformTransactionManager;
 	
+	/**
+	 * Méthode pour obtenir la liste des {@link Topo}
+	 */
 	@Override
 	public ArrayList<Topo> getListTopo() {
 		ArrayList<Topo> listeTopo = topoDAO.listerTopo();
 		return listeTopo;
 	}
 
+	/**
+	 * Méthode pour obtenir le {@link Topo} dont le nom est donné en paramètre
+	 */
 	@Override
 	public Topo getTopo(String pNom) {
 		Topo vTopo = null;
@@ -44,6 +55,9 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 		return vTopo;
 	}
 
+	/**
+	 * Méthode pour créer le {@link Topo} donné en paramètre
+	 */
 	@Override
 	public void creerTopo(Topo pTopo) {
 		System.out.println("CTRL "+pTopo.getNom());

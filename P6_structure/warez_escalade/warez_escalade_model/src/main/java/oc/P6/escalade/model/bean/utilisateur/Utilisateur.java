@@ -15,10 +15,9 @@ import oc.P6.escalade.model.bean.emprunt.TopoEmprunt;
 /**
  * Classe représentant un Utilsateur
  */
-@Named("refUtilisateur")
+@Named("utilisateur")
 public class Utilisateur {
-
-    // ==================== Attributs ====================
+ 
     @NotNull
     @Size(min = 1)
     private String pseudo;
@@ -32,8 +31,6 @@ public class Utilisateur {
     private String role;
     private ArrayList<TopoEmprunt> listTopoEmprunt;
 
-
-    // ==================== Constructeurs ====================
     /**
      * Constructeur.
      */
@@ -51,7 +48,10 @@ public class Utilisateur {
     }
 
 
-    // ==================== Getters/Setters ====================
+	/**
+	 * Getter et Setter
+	 * @return
+	 */
     public String getPseudo() {
         return pseudo;
     }

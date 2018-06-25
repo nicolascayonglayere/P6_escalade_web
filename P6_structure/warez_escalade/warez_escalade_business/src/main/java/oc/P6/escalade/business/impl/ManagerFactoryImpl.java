@@ -15,6 +15,7 @@ import oc.P6.escalade.business.contract.manager.topo.TopoManager;
 import oc.P6.escalade.business.contract.manager.topo.VoieManager;
 import oc.P6.escalade.business.contract.manager.utilisateur.CoordonneeUtilisateurManager;
 import oc.P6.escalade.business.contract.manager.utilisateur.UtilisateurManager;
+import oc.P6.escalade.business.impl.manager.utilisateur.UtilisateurManagerImpl;
 
 
 
@@ -25,13 +26,20 @@ import oc.P6.escalade.business.contract.manager.utilisateur.UtilisateurManager;
 @Named("managerFactory")
 public class ManagerFactoryImpl implements ManagerFactory {
 
+	public ManagerFactoryImpl() {}
+	
     @Inject
-    private UtilisateurManager utilisateurManager;
+    private UtilisateurManagerImpl utilisateurManager;
     @Override
-    public UtilisateurManager getUtilisateurManager() {
+    public UtilisateurManagerImpl getUtilisateurManager() {
         return this.utilisateurManager;
     }
-    @Inject
+       
+	public void setUtilisateurManager(UtilisateurManagerImpl utilisateurManager) {
+		this.utilisateurManager = utilisateurManager;
+	}
+
+	@Inject
     private TopoManager topoManager;
 	@Override
 	public TopoManager getTopoManager() {
@@ -100,5 +108,6 @@ public class ManagerFactoryImpl implements ManagerFactory {
 	public TopoEmpruntManager getTopoEmpruntManager() {
 		return this.topoEmprunt;
 	}
+
 
 }

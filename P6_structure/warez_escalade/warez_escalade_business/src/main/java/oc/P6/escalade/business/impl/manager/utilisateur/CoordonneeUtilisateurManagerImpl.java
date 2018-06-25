@@ -11,7 +11,11 @@ import oc.P6.escalade.consumer.DAO.impl.manager.utilisateur.CoordonneeUtilisateu
 import oc.P6.escalade.consumer.DAO.impl.manager.utilisateur.UtilisateurDaoImpl;
 import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateur;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
-
+/**
+ * Implémentation de {@link CoordonneeUtilisateurManager}
+ * @author nicolas
+ *
+ */
 @Named
 public class CoordonneeUtilisateurManagerImpl extends AbstractDAOManager implements CoordonneeUtilisateurManager{
 
@@ -28,6 +32,9 @@ public class CoordonneeUtilisateurManagerImpl extends AbstractDAOManager impleme
 	
 	private PlatformTransactionManager platformTransactionManager;
 	
+	/**
+	 * Méthode pour obtenir les {@link CoordonneeUtilisateur} de {@link Utilisateur} dont l'id est donné en paramètre
+	 */
 	@Override
 	public CoordonneeUtilisateur getCoordonnee(int pId) {
 		if(userDAO.find(pId) != null) {
@@ -49,6 +56,9 @@ public class CoordonneeUtilisateurManagerImpl extends AbstractDAOManager impleme
     	return coordonnee;
 	}
 
+	/**
+	 * Méthode pour créer {@link CoordonneeUtilisateur} donnée en paramètre
+	 */
 	@Override
 	public void creerCoordonnee(CoordonneeUtilisateur pCoordinneeUtilisateur) {
 		
@@ -63,7 +73,10 @@ public class CoordonneeUtilisateurManagerImpl extends AbstractDAOManager impleme
 		}
 		
 	}
-
+	
+	/**
+	 * Méthode pour modifier {@link CoordonneeUtilisateur} donnée en paramètre
+	 */
 	@Override
 	public void modifierCoordonnee(CoordonneeUtilisateur pCoordinneeUtilisateur) {
 		System.out.println("CTRL coord "+pCoordinneeUtilisateur.getEmail()+" - "+pCoordinneeUtilisateur.getUtilisateur().getId());
@@ -79,6 +92,9 @@ public class CoordonneeUtilisateurManagerImpl extends AbstractDAOManager impleme
 		
 	}
 
+	/**
+	 * Méthode pour supprimer {@link CoordonneeUtilisateur} donnée en paramètre
+	 */
 	@Override
 	public void supprimerCoordonnee(CoordonneeUtilisateur pCoordonneeUtilisateur) {
 		System.out.println("CTRL coord "+pCoordonneeUtilisateur.getEmail()+" - "+pCoordonneeUtilisateur.getUtilisateur().getId());

@@ -2,6 +2,11 @@ package oc.P6.escalade.model.bean.topo;
 
 import javax.inject.Named;
 
+/**
+ * Objet métier représentant une voie d'un topo
+ * @author nicolas
+ *
+ */
 @Named("voie")
 public class Voie {
 
@@ -14,12 +19,19 @@ public class Voie {
 	private Secteur secteur;
 	private String description;
 	
+	/**
+	 * Constructeurs
+	 */
 	public Voie() {}
 	
 	public Voie(String pNom) {
 		this.nom = pNom;
 	}
 
+	/**
+	 * Getter et Setter
+	 * @return
+	 */
 	public int getId() {
 		return id;
 	}

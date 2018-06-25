@@ -2,6 +2,11 @@ package oc.P6.escalade.model.bean.topo;
 
 import javax.inject.Named;
 
+/**
+ * Objet métier représentant un site d'un topo
+ * @author nicolas
+ *
+ */
 @Named("site")
 public class Site {
 
@@ -11,12 +16,19 @@ public class Site {
 	private String description;
 	private String image;
 	
+	/**
+	 * Constructeurs
+	 */
 	public Site () {}
 	
 	public Site(String pNom) {
 		this.nom = pNom;
 	}
 
+	/**
+	 * Getter et Setter
+	 * @return
+	 */
 	public int getId() {
 		return id;
 	}

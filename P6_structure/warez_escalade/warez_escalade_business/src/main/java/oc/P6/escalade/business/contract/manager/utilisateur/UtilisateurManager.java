@@ -1,22 +1,20 @@
 package oc.P6.escalade.business.contract.manager.utilisateur;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
 
-
-
 	/**
-	 * Manager du package « utilisateur »
+	 * Interface UtilisateurManager et ses méthodes
 	 */
 	public interface UtilisateurManager {
 
 	    /**
 	     * Renvoie la liste des {@link Utilisateur}
 	     *
-	     * @return List
+	     * @return List d'{@link Utilisateur}
 	     */
 		ArrayList<Utilisateur> getListUtilisateur(String pPseudo);
 
@@ -29,6 +27,12 @@ import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 	     */
 	    Utilisateur getUtilisateur(String pPseudo); //throws NotFoundException;
 	    
+	    /**
+	     * Renvoie l'{@link Utilisateur} demandé pour l'authentification
+	     * @param pPassword
+	     * @param pPseudo
+	     * @returnLe {@link Utilisateur}
+	     */
 	    Utilisateur getUtilisateurPass(String pPassword, String pPseudo);
 
 	    /**
@@ -46,13 +50,33 @@ import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 	     */
 	    void deleteUtilisateur(Utilisateur pUtilisateur);
 	    
+	    /**
+	     * Renvoie la liste des {@link Utilisateur} qui ont le role d'administrateur
+	     * @return les liste des admin
+	     */
 	    ArrayList<Utilisateur> getListAdmin();
 	    
+	    /**
+	     * Renvoie la liste des {@link Utilisateur} qui ont le role de modérateur
+	     * @return la liste des modérateurs
+	     */
 	    ArrayList<Utilisateur> getListModo();
 	    
+	    /**
+	     * Modifie l'{@link Utilisateur} donné en paramètre
+	     * @param pUtilisateur
+	     */
 	    void modifierUtilisateur(Utilisateur pUtilisateur);
 	    
+	    /**
+	     * Modifie le mot de passe de l'{@link Utilisateur} donné en paramètre (cryptage en bdd)
+	     * @param pUtilisateur
+	     */
 	    void modifierPassUtilisateur(Utilisateur pUtilisateur);
 	    
+	    /**
+	     * Banni l'{@link Utilisateur} donné en paramètre (modifie son role)
+	     * @param pUtilisateur
+	     */
 	    void banUtilisateur(Utilisateur pUtilisateur);
 }

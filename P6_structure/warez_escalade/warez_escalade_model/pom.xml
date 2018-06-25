@@ -56,7 +56,13 @@
     		<groupId>net.java.dev.spring-annotation</groupId>
     		<artifactId>spring-annotation-base</artifactId>
     		<version>1.0.2</version>
-		</dependency>
+    		<exclusions>
+    			<exclusion>
+    				<groupId>org.springframework</groupId>
+    				<artifactId>spring</artifactId>
+    			</exclusion>
+    		</exclusions>
+        </dependency>
         <dependency>
         	<groupId>org.springframework</groupId>
         	<artifactId>spring-context</artifactId>
