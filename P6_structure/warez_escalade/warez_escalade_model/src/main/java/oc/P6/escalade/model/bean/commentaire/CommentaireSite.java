@@ -3,9 +3,10 @@ package oc.P6.escalade.model.bean.commentaire;
 import javax.inject.Named;
 
 import oc.P6.escalade.model.bean.topo.Site;
+import oc.P6.escalade.model.contract.commentaire.IntCommentaireSite;
 
 @Named("commentaireSite")
-public class CommentaireSite extends Commentaire{
+public class CommentaireSite extends Commentaire implements IntCommentaireSite{
 
 	private Site site;
 	

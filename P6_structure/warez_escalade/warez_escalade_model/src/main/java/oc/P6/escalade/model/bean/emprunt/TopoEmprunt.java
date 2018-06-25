@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Scope;
 
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
+import oc.P6.escalade.model.contract.emprunt.IntTopoEmprunt;
 /**
  * Objet métier TopoEmprunt
  * @author nicolas
@@ -15,7 +16,7 @@ import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
  */
 @Named("topoEmprunt")
 @Scope("prototype")
-public class TopoEmprunt {
+public class TopoEmprunt implements IntTopoEmprunt{
 
 	private int id;
 	private Topo topo;
@@ -81,6 +82,8 @@ public class TopoEmprunt {
 		this.dateRetour = dateRetour;
 	}
 	
-	
+	public void destroy() {
+		this.destroy();
+	}
 	
 }

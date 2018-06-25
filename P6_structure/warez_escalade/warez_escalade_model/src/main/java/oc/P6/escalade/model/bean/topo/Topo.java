@@ -3,6 +3,7 @@ package oc.P6.escalade.model.bean.topo;
 import javax.inject.Named;
 
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
+import oc.P6.escalade.model.contract.topo.IntTopo;
 
 /**
  * Objet métier représentant un topo
@@ -10,7 +11,7 @@ import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
  *
  */
 @Named("topo")
-public class Topo {
+public class Topo implements IntTopo{
 	
 	private String nom;
 	private int id;
@@ -71,7 +72,7 @@ public class Topo {
 		return longitude;
 	}
 
-	public void setLongitude(Double longitude) {
+	public void setLongitude(double longitude) {
 		this.longitude = longitude; 
 	}
 
@@ -79,7 +80,7 @@ public class Topo {
 		return latitude;
 	}
 
-	public void setLatitude(Double latitude) {
+	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
 

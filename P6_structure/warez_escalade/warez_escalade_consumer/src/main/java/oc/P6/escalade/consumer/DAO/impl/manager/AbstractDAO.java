@@ -9,7 +9,11 @@ public abstract class AbstractDAO {
     @Named("dataSourceP6")
 	private DataSource dataSource;
 
-    protected DataSource getDataSource() {
+    public void setDataSource(DataSource dataSource) {
+		this.dataSource = dataSource;
+	}
+
+	protected DataSource getDataSource() {
         return dataSource;
     }
 }

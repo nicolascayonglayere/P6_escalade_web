@@ -1,13 +1,15 @@
 package oc.P6.escalade.model.bean.topo;
 
 import javax.inject.Named;
+
+import oc.P6.escalade.model.contract.topo.IntSecteur;
 /**
  * Objet métier représentant le secteur d'un topo
  * @author nicolas
  *
  */
 @Named("secteur")
-public class Secteur {
+public class Secteur implements IntSecteur {
 
 		private int id;
 		private String nom;

@@ -2,6 +2,7 @@ package oc.P6.escalade.actions.utilisateur;
 
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
@@ -10,7 +11,7 @@ import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-import oc.P6.escalade.WebappHelper.WebappHelper;
+import oc.P6.escalade.business.contract.ManagerFactory;
 import oc.P6.escalade.model.bean.emprunt.TopoEmprunt;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
@@ -21,7 +22,8 @@ public class GestionPretAction extends ActionSupport implements SessionAware, Se
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+	@Inject
+	private ManagerFactory managerFactory;
 	private String nom;
 	private String pseudo;
 	private Utilisateur utilisateur;
@@ -30,13 +32,13 @@ public class GestionPretAction extends ActionSupport implements SessionAware, Se
 	
 	public String retourner() {
 		pseudo = ((Utilisateur) session.get("utilisateur")).getPseudo();
-		utilisateur = WebappHelper.getManagerFactory().getUtilisateurManager().getUtilisateur(pseudo);
+		utilisateur = managerFactory.getUtilisateurManager().getUtilisateur(pseudo);
 		HttpServletRequest request = ServletActionContext.getRequest();
 		nom = request.getParameter("nom");
 		System.out.println("nom topo retourner "+nom+" nom emprunteur "+pseudo);
-		TopoEmprunt vTopoEmp = WebappHelper.getManagerFactory().getTopoEmpruntManager().getTopoEmprunt(nom, utilisateur);//ajouter un param utilisateur.pseudo ds la methode getTopoEmprunt
+		TopoEmprunt vTopoEmp = managerFactory.getTopoEmpruntManager().getTopoEmprunt(nom, utilisateur);//ajouter un param utilisateur.pseudo ds la methode getTopoEmprunt
 		if (vTopoEmp != null)
-			WebappHelper.getManagerFactory().getTopoEmpruntManager().retourTopoEmprunt(vTopoEmp, utilisateur);
+			managerFactory.getTopoEmpruntManager().retourTopoEmprunt(vTopoEmp, utilisateur);
 		
 		addActionMessage("Vous avez rendu le topo "+vTopoEmp.getNom());
 		return SUCCESS;
@@ -44,14 +46,14 @@ public class GestionPretAction extends ActionSupport implements SessionAware, Se
 	
 	public String emprunter() {
 		pseudo = ((Utilisateur) session.get("utilisateur")).getPseudo();
-		utilisateur = WebappHelper.getManagerFactory().getUtilisateurManager().getUtilisateur(pseudo);
+		utilisateur = managerFactory.getUtilisateurManager().getUtilisateur(pseudo);
 		HttpServletRequest request = ServletActionContext.getRequest();
 		nom = request.getParameter("nom");
-		Topo vTopo = WebappHelper.getManagerFactory().getTopoManager().getTopo(nom);
+		Topo vTopo = managerFactory.getTopoManager().getTopo(nom);
 		//ajouter un ctrl pour pas emprunter +sieurs fois le meme topo + ctrl du nb d'ex dispo
-		if (WebappHelper.getManagerFactory().getTopoEmpruntManager().getTopoEmprunt(nom, utilisateur) == null) {
-			if (WebappHelper.getManagerFactory().getTopoEmpruntManager().getNbExemplaire(vTopo)>0) {
-				WebappHelper.getManagerFactory().getTopoEmpruntManager().creerTopoEmprunt(vTopo, utilisateur);
+		if (managerFactory.getTopoEmpruntManager().getTopoEmprunt(nom, utilisateur) == null) {
+			if (managerFactory.getTopoEmpruntManager().getNbExemplaire(vTopo)>0) {
+				managerFactory.getTopoEmpruntManager().creerTopoEmprunt(vTopo, utilisateur);
 				addActionMessage("Votre emprunt est bien enregistré");		
 				return ActionSupport.SUCCESS;
 			}
@@ -99,6 +101,14 @@ public class GestionPretAction extends ActionSupport implements SessionAware, Se
 	public void setServletRequest(HttpServletRequest request) {
 		this.servletRequest = request;
 		
+	}
+
+	public ManagerFactory getManagerFactory() {
+		return managerFactory;
+	}
+
+	public void setManagerFactory(ManagerFactory managerFactory) {
+		this.managerFactory = managerFactory;
 	}
 	
 	

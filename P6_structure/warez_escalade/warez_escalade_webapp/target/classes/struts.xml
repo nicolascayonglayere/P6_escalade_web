@@ -6,6 +6,7 @@
 	<constant name="struts.devMode" value="true" />
 	<constant name="struts.ui.theme" value="bootstrap" />
 	<constant name="struts.custom.i18n.resources" value="package" />
+	<constant name="struts.objectFactory" value="spring"/>
 	
 	<package name="default" extends="struts-default">
 			
@@ -113,7 +114,7 @@
         
         <!-- page presentation-->
         <action name="presentation" class="oc.P6.escalade.actions.PresentationAction" method="execute">
-        	<result name = "success">/jsp/presentation.jsp</result>
+        	<result name="success">/jsp/presentation.jsp</result>
         </action>
         
         <!-- page d'inscription -->
@@ -163,7 +164,7 @@
        		<interceptor-ref name="store">
 				<param name="operationMode">STORE</param>
 		    </interceptor-ref>
-		    <interceptor-ref name="defaultStack" />        
+		    <interceptor-ref name="loginStack" />        
 			<result name="success" type="redirectAction">
 				<param name="actionName">go_monCompte</param>
 			</result>
@@ -182,6 +183,7 @@
        		<interceptor-ref name="store">
 				<param name="operationMode">STORE</param>
 		    </interceptor-ref>
+		    <!--  <interceptor-ref name="createSession"/>-->
 		    <interceptor-ref name="defaultStack" />        
 			<result name="success">/jsp/index.jsp</result>
         </action>

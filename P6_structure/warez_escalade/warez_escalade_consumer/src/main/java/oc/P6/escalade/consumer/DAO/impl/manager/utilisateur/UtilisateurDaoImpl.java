@@ -24,9 +24,7 @@ import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 @Named("utilisateurDAO")
 public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManagerDAO  {
 
-	@Inject
-	private UtilisateurDaoImpl userDAO;
-	
+
 	@Override
 	public boolean create(Utilisateur pUtilisateur) {
 		
@@ -38,7 +36,7 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 		vParams.addValue("prenom", pUtilisateur.getPrenom(), Types.VARCHAR);
 		vParams.addValue("pseudo", pUtilisateur.getPseudo(), Types.VARCHAR);
 		vParams.addValue("password", pUtilisateur.getPassword(), Types.VARCHAR);
-		vParams.addValue("id_role",pUtilisateur.getId_role(), Types.INTEGER);
+		vParams.addValue("id_role",pUtilisateur.getId_Role(), Types.INTEGER);
 	    System.out.println("ctrlDAO : "+pUtilisateur.getNom());
 	    
 	    try {
@@ -81,7 +79,7 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 		vParams.addValue("pseudo", pUtilisateur.getPseudo(), Types.VARCHAR);
 		vParams.addValue("password", pUtilisateur.getPassword(), Types.VARCHAR);
 		vParams.addValue("id_utilisateur", pUtilisateur.getId(), Types.INTEGER);
-		vParams.addValue("id_role",pUtilisateur.getId_role(), Types.INTEGER);
+		vParams.addValue("id_role",pUtilisateur.getId_Role(), Types.INTEGER);
 	    
 	    try {
 	        vJdbcTemplate.update(vSQL, vParams);
@@ -112,7 +110,7 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 				vUtilisateur.setPrenom(rs.getString("prenom"));
 				vUtilisateur.setPassword(rs.getString("password"));
 				vUtilisateur.setId(rs.getInt("id_utilisateur"));
-				vUtilisateur.setId_role(rs.getInt("id_role"));
+				vUtilisateur.setId_Role(rs.getInt("id_role"));
 				vUtilisateur.setRole(rs.getString("role"));
 				return vUtilisateur;
 			}
@@ -174,7 +172,7 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 			public Utilisateur mapRow(ResultSet rs, int rowNum) throws SQLException {
 				Utilisateur vUtilisateur = new Utilisateur();
 				vUtilisateur.setPseudo(rs.getString("pseudo"));
-				vUtilisateur.setId_role(pIdRole);
+				vUtilisateur.setId_Role(pIdRole);
 				return vUtilisateur;
 			}
 			
@@ -243,8 +241,5 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 		
 		return user;
 	}
-	
-	
-	
 	
 }

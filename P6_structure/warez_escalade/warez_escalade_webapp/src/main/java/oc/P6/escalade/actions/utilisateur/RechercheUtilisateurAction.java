@@ -2,9 +2,11 @@ package oc.P6.escalade.actions.utilisateur;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 import com.opensymphony.xwork2.ActionSupport;
 
-import oc.P6.escalade.WebappHelper.WebappHelper;
+import oc.P6.escalade.business.contract.ManagerFactory;
 import oc.P6.escalade.model.bean.emprunt.TopoEmprunt;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
@@ -14,7 +16,8 @@ public class RechercheUtilisateurAction extends ActionSupport {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+	@Inject
+	private ManagerFactory managerFactory;
 	private ArrayList<Utilisateur> listUtilisateur;
 	private Utilisateur utilisateur;
 	private ArrayList<TopoEmprunt> listTopoEmprunt;
@@ -45,9 +48,17 @@ public class RechercheUtilisateurAction extends ActionSupport {
 
 	public String execute() {
 		System.out.println(utilisateur.getPseudo());
-		listUtilisateur = WebappHelper.getManagerFactory().getUtilisateurManager().getListUtilisateur(utilisateur.getPseudo());
+		listUtilisateur = managerFactory.getUtilisateurManager().getListUtilisateur(utilisateur.getPseudo());
 		System.out.println("ctrl topo emp "+listUtilisateur.get(1).getListTopoEmprunt());
 		return ActionSupport.SUCCESS;
+	}
+
+	public ManagerFactory getManagerFactory() {
+		return managerFactory;
+	}
+
+	public void setManagerFactory(ManagerFactory managerFactory) {
+		this.managerFactory = managerFactory;
 	}
 
 }

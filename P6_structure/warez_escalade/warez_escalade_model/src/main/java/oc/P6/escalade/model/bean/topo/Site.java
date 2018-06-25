@@ -2,13 +2,15 @@ package oc.P6.escalade.model.bean.topo;
 
 import javax.inject.Named;
 
+import oc.P6.escalade.model.contract.topo.IntSite;
+
 /**
  * Objet métier représentant un site d'un topo
  * @author nicolas
  *
  */
 @Named("site")
-public class Site {
+public class Site implements IntSite{
 
 	private int id;
 	private String nom;

@@ -7,8 +7,10 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.context.annotation.Scope;
 
 import oc.P6.escalade.model.bean.emprunt.TopoEmprunt;
+import oc.P6.escalade.model.contract.utilisateur.IntUtilisateur;
 
 
 
@@ -16,7 +18,8 @@ import oc.P6.escalade.model.bean.emprunt.TopoEmprunt;
  * Classe représentant un Utilsateur
  */
 @Named("utilisateur")
-public class Utilisateur {
+@Scope("prototype")
+public class Utilisateur implements IntUtilisateur{
  
     @NotNull
     @Size(min = 1)
@@ -60,12 +63,12 @@ public class Utilisateur {
     }
 
 
-    public int getId_role() {
+    public int getId_Role() {
 		return id_role;
 	}
 
 
-	public void setId_role(int id_role) {
+	public void setId_Role(int id_role) {
 		this.id_role = id_role;
 	}
 
@@ -156,6 +159,10 @@ public class Utilisateur {
     @Override
     public int hashCode() {
         return this.pseudo != null ? this.pseudo.hashCode() : super.hashCode();
+    }
+    
+    public void destroy() {
+    	this.destroy();
     }
 }
 

@@ -1,8 +1,10 @@
 package oc.P6.escalade.actions.topo;
 
+import javax.inject.Inject;
+
 import com.opensymphony.xwork2.ActionSupport;
 
-import oc.P6.escalade.WebappHelper.WebappHelper;
+import oc.P6.escalade.business.contract.ManagerFactory;
 import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
@@ -14,6 +16,8 @@ public class CreerVoie extends ActionSupport {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	@Inject
+	private ManagerFactory managerFactory;
 	private Voie voie;
 	private String nomTopo, nomSite, nomSecteur;
 	
@@ -45,13 +49,19 @@ public class CreerVoie extends ActionSupport {
 	
 	
 	public String execute() {
-		Topo topo = WebappHelper.getManagerFactory().getTopoManager().getTopo(nomTopo);
-		Site site = WebappHelper.getManagerFactory().getSiteManager().getSite(nomSite, topo);
-		Secteur secteur = WebappHelper.getManagerFactory().getSecteurManager().getSecteur(nomSecteur, site);
+		Topo topo = managerFactory.getTopoManager().getTopo(nomTopo);
+		Site site = managerFactory.getSiteManager().getSite(nomSite, topo);
+		Secteur secteur = managerFactory.getSecteurManager().getSecteur(nomSecteur, site);
 		voie.setSecteur(secteur);
-		WebappHelper.getManagerFactory().getVoieManager().creerVoie(voie);
+		managerFactory.getVoieManager().creerVoie(voie);
 		
 		return ActionSupport.SUCCESS;
+	}
+	public ManagerFactory getManagerFactory() {
+		return managerFactory;
+	}
+	public void setManagerFactory(ManagerFactory managerFactory) {
+		this.managerFactory = managerFactory;
 	}
 	
 

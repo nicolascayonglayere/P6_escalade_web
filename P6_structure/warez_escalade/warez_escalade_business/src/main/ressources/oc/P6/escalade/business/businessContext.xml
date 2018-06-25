@@ -12,5 +12,7 @@
 
     <!-- Scanne les packages pour trouver les beans qui se déclarent (@Named...) -->
     <context:component-scan base-package="oc.P6.escalade.business.impl"/>
+    
+    
 
 </beans>

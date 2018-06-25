@@ -2,6 +2,7 @@ package oc.P6.escalade.actions.utilisateur;
 
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
@@ -10,13 +11,15 @@ import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-import oc.P6.escalade.WebappHelper.WebappHelper;
+import oc.P6.escalade.business.contract.ManagerFactory;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
 public class LoginAction extends ActionSupport implements SessionAware, ServletRequestAware {
 	/**
 	 * 
 	 */
+	@Inject
+	private ManagerFactory managerFactory;
 	private static final long serialVersionUID = 1L;
 	private Utilisateur utilisateur;
 	private String pseudo;
@@ -35,7 +38,7 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
 	public String logOut() {
 		String username1 = ((Utilisateur) this.session.get("utilisateur")).getPseudo();
 		System.out.println("deco - "+username1);
-		utilisateur = WebappHelper.getManagerFactory().getUtilisateurManager().getUtilisateur(username1);
+		utilisateur = managerFactory.getUtilisateurManager().getUtilisateur(username1);
 		session.remove("utilisateur");
 		this.servletRequest.getSession().invalidate();
 		addActionMessage("You Have Been Successfully Logged Out");
@@ -47,7 +50,7 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
 	public String loginRegisterUser() {
 		String vResult="";
 		System.out.println(utilisateur.getPseudo()+" - "+utilisateur.getPassword());
-		Utilisateur vUser = WebappHelper.getManagerFactory().getUtilisateurManager().getUtilisateurPass(utilisateur.getPassword(), utilisateur.getPseudo());
+		Utilisateur vUser = managerFactory.getUtilisateurManager().getUtilisateurPass(utilisateur.getPassword(), utilisateur.getPseudo());
 
 		if(vUser.getNom() != null && !(vUser.getRole()).equals("banni")) {
 			if ((utilisateur.getPseudo().equals(vUser.getPseudo()))&&(utilisateur.getPassword().equals(vUser.getPassword()))) {
@@ -96,6 +99,14 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
 	public void setServletRequest(HttpServletRequest pRequest) {
 		// TODO Auto-generated method stub
 		this.servletRequest = pRequest;
+	}
+
+	public ManagerFactory getManagerFactory() {
+		return managerFactory;
+	}
+
+	public void setManagerFactory(ManagerFactory managerFactory) {
+		this.managerFactory = managerFactory;
 	}
 
 

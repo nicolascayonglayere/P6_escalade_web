@@ -26,18 +26,14 @@ import oc.P6.escalade.business.impl.manager.utilisateur.UtilisateurManagerImpl;
 @Named("managerFactory")
 public class ManagerFactoryImpl implements ManagerFactory {
 
-	public ManagerFactoryImpl() {}
+
 	
     @Inject
-    private UtilisateurManagerImpl utilisateurManager;
+    private UtilisateurManager utilisateurManager;
     @Override
-    public UtilisateurManagerImpl getUtilisateurManager() {
+    public UtilisateurManager getUtilisateurManager() {
         return this.utilisateurManager;
     }
-       
-	public void setUtilisateurManager(UtilisateurManagerImpl utilisateurManager) {
-		this.utilisateurManager = utilisateurManager;
-	}
 
 	@Inject
     private TopoManager topoManager;

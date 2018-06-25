@@ -20,7 +20,7 @@ import oc.P6.escalade.business.impl.manager.utilisateur.UtilisateurManagerImpl;
  */
 public interface ManagerFactory {
 
-	UtilisateurManagerImpl getUtilisateurManager();
+	UtilisateurManager getUtilisateurManager();
 	CoordonneeUtilisateurManager getCoordonneeUtilisateurManager();
 	
 	TopoManager getTopoManager();

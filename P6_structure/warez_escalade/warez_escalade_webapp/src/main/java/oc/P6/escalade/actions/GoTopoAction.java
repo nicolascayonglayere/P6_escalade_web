@@ -3,9 +3,11 @@ package oc.P6.escalade.actions;
 import java.io.File;
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 import com.opensymphony.xwork2.ActionSupport;
 
-import oc.P6.escalade.WebappHelper.WebappHelper;
+import oc.P6.escalade.business.contract.ManagerFactory;
 import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
@@ -17,7 +19,8 @@ public class GoTopoAction extends ActionSupport {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+	@Inject
+	private ManagerFactory managerFactory;	
 	private Topo topo;
 	private String nom;
 	private Secteur secteur;
@@ -105,7 +108,7 @@ public class GoTopoAction extends ActionSupport {
         //call Service class to store personBean's state in database
 		//--recupe le nom du topo dans la requete
 		System.out.println(nom);
-		topo = (Topo) WebappHelper.getManagerFactory().getTopoManager().getTopo(nom);
+		topo = (Topo) managerFactory.getTopoManager().getTopo(nom);
 		System.out.println(topo.getImage());
  		//File repertoire = new File("webapp\\assets\\images\\"+topo.getImage());
 		File repertoire = new File("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\"+topo.getImage());//
@@ -117,11 +120,11 @@ public class GoTopoAction extends ActionSupport {
 		image = listImage.get(0);
 		System.out.println(image);
         if (topo != null) {
-        	listSite = (ArrayList<Site>) WebappHelper.getManagerFactory().getSiteManager().getSite(topo);
+        	listSite = (ArrayList<Site>) managerFactory.getSiteManager().getSite(topo);
         	for (Site s : listSite) {
-        		listSecteur = (ArrayList<Secteur>) WebappHelper.getManagerFactory().getSecteurManager().getListSecteur(s);
+        		listSecteur = (ArrayList<Secteur>) managerFactory.getSecteurManager().getListSecteur(s);
         		for (Secteur sect : listSecteur) 
-        			listVoie = (ArrayList<Voie>) WebappHelper.getManagerFactory().getVoieManager().getListVoie(sect);
+        			listVoie = (ArrayList<Voie>) managerFactory.getVoieManager().getListVoie(sect);
         	}
 
         	return SUCCESS;
@@ -135,6 +138,12 @@ public class GoTopoAction extends ActionSupport {
     }
 	public String[] getDefaultLieux(){
 		return new String [] {"topo"};
+	}
+	public ManagerFactory getManagerFactory() {
+		return managerFactory;
+	}
+	public void setManagerFactory(ManagerFactory managerFactory) {
+		this.managerFactory = managerFactory;
 	}
 
 }

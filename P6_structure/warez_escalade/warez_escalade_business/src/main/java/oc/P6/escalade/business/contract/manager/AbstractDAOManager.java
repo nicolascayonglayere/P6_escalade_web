@@ -7,15 +7,15 @@ import oc.P6.escalade.consumer.DAO.DAOFactory;
 
 public abstract class AbstractDAOManager {
 	@Inject
-	private DAOFactory daoFacto;
+	private DAOFactory daoFactory;
 	
 	
 	public DAOFactory getDAOFactory() {
-		return this.daoFacto;
+		return this.daoFactory;
 	}
 	
 	public void setDAOFactory(DAOFactory pDaoFacto) {
-		this.daoFacto=pDaoFacto;
+		this.daoFactory = pDaoFacto;
 	}
 	
 }

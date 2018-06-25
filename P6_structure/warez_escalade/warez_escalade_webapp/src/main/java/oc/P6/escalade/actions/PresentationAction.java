@@ -1,23 +1,16 @@
 package oc.P6.escalade.actions;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import javax.inject.Inject;
 
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.xml.XmlBeanFactory;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
-
 import com.opensymphony.xwork2.ActionSupport;
 
-import oc.P6.escalade.WebappHelper.WebappHelper;
+
 import oc.P6.escalade.business.contract.ManagerFactory;
-import oc.P6.escalade.business.impl.ManagerFactoryImpl;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
+//@Named("presentation")
 public class PresentationAction extends ActionSupport{
 
 	/**
@@ -54,15 +47,10 @@ public class PresentationAction extends ActionSupport{
 	}
 
 	public String execute() {
-		
-		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("bootstrapContext.xml");
-		System.out.println("Bean names web-app: " + Arrays.toString(context.getBeanNamesForType(ManagerFactoryImpl.class)));
-		// get the bean from spring container
-		//ManagerFactoryImpl managerFactory = (ManagerFactoryImpl) context.getBean("managerFactory", ManagerFactory.class);
-		//listModo = WebappHelper.getManagerFactory().getUtilisateurManager().getListModo();
+	
+		listModo = managerFactory.getUtilisateurManager().getListModo();
 		listAdmin = managerFactory.getUtilisateurManager().getListAdmin();
-		
-		//context.close();
+
 		return SUCCESS;
 	}
 

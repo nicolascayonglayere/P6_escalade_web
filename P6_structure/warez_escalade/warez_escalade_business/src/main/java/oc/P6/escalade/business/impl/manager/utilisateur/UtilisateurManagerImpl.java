@@ -21,6 +21,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import oc.P6.escalade.business.contract.manager.AbstractDAOManager;
 import oc.P6.escalade.business.contract.manager.utilisateur.UtilisateurManager;
+import oc.P6.escalade.consumer.DAO.impl.DAOFactoryImpl;
 import oc.P6.escalade.consumer.DAO.impl.manager.TopoEmpruntDaoImpl;
 import oc.P6.escalade.consumer.DAO.impl.manager.utilisateur.CoordonneeUtilisateurDaoImpl;
 import oc.P6.escalade.consumer.DAO.impl.manager.utilisateur.UtilisateurDaoImpl;
@@ -40,8 +41,8 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
     /** Logger pour la classe */
     private static final Log LOGGER = LogFactory.getLog(UtilisateurManagerImpl.class);
 
- 
-    
+    @Inject
+    private DAOFactoryImpl daoFactory;
     //@Inject
    // @Named("refListUtilisateur")
    //private List<Utilisateur> listUtilisateur;
@@ -52,9 +53,9 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
    // private Optional<Utilisateur> searchUtilisateur(String pPseudo) {
      //   return this.listUtilisateur.stream().filter(u -> StringUtils.equals(u.getPseudo(), pPseudo)).findFirst();
     //}
-    @Inject
+    //@Inject
     //@Named("utilisateurDAO")
-    private UtilisateurDaoImpl userDAO;// = (UtilisateurDaoImpl) getDAOFactory().getUtilisateurManagerDAO();
+    private UtilisateurDaoImpl userDAO; 
     
     @Inject
     private TopoEmpruntDaoImpl topoEmpDAO;
@@ -71,7 +72,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
     @Override
     public Utilisateur getUtilisateur(String pPseudo) {//throws NotFoundException {
     	//--chercher l'utilisateur ds la bdd
-
+    	userDAO = (UtilisateurDaoImpl) daoFactory.getUtilisateurManagerDAO();
     	if(userDAO.find(pPseudo) != null) { 
         	LOGGER.debug(userDAO.find(pPseudo).getPseudo());
         	System.out.println(userDAO.find(pPseudo).getPseudo());
@@ -79,7 +80,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 	       	utilisateur.setPrenom(userDAO.find(pPseudo).getPrenom());
 	    	utilisateur.setPseudo(pPseudo);
 	    	utilisateur.setPassword(userDAO.find(pPseudo).getPassword());
-	    	utilisateur.setId_role(userDAO.find(pPseudo).getId_role());
+	    	utilisateur.setId_Role(userDAO.find(pPseudo).getId_Role());
 	    	utilisateur.setRole(userDAO.find(pPseudo).getRole());
 	    	utilisateur.setId(userDAO.find(pPseudo).getId());
 	    	
@@ -113,6 +114,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
         //TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
 		//TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(new DefaultTransactionDefinition());
 		System.out.println("CTRL "+pUtilisateur.getPseudo());
+		userDAO = (UtilisateurDaoImpl) daoFactory.getUtilisateurManagerDAO();
 		if (userDAO.find(pUtilisateur.getNom())!= null) {
 			System.out.println("trace-");
 			try {
@@ -131,7 +133,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 				utilisateur.setPseudo(pUtilisateur.getPseudo());
 				utilisateur.setPassword(pUtilisateur.getPassword());
 				//utilisateur.setCoordonnee(pUtilisateur.getCoordonnee());
-				utilisateur.setId_role(3);//(RoleUtilisateur.Utilisateur.getId());
+				utilisateur.setId_Role(3);//(RoleUtilisateur.Utilisateur.getId());
 				userDAO.create(utilisateur);
 				
 			    //TransactionStatus vTScommit = vTransactionStatus;
@@ -152,6 +154,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 	 */
 	@Override
 	public ArrayList<Utilisateur> getListAdmin() {
+		userDAO = (UtilisateurDaoImpl) daoFactory.getUtilisateurManagerDAO();
 		ArrayList<Utilisateur> listAdmin = userDAO.getList(1);
 		return listAdmin;
 	}
@@ -160,6 +163,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 	 */
 	@Override
 	public ArrayList<Utilisateur> getListModo() {
+		userDAO = (UtilisateurDaoImpl) daoFactory.getUtilisateurManagerDAO();
 		ArrayList<Utilisateur> listModo = userDAO.getList(2);
 		return listModo;
 	}
@@ -170,6 +174,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 	@Override
 	public void modifierUtilisateur(Utilisateur pUtilisateur) {
 		System.out.println("CTRL "+pUtilisateur.getPseudo());
+		userDAO = (UtilisateurDaoImpl) daoFactory.getUtilisateurManagerDAO();
 		if (userDAO.find(pUtilisateur.getPseudo())!= null && userDAO.find(pUtilisateur.getPseudo()).getPassword() != pUtilisateur.getPassword()) {
 			System.out.println("trace-");
 			try {
@@ -188,7 +193,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 				utilisateur.setPseudo(pUtilisateur.getPseudo());
 				utilisateur.setPassword(pUtilisateur.getPassword());
 				//utilisateur.setCoordonnee(pUtilisateur.getCoordonnee());
-				utilisateur.setId_role(pUtilisateur.getId_role());//(RoleUtilisateur.Utilisateur.getId());
+				utilisateur.setId_Role(pUtilisateur.getId_Role());//(RoleUtilisateur.Utilisateur.getId());
 				userDAO.update(utilisateur);
 				
 			    //TransactionStatus vTScommit = vTransactionStatus;
@@ -208,6 +213,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 	@Override
 	public void deleteUtilisateur(Utilisateur pUtilisateur) {
 		System.out.println("CTRL "+pUtilisateur.getPseudo());
+		userDAO = (UtilisateurDaoImpl) daoFactory.getUtilisateurManagerDAO();
 		if (userDAO.find(pUtilisateur.getPseudo())== null) {
 			System.out.println("trace-");
 			try {
@@ -226,7 +232,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 				utilisateur.setPseudo(pUtilisateur.getPseudo());
 				utilisateur.setPassword(pUtilisateur.getPassword());
 				//utilisateur.setCoordonnee(pUtilisateur.getCoordonnee());
-				utilisateur.setId_role(3);//(RoleUtilisateur.Utilisateur.getId());
+				utilisateur.setId_Role(3);//(RoleUtilisateur.Utilisateur.getId());
 				userDAO.delete(utilisateur);
 				
 			    //TransactionStatus vTScommit = vTransactionStatus;
@@ -243,10 +249,11 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 	}
 	
 	/**
-	 * Méthode pour obtenir la liste des ????
+	 * Méthode pour obtenir la liste des utilisateurs à partir du pseudo (une partie pour une recherche)
 	 */
 	@Override
 	public ArrayList<Utilisateur> getListUtilisateur(String pPseudo) {
+		userDAO = (UtilisateurDaoImpl) daoFactory.getUtilisateurManagerDAO();
 		ArrayList<Utilisateur> listUtilisateur = userDAO.getList(pPseudo);
 		for (Utilisateur u : listUtilisateur) {
 			System.out.println(userDAO.find(u.getPseudo()).getId());
@@ -262,14 +269,14 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 	@Override
 	public Utilisateur getUtilisateurPass(String pPassword, String pPseudo) {
     	//--chercher l'utilisateur ds la bdd
-
+		userDAO = (UtilisateurDaoImpl) daoFactory.getUtilisateurManagerDAO();
     	if(userDAO.findPass(pPassword, pPseudo) != null) { 
         	System.out.println(userDAO.findPass(pPassword, pPseudo).getPseudo());
         		utilisateur.setNom(userDAO.findPass(pPassword, pPseudo).getNom());
         		utilisateur.setPrenom(userDAO.findPass(pPassword, pPseudo).getPrenom());
     	        utilisateur.setPseudo(pPseudo);
     			utilisateur.setPassword(pPassword);
-    			utilisateur.setId_role(userDAO.findPass(pPassword, pPseudo).getId_role());
+    			utilisateur.setId_Role(userDAO.findPass(pPassword, pPseudo).getId_Role());
     			utilisateur.setRole(userDAO.findPass(pPassword, pPseudo).getRole());
     			utilisateur.setId(userDAO.findPass(pPassword, pPseudo).getId());
         
@@ -295,6 +302,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 	@Override
 	public void banUtilisateur(Utilisateur pUtilisateur) {
 		System.out.println("CTRL "+pUtilisateur.getPseudo());
+		userDAO = (UtilisateurDaoImpl) daoFactory.getUtilisateurManagerDAO();
 			try {
 				utilisateur.setId(pUtilisateur.getId());
 				utilisateur.setNom(pUtilisateur.getNom());
@@ -302,7 +310,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 				utilisateur.setPseudo(pUtilisateur.getPseudo());
 				utilisateur.setPassword(pUtilisateur.getPassword());
 				//utilisateur.setCoordonnee(pUtilisateur.getCoordonnee());
-				utilisateur.setId_role(4);//(RoleUtilisateur.Utilisateur.getId());
+				utilisateur.setId_Role(4);//(RoleUtilisateur.Utilisateur.getId());
 				userDAO.update(utilisateur);
 				
 			    //TransactionStatus vTScommit = vTransactionStatus;
@@ -324,7 +332,8 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 	 */
 	@Override
 	public void modifierPassUtilisateur(Utilisateur pUtilisateur) {
-		System.out.println("CTRL "+pUtilisateur.getPseudo()+" - "+userDAO.find(pUtilisateur.getPseudo()).getId()+" - "+userDAO.find(pUtilisateur.getPseudo()).getId_role());
+		userDAO = (UtilisateurDaoImpl) daoFactory.getUtilisateurManagerDAO();
+		System.out.println("CTRL "+pUtilisateur.getPseudo()+" - "+userDAO.find(pUtilisateur.getPseudo()).getId()+" - "+userDAO.find(pUtilisateur.getPseudo()).getId_Role());
 		if (userDAO.find(pUtilisateur.getPseudo()) == null ) {
 			System.out.println("trace-");
 			try {
@@ -343,7 +352,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 				utilisateur.setPseudo(pUtilisateur.getPseudo());
 				utilisateur.setPassword(pUtilisateur.getPassword());
 				//utilisateur.setCoordonnee(pUtilisateur.getCoordonnee());
-				utilisateur.setId_role(userDAO.find(pUtilisateur.getPseudo()).getId_role());//(RoleUtilisateur.Utilisateur.getId());
+				utilisateur.setId_Role(userDAO.find(pUtilisateur.getPseudo()).getId_Role());//(RoleUtilisateur.Utilisateur.getId());
 				userDAO.update(utilisateur);
 				
 			    //TransactionStatus vTScommit = vTransactionStatus;
@@ -357,6 +366,12 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 
 		}
 		
+	}
+	public DAOFactoryImpl getDaoFactory() {
+		return daoFactory;
+	}
+	public void setDaoFactory(DAOFactoryImpl daoFactory) {
+		this.daoFactory = daoFactory;
 	}
 
 

@@ -14,16 +14,21 @@ import oc.P6.escalade.consumer.DAO.contract.manager.topo.TopoManagerDao;
 import oc.P6.escalade.consumer.DAO.contract.manager.topo.VoieManagerDao;
 import oc.P6.escalade.consumer.DAO.contract.manager.utilisateur.CoordonneeUtilisateurDao;
 import oc.P6.escalade.consumer.DAO.contract.manager.utilisateur.UtilisateurManagerDAO;
+import oc.P6.escalade.consumer.DAO.impl.manager.utilisateur.UtilisateurDaoImpl;
 
 @Named("daoFactory")
 public class DAOFactoryImpl implements DAOFactory {
 	@Inject
-	private UtilisateurManagerDAO userManagerDAO;
+	private UtilisateurDaoImpl userManagerDAO;
 	@Override
 	public UtilisateurManagerDAO getUtilisateurManagerDAO() {
 		return this.userManagerDAO;		
 	}
 	
+	public void setUserManagerDAO(UtilisateurDaoImpl userManagerDAO) {
+		this.userManagerDAO = userManagerDAO;
+	}
+
 	@Inject
 	private TopoManagerDao topoManagerDao;
 	@Override

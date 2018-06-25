@@ -2,6 +2,7 @@ package oc.P6.escalade.business.impl.manager;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -14,6 +15,7 @@ import oc.P6.escalade.consumer.DAO.impl.manager.TopoEmpruntDaoImpl;
 import oc.P6.escalade.consumer.DAO.impl.manager.topo.TopoDaoImpl;
 import oc.P6.escalade.consumer.DAO.impl.manager.utilisateur.UtilisateurDaoImpl;
 import oc.P6.escalade.model.bean.emprunt.TopoEmprunt;
+import oc.P6.escalade.model.bean.impl.ModelManagerFactoryImpl;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
@@ -24,7 +26,9 @@ import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
  */
 @Named
 public class TopoEmpruntManagerImpl extends AbstractDAOManager implements TopoEmpruntManager{
-
+	@Inject
+	private ModelManagerFactoryImpl modelManagerFactoryImpl; 
+	
 	@Inject
 	private TopoEmprunt topoEmprunt;
 	
@@ -88,9 +92,12 @@ public class TopoEmpruntManagerImpl extends AbstractDAOManager implements TopoEm
 	@Override
 	public void creerTopoEmprunt(Topo topo, Utilisateur pEmprunteur) {
 		System.out.println(topo.getNom()+" - "+pEmprunteur.getPseudo());
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(cal.getTime());
+
 		if (topoDAO.find(topo.getNom()) != null && userDAO.find(pEmprunteur.getPseudo())!= null) {
+			Calendar cal = Calendar.getInstance();
+			System.out.println(cal.getTime());
+			//cal.setTime((Date)System.currentTimeMillis());
+			topoEmprunt = (TopoEmprunt) modelManagerFactoryImpl.getTopoEmprunt();
 			topoEmprunt.setDateEmprunt(cal.getTime());
 			cal.add(Calendar.DATE, 20);
 			topoEmprunt.setEmprunteur(pEmprunteur);
@@ -134,7 +141,7 @@ public class TopoEmpruntManagerImpl extends AbstractDAOManager implements TopoEm
 	@Override
 	public int getNbExemplaire(Topo pTopo) {
 		int nbEx = topoDAO.find(pTopo.getNom()).getNbreEx() - topoEmpruntDao.getListTopoEmprunt(pTopo).size();
-		
+		System.out.println("nbre ex : "+topoDAO.find(pTopo.getNom()).getNbreEx()+" - "+topoEmpruntDao.getListTopoEmprunt(pTopo).size());
 		return nbEx;
 	}
 

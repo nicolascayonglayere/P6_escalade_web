@@ -2,13 +2,15 @@ package oc.P6.escalade.model.bean.topo;
 
 import javax.inject.Named;
 
+import oc.P6.escalade.model.contract.topo.IntVoie;
+
 /**
  * Objet métier représentant une voie d'un topo
  * @author nicolas
  *
  */
 @Named("voie")
-public class Voie {
+public class Voie implements IntVoie{
 
 	private int id;
 	private String nom;

@@ -2,13 +2,15 @@ package oc.P6.escalade.model.bean.utilisateur;
 
 import javax.inject.Named;
 
+import oc.P6.escalade.model.contract.utilisateur.IntCoordonneeUtilisateur;
+
 /**
  * Objet métier représentant les coordonnées d'un utilisateur
  * @author nicolas
  *
  */
 @Named ("coordonneeUtilisateur")
-public class CoordonneeUtilisateur {
+public class CoordonneeUtilisateur implements IntCoordonneeUtilisateur {
 
 	private int id;
 	private String email;

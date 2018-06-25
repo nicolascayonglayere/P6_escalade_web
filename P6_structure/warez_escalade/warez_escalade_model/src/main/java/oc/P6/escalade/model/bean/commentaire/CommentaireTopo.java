@@ -6,9 +6,10 @@ import javax.inject.Named;
 
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
+import oc.P6.escalade.model.contract.commentaire.IntCommentaireTopo;
 
 @Named("commentaireTopo")
-public class CommentaireTopo extends Commentaire{
+public class CommentaireTopo extends Commentaire implements IntCommentaireTopo{
 
 	private Topo topo;
 	private int id;

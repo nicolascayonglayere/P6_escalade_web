@@ -1,8 +1,10 @@
 package oc.P6.escalade.actions.topo;
 
+import javax.inject.Inject;
+
 import com.opensymphony.xwork2.ActionSupport;
 
-import oc.P6.escalade.WebappHelper.WebappHelper;
+import oc.P6.escalade.business.contract.ManagerFactory;
 import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
@@ -14,6 +16,8 @@ public class CreerSecteur extends ActionSupport {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	@Inject
+	private ManagerFactory managerFactory;	
 	private Secteur secteur;
 	private String nomTopo, nomSite;
 	
@@ -38,11 +42,17 @@ public class CreerSecteur extends ActionSupport {
 	}
 	
 	public String execute() {
-		Topo topo = WebappHelper.getManagerFactory().getTopoManager().getTopo(nomTopo);
-		Site site = WebappHelper.getManagerFactory().getSiteManager().getSite(nomSite, topo);
+		Topo topo = managerFactory.getTopoManager().getTopo(nomTopo);
+		Site site = managerFactory.getSiteManager().getSite(nomSite, topo);
 		secteur.setSite(site);
-		WebappHelper.getManagerFactory().getSecteurManager().creerSecteur(secteur);
+		managerFactory.getSecteurManager().creerSecteur(secteur);
 		return ActionSupport.SUCCESS;
+	}
+	public ManagerFactory getManagerFactory() {
+		return managerFactory;
+	}
+	public void setManagerFactory(ManagerFactory managerFactory) {
+		this.managerFactory = managerFactory;
 	}
 	
 }

@@ -2,6 +2,7 @@ package oc.P6.escalade.actions;
 
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.ServletActionContext;
@@ -10,7 +11,7 @@ import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-import oc.P6.escalade.WebappHelper.WebappHelper;
+import oc.P6.escalade.business.contract.ManagerFactory;
 import oc.P6.escalade.model.bean.commentaire.Commentaire;
 import oc.P6.escalade.model.bean.commentaire.CommentaireSite;
 import oc.P6.escalade.model.bean.commentaire.CommentaireTopo;
@@ -27,8 +28,8 @@ public class CommenterAction extends ActionSupport implements ServletRequestAwar
 	private static final long serialVersionUID = 1L;
 	
 	private Utilisateur utilisateur;
-	
-	
+	@Inject
+	private ManagerFactory managerFactory;
 	private String nom;
 	private CommentaireTopo commentaireTopo;
 	private Topo topo;
@@ -66,12 +67,12 @@ public class CommenterAction extends ActionSupport implements ServletRequestAwar
 		String nameTopo = request.getParameter("nom");
 		utilisateur = (Utilisateur) (session.get("utilisateur"));
 		System.out.println(topo.getNom()+" - "+nameTopo+" - "+utilisateur.getPseudo()+" - "+commentaireTopo.getMessage());
-		utilisateur = WebappHelper.getManagerFactory().getUtilisateurManager().getUtilisateur(utilisateur.getPseudo());
-		topo = WebappHelper.getManagerFactory().getTopoManager().getTopo(nameTopo);
+		utilisateur = managerFactory.getUtilisateurManager().getUtilisateur(utilisateur.getPseudo());
+		topo = managerFactory.getTopoManager().getTopo(nameTopo);
 	
 		commentaireTopo.setAuteur(utilisateur);
 		commentaireTopo.setTopo(topo);
-		WebappHelper.getManagerFactory().getCommentaireTopoManager().creerCommentaireTopo(commentaireTopo);
+		managerFactory.getCommentaireTopoManager().creerCommentaireTopo(commentaireTopo);
 		addActionMessage("Votre commentaire a bien été envoyé");
 		return ActionSupport.SUCCESS;
 		
@@ -88,5 +89,11 @@ public class CommenterAction extends ActionSupport implements ServletRequestAwar
 	
 	public String input() {
 		return ActionSupport.INPUT;
+	}
+	public ManagerFactory getManagerFactory() {
+		return managerFactory;
+	}
+	public void setManagerFactory(ManagerFactory managerFactory) {
+		this.managerFactory = managerFactory;
 	}
 }

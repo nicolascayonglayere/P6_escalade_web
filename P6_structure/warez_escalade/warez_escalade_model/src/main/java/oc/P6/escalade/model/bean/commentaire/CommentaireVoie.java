@@ -3,9 +3,10 @@ package oc.P6.escalade.model.bean.commentaire;
 import javax.inject.Named;
 
 import oc.P6.escalade.model.bean.topo.Voie;
+import oc.P6.escalade.model.contract.commentaire.IntCommentaireVoie;
 
 @Named("commentaireVoie")
-public class CommentaireVoie extends Commentaire{
+public class CommentaireVoie extends Commentaire implements IntCommentaireVoie{
 
 	private Voie voie;
 	
