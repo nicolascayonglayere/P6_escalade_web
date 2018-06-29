@@ -7,9 +7,9 @@
 		https://spring-annotation.dev.java.net/context https://spring-annotation.dev.java.net/context.xsd">
 
 	<!-- Prend en compte la configuration des injections (@Inject...) -->
-    <context:annotation-config/>
+	<context:annotation-config/>
     
-    <!-- Scanne les packages pour trouver les beans qui se déclarent (@Named...) -->
+    <!-- Scanne les packages pour trouver les beans qui se déclarent (@Named...)--> 
     <context:component-scan base-package="oc.P6.escalade.*"/>
     
    	<bean id="dataSourceP6" class="org.springframework.jndi.JndiObjectFactoryBean">

@@ -9,21 +9,21 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import oc.P6.escalade.consumer.DAO.contract.manager.utilisateur.UtilisateurManagerDAO;
-import oc.P6.escalade.consumer.DAO.impl.DAOFactoryImpl;
 import oc.P6.escalade.consumer.DAO.impl.manager.AbstractDAO;
-import oc.P6.escalade.model.bean.topo.Secteur;
+import oc.P6.escalade.consumer.DAO.impl.rowmapper.UtilisateurRowMapper;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
-@Named("utilisateurDAO")
+@Named("userDAO")
 public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManagerDAO  {
 
+    @Inject
+	RowMapper<Utilisateur> vRowMapper;
 
 	@Override
 	public boolean create(Utilisateur pUtilisateur) {
@@ -101,21 +101,9 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
         vParams.addValue("pseudo", pPseudo, Types.VARCHAR);
 		
-		RowMapper<Utilisateur> vRowMapper = new RowMapper<Utilisateur>() {
 
-			@Override
-			public Utilisateur mapRow(ResultSet rs, int rowNum) throws SQLException {
-				Utilisateur vUtilisateur = new Utilisateur(rs.getString("pseudo"));
-				vUtilisateur.setNom(rs.getString("nom"));
-				vUtilisateur.setPrenom(rs.getString("prenom"));
-				vUtilisateur.setPassword(rs.getString("password"));
-				vUtilisateur.setId(rs.getInt("id_utilisateur"));
-				vUtilisateur.setId_Role(rs.getInt("id_role"));
-				vUtilisateur.setRole(rs.getString("role"));
-				return vUtilisateur;
-			}
-			
-		};
+//		RowMapper<Utilisateur> vRowMapper;// = new UtilisateurRowMapper();
+
 		Utilisateur user;
 		if (vJdbcTemplate.query(vSQL,vParams,vRowMapper).size() != 0)
 			user = vJdbcTemplate.query(vSQL,vParams,vRowMapper).get(0);
@@ -128,27 +116,15 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 
 	@Override
 	public Utilisateur find(int pId) {
-		String vSQL = "SELECT * FROM utilisateur WHERE id_utilisateur = :id";
+		String vSQL = "SELECT * FROM utilisateur INNER JOIN role_utilisateur ON utilisateur.id_role = role_utilisateur.id_role WHERE id_utilisateur = :id";
         NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
         vParams.addValue("id", pId, Types.INTEGER);
 		
-		RowMapper<Utilisateur> vRowMapper = new RowMapper<Utilisateur>() {
+		//RowMapper<Utilisateur> vRowMapper = new UtilisateurRowMapper();
 
-			@Override
-			public Utilisateur mapRow(ResultSet rs, int rowNum) throws SQLException {
-				Utilisateur vUtilisateur = new Utilisateur();
-				vUtilisateur.setPassword(rs.getString("password"));
-				vUtilisateur.setId(pId);
-				vUtilisateur.setPseudo(rs.getString("pseudo"));
-				vUtilisateur.setNom(rs.getString("nom"));
-				vUtilisateur.setPrenom(rs.getString("prenom"));
-				
-				return vUtilisateur;
-			}
-			
-		};
 		Utilisateur user;
+		//System.out.println(vJdbcTemplate.query(vSQL,vParams,vRowMapper).size());
 		if (vJdbcTemplate.query(vSQL,vParams,vRowMapper).size() != 0)
 			user = vJdbcTemplate.query(vSQL,vParams,vRowMapper).get(0);
 		else
@@ -161,7 +137,7 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 	@Override
 	public ArrayList<Utilisateur> getList(int pIdRole) {
 		ArrayList<Utilisateur> vListRole = new ArrayList<Utilisateur>();
-		String vSQL ="SELECT pseudo FROM utilisateur WHERE id_role = :id_role";
+		String vSQL ="SELECT * FROM utilisateur WHERE id_role = :id_role";
         NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
         vParams.addValue("id_role", pIdRole, Types.INTEGER);	
@@ -170,13 +146,18 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 
 			@Override
 			public Utilisateur mapRow(ResultSet rs, int rowNum) throws SQLException {
-				Utilisateur vUtilisateur = new Utilisateur();
-				vUtilisateur.setPseudo(rs.getString("pseudo"));
-				vUtilisateur.setId_Role(pIdRole);
+				Utilisateur vUtilisateur = new Utilisateur(rs.getString("pseudo"));
+				vUtilisateur.setNom(rs.getString("nom"));
+				vUtilisateur.setPrenom(rs.getString("prenom"));
+				vUtilisateur.setPassword(rs.getString("password"));
+				vUtilisateur.setId(rs.getInt("id_utilisateur"));
+				vUtilisateur.setId_Role(rs.getInt("id_role"));
+
 				return vUtilisateur;
 			}
 			
-		};        
+		};
+      
 		vListRole = (ArrayList<Utilisateur>) vJdbcTemplate.query(vSQL, vParams, vRowMapper);
 		return vListRole;
 	}
@@ -189,21 +170,8 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
         vParams.addValue("pseudo", pPseudo+"%", Types.VARCHAR);	
         
-		RowMapper<Utilisateur> vRowMapper = new RowMapper<Utilisateur>() {
-
-			@Override
-			public Utilisateur mapRow(ResultSet rs, int rowNum) throws SQLException {
-				Utilisateur vUtilisateur = new Utilisateur();
-				vUtilisateur.setPseudo(rs.getString("pseudo"));
-				vUtilisateur.setNom(rs.getString("nom"));
-				vUtilisateur.setPrenom(rs.getString("prenom"));
-				vUtilisateur.setPassword(rs.getString("password"));
-				vUtilisateur.setId(rs.getInt("id_utilisateur"));
-				vUtilisateur.setRole(rs.getString("role"));
-				return vUtilisateur;
-			}
-			
-		};        
+		//RowMapper<Utilisateur> vRowMapper = new UtilisateurRowMapper();
+   
 		vListUtilisateur = (ArrayList<Utilisateur>) vJdbcTemplate.query(vSQL, vParams, vRowMapper);
 		return vListUtilisateur;
 	}
@@ -218,20 +186,8 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
         vParams.addValue("password", pPassword, Types.VARCHAR);
         vParams.addValue("pseudo", pPseudo, Types.VARCHAR);
 		
-		RowMapper<Utilisateur> vRowMapper = new RowMapper<Utilisateur>() {
+		//RowMapper<Utilisateur> vRowMapper = new UtilisateurRowMapper();
 
-			@Override
-			public Utilisateur mapRow(ResultSet rs, int rowNum) throws SQLException {
-				Utilisateur vUtilisateur = new Utilisateur(pPseudo);
-				vUtilisateur.setNom(rs.getString("nom"));
-				vUtilisateur.setPrenom(rs.getString("prenom"));
-				//vUtilisateur.setPassword(rs.getString("password"));
-				vUtilisateur.setId(rs.getInt("id_utilisateur"));
-				vUtilisateur.setRole(rs.getString("role"));
-				return vUtilisateur;
-			}
-			
-		};
 		Utilisateur user;
 		if (vJdbcTemplate.query(vSQL,vParams,vRowMapper).size() != 0)
 			user = vJdbcTemplate.query(vSQL,vParams,vRowMapper).get(0);

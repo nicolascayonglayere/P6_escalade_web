@@ -30,5 +30,22 @@ public interface TopoManager {
 	 */
 	void creerTopo(Topo pTopo);
 	
+	/**
+	 * Modifie le {@link Topo} donné en paramètre
+	 * @param pTopo
+	 */
+	void modifTopo(Topo pTopo);
 	
+	/**
+	 * Retourne la liste des {@link Topo} à partir d'un nom donné  en paramètre
+	 * @param pNom
+	 * @return
+	 */
+	ArrayList<Topo> rechercheTopo(String pNom);
+	
+	/**
+	 * Supprime le {@link Topo} donné en paramètre
+	 * @param pTopo
+	 */
+	void supprimerTopo(Topo pTopo);
 }

@@ -1,20 +1,19 @@
 package oc.P6.escalade.consumer.DAO.impl.manager.utilisateur;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Types;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import oc.P6.escalade.consumer.DAO.contract.manager.utilisateur.CoordonneeUtilisateurDao;
+import oc.P6.escalade.consumer.DAO.contract.manager.utilisateur.UtilisateurManagerDAO;
 import oc.P6.escalade.consumer.DAO.impl.manager.AbstractDAO;
+import oc.P6.escalade.consumer.DAO.impl.rowmapper.CoordonneeUtilisateurRowMapper;
 import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateur;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
@@ -22,7 +21,9 @@ import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 public class CoordonneeUtilisateurDaoImpl extends AbstractDAO implements CoordonneeUtilisateurDao{
 
 	@Inject
-	private UtilisateurDaoImpl userDAO;
+	private UtilisateurManagerDAO userDAO;
+	@Inject
+	CoordonneeUtilisateurRowMapper coordonneeUtilisateurRowMapper;
 	@Override
 	public boolean create(CoordonneeUtilisateur pCoordonneeUtilisateur) {
 		String vSQLCoordonnee = "INSERT INTO coordonnee_utilisateur (email, adresse_postale, id_utilisateur) VALUES (:email, :adresse, :idUtilisateur)";
@@ -97,22 +98,9 @@ public class CoordonneeUtilisateurDaoImpl extends AbstractDAO implements Coordon
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
         vParams.addValue("id_utilisateur", userDAO.find(pAuteur.getPseudo()).getId(), Types.INTEGER);
 		
-		RowMapper<CoordonneeUtilisateur> vRowMapper = new RowMapper<CoordonneeUtilisateur>() {
-
-			@Override
-			public CoordonneeUtilisateur mapRow(ResultSet rs, int rowNum) throws SQLException {
-				CoordonneeUtilisateur vCoord = new CoordonneeUtilisateur();
-				vCoord.setAdresse(rs.getString("adresse_postale"));
-				vCoord.setEmail(rs.getString("email"));
-				vCoord.setIdUtilisateur(userDAO.find(pAuteur.getPseudo()).getId());
-				vCoord.setId(rs.getInt("id_coordonnee"));
-				return vCoord;
-			}
-			
-		};
 		CoordonneeUtilisateur coordo;
-		if (vJdbcTemplate.query(vSQL,vParams,vRowMapper).size() != 0)
-			coordo = vJdbcTemplate.query(vSQL,vParams,vRowMapper).get(0);
+		if (vJdbcTemplate.query(vSQL,vParams,coordonneeUtilisateurRowMapper).size() != 0)
+			coordo = vJdbcTemplate.query(vSQL,vParams,coordonneeUtilisateurRowMapper).get(0);
 		else
 			coordo = null;
 		

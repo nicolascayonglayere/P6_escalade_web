@@ -31,4 +31,16 @@ public interface SecteurManager {
 	 * @param pSecteur
 	 */
 	void creerSecteur(Secteur pSecteur);
+	
+	/**
+	 * Modifie le {@link Secteur} donné en paramètre
+	 * @param pSecteur
+	 */
+	void modifierSecteur(Secteur pSecteur);
+	
+	/**
+	 * Supprime le {@link Secteur} donné en paramètre
+	 * @param pSecteur
+	 */
+	void supprimerSecteur(Secteur pSecteur);
 }

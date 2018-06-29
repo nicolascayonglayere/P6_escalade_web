@@ -9,9 +9,11 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 import oc.P6.escalade.business.contract.manager.AbstractDAOManager;
 import oc.P6.escalade.business.contract.manager.topo.SiteManager;
+import oc.P6.escalade.consumer.DAO.contract.manager.topo.SiteManagerDAO;
 import oc.P6.escalade.consumer.DAO.impl.manager.topo.SiteDaoImpl;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
+import oc.P6.escalade.model.contract.topo.IntSite;
 
 /**
  * Implémentation de {@link SiteManager}
@@ -22,10 +24,10 @@ import oc.P6.escalade.model.bean.topo.Topo;
 public class SiteManagerImpl extends AbstractDAOManager implements SiteManager{
 
 	@Inject
-	private Site site;
+	private IntSite site;
 	
 	@Inject
-	private SiteDaoImpl siteDAO;// = (SiteDaoImpl) getDAOFactory().getSiteManagerDao();
+	private SiteManagerDAO siteDAO;// = (SiteDaoImpl) getDAOFactory().getSiteManagerDao();
 	
 	private PlatformTransactionManager platformTransactionManager;
 	
@@ -60,8 +62,8 @@ public class SiteManagerImpl extends AbstractDAOManager implements SiteManager{
 	 */
 	@Override
 	public void creerSite(Site pSite) {
-		System.out.println("CTRL "+pSite.getNom());
-		if (siteDAO.find(pSite.getNom(), pSite.getTopo().getId()) != null) {
+		System.out.println("CTRL "+pSite.getNomSite());
+		if (siteDAO.find(pSite.getNomSite(), pSite.getTopo().getId()) != null) {
 			try {
 				throw new Exception("Le site existe deja.");
 			} catch (Exception e) {
@@ -70,10 +72,10 @@ public class SiteManagerImpl extends AbstractDAOManager implements SiteManager{
 			}
 		}
 		else {
-			site.setNom(pSite.getNom());
+			site.setNomSite(pSite.getNomSite());
 			site.setDescription(pSite.getDescription());
 			site.setTopo(pSite.getTopo());
-			siteDAO.create(pSite);
+			siteDAO.create((Site)site);
 		}
 		
 	}
@@ -95,6 +97,65 @@ public class SiteManagerImpl extends AbstractDAOManager implements SiteManager{
 				e.printStackTrace();
 			}
 		return vSite;
+	}
+
+	@Override
+	public void modifierSite(Site pSite) {
+		System.out.println("CTRL "+pSite.getNomSite());
+		if (siteDAO.find(pSite.getNomSite(), pSite.getTopo().getId()) == null) {
+			try {
+				throw new Exception("Le site n'existe pas.");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else {
+			site.setId(siteDAO.find(pSite.getNomSite(), pSite.getTopo().getId()).getId());
+			site.setNomSite(pSite.getNomSite());
+			site.setDescription(pSite.getDescription());
+			site.setTopo(pSite.getTopo());
+			siteDAO.update((Site)site);
+		}		
+		
+	}
+
+	@Override
+	public Site getSite(int pId) {
+		Site site = null;
+		if (siteDAO.get(pId) != null) {
+			site = siteDAO.get(pId);
+		}
+		else {
+			try {
+				throw new Exception("Le site n'existe pas.");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return site;
+	}
+
+	@Override
+	public void supprimmerSite(Site pSite) {
+		System.out.println("CTRL "+pSite.getNomSite());
+		if (siteDAO.find(pSite.getNomSite(), pSite.getTopo().getId()) == null) {
+			try {
+				throw new Exception("Le site n'existe pas.");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else {
+			site.setId(siteDAO.find(pSite.getNomSite(), pSite.getTopo().getId()).getId());
+			site.setNomSite(pSite.getNomSite());
+			site.setDescription(pSite.getDescription());
+			site.setTopo(pSite.getTopo());
+			siteDAO.delete((Site)site);
+		}
+		
 	}
 
 }

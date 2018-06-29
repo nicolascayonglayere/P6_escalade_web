@@ -20,10 +20,10 @@ public interface VoieManager {
 	ArrayList<Voie> getListVoie(Secteur pSecteur);
 	
 	/**
-	 * 
-	 * @return
+	 * Renvoie la {@link Voie} du {@link Secteur} donné en paramètre
+	 * @return {@link Voie}
 	 */
-	Voie getVoie();
+	Voie getVoie(String pNom, Secteur pSecteur);
 	
 	/**
 	 * Cree la {@link Voie} donnée en paramètre
@@ -36,4 +36,10 @@ public interface VoieManager {
 	 * @param pVoie
 	 */
 	void majVoie(Voie pVoie);
+	
+	/**
+	 * Supprime la {@link Voie} donnée en paramètre
+	 * @param pVoie
+	 */
+	void supprimerVoie(Voie pVoie);
 }

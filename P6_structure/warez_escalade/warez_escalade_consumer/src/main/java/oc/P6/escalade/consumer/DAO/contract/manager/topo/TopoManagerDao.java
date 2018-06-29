@@ -51,4 +51,11 @@ public interface TopoManagerDao {
 	 * @return la liste des {@link Topo}
 	 */
 	ArrayList<Topo> listerTopo();
+	
+	/**
+	 * Méthode pour obtenir la liste des {@link Topo} de la base de donnée à partir d'un nom donné en paramètre
+	 * @param pNom
+	 * @return la liste des {@link Topo}
+	 */
+	ArrayList<Topo> rechercherTopo(String pNom);
 }

@@ -33,8 +33,27 @@ public interface SiteManager {
 	ArrayList<Site> getSite (Topo pTopo);
 	
 	/**
+	 * Retourne le {@link Site} à partir de son id donné en paramètre
+	 * @param pId
+	 * @return {@link Site}
+	 */
+	Site getSite(int pId);
+	
+	/**
 	 * Crée le {@link Site} donné en paramètre
 	 * @param pSite
 	 */
 	void creerSite(Site pSite);
+	
+	/**
+	 * Modifie le {@link Site} donné en paramètre
+	 * @param pSite
+	 */
+	void modifierSite(Site pSite);
+	
+	/**
+	 * Supprime le {@link Site} donné en paramètre
+	 * @param pSite
+	 */
+	void supprimmerSite(Site pSite);
 }

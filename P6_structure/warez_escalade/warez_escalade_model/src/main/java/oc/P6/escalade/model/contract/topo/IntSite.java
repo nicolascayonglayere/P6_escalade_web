@@ -7,8 +7,8 @@ public interface IntSite {
 	int getId();
 	void setId(int pId);
 	
-	String getNom();
-	void setNom(String pNom);
+	String getNomSite();
+	void setNomSite(String pNom);
 	
 	String getDescription();
 	void setDescription(String pDescription);

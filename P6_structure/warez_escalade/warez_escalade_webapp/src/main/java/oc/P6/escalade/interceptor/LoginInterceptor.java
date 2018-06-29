@@ -11,7 +11,7 @@ public class LoginInterceptor extends AbstractInterceptor {
 	@Override
 	public String intercept(ActionInvocation invocation) throws Exception {
 		Map<String, Object> sessionAttributes = invocation.getInvocationContext().getSession();
-		System.out.println(sessionAttributes.get("utilisateur"));
+		System.out.println("interceptor Login "+sessionAttributes.get("utilisateur"));
 		if (sessionAttributes == null || sessionAttributes.get("utilisateur") == null) {
 
 			return "login";

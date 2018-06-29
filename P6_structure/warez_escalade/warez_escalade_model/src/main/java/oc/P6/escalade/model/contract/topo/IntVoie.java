@@ -7,8 +7,8 @@ public interface IntVoie {
 	int getId();
 	void setId(int pId);
 	
-	String getNom();
-	void setNom(String pNom);
+	String getNomVoie();
+	void setNomVoie(String pNom);
 	
 	String getDescription();
 	void setDescription(String pDescription);

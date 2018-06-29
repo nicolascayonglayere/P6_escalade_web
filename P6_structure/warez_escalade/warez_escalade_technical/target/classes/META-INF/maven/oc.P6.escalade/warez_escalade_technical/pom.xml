@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+  <!-- =============================================================== -->
+  <!-- Informations du projet -->
+  <!-- =============================================================== -->
+  <!-- ===== Projet Parent Maven ===== -->	
+	<parent>
+		<groupId>oc.P6.escalade</groupId>
+		<artifactId>warez_escalade</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+  <!-- ===== Informations Maven ===== -->	
+	<artifactId>warez_escalade_technical</artifactId>
+  <!-- ===== Informations générales ===== -->	
+	<name>warez_escalade_technical</name>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	
+  <!-- =============================================================== -->
+  <!-- Dépendances -->
+  <!-- =============================================================== -->	
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+	</dependencies>
+</project>

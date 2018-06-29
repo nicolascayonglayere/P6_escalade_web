@@ -31,6 +31,7 @@ public class CommenterAction extends ActionSupport implements ServletRequestAwar
 	@Inject
 	private ManagerFactory managerFactory;
 	private String nom;
+	private String message;
 	private CommentaireTopo commentaireTopo;
 	private Topo topo;
 	private HttpServletRequest servletRequest;
@@ -62,14 +63,15 @@ public class CommenterAction extends ActionSupport implements ServletRequestAwar
 	}
 	
 	
-	public String commenter() {
+	public String execute() {
 		HttpServletRequest request = ServletActionContext.getRequest();
 		String nameTopo = request.getParameter("nom");
 		utilisateur = (Utilisateur) (session.get("utilisateur"));
-		System.out.println(topo.getNom()+" - "+nameTopo+" - "+utilisateur.getPseudo()+" - "+commentaireTopo.getMessage());
+		//System.out.println(nameTopo);
+		System.out.println("comentaire du topo "+nom+" - "+utilisateur.getPseudo()+" - "+message);
 		utilisateur = managerFactory.getUtilisateurManager().getUtilisateur(utilisateur.getPseudo());
-		topo = managerFactory.getTopoManager().getTopo(nameTopo);
-	
+		topo = managerFactory.getTopoManager().getTopo(nom);
+		commentaireTopo.setMessage(message);
 		commentaireTopo.setAuteur(utilisateur);
 		commentaireTopo.setTopo(topo);
 		managerFactory.getCommentaireTopoManager().creerCommentaireTopo(commentaireTopo);
@@ -88,6 +90,7 @@ public class CommenterAction extends ActionSupport implements ServletRequestAwar
 	}
 	
 	public String input() {
+		System.out.println("trace input commentaire");
 		return ActionSupport.INPUT;
 	}
 	public ManagerFactory getManagerFactory() {
@@ -95,5 +98,11 @@ public class CommenterAction extends ActionSupport implements ServletRequestAwar
 	}
 	public void setManagerFactory(ManagerFactory managerFactory) {
 		this.managerFactory = managerFactory;
+	}
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
 	}
 }

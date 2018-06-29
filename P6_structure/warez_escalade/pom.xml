@@ -45,6 +45,7 @@
     <module>warez_escalade_business</module>
     <module>warez_escalade_consumer</module>
     <module>warez_escalade_model</module>
+    <module>warez_escalade_technical</module>
   </modules>
 
     <!-- =============================================================== -->
@@ -77,6 +78,12 @@
                 <artifactId>warez_escalade_model</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>warez_escalade_technical</artifactId>
+                <version>${project.version}</version>
+            </dependency>            
 
             <!-- ===== Bibliothèques tierces ===== -->
             <dependency>

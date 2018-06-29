@@ -1,39 +1,41 @@
 package oc.P6.escalade.consumer.DAO.impl.manager.topo;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
+import oc.P6.escalade.consumer.DAO.DAOFactory;
 import oc.P6.escalade.consumer.DAO.contract.manager.topo.TopoManagerDao;
 import oc.P6.escalade.consumer.DAO.impl.manager.AbstractDAO;
-import oc.P6.escalade.consumer.DAO.impl.manager.utilisateur.UtilisateurDaoImpl;
+import oc.P6.escalade.consumer.DAO.impl.rowmapper.TopoRowMapper;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
 @Named("topoDao")
+@Scope("prototype")
 public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 
 	@Inject
-	UtilisateurDaoImpl userDAO;
+	DAOFactory daoFacto;
+
+	@Inject
+	TopoRowMapper topoRowMapper;
 	
 	@Override
 	public boolean create(Topo pTopo) {
 		String vSQL = "INSERT INTO topo (nom, id_utilisateur, nombre_exemplaires, description, longitude, latitude, image) VALUES (:nom, :id, :nbreEx, :description, :longitude, :latitude, :image)";
-		Utilisateur auteur = userDAO.find(pTopo.getAuteur().getPseudo());
+		Utilisateur auteur = daoFacto.getUtilisateurManagerDAO().find(pTopo.getAuteur().getPseudo());
 		
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
-		vParams.addValue("nom", pTopo.getNom(), Types.VARCHAR);
+		vParams.addValue("nom", pTopo.getNomTopo(), Types.VARCHAR);
 		vParams.addValue("id", auteur.getId(), Types.INTEGER);
 		vParams.addValue("nbreEx", pTopo.getNbreEx(), Types.INTEGER);
 		vParams.addValue("description", pTopo.getDescription(), Types.LONGVARCHAR);
@@ -45,7 +47,7 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 	    try {
 	        vJdbcTemplate.update(vSQL, vParams);
 	    } catch (DuplicateKeyException vEx) {
-	        System.out.println("Le topo existe déjà ! pseudo=" + pTopo.getNom());
+	        System.out.println("Le topo existe déjà ! topo=" + pTopo.getNomTopo());
 	        return false;
 	    }
 	    
@@ -55,45 +57,64 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 
 	@Override
 	public boolean delete(Topo pTopo) {
-		// TODO Auto-generated method stub
-		return false;
+		String vSQL = "DELETE FROM topo WHERE id_topo = :id_topo";
+		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
+		MapSqlParameterSource vParams = new MapSqlParameterSource();
+		vParams.addValue("id_topo", pTopo.getId(), Types.INTEGER);
+	    
+	    try {
+	        vJdbcTemplate.update(vSQL, vParams);
+	    } catch (Exception vEx) {
+	        System.out.println("Le topo n'existe pas ! topo=" + pTopo.getNomTopo());
+	        vEx.printStackTrace();
+	        return false;
+	    }
+	    
+	    
+		return true;		
+		
 	}
 
 	@Override
 	public boolean update(Topo pTopo) {
-		// TODO Auto-generated method stub
-		return false;
+		String vSQL = "UPDATE topo SET nom = :nom, id_utilisateur = :id, nombre_exemplaires = :nbreEx, description = :description, longitude = :longitude, latitude = :latitude, image = :image"
+					+ "WHERE id_topo = :id_topo";
+		Utilisateur auteur = daoFacto.getUtilisateurManagerDAO().find(pTopo.getAuteur().getPseudo());
+		
+		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
+		MapSqlParameterSource vParams = new MapSqlParameterSource();
+		vParams.addValue("nom", pTopo.getNomTopo(), Types.VARCHAR);
+		vParams.addValue("id", auteur.getId(), Types.INTEGER);
+		vParams.addValue("nbreEx", pTopo.getNbreEx(), Types.INTEGER);
+		vParams.addValue("description", pTopo.getDescription(), Types.LONGVARCHAR);
+		vParams.addValue("longitude", pTopo.getLongitude(), Types.DECIMAL);
+		vParams.addValue("latitude", pTopo.getLatitude(), Types.DECIMAL);
+		vParams.addValue("image", pTopo.getImage(), Types.VARCHAR);
+		vParams.addValue("id_topo", pTopo.getId(), Types.INTEGER);
+
+	    
+	    try {
+	        vJdbcTemplate.update(vSQL, vParams);
+	    } catch (DuplicateKeyException vEx) {
+	        System.out.println("Erreur modif ! topo=" + pTopo.getNomTopo());
+	        return false;
+	    }
+	    
+	    
+		return true;
 	}
 
 	@Override
 	public Topo find(String pNom) {
 		String vSQL = "SELECT * FROM topo WHERE nom = :nom ";
-		
-		//JdbcTemplate vJdbcTemplate = new JdbcTemplate(getDataSource());
+
         NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
         vParams.addValue("nom", pNom, Types.VARCHAR);
 		
-		RowMapper<Topo> vRowMapper = new RowMapper<Topo>() {
-
-			@Override
-			public Topo mapRow(ResultSet rs, int rowNum) throws SQLException {
-				Topo vTopo = new Topo(rs.getString("nom"));
-				vTopo.setId(rs.getInt("id_topo"));
-				Utilisateur vAuteur = userDAO.find(rs.getString("id_utilisateur"));
-				vTopo.setAuteur(vAuteur);
-				vTopo.setImage(rs.getString("image"));
-				vTopo.setLongitude(rs.getDouble("longitude"));
-				vTopo.setLatitude(rs.getDouble("latitude"));
-				vTopo.setDescription(rs.getString("description"));
-				vTopo.setNbreEx(rs.getInt("nombre_exemplaires"));
-				return vTopo;
-			}
-			
-		};
 		Topo topo;
-		if (vJdbcTemplate.query(vSQL,vParams,vRowMapper).size() != 0)
-			topo = vJdbcTemplate.query(vSQL,vParams,vRowMapper).get(0);
+		if (vJdbcTemplate.query(vSQL,vParams,topoRowMapper).size() != 0)
+			topo = vJdbcTemplate.query(vSQL,vParams, topoRowMapper).get(0);
 		else
 			topo = null;
 		
@@ -105,27 +126,13 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 	public Topo find(int pId) {
 		String vSQL = "SELECT * FROM topo WHERE id_topo = :id_topo ";
 		
-		//JdbcTemplate vJdbcTemplate = new JdbcTemplate(getDataSource());
         NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
         vParams.addValue("id_topo", pId, Types.INTEGER);
-		
-		RowMapper<Topo> vRowMapper = new RowMapper<Topo>() {
 
-			@Override
-			public Topo mapRow(ResultSet rs, int rowNum) throws SQLException {
-				Topo vTopo = new Topo();
-				vTopo.setId(pId);
-				vTopo.setNom(rs.getString("nom"));
-				Utilisateur vAuteur = userDAO.find(rs.getString("id_utilisateur"));
-				vTopo.setAuteur(vAuteur);
-				return vTopo;
-			}
-			
-		};
 		Topo topo;
-		if (vJdbcTemplate.query(vSQL,vParams,vRowMapper).size() != 0)
-			topo = vJdbcTemplate.query(vSQL,vParams,vRowMapper).get(0);
+		if (vJdbcTemplate.query(vSQL,vParams,topoRowMapper).size() != 0)
+			topo = vJdbcTemplate.query(vSQL,vParams,topoRowMapper).get(0);
 		else
 			topo = null;
 		
@@ -134,29 +141,26 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 	}
 	
 	@Override
-	public ArrayList<Topo> listerTopo() {
-
-		
+	public ArrayList<Topo> listerTopo() {		
 		ArrayList<Topo> listeTopo = new ArrayList<Topo>();
 		String vSQL = "SELECT * FROM topo WHERE 1 = 1 ";
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
-		
-		RowMapper<Topo> vRowMapper = new RowMapper<Topo>() {
 
-			@Override
-			public Topo mapRow(ResultSet rs, int rowNum) throws SQLException {
-
-				Utilisateur vAuteur = new Utilisateur(userDAO.find(rs.getInt("id_utilisateur")).getPseudo());
-				Topo vTopo = new Topo(rs.getString("nom"));
-				vTopo.setId(rs.getInt("id_topo"));
-				vTopo.setAuteur(vAuteur);
-				return vTopo;
-			}
-			
-		};
-		
-		listeTopo = (ArrayList<Topo>) vJdbcTemplate.query(vSQL, vRowMapper);
+		listeTopo = (ArrayList<Topo>) vJdbcTemplate.query(vSQL, topoRowMapper);
 		return listeTopo;
+	}
+
+	@Override
+	public ArrayList<Topo> rechercherTopo(String pNom) {
+		System.out.println("ctrl DAO "+pNom);
+		ArrayList<Topo> vListTopo = new ArrayList<Topo>();
+		String vSQL = "SELECT * FROM topo WHERE topo.nom LIKE :nom";
+        NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
+		MapSqlParameterSource vParams = new MapSqlParameterSource();
+        vParams.addValue("nom", pNom+"%", Types.VARCHAR);	
+
+		vListTopo = (ArrayList<Topo>) vJdbcTemplate.query(vSQL, vParams, topoRowMapper);
+		return vListTopo;
 	}
 
 

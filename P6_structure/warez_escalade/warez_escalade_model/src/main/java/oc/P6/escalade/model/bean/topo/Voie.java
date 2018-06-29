@@ -13,7 +13,7 @@ import oc.P6.escalade.model.contract.topo.IntVoie;
 public class Voie implements IntVoie{
 
 	private int id;
-	private String nom;
+	private String nomVoie;
 	private String cotation;
 	private int hauteur;
 	private int nbLgueur;
@@ -27,7 +27,7 @@ public class Voie implements IntVoie{
 	public Voie() {}
 	
 	public Voie(String pNom) {
-		this.nom = pNom;
+		this.nomVoie = pNom;
 	}
 
 	/**
@@ -40,14 +40,6 @@ public class Voie implements IntVoie{
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public String getNom() {
-		return nom;
-	}
-
-	public void setNom(String nom) {
-		this.nom = nom;
 	}
 
 	public String getCotation() {
@@ -96,6 +88,17 @@ public class Voie implements IntVoie{
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	@Override
+	public String getNomVoie() {
+		return this.nomVoie;
+	}
+
+	@Override
+	public void setNomVoie(String pNom) {
+		this.nomVoie = pNom;
+		
 	}
 	
 	

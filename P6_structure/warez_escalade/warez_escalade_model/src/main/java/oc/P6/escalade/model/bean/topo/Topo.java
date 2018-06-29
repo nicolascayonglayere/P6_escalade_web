@@ -13,7 +13,7 @@ import oc.P6.escalade.model.contract.topo.IntTopo;
 @Named("topo")
 public class Topo implements IntTopo{
 	
-	private String nom;
+	private String nomTopo;
 	private int id;
 	private Utilisateur auteur;
 	private String image;
@@ -29,20 +29,14 @@ public class Topo implements IntTopo{
 	public Topo() {}
 	
 	public Topo(String pNom) {
-		this.nom = pNom;
+		this.nomTopo = pNom;
 	}
 
-	public String getNom() {
-		return nom;
-	}
 
 	/**
 	 * Getter et Setter
 	 * @param nom
 	 */
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
 
 	public int getId() {
 		return id;
@@ -122,6 +116,17 @@ public class Topo implements IntTopo{
 
 	public void setNombreVoie(int nombreVoie) {
 		this.nombreVoie = nombreVoie;
+	}
+
+	@Override
+	public String getNomTopo() {
+		return this.nomTopo;
+	}
+
+	@Override
+	public void setNomTopo(String pNom) {
+		this.nomTopo = pNom;
+		
 	}
 	
 	

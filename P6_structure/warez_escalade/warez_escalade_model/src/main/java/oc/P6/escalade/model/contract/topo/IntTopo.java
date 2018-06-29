@@ -7,8 +7,8 @@ public interface IntTopo {
 	int getId();
 	void setId(int pId);
 	
-	String getNom();
-	void setNom(String pNom);
+	String getNomTopo();
+	void setNomTopo(String pNom);
 	
 	Utilisateur getAuteur();
 	void setAuteur(Utilisateur pUtilisateur);

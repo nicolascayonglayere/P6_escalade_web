@@ -49,7 +49,7 @@ public class RechercheUtilisateurAction extends ActionSupport {
 	public String execute() {
 		System.out.println(utilisateur.getPseudo());
 		listUtilisateur = managerFactory.getUtilisateurManager().getListUtilisateur(utilisateur.getPseudo());
-		System.out.println("ctrl topo emp "+listUtilisateur.get(1).getListTopoEmprunt());
+		System.out.println("ctrl topo emp "+listUtilisateur.get(0).getListTopoEmprunt());
 		return ActionSupport.SUCCESS;
 	}
 

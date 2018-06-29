@@ -13,10 +13,7 @@
   </parent>
 
   <!-- ===== Informations Maven ===== -->
-  <groupId>oc.P6.escalade</groupId>
   <artifactId>warez_escalade_model</artifactId>
-  <version>1.0-SNAPSHOT</version>
-
   <!-- ===== Informations générales ===== -->
   <name>${nomProjet}_model</name>
 

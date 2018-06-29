@@ -1,7 +1,5 @@
 package oc.P6.escalade.consumer.DAO.impl.manager.topo;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 
@@ -9,30 +7,34 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import oc.P6.escalade.consumer.DAO.contract.manager.topo.SiteManagerDAO;
-import oc.P6.escalade.consumer.DAO.impl.DAOFactoryImpl;
+import oc.P6.escalade.consumer.DAO.contract.manager.topo.TopoManagerDao;
 import oc.P6.escalade.consumer.DAO.impl.manager.AbstractDAO;
+import oc.P6.escalade.consumer.DAO.impl.rowmapper.SiteRowMapper;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
+
 @Named
 public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 	@Inject
-	TopoDaoImpl topoDAO;
+	TopoManagerDao topoDAO;
+	@Inject
+	SiteRowMapper siteRowMapper;
 
 	@Override
 	public boolean create(Site pSite) {
 		String vSQL = "INSERT INTO site (nom, description, id_topo, image) VALUES (:nom, :description, :id_topo, :image)";
-		Topo topo = topoDAO.find(pSite.getTopo().getNom());
+		Topo topo = topoDAO.find(pSite.getTopo().getNomTopo());
+	
 
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
-		vParams.addValue("nom", pSite.getNom(), Types.VARCHAR);
+		vParams.addValue("nom", pSite.getNomSite(), Types.VARCHAR);
 		vParams.addValue("description", pSite.getDescription(), Types.LONGVARCHAR);
 		vParams.addValue("id_topo", topo.getId(), Types.INTEGER);
 		vParams.addValue("image", pSite.getImage(), Types.VARCHAR);
@@ -41,7 +43,7 @@ public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 	    try {
 	        vJdbcTemplate.update(vSQL, vParams);
 	    } catch (DuplicateKeyException vEx) {
-	        System.out.println("Le site existe déjà ! site=" + pSite.getNom()+" dans le topo "+pSite.getTopo().getNom());
+	        System.out.println("Le site existe déjà ! site=" + pSite.getNomSite()+" dans le topo "+pSite.getTopo().getNomTopo());
 	        return false;
 	    }
 	    
@@ -51,14 +53,46 @@ public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 
 	@Override
 	public boolean delete(Site pSite) {
-		// TODO Auto-generated method stub
-		return false;
+		String vSQL = "DELETE FROM site WHERE id_site = :id_site";
+		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
+		MapSqlParameterSource vParams = new MapSqlParameterSource();
+		vParams.addValue("id_site", pSite.getId(), Types.INTEGER);
+	    
+	    try {
+	        vJdbcTemplate.update(vSQL, vParams);
+	    } catch (Exception vEx) {
+	        System.out.println("Le site n'existe pas ! site=" + pSite.getNomSite());
+	        vEx.printStackTrace();
+	        return false;
+	    }
+	    
+	    
+		return true;
 	}
 
 	@Override
 	public boolean update(Site pSite) {
-		// TODO Auto-generated method stub
-		return false;
+		String vSQL = "UPDATE site SET nom = :nom, description = :description, id_topo = :id_topo, image = :image"
+				+ "WHERE id_site = :id_site";
+
+	
+		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
+		MapSqlParameterSource vParams = new MapSqlParameterSource();
+		vParams.addValue("nom", pSite.getNomSite(), Types.VARCHAR);
+		vParams.addValue("description", pSite.getDescription(), Types.LONGVARCHAR);
+		vParams.addValue("image", pSite.getImage(), Types.VARCHAR);
+		vParams.addValue("id_topo", pSite.getTopo().getId(), Types.INTEGER);
+	
+	    
+	    try {
+	        vJdbcTemplate.update(vSQL, vParams);
+	    } catch (DuplicateKeyException vEx) {
+	        System.out.println("Erreur modif ! site=" + pSite.getNomSite());
+	        return false;
+	    }
+	    
+	    
+		return true;
 	}
 
 	@Override
@@ -70,24 +104,7 @@ public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
         vParams.addValue("nom", pNom, Types.VARCHAR);
 		
-		RowMapper<Site> vRowMapper = new RowMapper<Site>() {
-
-			@Override
-			public Site mapRow(ResultSet rs, int rowNum) throws SQLException {
-				Site vSite = new Site(rs.getString("nom"));
-				Topo vTopo = new Topo();
-				vTopo.setId(rs.getInt("id_topo"));
-				//--recupere ici le topo ds la bdd
-				vSite.setId(rs.getInt("id_site"));
-				vSite.setTopo(vTopo);
-				vSite.setDescription(rs.getString("description"));
-				vSite.setImage(rs.getString("image"));
-				return vSite;
-			}
-			
-		};
-		
-		return ((ArrayList<Site>)vJdbcTemplate.query(vSQL,vParams,vRowMapper));
+		return ((ArrayList<Site>)vJdbcTemplate.query(vSQL,vParams,siteRowMapper));
 	}
 
 	@Override
@@ -97,23 +114,8 @@ public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
         vParams.addValue("id_topo", pId, Types.INTEGER);
-		
-		RowMapper<Site> vRowMapper = new RowMapper<Site>() {
-
-			@Override
-			public Site mapRow(ResultSet rs, int rowNum) throws SQLException {
-				Topo vTopo = topoDAO.find(pId);
-				Site vSite = new Site(rs.getString("nom"));
-				vSite.setId(rs.getInt("id_site"));
-				vSite.setTopo(vTopo);
-				vSite.setDescription(rs.getString("description"));
-				vSite.setImage(rs.getString("image"));
-				return vSite;
-			}
-			
-		};
 	
-		return ((ArrayList<Site>)vJdbcTemplate.query(vSQL,vParams,vRowMapper));
+		return ((ArrayList<Site>)vJdbcTemplate.query(vSQL,vParams,siteRowMapper));
 		
 	}
 
@@ -124,24 +126,10 @@ public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
         vParams.addValue("id_topo", pIdTopo, Types.INTEGER);
         vParams.addValue("nom", pNom, Types.VARCHAR);
-		
-		RowMapper<Site> vRowMapper = new RowMapper<Site>() {
 
-			@Override
-			public Site mapRow(ResultSet rs, int rowNum) throws SQLException {
-				Topo vTopo = topoDAO.find(pIdTopo);
-				Site vSite = new Site(pNom);
-				vSite.setId(rs.getInt("id_site"));
-				vSite.setTopo(vTopo);
-				vSite.setDescription(rs.getString("description"));
-				vSite.setImage(rs.getString("image"));
-				return vSite;
-			}
-			
-		};
 		Site site;
-		if (vJdbcTemplate.query(vSQL,vParams,vRowMapper).size() != 0)
-			site = vJdbcTemplate.query(vSQL,vParams,vRowMapper).get(0);
+		if (vJdbcTemplate.query(vSQL,vParams,siteRowMapper).size() != 0)
+			site = vJdbcTemplate.query(vSQL,vParams,siteRowMapper).get(0);
 		else
 			site = null;
 		
@@ -156,23 +144,9 @@ public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
         vParams.addValue("id_site", pId, Types.INTEGER);
 		
-		RowMapper<Site> vRowMapper = new RowMapper<Site>() {
-
-			@Override
-			public Site mapRow(ResultSet rs, int rowNum) throws SQLException {
-				Topo vTopo = topoDAO.find(rs.getInt("id_topo"));
-				Site vSite = new Site(rs.getString("nom"));
-				vSite.setId(pId);
-				vSite.setTopo(vTopo);
-				vSite.setDescription(rs.getString("description"));
-				vSite.setImage(rs.getString("image"));
-				return vSite;
-			}
-			
-		};
 		Site site;
-		if (vJdbcTemplate.query(vSQL,vParams,vRowMapper).size() != 0)
-			site = vJdbcTemplate.query(vSQL,vParams,vRowMapper).get(0);
+		if (vJdbcTemplate.query(vSQL,vParams,siteRowMapper).size() != 0)
+			site = vJdbcTemplate.query(vSQL,vParams,siteRowMapper).get(0);
 		else
 			site = null;
 		

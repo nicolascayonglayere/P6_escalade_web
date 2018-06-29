@@ -13,6 +13,9 @@
         <dependent-module archiveName="warez_escalade_model-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/warez_escalade_model/warez_escalade_model">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="warez_escalade_technical-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/warez_escalade_technical/warez_escalade_technical">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="java-output-path" value="/warez_escalade_webapp/target/classes"/>
         <property name="context-root" value="warez-escalade-webapp"/>
     </wb-module>

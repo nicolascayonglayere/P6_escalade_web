@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE validators PUBLIC "-//Apache Struts//XWork Validator 1.0.3//EN"
+		"http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd">
+
+<validators>
+    <field name="utilisateur.pseudo">
+        <field-validator type="requiredstring">
+        	<message key="required.pseudo"/>
+        </field-validator>
+    </field>  
+    <field name="utilisateur.password">
+        <field-validator type="requiredstring">
+        	<message key="required.mdp"/> 
+        </field-validator>
+    </field>
+    <field name="coordonneeUtilisateur.email">
+        <field-validator type="requiredstring">
+        	<message key="required.email"/>
+        </field-validator>
+        <field-validator type="email">
+    		<message key="invalid.email"/>
+		</field-validator>
+    </field>
+    <field name="coordonneeUtilisateur.adresse">
+        <field-validator type="requiredstring">
+        	<message key="required.adresse"/>
+        </field-validator>
+    </field>        
+</validators>

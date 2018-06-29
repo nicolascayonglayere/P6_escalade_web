@@ -12,7 +12,7 @@ import oc.P6.escalade.model.contract.topo.IntSecteur;
 public class Secteur implements IntSecteur {
 
 		private int id;
-		private String nom;
+		private String nomSecteur;
 		private Site site;
 		private String description;
 		private String image;
@@ -23,7 +23,7 @@ public class Secteur implements IntSecteur {
 		public Secteur() {}
 		
 		public Secteur(String pNom) {
-			this.nom = pNom;
+			this.nomSecteur = pNom;
 		}
 
 		/**
@@ -36,14 +36,6 @@ public class Secteur implements IntSecteur {
 
 		public void setId(int id) {
 			this.id = id;
-		}
-
-		public String getNom() {
-			return nom;
-		}
-
-		public void setNom(String nom) {
-			this.nom = nom;
 		}
 
 		public Site getSite() {
@@ -68,6 +60,17 @@ public class Secteur implements IntSecteur {
 
 		public void setImage(String image) {
 			this.image = image;
+		}
+
+		@Override
+		public String getNomSecteur() {
+			return this.nomSecteur;
+		}
+
+		@Override
+		public void setNomSecteur(String pNom) {
+			this.nomSecteur = pNom;
+			
 		}
 		
 		

@@ -19,7 +19,7 @@ import oc.P6.escalade.consumer.DAO.impl.manager.utilisateur.UtilisateurDaoImpl;
 @Named("daoFactory")
 public class DAOFactoryImpl implements DAOFactory {
 	@Inject
-	private UtilisateurDaoImpl userManagerDAO;
+	private UtilisateurManagerDAO userManagerDAO;
 	@Override
 	public UtilisateurManagerDAO getUtilisateurManagerDAO() {
 		return this.userManagerDAO;		

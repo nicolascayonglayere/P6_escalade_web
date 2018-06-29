@@ -41,9 +41,10 @@ public class CreerTopo extends ActionSupport implements SessionAware{
 	public String execute() {
 		utilisateur=(Utilisateur)session.get("utilisateur");
 		topo.setAuteur(utilisateur);
-		System.out.println(topo.getNom()+" - "+topo.getAuteur().getPseudo());
+		System.out.println(topo.getNomTopo()+" - "+topo.getAuteur().getPseudo());
 		managerFactory.getTopoManager().creerTopo(topo);
-		addActionMessage("Le topo "+topo.getNom()+" a bien été crée.");
+		addActionMessage("Le topo "+topo.getNomTopo()+" a bien été crée.");
+		session.put("topo", topo);
 		return ActionSupport.SUCCESS;
 	}
 	@Override

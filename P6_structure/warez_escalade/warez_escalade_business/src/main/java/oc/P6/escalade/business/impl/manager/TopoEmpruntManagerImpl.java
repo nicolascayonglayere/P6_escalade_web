@@ -57,7 +57,7 @@ public class TopoEmpruntManagerImpl extends AbstractDAOManager implements TopoEm
 	 */
 	@Override
 	public TopoEmprunt getTopoEmprunt(String pNom, Utilisateur pEmprunteur) {
-		System.out.println("topo : "+topoDAO.find(pNom).getNom()+" - "+topoDAO.find(pNom).getId());
+		System.out.println("topo : "+topoDAO.find(pNom).getNomTopo()+" - "+topoDAO.find(pNom).getId());
 		Calendar cal = Calendar.getInstance();
 		Topo vTopo = topoDAO.find(pNom);
     	if(topoEmpruntDao.find(vTopo.getId(), pEmprunteur.getId()) != null) { 
@@ -70,7 +70,7 @@ public class TopoEmpruntManagerImpl extends AbstractDAOManager implements TopoEm
     			cal.add(Calendar.DATE, 20);
     			topoEmprunt.setDateRetour(cal.getTime());
     			topoEmprunt.setTopo(vTopo);
-    			System.out.println("CTRL "+topoEmprunt.getNom()+" - "+topoEmprunt.getEmprunteur().getPseudo()+" - "+topoEmprunt.getTopo().getNom());
+    			System.out.println("CTRL "+topoEmprunt.getNom()+" - "+topoEmprunt.getEmprunteur().getPseudo()+" - "+topoEmprunt.getTopo().getNomTopo());
     	} 
     	else {
 			try {
@@ -91,9 +91,9 @@ public class TopoEmpruntManagerImpl extends AbstractDAOManager implements TopoEm
 	 */
 	@Override
 	public void creerTopoEmprunt(Topo topo, Utilisateur pEmprunteur) {
-		System.out.println(topo.getNom()+" - "+pEmprunteur.getPseudo());
+		System.out.println(topo.getNomTopo()+" - "+pEmprunteur.getPseudo());
 
-		if (topoDAO.find(topo.getNom()) != null && userDAO.find(pEmprunteur.getPseudo())!= null) {
+		if (topoDAO.find(topo.getNomTopo()) != null && userDAO.find(pEmprunteur.getPseudo())!= null) {
 			Calendar cal = Calendar.getInstance();
 			System.out.println(cal.getTime());
 			//cal.setTime((Date)System.currentTimeMillis());
@@ -103,7 +103,7 @@ public class TopoEmpruntManagerImpl extends AbstractDAOManager implements TopoEm
 			topoEmprunt.setEmprunteur(pEmprunteur);
 			topoEmprunt.setTopo(topo);
 			topoEmprunt.setDateRetour(cal.getTime());
-			topoEmprunt.setNom(topo.getNom());
+			topoEmprunt.setNom(topo.getNomTopo());
 			topoEmpruntDao.create(topoEmprunt);
 		}
 		
@@ -140,8 +140,8 @@ public class TopoEmpruntManagerImpl extends AbstractDAOManager implements TopoEm
 	 */
 	@Override
 	public int getNbExemplaire(Topo pTopo) {
-		int nbEx = topoDAO.find(pTopo.getNom()).getNbreEx() - topoEmpruntDao.getListTopoEmprunt(pTopo).size();
-		System.out.println("nbre ex : "+topoDAO.find(pTopo.getNom()).getNbreEx()+" - "+topoEmpruntDao.getListTopoEmprunt(pTopo).size());
+		int nbEx = topoDAO.find(pTopo.getNomTopo()).getNbreEx() - topoEmpruntDao.getListTopoEmprunt(pTopo).size();
+		System.out.println("nbre ex : "+topoDAO.find(pTopo.getNomTopo()).getNbreEx()+" - "+topoEmpruntDao.getListTopoEmprunt(pTopo).size());
 		return nbEx;
 	}
 

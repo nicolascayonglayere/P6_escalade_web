@@ -25,33 +25,5 @@
             <param name="min">0.0</param>
         	<message key="invalid.latitude"/>
         </field-validator>        
-    </field>
-    
-    <!--<field name="nombreSite">
-        <field-validator type="required">
-        	<message>Veuillez saisir le nombre de site.</message>
-        </field-validator>
-        <field-validator type="int">
-            <param name="min">0</param>
-        	<message>Veuillez saisir le nombre de site.</message>
-        </field-validator>        
-    </field>
-    <field name="nombreSecteur">
-        <field-validator type="required">
-        	<message>Veuillez saisir le nombre de secteur.</message>
-        </field-validator>
-        <field-validator type="int">
-       		<param name="min">0</param>        
-        	<message>Veuillez saisir le nombre de secteur.</message>
-        </field-validator>        
-    </field>            
-    <field name="nombreVoie">
-        <field-validator type="required">
-        	<message>Veuillez saisir le nombre de voie.</message>
-        </field-validator>
-        <field-validator type="int">
-       		<param name="min">0</param>        	
-        	<message>Veuillez saisir le nombre de voie.</message>
-        </field-validator>
-    </field>-->            
+    </field>          
 </validators>

@@ -23,7 +23,7 @@ public class SelectTopoAction extends ActionSupport {
 	public String doListTopo() throws Exception {
         //call Service class to store personBean's state in database
 		listTopo = (ArrayList<Topo>) managerFactory.getTopoManager().getListTopo();
-        System.out.println(listTopo.get(0).getNom());
+        System.out.println(listTopo.get(0).getNomTopo());
         return SUCCESS;
     }
 

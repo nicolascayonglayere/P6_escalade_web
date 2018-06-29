@@ -13,7 +13,7 @@ import oc.P6.escalade.model.contract.topo.IntSite;
 public class Site implements IntSite{
 
 	private int id;
-	private String nom;
+	private String nomSite;
 	private Topo topo;
 	private String description;
 	private String image;
@@ -24,7 +24,7 @@ public class Site implements IntSite{
 	public Site () {}
 	
 	public Site(String pNom) {
-		this.nom = pNom;
+		this.nomSite = pNom;
 	}
 
 	/**
@@ -37,14 +37,6 @@ public class Site implements IntSite{
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public String getNom() {
-		return nom;
-	}
-
-	public void setNom(String nom) {
-		this.nom = nom;
 	}
 
 	public Topo getTopo() {
@@ -69,6 +61,16 @@ public class Site implements IntSite{
 
 	public void setImage(String image) {
 		this.image = image;
+	}
+
+	@Override
+	public String getNomSite() {
+		return this.nomSite;
+	}
+
+	@Override
+	public void setNomSite(String pNom) {
+		this.nomSite = pNom;		
 	}
 	
 	
