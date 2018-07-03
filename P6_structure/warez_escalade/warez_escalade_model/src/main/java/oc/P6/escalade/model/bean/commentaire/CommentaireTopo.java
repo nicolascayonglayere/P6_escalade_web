@@ -9,7 +9,7 @@ import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 import oc.P6.escalade.model.contract.commentaire.IntCommentaireTopo;
 
 @Named("commentaireTopo")
-public class CommentaireTopo extends Commentaire implements IntCommentaireTopo{
+public class CommentaireTopo implements IntCommentaireTopo{
 
 	private Topo topo;
 	private int id;

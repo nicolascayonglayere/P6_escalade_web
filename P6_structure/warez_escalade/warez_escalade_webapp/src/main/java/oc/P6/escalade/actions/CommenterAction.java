@@ -22,7 +22,7 @@ public class CommenterAction extends ActionSupport implements ServletRequestAwar
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+	@Inject
 	private Utilisateur utilisateur;
 	@Inject
 	private ManagerFactory managerFactory;
@@ -60,6 +60,7 @@ public class CommenterAction extends ActionSupport implements ServletRequestAwar
 	
 	
 	public String execute() {
+		System.out.println(((Utilisateur) session.get("utilisateur")).getPseudo());
 		HttpServletRequest request = ServletActionContext.getRequest();
 		String nameTopo = request.getParameter("nom");
 		utilisateur = (Utilisateur) (session.get("utilisateur"));

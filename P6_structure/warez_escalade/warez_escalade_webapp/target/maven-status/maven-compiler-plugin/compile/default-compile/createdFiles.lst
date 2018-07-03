@@ -13,8 +13,10 @@ oc\P6\escalade\actions\topo\SupprimerSite.class
 oc\P6\escalade\actions\GoCreerTopo.class
 oc\P6\escalade\actions\utilisateur\RechercheUtilisateurAction.class
 oc\P6\escalade\actions\CommenterAction.class
+oc\P6\escalade\WebappHelper\GestionFichierProperties.class
 oc\P6\escalade\actions\topo\CreerTopo.class
 oc\P6\escalade\actions\topo\ModifierVoie.class
+oc\P6\escalade\actions\images\ImageAction.class
 oc\P6\escalade\actions\topo\CreerVoie.class
 oc\P6\escalade\actions\topo\ModifierTopo.class
 oc\P6\escalade\actions\utilisateur\SupprimerUserAction.class
@@ -27,6 +29,7 @@ oc\P6\escalade\actions\topo\ModifierSite.class
 oc\P6\escalade\actions\PresentationAction.class
 oc\P6\escalade\actions\utilisateur\MonCompteAction.class
 oc\P6\escalade\actions\topo\SupprimerVoie.class
+oc\P6\escalade\actions\images\CustomImageBytesResult.class
 oc\P6\escalade\actions\GoTopoAction.class
 oc\P6\escalade\WebappHelper\WebappHelper.class
 oc\P6\escalade\interceptor\LoginInterceptor.class

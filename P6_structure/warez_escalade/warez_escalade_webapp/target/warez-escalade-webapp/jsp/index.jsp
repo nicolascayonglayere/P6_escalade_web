@@ -38,7 +38,7 @@
 				    	<td>
 
 				    		<s:a action="emprunt_topo" namespace="/jsp/utilisateur">
-			    				<s:param name="nom" value="nom"/>
+			    				<s:param name="nom" value="nomTopo"/>
 				    			<s:submit class="btn btn-default" value="%{getText('bouton.emprunt')}"/>
 				    		</s:a>
 				    		

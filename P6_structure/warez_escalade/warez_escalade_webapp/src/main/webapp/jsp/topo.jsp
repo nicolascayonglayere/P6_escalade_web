@@ -47,13 +47,14 @@
 			    <div id="monCarousel" class="carousel slide col-sm" data-ride="carousel">
 			      <!-- Indicateurs -->
 			      <ol class="carousel-indicators">
-			      	<s:iterator var="listImage" status="status">
-			      		<li data-target="#monCarousel" data-slide-to="${status.index}" class="active"></li>
+			      	<li data-target="#monCarousel" data-slide-to="0" class="active"></li>
+			      	<s:iterator value="listImage" status="status">
+						<li data-target="#monCarousel" data-slide-to="${status.index }"></li>
 			      	</s:iterator>
 			      </ol>
 			      <!-- Diapositives -->
 			      <div class="carousel-inner">
-			        <div class="item active">
+			        <div class="carousel-item active">
 						<s:set var="imgURL">
 							<s:url action="ImageAction" namespace="/" var="URLtag">
 								<s:param name="imageId" value="imageId"/>
@@ -61,23 +62,25 @@
 						</s:set>		        
 						<img src="<s:property value="#URLtag" />"/>
 				     </div>
-				     <div class="item">
-					      <s:iterator value="listImage" var="imageId">
+				     
+					 <s:iterator value="listImage" var="imageId">
+					 	<div class="carousel-item">
 					      	<s:set var="imgURL">
 								<s:url action="ImageAction" namespace="/" var="URLTag">
 									<s:param name="imageId" value="#imageId"/>
 								</s:url>
 							</s:set>
 				          	<img src="<s:property value="#URLTag"/>"/>
-				      	</s:iterator>
-				     </div>				      	
+				        </div>  	
+				     </s:iterator>
+				     				      	
 			      </div>
 			      <!-- Contrôles -->
-			      <a class="left carousel-control" href="#monCarousel" data-slide="prev">
-			        <span class="glyphicon glyphicon-chevron-left"></span>
+			      <a class="carousel-control-prev" href="#monCarousel" role="button" data-slide="prev">
+			        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
 			      </a>
-			      <a class="right carousel-control" href="#monCarousel" data-slide="next">
-			        <span class="glyphicon glyphicon-chevron-right"></span>
+			      <a class="carousel-control-next" href="#monCarousel" role="button" data-slide="next">
+			        <span class="carousel-control-next-icon" aria-hidden="true"></span>
 			      </a>  
 			    </div>							
 				<!-- google map -->
@@ -103,7 +106,7 @@
 									<table class="table table-bordered table-striped">
 										<thead>
 											<tr>
-												<th><s:text name="topo.nomTopo"/></th>
+												<th><s:text name="topo.nom"/></th>
 												<th><s:text name="topo.cotation"/></th>
 												<th><s:text name="topo.hauteur"/></th>
 												<th><s:text name="topo.longueur"/></th>
@@ -119,8 +122,6 @@
 											    	<td style="text-align:right;"><s:property value="#voie.nbLgueur" /></td>
 											    	<td style="text-align:right;"><s:property value="#voie.nbPoint" /></td>
 											    	<td style="text-align:left;"><s:property value="#voie.description" /></td>
-											    	<td><button id="btCommVoie" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myCommModal" data-backdrop="true">COMMENTER</button></td>
-											   		<%@include file="_include/commentaireVoie.jsp" %>
 											   	</tr>
 										 	</s:iterator>
 									</table>					
@@ -137,7 +138,7 @@
 				<h3><s:text name="topo.commentaire"></s:text></h3>		
 				<div class="row">
 		
-					<s:form id="commentaireForm" action="commenter" namespace="/">
+					<s:form id="commentaireForm" action="commenter" namespace="/jsp/utilisateur">
 						<s:textarea name="commentaireTopo.message" placeholder="commentaire" label="%{getText('form.commentaire')}" requiredLabel="true"  cols="100" rows="10"/>		
 						<s:submit id="btEnvoi" class="btn btn-default" value="%{getText('bouton.envoi')}">
 			      			<s:param name="nom" value="topo.nomTopo"/>

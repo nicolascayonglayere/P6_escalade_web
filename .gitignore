@@ -6,11 +6,10 @@ cle_googleMapAPI.txt
 #fichier configMail.properties
 *.properties
 
-# fichier Log 
+#fichier Log 
 *.log
 
-
-# Package Files #
+#Package Files #
 *.jar
 *.war
 *.nar

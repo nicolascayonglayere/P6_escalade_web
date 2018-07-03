@@ -9,7 +9,13 @@
 	<constant name="struts.objectFactory" value="spring"/>
 	
 	<package name="default" extends="struts-default">
+	
+		<!-- Resultat de type imageResult pour afficher des images -->
+		<result-types>
+			<result-type name="imageResult"	class="oc.P6.escalade.actions.images.CustomImageBytesResult"/>
+		</result-types>
 			
+		<!-- pile d'interceptor personnalisee -->	
 		<interceptors>
 			<interceptor class="oc.P6.escalade.interceptor.LoginInterceptor" name="loginInterceptor"/>
 			<interceptor-stack name="loginStack">
@@ -38,6 +44,8 @@
 			<result name="login">/jsp/_include/login.jsp</result>
 		</global-results>
 
+
+		
         <!-- Action "index" -->
         <action name="index">
             <result>/jsp/index.jsp</result>
@@ -130,6 +138,11 @@
         	<result name="input">/jsp/creer_user.jsp</result>
         	<result name="success">/jsp/utilisateur/accueil_utilisateur.jsp</result>
         </action>
+        
+        <!-- Action pour obtenir une image -->
+   		<action name="ImageAction" class="oc.P6.escalade.actions.images.ImageAction">
+			<result name="success" type="imageResult"/>
+		</action>
  	</package>
         
 	<package name="utilisateur" extends="default" namespace="/jsp/utilisateur">   
@@ -164,7 +177,7 @@
        		<interceptor-ref name="store">
 				<param name="operationMode">STORE</param>
 		    </interceptor-ref>
-		    <interceptor-ref name="defaultStack" />        
+		    <interceptor-ref name="loginStack" />        
 			<result name="success" type="redirectAction">
 				<param name="actionName">go_monCompte</param>
 			</result>
@@ -192,10 +205,13 @@
         
         <!-- action pour commenter un topo -->
         <action name="commenter" class="oc.P6.escalade.actions.CommenterAction" method="execute">
-       		<!--  <interceptor-ref name="store">
+			<interceptor-ref name="store">
 				<param name="operationMode">STORE</param>
 		    </interceptor-ref>
-		    <interceptor-ref name="commentaireStack" />-->        
+		    <interceptor-ref name="loginStack">
+		   		<param name="params.excludeParams">dojo..*,^struts..*,^session..*,^request..*,^application..*,^servlet(Request|Response)..*,parameters...*,submit,token,struts.token.name</param>
+		   	</interceptor-ref>
+		    <!--  <interceptor-ref name="commentaireStack" />-->        
         	<result name="success" type="redirectAction">
         		<param name="actionName">go_topo</param>
         		<param name="namespace">/</param>

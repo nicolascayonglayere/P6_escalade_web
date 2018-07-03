@@ -6,6 +6,7 @@ D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_esca
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\java\oc\P6\escalade\actions\topo\SelectTopoAction.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\java\oc\P6\escalade\actions\utilisateur\LoginAction.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\java\oc\P6\escalade\actions\utilisateur\GestionPretAction.java
+D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\java\oc\P6\escalade\actions\images\ImageAction.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\java\oc\P6\escalade\actions\PresentationAction.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\java\oc\P6\escalade\actions\utilisateur\ModifierUserAction.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\java\oc\P6\escalade\WebappHelper\WebappHelper.java
@@ -17,6 +18,7 @@ D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_esca
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\java\oc\P6\escalade\actions\utilisateur\BanUtilisateurAction.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\java\oc\P6\escalade\actions\topo\CreerSite.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\java\oc\P6\escalade\actions\CommenterAction.java
+D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\java\oc\P6\escalade\actions\images\CustomImageBytesResult.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\java\oc\P6\escalade\actions\utilisateur\SupprimerUserAction.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\java\oc\P6\escalade\actions\topo\SupprimerTopo.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\java\oc\P6\escalade\actions\utilisateur\MonCompteAction.java
@@ -28,6 +30,7 @@ D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_esca
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\java\oc\P6\escalade\actions\topo\CreerTopo.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\java\oc\P6\escalade\actions\topo\SupprimerSecteur.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\java\oc\P6\escalade\actions\topo\FinaliserTopo.java
+D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\java\oc\P6\escalade\WebappHelper\GestionFichierProperties.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\java\oc\P6\escalade\actions\GoBanAction.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\java\oc\P6\escalade\actions\topo\CreerVoie.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\java\oc\P6\escalade\actions\topo\ModifierVoie.java

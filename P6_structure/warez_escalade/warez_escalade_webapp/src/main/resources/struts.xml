@@ -140,7 +140,7 @@
         </action>
         
         <!-- Action pour obtenir une image -->
-   		<action name="ImageAction" class="oc.P6.escalade.actions.images.ImageAction" method="execute">
+   		<action name="ImageAction" class="oc.P6.escalade.actions.images.ImageAction">
 			<result name="success" type="imageResult"/>
 		</action>
  	</package>
@@ -177,7 +177,7 @@
        		<interceptor-ref name="store">
 				<param name="operationMode">STORE</param>
 		    </interceptor-ref>
-		    <interceptor-ref name="defaultStack" />        
+		    <interceptor-ref name="loginStack" />        
 			<result name="success" type="redirectAction">
 				<param name="actionName">go_monCompte</param>
 			</result>
@@ -205,10 +205,13 @@
         
         <!-- action pour commenter un topo -->
         <action name="commenter" class="oc.P6.escalade.actions.CommenterAction" method="execute">
-       		<!--  <interceptor-ref name="store">
+			<interceptor-ref name="store">
 				<param name="operationMode">STORE</param>
 		    </interceptor-ref>
-		    <interceptor-ref name="commentaireStack" />-->        
+		    <interceptor-ref name="loginStack">
+		   		<param name="params.excludeParams">dojo..*,^struts..*,^session..*,^request..*,^application..*,^servlet(Request|Response)..*,parameters...*,submit,token,struts.token.name</param>
+		   	</interceptor-ref>
+		    <!--  <interceptor-ref name="commentaireStack" />-->        
         	<result name="success" type="redirectAction">
         		<param name="actionName">go_topo</param>
         		<param name="namespace">/</param>

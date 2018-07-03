@@ -22,7 +22,7 @@ public class CustomImageBytesResult implements Result {
 		response.setContentType(action.getCustomContentType());
 		response.getOutputStream().write(action.getCustomImageInBytes());
 		response.getOutputStream().flush();
-
+		//System.out.println("resultat image "+response.toString());
 	}
 
 }
