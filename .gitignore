@@ -2,3 +2,19 @@
 
 #cle googleMap
 cle_googleMapAPI.txt
+
+#fichier configMail.properties
+*.properties
+
+# fichier Log 
+*.log
+
+
+# Package Files #
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar

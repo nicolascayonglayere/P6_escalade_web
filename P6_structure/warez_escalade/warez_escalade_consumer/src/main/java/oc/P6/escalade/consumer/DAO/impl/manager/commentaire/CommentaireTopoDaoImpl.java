@@ -4,8 +4,6 @@ import java.sql.Types;
 
 import javax.inject.Named;
 
-import org.springframework.dao.DuplicateKeyException;
-import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 

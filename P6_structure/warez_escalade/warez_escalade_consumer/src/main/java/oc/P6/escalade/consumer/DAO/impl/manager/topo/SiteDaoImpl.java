@@ -16,8 +16,6 @@ import oc.P6.escalade.consumer.DAO.impl.manager.AbstractDAO;
 import oc.P6.escalade.consumer.DAO.impl.rowmapper.SiteRowMapper;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
-import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
-
 
 @Named
 public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{

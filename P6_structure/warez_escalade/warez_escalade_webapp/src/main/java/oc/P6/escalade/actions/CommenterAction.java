@@ -12,11 +12,7 @@ import org.apache.struts2.interceptor.SessionAware;
 import com.opensymphony.xwork2.ActionSupport;
 
 import oc.P6.escalade.business.contract.ManagerFactory;
-import oc.P6.escalade.model.bean.commentaire.Commentaire;
-import oc.P6.escalade.model.bean.commentaire.CommentaireSite;
 import oc.P6.escalade.model.bean.commentaire.CommentaireTopo;
-import oc.P6.escalade.model.bean.topo.Secteur;
-import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 

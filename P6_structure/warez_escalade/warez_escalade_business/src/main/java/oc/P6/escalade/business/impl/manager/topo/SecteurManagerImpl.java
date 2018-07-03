@@ -6,12 +6,17 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import oc.P6.escalade.business.contract.manager.AbstractDAOManager;
 import oc.P6.escalade.business.contract.manager.topo.SecteurManager;
-import oc.P6.escalade.consumer.DAO.impl.manager.topo.SecteurDaoImpl;
+import oc.P6.escalade.consumer.DAO.DAOFactory;
+import oc.P6.escalade.consumer.DAO.contract.manager.topo.SecteurManagerDao;
 import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Site;
+import oc.P6.escalade.model.contract.topo.IntSecteur;
 
 /**
  * Implémentation de {@link SecteurManager}
@@ -22,11 +27,14 @@ import oc.P6.escalade.model.bean.topo.Site;
 public class SecteurManagerImpl extends AbstractDAOManager implements SecteurManager{
 
 	@Inject
-	private Secteur secteur;
+	private IntSecteur secteur;
 	
 	@Inject
-	private SecteurDaoImpl secteurDAO;// = (SecteurDaoImpl) getDAOFactory().getSecteurManagerDao();
+	private DAOFactory daoFactory;
 	
+	private SecteurManagerDao secteurDAO;
+	@Inject
+	@Named("platformTransactionManager")
 	private PlatformTransactionManager platformTransactionManager;
 	
 	/**
@@ -34,7 +42,21 @@ public class SecteurManagerImpl extends AbstractDAOManager implements SecteurMan
 	 */
 	@Override
 	public ArrayList<Secteur> getListSecteur(Site pSite) {
-		ArrayList<Secteur> listSecteur = secteurDAO.getListeSecteur(pSite);
+		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
+		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+		vDefinition.setTimeout(30); // 30 secondes
+        TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
+		secteurDAO = daoFactory.getSecteurManagerDao();
+		ArrayList<Secteur> listSecteur = new ArrayList<Secteur>();
+		try {
+			listSecteur = secteurDAO.getListeSecteur(pSite);
+		    TransactionStatus vTScommit = vTransactionStatus;
+		    vTransactionStatus = null;
+		    platformTransactionManager.commit(vTScommit);
+		}finally {
+			if (vTransactionStatus != null) 
+				platformTransactionManager.rollback(vTransactionStatus); 			
+		}
 		return listSecteur;
 	}
 
@@ -43,9 +65,21 @@ public class SecteurManagerImpl extends AbstractDAOManager implements SecteurMan
 	 */
 	@Override
 	public Secteur getSecteur(String pNom, Site pSite) {
-		Secteur secteur = null;
+		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
+		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+		vDefinition.setTimeout(30); // 30 secondes
+        TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
+		secteurDAO = daoFactory.getSecteurManagerDao();
 		if (secteurDAO.find(pNom, pSite.getId()) != null) {
-			secteur = secteurDAO.find(pNom, pSite.getId());
+			try {
+				secteur = secteurDAO.find(pNom, pSite.getId());
+			    TransactionStatus vTScommit = vTransactionStatus;
+			    vTransactionStatus = null;
+			    platformTransactionManager.commit(vTScommit);
+			}finally {
+				if (vTransactionStatus != null) 
+					platformTransactionManager.rollback(vTransactionStatus); 			
+			}
 		}
 		else {
 			try {
@@ -55,7 +89,7 @@ public class SecteurManagerImpl extends AbstractDAOManager implements SecteurMan
 				e.printStackTrace();
 			}
 		}
-		return secteur;
+		return (Secteur) secteur;
 	}
 
 	/**
@@ -63,6 +97,11 @@ public class SecteurManagerImpl extends AbstractDAOManager implements SecteurMan
 	 */
 	@Override
 	public void creerSecteur(Secteur pSecteur) {
+		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
+		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+		vDefinition.setTimeout(30); // 30 secondes
+        TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
+		secteurDAO = daoFactory.getSecteurManagerDao();
 		System.out.println("CTRL "+pSecteur.getNomSecteur()+" - "+pSecteur.getSite().getId());
 		if (secteurDAO.find(pSecteur.getNomSecteur(), pSecteur.getSite().getId()) != null) {
 			try {
@@ -73,16 +112,29 @@ public class SecteurManagerImpl extends AbstractDAOManager implements SecteurMan
 			}
 		}
 		else {
-			secteur.setNomSecteur(pSecteur.getNomSecteur());
-			secteur.setDescription(pSecteur.getDescription());
-			secteur.setSite(pSecteur.getSite());
-			secteurDAO.create((Secteur)secteur);
+			try {
+				secteur.setNomSecteur(pSecteur.getNomSecteur());
+				secteur.setDescription(pSecteur.getDescription());
+				secteur.setSite(pSecteur.getSite());
+				secteurDAO.create((Secteur)secteur);
+			    TransactionStatus vTScommit = vTransactionStatus;
+			    vTransactionStatus = null;
+			    platformTransactionManager.commit(vTScommit);
+			}finally {
+				if (vTransactionStatus != null) 
+					platformTransactionManager.rollback(vTransactionStatus); 			
+			}
 		}
 		
 	}
 
 	@Override
 	public void modifierSecteur(Secteur pSecteur) {
+		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
+		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+		vDefinition.setTimeout(30); // 30 secondes
+        TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
+		secteurDAO = daoFactory.getSecteurManagerDao();
 		System.out.println("CTRL "+pSecteur.getNomSecteur());
 		if (secteurDAO.find(pSecteur.getNomSecteur(), pSecteur.getSite().getId()) == null) {
 			try {
@@ -93,11 +145,19 @@ public class SecteurManagerImpl extends AbstractDAOManager implements SecteurMan
 			}
 		}
 		else {
-			secteur.setId(secteurDAO.find(pSecteur.getNomSecteur(), pSecteur.getSite().getId()).getId());
-			secteur.setNomSecteur(pSecteur.getNomSecteur());
-			secteur.setDescription(pSecteur.getDescription());
-			secteur.setSite(pSecteur.getSite());
-			secteurDAO.update((Secteur)secteur);
+			try {
+				secteur.setId(secteurDAO.find(pSecteur.getNomSecteur(), pSecteur.getSite().getId()).getId());
+				secteur.setNomSecteur(pSecteur.getNomSecteur());
+				secteur.setDescription(pSecteur.getDescription());
+				secteur.setSite(pSecteur.getSite());
+				secteurDAO.update((Secteur)secteur);
+			    TransactionStatus vTScommit = vTransactionStatus;
+			    vTransactionStatus = null;
+			    platformTransactionManager.commit(vTScommit);
+			}finally {
+				if (vTransactionStatus != null) 
+					platformTransactionManager.rollback(vTransactionStatus); 			
+			}
 		}
 		
 	}
@@ -107,6 +167,11 @@ public class SecteurManagerImpl extends AbstractDAOManager implements SecteurMan
 	 */
 	@Override
 	public void supprimerSecteur(Secteur pSecteur) {
+		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
+		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+		vDefinition.setTimeout(30); // 30 secondes
+        TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
+		secteurDAO = daoFactory.getSecteurManagerDao();
 		System.out.println("CTRL "+pSecteur.getNomSecteur());
 		if (secteurDAO.find(pSecteur.getNomSecteur(), pSecteur.getSite().getId()) == null) {
 			try {
@@ -117,13 +182,45 @@ public class SecteurManagerImpl extends AbstractDAOManager implements SecteurMan
 			}
 		}
 		else {
-			secteur.setId(secteurDAO.find(pSecteur.getNomSecteur(), pSecteur.getSite().getId()).getId());
-			secteur.setNomSecteur(pSecteur.getNomSecteur());
-			secteur.setDescription(pSecteur.getDescription());
-			secteur.setSite(pSecteur.getSite());
-			secteurDAO.delete((Secteur)secteur);
+			try {
+				secteur.setId(secteurDAO.find(pSecteur.getNomSecteur(), pSecteur.getSite().getId()).getId());
+				secteur.setNomSecteur(pSecteur.getNomSecteur());
+				secteur.setDescription(pSecteur.getDescription());
+				secteur.setSite(pSecteur.getSite());
+				secteurDAO.delete((Secteur)secteur);
+			    TransactionStatus vTScommit = vTransactionStatus;
+			    vTransactionStatus = null;
+			    platformTransactionManager.commit(vTScommit);
+			}finally {
+				if (vTransactionStatus != null) 
+					platformTransactionManager.rollback(vTransactionStatus); 			
+			}
 		}
 		
+	}
+
+	public DAOFactory getDaoFactory() {
+		return daoFactory;
+	}
+
+	public void setDaoFactory(DAOFactory daoFactory) {
+		this.daoFactory = daoFactory;
+	}
+
+	public IntSecteur getSecteur() {
+		return secteur;
+	}
+
+	public void setSecteur(IntSecteur secteur) {
+		this.secteur = secteur;
+	}
+
+	public PlatformTransactionManager getPlatformTransactionManager() {
+		return platformTransactionManager;
+	}
+
+	public void setPlatformTransactionManager(PlatformTransactionManager platformTransactionManager) {
+		this.platformTransactionManager = platformTransactionManager;
 	}
 
 }

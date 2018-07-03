@@ -32,7 +32,7 @@
 				<s:iterator value="listTopo">
 					<ul>
 						<s:a action="go_modifTopo" namespace="/jsp/utilisateur">
-							<s:text name="modifierTopo.topo"/> <s:property value="#topo.nomTopo"/>
+							<s:text name="modifierTopo.topo"/> <s:property value="nomTopo"/>
 		                    <s:param name="nomTopo" value="nomTopo" />
 						</s:a>
 						<s:a action="supprimerTopo" namespace="/jsp/utilisateur">

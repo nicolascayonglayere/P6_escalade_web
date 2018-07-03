@@ -6,11 +6,14 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import oc.P6.escalade.business.contract.manager.AbstractDAOManager;
 import oc.P6.escalade.business.contract.manager.topo.VoieManager;
+import oc.P6.escalade.consumer.DAO.DAOFactory;
 import oc.P6.escalade.consumer.DAO.contract.manager.topo.VoieManagerDao;
-import oc.P6.escalade.consumer.DAO.impl.manager.topo.VoieDaoImpl;
 import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Voie;
 import oc.P6.escalade.model.contract.topo.IntVoie;
@@ -25,10 +28,12 @@ public class VoieManagerImpl extends AbstractDAOManager implements VoieManager{
 
 	@Inject
 	private IntVoie voie;
-	
 	@Inject
-	private VoieManagerDao voieDao;// = (VoieDaoImpl) getDAOFactory().getVoieManagerFao();
+	private DAOFactory daoFactory;
 	
+	private VoieManagerDao voieDao;
+	@Inject
+	@Named("platformTransactionManager")
 	private PlatformTransactionManager platformTransactionManager;
 	
 	/**
@@ -36,7 +41,22 @@ public class VoieManagerImpl extends AbstractDAOManager implements VoieManager{
 	 */
 	@Override
 	public ArrayList<Voie> getListVoie(Secteur pSecteur) {
-		ArrayList<Voie> listVoie = voieDao.getlistVoie(pSecteur);
+		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
+		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+		vDefinition.setTimeout(30); // 30 secondes
+        TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
+		voieDao = daoFactory.getVoieManagerDao();
+		ArrayList<Voie> listVoie = new ArrayList<Voie>();
+		try {
+			listVoie = voieDao.getlistVoie(pSecteur);
+		    TransactionStatus vTScommit = vTransactionStatus;
+		    vTransactionStatus = null;
+		    platformTransactionManager.commit(vTScommit);
+		}finally {
+			if (vTransactionStatus != null) 
+				platformTransactionManager.rollback(vTransactionStatus); 			
+		}
+
 		return listVoie;
 	}
 
@@ -45,6 +65,11 @@ public class VoieManagerImpl extends AbstractDAOManager implements VoieManager{
 	 */
 	@Override
 	public void creerVoie(Voie pVoie) {
+		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
+		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+		vDefinition.setTimeout(30); // 30 secondes
+        TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
+		voieDao = daoFactory.getVoieManagerDao();
 		System.out.println("CTRL "+pVoie.getNomVoie());
 		if (voieDao.find(pVoie.getNomVoie(), pVoie.getSecteur().getId()) != null) {
 			try {
@@ -55,14 +80,25 @@ public class VoieManagerImpl extends AbstractDAOManager implements VoieManager{
 			}
 		}
 		else {
-			voie.setCotation(pVoie.getCotation());
-			voie.setDescription(pVoie.getDescription());
-			voie.setHauteur(pVoie.getHauteur());
-			voie.setNbLgueur(pVoie.getNbLgueur());
-			voie.setNbPoint(pVoie.getNbPoint());
-			voie.setNomVoie(pVoie.getNomVoie());
-			voie.setSecteur(pVoie.getSecteur());
-			voieDao.create((Voie)voie);
+			try {
+				voie.setCotation(pVoie.getCotation());
+				voie.setDescription(pVoie.getDescription());
+				voie.setHauteur(pVoie.getHauteur());
+				voie.setNbLgueur(pVoie.getNbLgueur());
+				voie.setNbPoint(pVoie.getNbPoint());
+				voie.setNomVoie(pVoie.getNomVoie());
+				voie.setSecteur(pVoie.getSecteur());
+				voieDao.create((Voie)voie);
+				
+			    TransactionStatus vTScommit = vTransactionStatus;
+			    vTransactionStatus = null;
+			    platformTransactionManager.commit(vTScommit);
+			}finally {
+				if (vTransactionStatus != null) 
+					platformTransactionManager.rollback(vTransactionStatus); 			
+    		}
+			
+
 		}
 		
 	}
@@ -72,6 +108,11 @@ public class VoieManagerImpl extends AbstractDAOManager implements VoieManager{
 	 */
 	@Override
 	public void majVoie(Voie pVoie) {
+		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
+		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+		vDefinition.setTimeout(30); // 30 secondes
+        TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
+		voieDao = daoFactory.getVoieManagerDao();
 		System.out.println("CTRL "+pVoie.getNomVoie());
 		if (voieDao.find(pVoie.getNomVoie(), pVoie.getSecteur().getId()) == null) {
 			try {
@@ -82,15 +123,25 @@ public class VoieManagerImpl extends AbstractDAOManager implements VoieManager{
 			}
 		}
 		else {
-			voie.setId(voieDao.find(pVoie.getNomVoie(), pVoie.getSecteur().getId()).getId());
-			voie.setCotation(pVoie.getCotation());
-			voie.setDescription(pVoie.getDescription());
-			voie.setHauteur(pVoie.getHauteur());
-			voie.setNbLgueur(pVoie.getNbLgueur());
-			voie.setNbPoint(pVoie.getNbPoint());
-			voie.setNomVoie(pVoie.getNomVoie());
-			voie.setSecteur(pVoie.getSecteur());
-			voieDao.update((Voie)voie);
+			try {
+				voie.setId(voieDao.find(pVoie.getNomVoie(), pVoie.getSecteur().getId()).getId());
+				voie.setCotation(pVoie.getCotation());
+				voie.setDescription(pVoie.getDescription());
+				voie.setHauteur(pVoie.getHauteur());
+				voie.setNbLgueur(pVoie.getNbLgueur());
+				voie.setNbPoint(pVoie.getNbPoint());
+				voie.setNomVoie(pVoie.getNomVoie());
+				voie.setSecteur(pVoie.getSecteur());
+				voieDao.update((Voie)voie);
+				
+			    TransactionStatus vTScommit = vTransactionStatus;
+			    vTransactionStatus = null;
+			    platformTransactionManager.commit(vTScommit);				
+			}finally {
+				if (vTransactionStatus != null) 
+					platformTransactionManager.rollback(vTransactionStatus); 			
+    		}
+
 		}
 	}
 
@@ -99,9 +150,22 @@ public class VoieManagerImpl extends AbstractDAOManager implements VoieManager{
 	 */
 	@Override
 	public Voie getVoie(String pNom, Secteur pSecteur) {
-		Voie voie = null;
+		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
+		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+		vDefinition.setTimeout(30); // 30 secondes
+        TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
+		voieDao = daoFactory.getVoieManagerDao();
 		if (voieDao.find(pNom, pSecteur.getId()) != null) {
+			try {
 			voie = voieDao.find(pNom, pSecteur.getId());
+			
+		    TransactionStatus vTScommit = vTransactionStatus;
+		    vTransactionStatus = null;
+		    platformTransactionManager.commit(vTScommit);
+			}finally {
+				if (vTransactionStatus != null) 
+					platformTransactionManager.rollback(vTransactionStatus); 			
+    		}
 		}
 		else {
 			try {
@@ -111,7 +175,7 @@ public class VoieManagerImpl extends AbstractDAOManager implements VoieManager{
 				e.printStackTrace();
 			}
 		}
-		return voie;
+		return (Voie) voie;
 	}
 
 	/**
@@ -119,6 +183,11 @@ public class VoieManagerImpl extends AbstractDAOManager implements VoieManager{
 	 */
 	@Override
 	public void supprimerVoie(Voie pVoie) {
+		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
+		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+		vDefinition.setTimeout(30); // 30 secondes
+        TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
+		voieDao = daoFactory.getVoieManagerDao();
 		System.out.println("CTRL "+pVoie.getNomVoie());
 		if (voieDao.find(pVoie.getNomVoie(), pVoie.getSecteur().getId()) == null) {
 			try {
@@ -129,6 +198,7 @@ public class VoieManagerImpl extends AbstractDAOManager implements VoieManager{
 			}
 		}
 		else {
+			try {
 			voie.setId(voieDao.find(pVoie.getNomVoie(), pVoie.getSecteur().getId()).getId());
 			voie.setCotation(pVoie.getCotation());
 			voie.setDescription(pVoie.getDescription());
@@ -138,7 +208,23 @@ public class VoieManagerImpl extends AbstractDAOManager implements VoieManager{
 			voie.setNomVoie(pVoie.getNomVoie());
 			voie.setSecteur(pVoie.getSecteur());
 			voieDao.delete((Voie)voie);
+			
+		    TransactionStatus vTScommit = vTransactionStatus;
+		    vTransactionStatus = null;
+		    platformTransactionManager.commit(vTScommit);
+			}finally {
+				if (vTransactionStatus != null) 
+					platformTransactionManager.rollback(vTransactionStatus); 			
+    		}
 		}
+	}
+
+	public DAOFactory getDaoFactory() {
+		return daoFactory;
+	}
+
+	public void setDaoFactory(DAOFactory daoFactory) {
+		this.daoFactory = daoFactory;
 	}
 
 }

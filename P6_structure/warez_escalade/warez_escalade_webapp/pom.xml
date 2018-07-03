@@ -87,6 +87,10 @@
     	<groupId>com.jgeppert.struts2.bootstrap</groupId>
     	<artifactId>struts2-bootstrap-plugin</artifactId>
     </dependency>
+    <dependency>
+    	<groupId>com.sun.mail</groupId>
+    	<artifactId>javax.mail</artifactId>
+    </dependency>
   </dependencies>
 
     <!-- =============================================================== -->

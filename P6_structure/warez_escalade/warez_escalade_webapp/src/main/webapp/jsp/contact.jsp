@@ -23,11 +23,10 @@
 				<s:textfield name="coordonneeUtilisateur.email" placeholder="email" label="%{getText('form.email')}" requiredLabel="true"/>
 				<s:textfield name="utilisateur.pseudo" placeholder="pseudo" label="%{getText('form.pseudo')}" requiredLabel="true"/>
 				<s:textarea name="message" placeholder="message" label="%{getText('form.message')}" requiredLabel="true"  cols="50" rows="10"/>
-				<s:submit class="btn btn-default" value="%{getText('bouton.envoi')}">		
-	      			<s:param name="message"><!--le message en param--></s:param>
-	     		 </s:submit>
+				<s:submit class="btn btn-default" value="%{getText('bouton.envoi')}"/>		
+			<s:token/>
 			</s:form>	
-			<s:token/>	
+	
 		</div>
 
 		

@@ -6,9 +6,13 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import oc.P6.escalade.business.contract.manager.AbstractDAOManager;
 import oc.P6.escalade.business.contract.manager.topo.TopoManager;
+import oc.P6.escalade.consumer.DAO.DAOFactory;
 import oc.P6.escalade.consumer.DAO.contract.manager.topo.TopoManagerDao;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.contract.topo.IntTopo;
@@ -25,16 +29,34 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 	private IntTopo topo;
 	
 	@Inject
+	private DAOFactory daoFactory;
+	
 	private TopoManagerDao topoDAO;// = (TopoDaoImpl) getDAOFactory().getTopoManagerDao();
 	
-	//private PlatformTransactionManager platformTransactionManager;
+	@Inject
+	@Named("platformTransactionManager")
+	private PlatformTransactionManager platformTransactionManager;
 	
 	/**
 	 * Méthode pour obtenir la liste des {@link Topo}
 	 */
 	@Override
 	public ArrayList<Topo> getListTopo() {
-		ArrayList<Topo> listeTopo = topoDAO.listerTopo();
+		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
+		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+		vDefinition.setTimeout(30); // 30 secondes
+        TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
+        topoDAO = daoFactory.getTopoManagerDao();
+        ArrayList<Topo> listeTopo = new ArrayList<Topo>();
+        try {
+        	listeTopo= topoDAO.listerTopo();
+		    TransactionStatus vTScommit = vTransactionStatus;
+		    vTransactionStatus = null;
+		    platformTransactionManager.commit(vTScommit);
+		}finally {
+			if (vTransactionStatus != null) 
+				platformTransactionManager.rollback(vTransactionStatus); 			
+		}
 		return listeTopo;
 	}
 
@@ -43,17 +65,30 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 	 */
 	@Override
 	public Topo getTopo(String pNom) {
-		Topo vTopo = null;
+		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
+		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+		vDefinition.setTimeout(30); // 30 secondes
+        TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
+        topoDAO = daoFactory.getTopoManagerDao();
+
 		if (topoDAO.find(pNom) != null) {
-			vTopo = topoDAO.find(pNom);
-		}
+			try {
+			topo = topoDAO.find(pNom);
+		    TransactionStatus vTScommit = vTransactionStatus;
+		    vTransactionStatus = null;
+		    platformTransactionManager.commit(vTScommit);
+		}finally {
+			if (vTransactionStatus != null) 
+				platformTransactionManager.rollback(vTransactionStatus); 			
+			}			
+		}	
 		else
 			try {
 				throw new Exception ("Le topo n'existe pas.");
 			}catch (Exception e) {
 				e.printStackTrace();
 			}
-		return vTopo;
+		return (Topo) topo;
 	}
 
 	/**
@@ -61,6 +96,11 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 	 */
 	@Override
 	public void creerTopo(Topo pTopo) {
+		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
+		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+		vDefinition.setTimeout(30); // 30 secondes
+        TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
+        topoDAO = daoFactory.getTopoManagerDao();
 		System.out.println("CTRL "+pTopo.getNomTopo());
 		if (topoDAO.find(pTopo.getNomTopo()) != null) {
 			try {
@@ -71,15 +111,24 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 			}
 		}
 		else {
-			topo.setNomTopo(pTopo.getNomTopo());
-			topo.setAuteur(pTopo.getAuteur());
-			topo.setNbreEx(pTopo.getNbreEx());
-			topo.setDescription(pTopo.getDescription());
-			topo.setLatitude(pTopo.getLatitude());
-			topo.setLongitude(pTopo.getLongitude());
-			topo.setImage(pTopo.getNomTopo().replaceAll("\\p{Space}", ""));
-			topoDAO.create((Topo)topo);
-		}
+			try {
+				topo.setNomTopo(pTopo.getNomTopo());
+				topo.setAuteur(pTopo.getAuteur());
+				topo.setNbreEx(pTopo.getNbreEx());
+				topo.setDescription(pTopo.getDescription());
+				topo.setLatitude(pTopo.getLatitude());
+				topo.setLongitude(pTopo.getLongitude());
+				topo.setImage(pTopo.getNomTopo().replaceAll("\\p{Space}", ""));
+				topoDAO.create((Topo)topo);
+				
+			    TransactionStatus vTScommit = vTransactionStatus;
+			    vTransactionStatus = null;
+			    platformTransactionManager.commit(vTScommit);
+			}finally {
+				if (vTransactionStatus != null) 
+					platformTransactionManager.rollback(vTransactionStatus); 			
+				}
+			}
 		
 	}
 
@@ -88,6 +137,11 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 	 */
 	@Override
 	public void modifTopo(Topo pTopo) {
+		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
+		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+		vDefinition.setTimeout(30); // 30 secondes
+        TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
+        topoDAO = daoFactory.getTopoManagerDao();
 		System.out.println("CTRL "+pTopo.getNomTopo());
 		if (topoDAO.find(pTopo.getNomTopo()) == null) {
 			try {
@@ -98,16 +152,25 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 			}
 		}
 		else {
-			topo.setId(topoDAO.find(pTopo.getNomTopo()).getId());
-			topo.setNomTopo(pTopo.getNomTopo());
-			topo.setAuteur(pTopo.getAuteur());
-			topo.setNbreEx(pTopo.getNbreEx());
-			topo.setDescription(pTopo.getDescription());
-			topo.setLatitude(pTopo.getLatitude());
-			topo.setLongitude(pTopo.getLongitude());
-			topo.setImage(pTopo.getNomTopo().replaceAll("\\p{Space}", ""));
-			topoDAO.update((Topo)topo);
-		}
+			try {
+				topo.setId(topoDAO.find(pTopo.getNomTopo()).getId());
+				topo.setNomTopo(pTopo.getNomTopo());
+				topo.setAuteur(pTopo.getAuteur());
+				topo.setNbreEx(pTopo.getNbreEx());
+				topo.setDescription(pTopo.getDescription());
+				topo.setLatitude(pTopo.getLatitude());
+				topo.setLongitude(pTopo.getLongitude());
+				topo.setImage(pTopo.getNomTopo().replaceAll("\\p{Space}", ""));
+				topoDAO.update((Topo)topo);
+				
+			    TransactionStatus vTScommit = vTransactionStatus;
+			    vTransactionStatus = null;
+			    platformTransactionManager.commit(vTScommit);
+			}finally {
+				if (vTransactionStatus != null) 
+					platformTransactionManager.rollback(vTransactionStatus); 			
+				}
+			}
 		
 	}
 
@@ -116,13 +179,33 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 	 */
 	@Override
 	public ArrayList<Topo> rechercheTopo(String pNom) {
-		ArrayList<Topo>listTopo = topoDAO.rechercherTopo(pNom) ;
-		System.out.println("business recherche "+pNom+" - "+listTopo.size());
+		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
+		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+		vDefinition.setTimeout(30); // 30 secondes
+        TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
+        topoDAO = daoFactory.getTopoManagerDao();
+		ArrayList<Topo>listTopo = new ArrayList<Topo>(); 
+		try {
+			listTopo = topoDAO.rechercherTopo(pNom) ;
+			System.out.println("business recherche "+pNom+" - "+listTopo.size());
+		    TransactionStatus vTScommit = vTransactionStatus;
+		    vTransactionStatus = null;
+		    platformTransactionManager.commit(vTScommit);
+		}finally {
+			if (vTransactionStatus != null) 
+				platformTransactionManager.rollback(vTransactionStatus); 			
+			}
 		return listTopo;
 	}
 
+
 	@Override
 	public void supprimerTopo(Topo pTopo) {
+		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
+		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+		vDefinition.setTimeout(30); // 30 secondes
+        TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
+        topoDAO = daoFactory.getTopoManagerDao();
 		System.out.println("CTRL business "+pTopo.getNomTopo());
 		if (topoDAO.find(pTopo.getNomTopo()) == null) {
 			try {
@@ -133,17 +216,42 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 			}
 		}
 		else {
-			topo.setId(topoDAO.find(pTopo.getNomTopo()).getId());
-			topo.setNomTopo(pTopo.getNomTopo());
-			topo.setAuteur(pTopo.getAuteur());
-			topo.setNbreEx(pTopo.getNbreEx());
-			topo.setDescription(pTopo.getDescription());
-			topo.setLatitude(pTopo.getLatitude());
-			topo.setLongitude(pTopo.getLongitude());
-			topo.setImage(pTopo.getNomTopo().replaceAll("\\p{Space}", ""));
-			topoDAO.delete((Topo) topo);
-		}
+			try {
+				topo.setId(topoDAO.find(pTopo.getNomTopo()).getId());
+				topo.setNomTopo(pTopo.getNomTopo());
+				topo.setAuteur(pTopo.getAuteur());
+				topo.setNbreEx(pTopo.getNbreEx());
+				topo.setDescription(pTopo.getDescription());
+				topo.setLatitude(pTopo.getLatitude());
+				topo.setLongitude(pTopo.getLongitude());
+				topo.setImage(pTopo.getNomTopo().replaceAll("\\p{Space}", ""));
+				topoDAO.delete((Topo) topo);
+				
+			    TransactionStatus vTScommit = vTransactionStatus;
+			    vTransactionStatus = null;
+			    platformTransactionManager.commit(vTScommit);
+			}finally {
+				if (vTransactionStatus != null) 
+					platformTransactionManager.rollback(vTransactionStatus); 			
+				}
+			}
 		
+	}
+
+	public DAOFactory getDaoFactory() {
+		return daoFactory;
+	}
+
+	public void setDaoFactory(DAOFactory daoFactory) {
+		this.daoFactory = daoFactory;
+	}
+
+	public IntTopo getTopo() {
+		return topo;
+	}
+
+	public void setTopo(IntTopo topo) {
+		this.topo = topo;
 	}
 
 }

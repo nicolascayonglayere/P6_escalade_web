@@ -1,5 +1,6 @@
 package oc.P6.escalade.consumer.DAO;
 
+import oc.P6.escalade.consumer.DAO.contract.manager.TopoEmpruntDao;
 import oc.P6.escalade.consumer.DAO.contract.manager.commentaire.CommentaireSecteurDao;
 import oc.P6.escalade.consumer.DAO.contract.manager.commentaire.CommentaireSiteDao;
 import oc.P6.escalade.consumer.DAO.contract.manager.commentaire.CommentaireTopoDao;
@@ -24,10 +25,12 @@ public interface DAOFactory {
 	TopoManagerDao getTopoManagerDao();
 	SiteManagerDAO getSiteManagerDao();
 	SecteurManagerDao getSecteurManagerDao();
-	VoieManagerDao getVoieManagerFao();
+	VoieManagerDao getVoieManagerDao();
 	
 	CommentaireTopoDao getCommentaireTopoDao();
 	CommentaireSiteDao getCommentaireSiteDao();
 	CommentaireSecteurDao getCommentaireSecteurDao();
 	CommentaireVoieDao getCommentaireVoieDao();
+	
+	TopoEmpruntDao getTopoEmpruntDao();
 }

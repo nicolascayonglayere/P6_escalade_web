@@ -3,13 +3,10 @@
 <web-app>
   	<display-name>Archetype Created Web Application</display-name>
 
-
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath:/bootstrapContext.xml</param-value>
     </context-param>
-
-
 
 	<filter>
 		<filter-name>struts2</filter-name>

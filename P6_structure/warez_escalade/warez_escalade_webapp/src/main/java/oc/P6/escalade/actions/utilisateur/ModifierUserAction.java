@@ -47,25 +47,55 @@ public class ModifierUserAction extends ActionSupport implements SessionAware {
 	
 	public String execute() {
 		String vResult = "";
-		System.out.println("pseudo : "+utilisateur.getPseudo());
-		//--ctrl du pseudo
-		if (managerFactory.getUtilisateurManager().getUtilisateur(utilisateur.getPseudo()).getPseudo().equals(utilisateur.getPseudo())) {// et si le pseudo actuel != 
-			addFieldError("utilisateur.pseudo", "Veuillez choisir un autre pseudo.");
-			vResult = ActionSupport.INPUT;
-		}
-		else {
-			utilisateur.setId(managerFactory.getUtilisateurManager().getUtilisateur(utilisateur.getPseudo()).getId());
-			managerFactory.getUtilisateurManager().modifierUtilisateur(utilisateur);
-			coordonneeUtilisateur.setUtilisateur(utilisateur);
-			System.out.println(utilisateur.getPseudo()+" - "+ coordonneeUtilisateur.getIdUtilisateur());
-			managerFactory.getCoordonneeUtilisateurManager().modifierCoordonnee(coordonneeUtilisateur);
-			utilisateur = managerFactory.getUtilisateurManager().getUtilisateur(utilisateur.getPseudo());
-			session.put("utilisateur", utilisateur);
-			addActionMessage("Les modifications ont été correctement enregistrées.");
-			vResult = ActionSupport.SUCCESS;
-		}
+		System.out.println("pseudo : "+utilisateur.getPseudo()+" - adresse "+coordonneeUtilisateur.getAdresse()+" - email "+coordonneeUtilisateur.getEmail());
+		System.out.println("email "+managerFactory.getCoordonneeUtilisateurManager().getCoordonnee(
+							managerFactory.getUtilisateurManager().getUtilisateur(utilisateur.getPseudo()).getId()).getEmail());
+		System.out.println("adresse "+managerFactory.getCoordonneeUtilisateurManager().getCoordonnee(
+						managerFactory.getUtilisateurManager().getUtilisateur(utilisateur.getPseudo()).getId()).getAdresse());
+		if (utilisateur.getPseudo().equals(((Utilisateur)session.get("utilisateur")).getPseudo())) {
+			//--si pseudo inchangé, je cherche une modif dans les 3 autres champs : 
+			if ((managerFactory.getCoordonneeUtilisateurManager().getCoordonnee(
+							managerFactory.getUtilisateurManager().getUtilisateur(utilisateur.getPseudo()).getId()).getAdresse().equals(coordonneeUtilisateur.getAdresse()))&&
+					(managerFactory.getUtilisateurManager().getUtilisateur(utilisateur.getPseudo()).getPassword().equals(utilisateur.getPassword()))&&
+					(managerFactory.getCoordonneeUtilisateurManager().getCoordonnee(
+							managerFactory.getUtilisateurManager().getUtilisateur(utilisateur.getPseudo()).getId()).getEmail().equals(coordonneeUtilisateur.getEmail()))) {
+				addActionMessage("Aucunes modifications enregistrées");
+				vResult = ActionSupport.INPUT;
 
-		
+			}
+			else {
+				utilisateur.setId(managerFactory.getUtilisateurManager().getUtilisateur(utilisateur.getPseudo()).getId());
+				utilisateur.setId_Role(managerFactory.getUtilisateurManager().getUtilisateur(utilisateur.getPseudo()).getId_Role());
+				managerFactory.getUtilisateurManager().modifierUtilisateur(utilisateur);
+				coordonneeUtilisateur.setUtilisateur(utilisateur);
+				System.out.println(utilisateur.getPseudo()+" - "+ coordonneeUtilisateur.getIdUtilisateur());
+				managerFactory.getCoordonneeUtilisateurManager().modifierCoordonnee(coordonneeUtilisateur);
+				utilisateur = managerFactory.getUtilisateurManager().getUtilisateur(utilisateur.getPseudo());
+				session.put("utilisateur", utilisateur);
+				addActionMessage("Les modifications ont été correctement enregistrées.");
+				vResult = ActionSupport.SUCCESS;
+
+			}
+		}
+		else {//--si le pseudo a change, on vérifie qu'il n'existe pas deja en base de donnée
+			if(utilisateur.getPseudo().equals(managerFactory.getUtilisateurManager().getUtilisateur(utilisateur.getPseudo()).getPseudo())) {
+				addFieldError("utilisateur.pseudo", "Veuillez choisir un autre pseudo.");
+				vResult = ActionSupport.INPUT;
+			}
+			else {
+				utilisateur.setId(managerFactory.getUtilisateurManager().getUtilisateur(utilisateur.getPseudo()).getId());
+				utilisateur.setId_Role(managerFactory.getUtilisateurManager().getUtilisateur(utilisateur.getPseudo()).getId_Role());
+				managerFactory.getUtilisateurManager().modifierUtilisateur(utilisateur);
+				coordonneeUtilisateur.setUtilisateur(utilisateur);
+				System.out.println(utilisateur.getPseudo()+" - "+ coordonneeUtilisateur.getIdUtilisateur());
+				managerFactory.getCoordonneeUtilisateurManager().modifierCoordonnee(coordonneeUtilisateur);
+				utilisateur = managerFactory.getUtilisateurManager().getUtilisateur(utilisateur.getPseudo());
+				session.put("utilisateur", utilisateur);
+				addActionMessage("Les modifications ont été correctement enregistrées.");
+				vResult = ActionSupport.SUCCESS;
+			}
+		}
+	
 		System.out.println(vResult);
 		return vResult;
 	}

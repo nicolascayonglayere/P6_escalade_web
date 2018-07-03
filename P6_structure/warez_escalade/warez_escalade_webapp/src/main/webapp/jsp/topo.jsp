@@ -26,6 +26,9 @@
 	</head>
 	<body>
 		<%@include file="_include/entete.jsp" %>
+		<s:actionmessage/>
+
+		
 		<div class="container">
 			<div class="row">
 				<div class="col-sm">
@@ -38,7 +41,7 @@
 			
 				</div>
 			</div>
-			<s:actionmessage/>
+
 			<div class="row">
 			    <!-- Caroussel -->
 			    <div id="monCarousel" class="carousel slide col-sm" data-ride="carousel">
@@ -51,11 +54,21 @@
 			      <!-- Diapositives -->
 			      <div class="carousel-inner">
 			        <div class="item active">
-			        	<img src="<s:property value="image"/>"/>
+						<s:set var="imgURL">
+							<s:url action="ImageAction" namespace="/" var="URLtag">
+								<s:param name="imageId" value="imageId"/>
+							</s:url>
+						</s:set>		        
+						<img src="<s:property value="#URLtag" />"/>
 				     </div>
 				     <div class="item">
-				      	<s:iterator value="listImage" var="imgURL">
-				          	<img src="<s:property value="imgURL"/>"/>
+					      <s:iterator value="listImage" var="imageId">
+					      	<s:set var="imgURL">
+								<s:url action="ImageAction" namespace="/" var="URLTag">
+									<s:param name="imageId" value="#imageId"/>
+								</s:url>
+							</s:set>
+				          	<img src="<s:property value="#URLTag"/>"/>
 				      	</s:iterator>
 				     </div>				      	
 			      </div>
@@ -125,10 +138,10 @@
 				<div class="row">
 		
 					<s:form id="commentaireForm" action="commenter" namespace="/">
-						<s:textarea name="commentaire.message" placeholder="commentaire" label="%{getText('form.commentaire')}" requiredLabel="true"  cols="100" rows="10"/>		
+						<s:textarea name="commentaireTopo.message" placeholder="commentaire" label="%{getText('form.commentaire')}" requiredLabel="true"  cols="100" rows="10"/>		
 						<s:submit id="btEnvoi" class="btn btn-default" value="%{getText('bouton.envoi')}">
 			      			<s:param name="nom" value="topo.nomTopo"/>
-			      			<s:param name="message">${commentaire.message}</s:param>
+			      			<s:param name="message">${commentaireTopo.message}</s:param>
 			     		 </s:submit>
 			     		 <s:token/>
 			     	</s:form>

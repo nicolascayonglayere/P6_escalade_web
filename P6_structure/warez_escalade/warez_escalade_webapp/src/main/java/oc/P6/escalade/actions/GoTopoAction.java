@@ -26,7 +26,7 @@ public class GoTopoAction extends ActionSupport {
 	private Secteur secteur;
 	private Site site;
 	private Voie voie;
-	private String image;
+	private String imageId;
 	private ArrayList<Site> listSite;
 	private ArrayList<Secteur> listSecteur;
 	private ArrayList<Voie> listVoie;
@@ -84,11 +84,11 @@ public class GoTopoAction extends ActionSupport {
 		this.listImage = listImage;
 	}
 	
-	public String getImage() {
-		return image;
+	public String getImageId() {
+		return imageId;
 	}
-	public void setImage(String image) {
-		this.image = image;
+	public void setImageId(String imageId) {
+		this.imageId = imageId;
 	}
 	public String[] getListLieux() {
 		return listLieux;
@@ -115,10 +115,10 @@ public class GoTopoAction extends ActionSupport {
 		System.out.println(repertoire.getPath()+" - "+repertoire.isDirectory());//+" - "+repertoire.listFiles().length);
 		listImage = new ArrayList<String>();
 		for (File img : repertoire.listFiles())
-			listImage.add(repertoire.getPath()+"\\"+img.getName());
+			listImage.add(img.getName());//repertoire.getPath()+"\\"+img.getName());
         //System.out.println(topo.getNom());
-		image = listImage.get(0);
-		System.out.println(image);
+		imageId = listImage.get(0);
+		System.out.println(imageId);
         if (topo != null) {
         	listSite = (ArrayList<Site>) managerFactory.getSiteManager().getSite(topo);
         	for (Site s : listSite) {

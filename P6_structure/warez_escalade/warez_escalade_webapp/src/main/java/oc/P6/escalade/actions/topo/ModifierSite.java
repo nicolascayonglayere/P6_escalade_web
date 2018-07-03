@@ -6,7 +6,6 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import oc.P6.escalade.business.contract.ManagerFactory;
 import oc.P6.escalade.model.bean.topo.Site;
-import oc.P6.escalade.model.bean.topo.Topo;
 
 public class ModifierSite extends ActionSupport {
 

@@ -2,6 +2,7 @@ oc\P6\escalade\actions\utilisateur\GestionPretAction.class
 oc\P6\escalade\interceptor\CommentaireInterceptor.class
 oc\P6\escalade\actions\utilisateur\InscriptionAction.class
 oc\P6\escalade\actions\utilisateur\ModifierUserAction.class
+oc\P6\escalade\WebappHelper\EmailUtil.class
 oc\P6\escalade\actions\topo\CreerSecteur.class
 oc\P6\escalade\actions\utilisateur\BanUtilisateurAction.class
 oc\P6\escalade\actions\topo\SupprimerTopo.class
@@ -18,6 +19,7 @@ oc\P6\escalade\actions\topo\CreerVoie.class
 oc\P6\escalade\actions\topo\ModifierTopo.class
 oc\P6\escalade\actions\utilisateur\SupprimerUserAction.class
 oc\P6\escalade\actions\utilisateur\LoginAction.class
+oc\P6\escalade\actions\ContactAction$1.class
 oc\P6\escalade\actions\topo\SelectTopoAction.class
 oc\P6\escalade\actions\topo\RechercheTopo.class
 oc\P6\escalade\actions\topo\SupprimerSecteur.class

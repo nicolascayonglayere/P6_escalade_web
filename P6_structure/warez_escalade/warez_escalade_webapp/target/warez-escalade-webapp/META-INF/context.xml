@@ -8,7 +8,7 @@
               driverClassName="org.postgresql.Driver"
               username="postgres"
               password="ajx6tix"
-              defaultAutoCommit="true"
+              defaultAutoCommit="false"
               defaultTransactionIsolation="READ_COMMITTED"
 
               initialSize="1"

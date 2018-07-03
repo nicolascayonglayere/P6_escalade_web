@@ -19,6 +19,7 @@ public class CreerSecteur extends ActionSupport implements SessionAware {
 	/**
 	 * 
 	 */
+	
 	private static final long serialVersionUID = 1L;
 	@Inject
 	private ManagerFactory managerFactory;	

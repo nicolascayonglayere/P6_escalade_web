@@ -13,6 +13,14 @@
     <!-- Scanne les packages pour trouver les beans qui se déclarent (@Named...) -->
     <context:component-scan base-package="oc.P6.escalade.business.impl"/>
     
+   	<!-- Initialization for data source --> 
+	<bean id="dataSourceP6" class="org.springframework.jndi.JndiObjectFactoryBean">
+	    <property name="jndiName" value="java:comp/env/jdbc/P6_escalade_web_v2"/>
+	</bean>
     
+	<!-- Initialization for TransactionManager -->
+	<bean id="platformTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	    <property name="dataSource" ref="dataSourceP6"/>
+	</bean>    
 
 </beans>

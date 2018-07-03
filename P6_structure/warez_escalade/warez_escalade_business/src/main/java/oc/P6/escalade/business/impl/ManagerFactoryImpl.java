@@ -15,9 +15,6 @@ import oc.P6.escalade.business.contract.manager.topo.TopoManager;
 import oc.P6.escalade.business.contract.manager.topo.VoieManager;
 import oc.P6.escalade.business.contract.manager.utilisateur.CoordonneeUtilisateurManager;
 import oc.P6.escalade.business.contract.manager.utilisateur.UtilisateurManager;
-import oc.P6.escalade.business.impl.manager.utilisateur.UtilisateurManagerImpl;
-
-
 
 
 /**

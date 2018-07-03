@@ -2,22 +2,28 @@ package oc.P6.escalade.business.impl.manager;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import oc.P6.escalade.business.contract.manager.AbstractDAOManager;
 import oc.P6.escalade.business.contract.manager.TopoEmpruntManager;
-import oc.P6.escalade.consumer.DAO.impl.manager.TopoEmpruntDaoImpl;
-import oc.P6.escalade.consumer.DAO.impl.manager.topo.TopoDaoImpl;
-import oc.P6.escalade.consumer.DAO.impl.manager.utilisateur.UtilisateurDaoImpl;
+import oc.P6.escalade.consumer.DAO.DAOFactory;
+import oc.P6.escalade.consumer.DAO.contract.manager.TopoEmpruntDao;
+import oc.P6.escalade.consumer.DAO.contract.manager.topo.TopoManagerDao;
+import oc.P6.escalade.consumer.DAO.contract.manager.utilisateur.UtilisateurManagerDAO;
 import oc.P6.escalade.model.bean.emprunt.TopoEmprunt;
-import oc.P6.escalade.model.bean.impl.ModelManagerFactoryImpl;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
+import oc.P6.escalade.model.contract.emprunt.IntTopoEmprunt;
 
 /**
  * Implémentation de {@link TopoEmpruntManager}
@@ -26,21 +32,18 @@ import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
  */
 @Named
 public class TopoEmpruntManagerImpl extends AbstractDAOManager implements TopoEmpruntManager{
+ 	
 	@Inject
-	private ModelManagerFactoryImpl modelManagerFactoryImpl; 
-	
+	private IntTopoEmprunt topoEmprunt;
 	@Inject
-	private TopoEmprunt topoEmprunt;
-	
+	private DAOFactory daoFactory;
+
+	private TopoEmpruntDao topoEmpruntDao;
+	private TopoManagerDao topoDAO;
+	private UtilisateurManagerDAO userDAO;
+
 	@Inject
-	private TopoEmpruntDaoImpl topoEmpruntDao;
-	
-	@Inject
-	private TopoDaoImpl topoDAO;
-	
-	@Inject
-	private UtilisateurDaoImpl userDAO;
-	
+	@Named("platformTransactionManager")
 	private PlatformTransactionManager platformTransactionManager;
 	
 	/**
@@ -48,7 +51,21 @@ public class TopoEmpruntManagerImpl extends AbstractDAOManager implements TopoEm
 	 */
 	@Override
 	public ArrayList<TopoEmprunt> getListTopoEmprunt(int pId_utilisateur) {
-		ArrayList<TopoEmprunt> listTopoEmprunt = topoEmpruntDao.getListTopoEmprunt(pId_utilisateur);
+		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
+		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+		vDefinition.setTimeout(30); // 30 secondes
+        TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
+		topoEmpruntDao = daoFactory.getTopoEmpruntDao();
+		ArrayList<TopoEmprunt> listTopoEmprunt = new ArrayList<TopoEmprunt>();
+		try {
+			 listTopoEmprunt = topoEmpruntDao.getListTopoEmprunt(pId_utilisateur);
+			TransactionStatus vTScommit = vTransactionStatus;
+			vTransactionStatus = null;
+			platformTransactionManager.commit(vTScommit);
+		}finally {
+			if (vTransactionStatus != null) 
+				platformTransactionManager.rollback(vTransactionStatus); 			
+		}
 		return listTopoEmprunt;
 	}
 
@@ -57,20 +74,35 @@ public class TopoEmpruntManagerImpl extends AbstractDAOManager implements TopoEm
 	 */
 	@Override
 	public TopoEmprunt getTopoEmprunt(String pNom, Utilisateur pEmprunteur) {
+		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
+		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+		vDefinition.setTimeout(30); // 30 secondes
+        TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
+		topoEmpruntDao = daoFactory.getTopoEmpruntDao();
+		topoDAO = daoFactory.getTopoManagerDao();
 		System.out.println("topo : "+topoDAO.find(pNom).getNomTopo()+" - "+topoDAO.find(pNom).getId());
-		Calendar cal = Calendar.getInstance();
+		//Calendar cal = Calendar.getInstance();
 		Topo vTopo = topoDAO.find(pNom);
-    	if(topoEmpruntDao.find(vTopo.getId(), pEmprunteur.getId()) != null) { 
-    			topoEmprunt.setNom(pNom);
+    	if(topoEmpruntDao.find(vTopo.getId(), pEmprunteur.getId()) != null) {
+    		try {
+    		//	topoEmprunt.setNom(pNom);
     			System.out.println("topoEmp id : "+topoEmpruntDao.find(vTopo.getId(), pEmprunteur.getId()).getId());
-    			topoEmprunt.setId(topoEmpruntDao.find(vTopo.getId(), pEmprunteur.getId()).getId());
-    			topoEmprunt.setDateEmprunt(topoEmpruntDao.find(vTopo.getId(), pEmprunteur.getId()).getDateEmprunt());
-    			topoEmprunt.setEmprunteur(topoEmpruntDao.find(vTopo.getId(), pEmprunteur.getId()).getEmprunteur());
-    			cal.setTime(cal.getTime());
-    			cal.add(Calendar.DATE, 20);
-    			topoEmprunt.setDateRetour(cal.getTime());
-    			topoEmprunt.setTopo(vTopo);
+    		//topoEmprunt.setId(topoEmpruntDao.find(vTopo.getId(), pEmprunteur.getId()).getId());
+    		//topoEmprunt.setDateEmprunt(topoEmpruntDao.find(vTopo.getId(), pEmprunteur.getId()).getDateEmprunt());
+    		//topoEmprunt.setEmprunteur(topoEmpruntDao.find(vTopo.getId(), pEmprunteur.getId()).getEmprunteur());
+    		//cal.setTime(cal.getTime());
+    		//cal.add(Calendar.DATE, 20);
+    		//topoEmprunt.setDateRetour(cal.getTime());
+    		//topoEmprunt.setTopo(vTopo);
+    			topoEmprunt = topoEmpruntDao.find(vTopo.getId(), pEmprunteur.getId());
     			System.out.println("CTRL "+topoEmprunt.getNom()+" - "+topoEmprunt.getEmprunteur().getPseudo()+" - "+topoEmprunt.getTopo().getNomTopo());
+    			TransactionStatus vTScommit = vTransactionStatus;
+    			vTransactionStatus = null;
+    			platformTransactionManager.commit(vTScommit);
+    		}finally {
+    			if (vTransactionStatus != null) 
+    				platformTransactionManager.rollback(vTransactionStatus); 			
+    		}
     	} 
     	else {
 			try {
@@ -83,7 +115,7 @@ public class TopoEmpruntManagerImpl extends AbstractDAOManager implements TopoEm
 			}
     	}
     	
-    	return topoEmprunt;
+    	return (TopoEmprunt) topoEmprunt;
 	}
 
 	/**
@@ -91,20 +123,35 @@ public class TopoEmpruntManagerImpl extends AbstractDAOManager implements TopoEm
 	 */
 	@Override
 	public void creerTopoEmprunt(Topo topo, Utilisateur pEmprunteur) {
+		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
+		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+		vDefinition.setTimeout(30); // 30 secondes
+        TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
+		topoEmpruntDao = daoFactory.getTopoEmpruntDao();
+		topoDAO = daoFactory.getTopoManagerDao();
+		userDAO = daoFactory.getUtilisateurManagerDAO();
 		System.out.println(topo.getNomTopo()+" - "+pEmprunteur.getPseudo());
-
+		
 		if (topoDAO.find(topo.getNomTopo()) != null && userDAO.find(pEmprunteur.getPseudo())!= null) {
-			Calendar cal = Calendar.getInstance();
-			System.out.println(cal.getTime());
-			//cal.setTime((Date)System.currentTimeMillis());
-			topoEmprunt = (TopoEmprunt) modelManagerFactoryImpl.getTopoEmprunt();
-			topoEmprunt.setDateEmprunt(cal.getTime());
-			cal.add(Calendar.DATE, 20);
-			topoEmprunt.setEmprunteur(pEmprunteur);
-			topoEmprunt.setTopo(topo);
-			topoEmprunt.setDateRetour(cal.getTime());
-			topoEmprunt.setNom(topo.getNomTopo());
-			topoEmpruntDao.create(topoEmprunt);
+			try {
+				Calendar cal = Calendar.getInstance();
+				System.out.println(cal.getTime());
+				ApplicationContext context = new ClassPathXmlApplicationContext("bootstrapContext.xml");
+				topoEmprunt = (IntTopoEmprunt) context.getBean("topoEmprunt");
+				topoEmprunt.setDateEmprunt(cal.getTime());
+				cal.add(Calendar.DATE, 20);
+				topoEmprunt.setEmprunteur(pEmprunteur);
+				topoEmprunt.setTopo(topo);
+				topoEmprunt.setDateRetour(cal.getTime());
+				topoEmprunt.setNom(topo.getNomTopo());
+				topoEmpruntDao.create((TopoEmprunt) topoEmprunt);
+    			TransactionStatus vTScommit = vTransactionStatus;
+    			vTransactionStatus = null;
+    			platformTransactionManager.commit(vTScommit);
+    		}finally {
+    			if (vTransactionStatus != null) 
+    				platformTransactionManager.rollback(vTransactionStatus); 			
+    		}
 		}
 		
 	}
@@ -120,17 +167,32 @@ public class TopoEmpruntManagerImpl extends AbstractDAOManager implements TopoEm
 	 */
 	@Override
 	public void retourTopoEmprunt(TopoEmprunt pTopoEmprunt, Utilisateur pEmprunteur) {
+		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
+		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+		vDefinition.setTimeout(30); // 30 secondes
+        TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
+		topoEmpruntDao = daoFactory.getTopoEmpruntDao();
+		topoDAO = daoFactory.getTopoManagerDao();
+		userDAO = daoFactory.getUtilisateurManagerDAO();
 		int idTopo = topoDAO.find(pTopoEmprunt.getNom()).getId();
 		int idEmprunteur = userDAO.find(pEmprunteur.getPseudo()).getId();
 		Calendar cal = Calendar.getInstance();
 		System.out.println(pTopoEmprunt.getNom()+" - "+pEmprunteur.getPseudo()+" - "+topoEmpruntDao.find(idTopo, idEmprunteur).getId());
 		if (topoEmpruntDao.find(idTopo, idEmprunteur) != null) {
-			pTopoEmprunt.setId(topoEmpruntDao.find(idTopo, idEmprunteur).getId());
-			pTopoEmprunt.setDateRetour(cal.getTime());
-			pTopoEmprunt.setEmprunteur(pEmprunteur);
-			pTopoEmprunt.setTopo(pTopoEmprunt.getTopo());
-			pTopoEmprunt.setNom(pTopoEmprunt.getNom());
-			topoEmpruntDao.delete(pTopoEmprunt);
+			try {
+				pTopoEmprunt.setId(topoEmpruntDao.find(idTopo, idEmprunteur).getId());
+				pTopoEmprunt.setDateRetour(cal.getTime());
+				pTopoEmprunt.setEmprunteur(pEmprunteur);
+				pTopoEmprunt.setTopo(pTopoEmprunt.getTopo());
+				pTopoEmprunt.setNom(pTopoEmprunt.getNom());
+				topoEmpruntDao.delete(pTopoEmprunt);
+    			TransactionStatus vTScommit = vTransactionStatus;
+    			vTransactionStatus = null;
+    			platformTransactionManager.commit(vTScommit);
+    		}finally {
+    			if (vTransactionStatus != null) 
+    				platformTransactionManager.rollback(vTransactionStatus); 			
+    		}
 		}
 		
 	}
@@ -140,9 +202,48 @@ public class TopoEmpruntManagerImpl extends AbstractDAOManager implements TopoEm
 	 */
 	@Override
 	public int getNbExemplaire(Topo pTopo) {
-		int nbEx = topoDAO.find(pTopo.getNomTopo()).getNbreEx() - topoEmpruntDao.getListTopoEmprunt(pTopo).size();
-		System.out.println("nbre ex : "+topoDAO.find(pTopo.getNomTopo()).getNbreEx()+" - "+topoEmpruntDao.getListTopoEmprunt(pTopo).size());
+		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
+		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+		vDefinition.setTimeout(30); // 30 secondes
+        TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
+		topoEmpruntDao = daoFactory.getTopoEmpruntDao();
+		topoDAO = daoFactory.getTopoManagerDao();
+		int nbEx;
+		try {
+			nbEx = topoDAO.find(pTopo.getNomTopo()).getNbreEx() - topoEmpruntDao.getListTopoEmprunt(pTopo).size();
+			System.out.println("nbre ex : "+topoDAO.find(pTopo.getNomTopo()).getNbreEx()+" - "+topoEmpruntDao.getListTopoEmprunt(pTopo).size());
+   			TransactionStatus vTScommit = vTransactionStatus;
+			vTransactionStatus = null;
+			platformTransactionManager.commit(vTScommit);
+		}finally {
+			if (vTransactionStatus != null) 
+				platformTransactionManager.rollback(vTransactionStatus); 			
+		}
 		return nbEx;
+	}
+
+	public PlatformTransactionManager getPlatformTransactionManager() {
+		return platformTransactionManager;
+	}
+
+	public void setPlatformTransactionManager(PlatformTransactionManager platformTransactionManager) {
+		this.platformTransactionManager = platformTransactionManager;
+	}
+
+	public IntTopoEmprunt getTopoEmprunt() {
+		return topoEmprunt;
+	}
+
+	public void setTopoEmprunt(IntTopoEmprunt topoEmprunt) {
+		this.topoEmprunt = topoEmprunt;
+	}
+
+	public DAOFactory getDaoFactory() {
+		return daoFactory;
+	}
+
+	public void setDaoFactory(DAOFactory daoFactory) {
+		this.daoFactory = daoFactory;
 	}
 
 }

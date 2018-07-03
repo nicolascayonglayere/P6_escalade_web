@@ -4,6 +4,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import oc.P6.escalade.consumer.DAO.DAOFactory;
+import oc.P6.escalade.consumer.DAO.contract.manager.TopoEmpruntDao;
 import oc.P6.escalade.consumer.DAO.contract.manager.commentaire.CommentaireSecteurDao;
 import oc.P6.escalade.consumer.DAO.contract.manager.commentaire.CommentaireSiteDao;
 import oc.P6.escalade.consumer.DAO.contract.manager.commentaire.CommentaireTopoDao;
@@ -53,7 +54,7 @@ public class DAOFactoryImpl implements DAOFactory {
 	@Inject
 	private VoieManagerDao voieManagerDao;
 	@Override
-	public VoieManagerDao getVoieManagerFao() {
+	public VoieManagerDao getVoieManagerDao() {
 		return this.voieManagerDao;
 	}
 	
@@ -90,6 +91,13 @@ public class DAOFactoryImpl implements DAOFactory {
 	@Override
 	public CoordonneeUtilisateurDao getCoordonneeUtilisateurDao() {
 		return this.coordonneeUtilisateurDao;
+	}
+
+	@Inject
+	private TopoEmpruntDao topoEmpruntDao;
+	@Override
+	public TopoEmpruntDao getTopoEmpruntDao() {
+		return this.topoEmpruntDao;		
 	}
 
 }

@@ -3,7 +3,6 @@ package oc.P6.escalade.WebappHelper;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import oc.P6.escalade.business.contract.ManagerFactory;
 import oc.P6.escalade.business.impl.ManagerFactoryImpl;
 
 @Named

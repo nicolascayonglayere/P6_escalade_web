@@ -12,7 +12,6 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.stereotype.Repository;
 
 import oc.P6.escalade.consumer.DAO.contract.manager.utilisateur.UtilisateurManagerDAO;
 import oc.P6.escalade.consumer.DAO.impl.manager.AbstractDAO;
@@ -23,7 +22,7 @@ import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManagerDAO  {
 
     @Inject
-	RowMapper<Utilisateur> vRowMapper;
+	UtilisateurRowMapper vRowMapper;
 
 	@Override
 	public boolean create(Utilisateur pUtilisateur) {

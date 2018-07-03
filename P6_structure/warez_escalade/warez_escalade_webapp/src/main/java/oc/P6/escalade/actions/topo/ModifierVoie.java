@@ -23,6 +23,7 @@ public class ModifierVoie extends ActionSupport {
 	
 	public String execute() {
 		System.out.println(nom+" - "+nomTopo);
+		
 		Topo topo = managerFactory.getTopoManager().getTopo(nomTopo);
 		Site site = managerFactory.getSiteManager().getSite(nomSite, topo);
 		Secteur secteur = managerFactory.getSecteurManager().getSecteur(nomSecteur, site);
@@ -32,6 +33,7 @@ public class ModifierVoie extends ActionSupport {
 		addActionMessage("La voie "+voie.getNomVoie()+"a bien été modifiée.");
 		return ActionSupport.SUCCESS;	
 	}
+	//--methode input
 	
 	public ManagerFactory getManagerFactory() {
 		return managerFactory;

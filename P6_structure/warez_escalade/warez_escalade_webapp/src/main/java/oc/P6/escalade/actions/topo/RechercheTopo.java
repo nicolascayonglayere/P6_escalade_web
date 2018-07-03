@@ -25,6 +25,7 @@ public class RechercheTopo extends ActionSupport {
 	private ArrayList<Site> listSite = new ArrayList<Site>();
 	private ArrayList<Secteur> listSecteur = new ArrayList<Secteur>();
 	private ArrayList<Voie>listVoie = new ArrayList<Voie>();
+	private String nomTopo;
 	
 	
 	public String execute() {
@@ -85,6 +86,14 @@ public class RechercheTopo extends ActionSupport {
 
 	public void setListVoie(ArrayList<Voie> listVoie) {
 		this.listVoie = listVoie;
+	}
+
+	public String getNomTopo() {
+		return nomTopo;
+	}
+
+	public void setNomTopo(String nomTopo) {
+		this.nomTopo = nomTopo;
 	}
 	
 	
