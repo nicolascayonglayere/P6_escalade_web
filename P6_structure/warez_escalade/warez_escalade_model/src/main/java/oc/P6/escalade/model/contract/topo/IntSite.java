@@ -15,7 +15,5 @@ public interface IntSite {
 	
 	Topo getTopo();
 	void setTopo(Topo pTopo);
-	
-	String getImage();
-	void setImage(String pImage);
+
 }

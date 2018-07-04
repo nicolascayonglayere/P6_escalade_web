@@ -81,14 +81,7 @@ public class VoieManagerImpl extends AbstractDAOManager implements VoieManager{
 		}
 		else {
 			try {
-				voie.setCotation(pVoie.getCotation());
-				voie.setDescription(pVoie.getDescription());
-				voie.setHauteur(pVoie.getHauteur());
-				voie.setNbLgueur(pVoie.getNbLgueur());
-				voie.setNbPoint(pVoie.getNbPoint());
-				voie.setNomVoie(pVoie.getNomVoie());
-				voie.setSecteur(pVoie.getSecteur());
-				voieDao.create((Voie)voie);
+				voieDao.create(pVoie);
 				
 			    TransactionStatus vTScommit = vTransactionStatus;
 			    vTransactionStatus = null;

@@ -169,7 +169,7 @@ NOT DEFERRABLE;
 ALTER TABLE public.coordonnee_utilisateur ADD CONSTRAINT utilisateur_coordonnee_utilisateur_fk
 FOREIGN KEY (id_utilisateur)
 REFERENCES public.utilisateur (id_utilisateur)
-ON DELETE NO ACTION
+ON DELETE CASCADE
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 

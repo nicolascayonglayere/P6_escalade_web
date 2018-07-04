@@ -67,6 +67,8 @@
 	    		</s:a>				
 			</s:elseif>
 			
+			<!-- un recap des topo en cours de creation -->
+			
 			<!-- un tab recapitulatif des topos emrpuntés (historique tot ou partiel ?)-->
 			<table class="table table-bordered table-striped">
 				<thead>

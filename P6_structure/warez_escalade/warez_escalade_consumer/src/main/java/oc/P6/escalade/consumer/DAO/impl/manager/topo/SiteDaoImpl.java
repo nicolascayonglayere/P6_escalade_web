@@ -26,7 +26,7 @@ public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 
 	@Override
 	public boolean create(Site pSite) {
-		String vSQL = "INSERT INTO site (nom, description, id_topo, image) VALUES (:nom, :description, :id_topo, :image)";
+		String vSQL = "INSERT INTO site (nom, description, id_topo) VALUES (:nom, :description, :id_topo)";
 		Topo topo = topoDAO.find(pSite.getTopo().getNomTopo());
 	
 
@@ -35,7 +35,6 @@ public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 		vParams.addValue("nom", pSite.getNomSite(), Types.VARCHAR);
 		vParams.addValue("description", pSite.getDescription(), Types.LONGVARCHAR);
 		vParams.addValue("id_topo", topo.getId(), Types.INTEGER);
-		vParams.addValue("image", pSite.getImage(), Types.VARCHAR);
 
 	    
 	    try {
@@ -70,15 +69,13 @@ public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 
 	@Override
 	public boolean update(Site pSite) {
-		String vSQL = "UPDATE site SET nom = :nom, description = :description, id_topo = :id_topo, image = :image"
-				+ "WHERE id_site = :id_site";
+		String vSQL = "UPDATE site SET nom = :nom, description = :description, id_topo = :id_topo WHERE id_site = :id_site";
 
 	
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
 		vParams.addValue("nom", pSite.getNomSite(), Types.VARCHAR);
 		vParams.addValue("description", pSite.getDescription(), Types.LONGVARCHAR);
-		vParams.addValue("image", pSite.getImage(), Types.VARCHAR);
 		vParams.addValue("id_topo", pSite.getTopo().getId(), Types.INTEGER);
 	
 	    

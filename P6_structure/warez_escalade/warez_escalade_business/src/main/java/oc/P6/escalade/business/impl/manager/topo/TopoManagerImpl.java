@@ -1,5 +1,9 @@
 package oc.P6.escalade.business.impl.manager.topo;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import javax.inject.Inject;
@@ -84,6 +88,7 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 		}	
 		else
 			try {
+				topo = null;
 				throw new Exception ("Le topo n'existe pas.");
 			}catch (Exception e) {
 				e.printStackTrace();
@@ -112,14 +117,16 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 		}
 		else {
 			try {
-				topo.setNomTopo(pTopo.getNomTopo());
-				topo.setAuteur(pTopo.getAuteur());
-				topo.setNbreEx(pTopo.getNbreEx());
-				topo.setDescription(pTopo.getDescription());
-				topo.setLatitude(pTopo.getLatitude());
-				topo.setLongitude(pTopo.getLongitude());
-				topo.setImage(pTopo.getNomTopo().replaceAll("\\p{Space}", ""));
-				topoDAO.create((Topo)topo);
+				pTopo.setImage(pTopo.getNomTopo().replaceAll("\\p{Space}", ""));
+				Path chemin = Paths.get("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\"+pTopo.getImage());
+				try {
+					Files.createDirectories(chemin);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				pTopo.setConstruction(true);
+				topoDAO.create(pTopo);
 				
 			    TransactionStatus vTScommit = vTransactionStatus;
 			    vTransactionStatus = null;
@@ -153,14 +160,8 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 		}
 		else {
 			try {
-				topo.setId(topoDAO.find(pTopo.getNomTopo()).getId());
-				topo.setNomTopo(pTopo.getNomTopo());
-				topo.setAuteur(pTopo.getAuteur());
-				topo.setNbreEx(pTopo.getNbreEx());
-				topo.setDescription(pTopo.getDescription());
-				topo.setLatitude(pTopo.getLatitude());
-				topo.setLongitude(pTopo.getLongitude());
-				topo.setImage(pTopo.getNomTopo().replaceAll("\\p{Space}", ""));
+				pTopo.setId(topoDAO.find(pTopo.getNomTopo()).getId());
+				pTopo.setConstruction(false);
 				topoDAO.update((Topo)topo);
 				
 			    TransactionStatus vTScommit = vTransactionStatus;

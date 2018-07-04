@@ -21,7 +21,9 @@ public class Topo implements IntTopo{
 	private double latitude;
 	private String description;
 	private int nbreEx;
+	private boolean construction;
 	private int nombreSite, nombreSecteur, nombreVoie;
+	
 	
 	/**
 	 * Constructeur
@@ -127,6 +129,16 @@ public class Topo implements IntTopo{
 	public void setNomTopo(String pNom) {
 		this.nomTopo = pNom;
 		
+	}
+
+	@Override
+	public boolean getConstruction() {
+		return this.construction;
+	}
+
+	@Override
+	public void setConstruction(boolean pConstruction) {
+		this.construction = pConstruction;
 	}
 	
 	

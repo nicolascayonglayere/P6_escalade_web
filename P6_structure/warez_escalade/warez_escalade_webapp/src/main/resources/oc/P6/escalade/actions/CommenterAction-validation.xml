@@ -8,7 +8,7 @@
         	<message key="required.pseudo"/>
         </field-validator>
     </field>    
-    <field name="commentaire.message">
+    <field name="commentaireTopo.message">
         <field-validator type="requiredstring" short-circuit="true">
         	<message key="required.commentaire"/>
         </field-validator>

@@ -16,7 +16,6 @@ public class Site implements IntSite{
 	private String nomSite;
 	private Topo topo;
 	private String description;
-	private String image;
 	
 	/**
 	 * Constructeurs
@@ -31,36 +30,34 @@ public class Site implements IntSite{
 	 * Getter et Setter
 	 * @return
 	 */
+	@Override
 	public int getId() {
 		return id;
 	}
 
+	@Override
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	@Override
 	public Topo getTopo() {
 		return topo;
 	}
 
+	@Override
 	public void setTopo(Topo topo) {
 		this.topo = topo;
 	}
 
+	@Override
 	public String getDescription() {
 		return description;
 	}
-
+	
+	@Override
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public String getImage() {
-		return image;
-	}
-
-	public void setImage(String image) {
-		this.image = image;
 	}
 
 	@Override

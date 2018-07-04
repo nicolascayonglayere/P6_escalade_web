@@ -1,5 +1,6 @@
 package oc.P6.escalade.actions.topo;
 
+import java.io.File;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -23,6 +24,7 @@ public class CreerTopo extends ActionSupport implements SessionAware{
 	private Topo topo;
 	private Utilisateur utilisateur;
 	private Map<String, Object>session;
+	private File fichierImage;
 	
 	public Topo getTopo() {
 		return topo;
@@ -39,13 +41,22 @@ public class CreerTopo extends ActionSupport implements SessionAware{
 	}
 	
 	public String execute() {
+		System.out.println("trace");
 		utilisateur=(Utilisateur)session.get("utilisateur");
-		topo.setAuteur(utilisateur);
-		System.out.println(topo.getNomTopo()+" - "+topo.getAuteur().getPseudo());
-		managerFactory.getTopoManager().creerTopo(topo);
-		addActionMessage("Le topo "+topo.getNomTopo()+" a bien été crée.");
-		session.put("topo", topo);
-		return ActionSupport.SUCCESS;
+
+		System.out.println(topo.getNomTopo());
+		if (managerFactory.getTopoManager().getTopo(topo.getNomTopo()) != null) {
+			addActionMessage("Le topo "+topo.getNomTopo()+" existe déja.");
+			return ActionSupport.INPUT;
+		}
+		else {
+			topo.setAuteur(utilisateur);
+			managerFactory.getTopoManager().creerTopo(topo);
+			addActionMessage("Le topo "+topo.getNomTopo()+" a bien été crée.");
+			session.put("topo", topo);
+			return ActionSupport.SUCCESS;		
+		}
+
 	}
 	@Override
 	public void setSession(Map<String, Object> session) {
@@ -57,5 +68,11 @@ public class CreerTopo extends ActionSupport implements SessionAware{
 	}
 	public void setManagerFactory(ManagerFactory managerFactory) {
 		this.managerFactory = managerFactory;
+	}
+	public File getFichierImage() {
+		return fichierImage;
+	}
+	public void setFichierImage(File fichierImage) {
+		this.fichierImage = fichierImage;
 	}
 }

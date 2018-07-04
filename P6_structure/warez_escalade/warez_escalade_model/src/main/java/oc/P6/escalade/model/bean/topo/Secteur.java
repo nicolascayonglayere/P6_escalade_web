@@ -30,34 +30,35 @@ public class Secteur implements IntSecteur {
 		 * Getter et Setter
 		 * @return
 		 */
+		@Override
 		public int getId() {
 			return id;
 		}
-
+		@Override
 		public void setId(int id) {
 			this.id = id;
 		}
-
+		@Override
 		public Site getSite() {
 			return site;
 		}
-
+		@Override
 		public void setSite(Site site) {
 			this.site = site;
 		}
-
+		@Override
 		public String getDescription() {
 			return description;
 		}
-
+		@Override
 		public void setDescription(String description) {
 			this.description = description;
 		}
-
+		@Override
 		public String getImage() {
 			return image;
 		}
-
+		@Override
 		public void setImage(String image) {
 			this.image = image;
 		}

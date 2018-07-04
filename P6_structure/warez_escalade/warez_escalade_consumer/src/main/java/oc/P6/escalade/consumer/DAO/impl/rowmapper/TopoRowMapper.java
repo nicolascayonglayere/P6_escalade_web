@@ -27,6 +27,7 @@ public class TopoRowMapper implements RowMapper<Topo> {
 		vTopo.setLatitude(rs.getDouble("latitude"));
 		vTopo.setDescription(rs.getString("description"));
 		vTopo.setNbreEx(rs.getInt("nombre_exemplaires"));
+		vTopo.setConstruction(rs.getBoolean("construction"));
 		return vTopo;
 	}
 

@@ -30,7 +30,7 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 	
 	@Override
 	public boolean create(Topo pTopo) {
-		String vSQL = "INSERT INTO topo (nom, id_utilisateur, nombre_exemplaires, description, longitude, latitude, image) VALUES (:nom, :id, :nbreEx, :description, :longitude, :latitude, :image)";
+		String vSQL = "INSERT INTO topo (nom, id_utilisateur, nombre_exemplaires, description, longitude, latitude, image, construction) VALUES (:nom, :id, :nbreEx, :description, :longitude, :latitude, :image, :construction)";
 		Utilisateur auteur = daoFacto.getUtilisateurManagerDAO().find(pTopo.getAuteur().getPseudo());
 		
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
@@ -42,6 +42,7 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 		vParams.addValue("longitude", pTopo.getLongitude(), Types.DECIMAL);
 		vParams.addValue("latitude", pTopo.getLatitude(), Types.DECIMAL);
 		vParams.addValue("image", pTopo.getImage(), Types.VARCHAR);
+		vParams.addValue("construction", pTopo.getConstruction(), Types.BOOLEAN);
 
 	    
 	    try {
@@ -77,8 +78,8 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 
 	@Override
 	public boolean update(Topo pTopo) {
-		String vSQL = "UPDATE topo SET nom = :nom, id_utilisateur = :id, nombre_exemplaires = :nbreEx, description = :description, longitude = :longitude, latitude = :latitude, image = :image"
-					+ "WHERE id_topo = :id_topo";
+		String vSQL = "UPDATE topo SET nom = :nom, id_utilisateur = :id, nombre_exemplaires = :nbreEx, description = :description, longitude = :longitude, latitude = :latitude, image = :image "
+					+ " WHERE id_topo = :id_topo";
 		Utilisateur auteur = daoFacto.getUtilisateurManagerDAO().find(pTopo.getAuteur().getPseudo());
 		
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
@@ -91,7 +92,7 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 		vParams.addValue("latitude", pTopo.getLatitude(), Types.DECIMAL);
 		vParams.addValue("image", pTopo.getImage(), Types.VARCHAR);
 		vParams.addValue("id_topo", pTopo.getId(), Types.INTEGER);
-
+		vParams.addValue("construction", pTopo.getConstruction(), Types.BOOLEAN);
 	    
 	    try {
 	        vJdbcTemplate.update(vSQL, vParams);

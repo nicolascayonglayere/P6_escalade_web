@@ -3,7 +3,12 @@
 		"http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd">
 
 <validators>
-    <field name="topo.nom">
+    <field name="secteur.nomSecteur">
+        <field-validator type="requiredstring">
+        	<message key="required.nomSecteur"/>
+        </field-validator>
+    </field>
+    <field name="topo.nomTopo">
         <field-validator type="requiredstring">
         	<message key="required.nomTopo"/>
         </field-validator>

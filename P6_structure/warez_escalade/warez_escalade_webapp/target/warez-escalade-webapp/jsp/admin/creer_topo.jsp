@@ -27,14 +27,16 @@
 				<s:textfield name="topo.description" placeholder="description" label="%{getText('form.description')}" requiredLabel="false"/>
 				<s:textfield name="topo.longitude" placeholder="longitude" label="%{getText('form.longitude')}" requiredLabel="true"/>
 				<s:textfield name="topo.latitude" placeholder="latitude" label="%{getText('form.latitude')}" requiredLabel="true"/>
+				<s:file name="fichierImage" label="Selectionner une image à upload" requiredLabel="false" />
 				<s:submit class="btn btn-default" value="%{getText('bouton.valider')}">
       				<s:param name="nom">${topo.nomTopo}</s:param>
       				<s:param name="nbreEx">${topo.nbreEx}</s:param>
       				<s:param name="description">${topo.description}</s:param>
       				<s:param name="longitude">${topo.longitude}</s:param>
       				<s:param name="latitude">${topo.latitude}</s:param>
+      				<s:param name="fichierImage">${fichierImage }</s:param>
      			 </s:submit>
-     			 <s:token/>
+				 <s:token/>
 			</s:form>
 						
 		</div>

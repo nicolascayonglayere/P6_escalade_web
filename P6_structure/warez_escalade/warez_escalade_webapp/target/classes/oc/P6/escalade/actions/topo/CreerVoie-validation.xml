@@ -17,7 +17,7 @@
         	<message key="invalid.hauteur"/>
         </field-validator>
     </field>
-    <field name="voie.nbLongueur">
+    <field name="voie.nbLgueur">
         <field-validator type="required" short-circuit="true">
         	<message key="required.nbLongueur"/>
         </field-validator>
@@ -35,19 +35,19 @@
         	<message key="invalid.nbPoint"/>
         </field-validator>        
     </field>     
-    <field name="secteur.nom" >
+    <!--  <field name="secteur.nomSecteur" >
         <field-validator type="requiredstring" short-circuit="true">
         	<message key="required.nomSecteur"/>
         </field-validator>
     </field>    
-    <field name="site.nom">
+    <field name="site.nomSite">
         <field-validator type="requiredstring" short-circuit="true">
         	<message key="required.nomSite"/>
         </field-validator>
     </field> 
-    <field name="topo.nom">
+    <field name="topo.nomTopo">
         <field-validator type="requiredstring" short-circuit="true">
         	<message key="required.nomTopo"/>
         </field-validator>
-    </field>    
+    </field> -->   
 </validators>

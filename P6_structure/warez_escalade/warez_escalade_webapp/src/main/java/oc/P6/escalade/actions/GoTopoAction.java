@@ -116,19 +116,20 @@ public class GoTopoAction extends ActionSupport {
 		//--recupe le nom du topo dans la requete
 		System.out.println(nom);
 		topo = (Topo) managerFactory.getTopoManager().getTopo(nom);
-		repoId = topo.getImage();
-		//System.out.println(topo.getImage());
- 		//File repertoire = new File("webapp\\assets\\images\\"+topo.getImage());
-		File repertoire = new File("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\"+topo.getImage());//
-		//System.out.println(repertoire.getPath()+" - "+repertoire.isDirectory());//+" - "+repertoire.listFiles().length);
-		listImage = new ArrayList<String>();
-		for (File img : repertoire.listFiles())
-			listImage.add(repoId+"\\"+img.getName());//repertoire.getPath()+"\\"+img.getName());
-        //System.out.println(topo.getNom());
-		imageId = listImage.get(0);
-		
-		//System.out.println(imageId);
         if (topo != null) {
+    		repoId = topo.getImage();
+    		//System.out.println(topo.getImage());
+     		//File repertoire = new File("webapp\\assets\\images\\"+topo.getImage());
+    		File repertoire = new File("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\"+topo.getImage());//
+    		//System.out.println(repertoire.getPath()+" - "+repertoire.isDirectory());//+" - "+repertoire.listFiles().length);
+    		listImage = new ArrayList<String>();
+    		if((repertoire.listFiles()).length > 0) {
+    			for (File img : repertoire.listFiles())
+    				listImage.add(repoId+"\\"+img.getName());//repertoire.getPath()+"\\"+img.getName());
+    	        //System.out.println(topo.getNom());
+    			imageId = listImage.get(0);
+    		}
+    		//System.out.println(imageId);        	
         	listSite = (ArrayList<Site>) managerFactory.getSiteManager().getSite(topo);
         	for (Site s : listSite) {
         		listSecteur = (ArrayList<Secteur>) managerFactory.getSecteurManager().getListSecteur(s);

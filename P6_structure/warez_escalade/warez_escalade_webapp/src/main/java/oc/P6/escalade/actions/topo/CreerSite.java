@@ -38,8 +38,6 @@ public class CreerSite extends ActionSupport implements SessionAware {
 	public void setSite(Site site) {
 		this.site = site;
 	}
-
-
 	
 	public String execute() {
 		nomTopo = ((Topo)(session.get("topo"))).getNomTopo();

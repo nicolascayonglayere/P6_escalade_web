@@ -24,7 +24,7 @@
 			<h4><s:text name="creerTopo.site"/> <s:property value="#session.site.nomSite"/></h4>
 			<h4><s:text name="creerTopo.titreSecteur"/></h4>
 				<s:form action="creer_secteur" cssClass="form-horizontal" namespace="/jsp/utilisateur">
-					<s:textfield name="secteur.nomSecteur" placeholder="nom du secteur" label="%{getText('form.nomSecteur')}" requiredLabel="false"/>
+					<s:textfield name="secteur.nomSecteur" placeholder="nom du secteur" label="%{getText('form.nomSecteur')}" requiredLabel="true"/>
 					<s:textfield name="secteur.description" placeholder="description" label="%{getText('form.description')}" requiredLabel="false"/>
 					<s:textfield name="site.nomSite" placeholder="#session.site.nomSite" label="%{getText('form.nomSite')}" requiredLabel="true"/>
 					<s:textfield name="topo.nomTopo" placeholder="#session.topo.nomTopo" label="%{getText('form.nomTopo')}" requiredLabel="true"/>
@@ -35,7 +35,25 @@
 	      				<s:param name="nomTopo">${session.topo.nomTopo}</s:param>
 					</s:submit>
 	     			 <s:token/>
-				</s:form>		
+				</s:form>	
+				
+				<s:a action="ajouter_secteur" namespace="/jsp/utilisateur">
+					<s:submit class="btn btn-default" value="%{getText('bouton.ajouterSecteur')}">
+						<s:param name="topo.nomTopo">${session.topo.nomTopo}</s:param>
+					</s:submit>
+				</s:a>
+				
+				<s:a action="ajouter_site" namespace="/jsp/utilisateur">
+					<s:submit class="btn btn-default" value="%{getText('bouton.ajouterSite')}">
+						<s:param name="topo.nomTopo">${session.topo.nomTopo}</s:param>
+					</s:submit>
+				</s:a>
+				
+				<s:a action="ajouter_voie" namespace="/jsp/utilisateur">
+					<s:submit class="btn btn-default" value="%{getText('bouton.ajouterVoie')}">
+						<s:param name="topo.nomTopo">${session.topo.nomTopo}</s:param>
+					</s:submit>
+				</s:a>															
 		</div>	
 		
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

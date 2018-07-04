@@ -71,7 +71,7 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 
 	@Override
 	public boolean update(Utilisateur pUtilisateur) {
-		String vSQL = "UPDATE utilisateur SET pseudo = :pseudo, password = crypt(:password, gen_salt('bf',8)), id_role = :id_role WHERE id_utilisateur = :id_utilisateur";
+		String vSQL = "UPDATE utilisateur SET pseudo = :pseudo, password = :password, id_role = :id_role WHERE id_utilisateur = :id_utilisateur";
 		
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
@@ -177,7 +177,7 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 
 	@Override
 	public Utilisateur findPass(String pPassword, String pPseudo) {
-		String vSQL = "SELECT * FROM utilisateur INNER JOIN role_utilisateur ON utilisateur.id_role = role_utilisateur.id_role WHERE  password = crypt(:password, password) AND pseudo = :pseudo; ";
+		String vSQL = "SELECT * FROM utilisateur INNER JOIN role_utilisateur ON utilisateur.id_role = role_utilisateur.id_role WHERE  password = :password AND pseudo = :pseudo; ";
 		
 		//JdbcTemplate vJdbcTemplate = new JdbcTemplate(getDataSource());
         NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());

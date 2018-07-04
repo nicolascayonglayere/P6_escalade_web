@@ -33,7 +33,7 @@
 	</welcome-file-list>  
 	
 	<resource-ref>
-        <res-ref-name>jdbc/P6_escalade_web_v2</res-ref-name>
+        <res-ref-name>jdbc/P6_escalade_web</res-ref-name>
         <res-type>javax.sql.DataSource</res-type>
         <res-auth>Container</res-auth>
     </resource-ref>

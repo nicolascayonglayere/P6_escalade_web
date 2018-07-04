@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
@@ -18,18 +19,20 @@ import oc.P6.escalade.model.bean.topo.Voie;
 
 @Named
 public class VoieDaoImpl extends AbstractDAO implements VoieManagerDao{
-
+	@Inject
+	VoieManagerDao voieDAO;
 	@Inject
 	VoieRowMapper voieRowMapper;
 
 	@Override
 	public boolean create(Voie pVoie) {
 		System.out.println(pVoie.getNomVoie()+" - "+pVoie.getCotation());
-		String vSQL = "INSERT INTO voie (nom, cotation, hauteur, nombre_longueur, nombre_point, id_secteur, description)"
-				+ " VALUES (:nom, :cotation, :hauteur, :nbLongueur, :nbPoint, :id_secteur, :description)";
+		String vSQL = "INSERT INTO voie (id_voie, nom, cotation, hauteur, nombre_longueur, nombre_point, id_secteur, description)"
+				+ " VALUES (:id_voie, :nom, :cotation, :hauteur, :nbLongueur, :nbPoint, :id_secteur, :description)";
 
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
+		vParams.addValue("id_voie", voieDAO.lastId()+1, Types.INTEGER);
 		vParams.addValue("nom", pVoie.getNomVoie(), Types.VARCHAR);
 		vParams.addValue("cotation", pVoie.getCotation(), Types.VARCHAR);
 		vParams.addValue("hauteur", pVoie.getHauteur(), Types.INTEGER);
@@ -41,7 +44,8 @@ public class VoieDaoImpl extends AbstractDAO implements VoieManagerDao{
 	    try {
 	        vJdbcTemplate.update(vSQL, vParams);
 	    } catch (DuplicateKeyException vEx) {
-	        System.out.println("La voie existe déjà ! voie=" + pVoie.getNomVoie()+" dans le secteur "+pVoie.getSecteur().getNomSecteur());
+	        System.out.println("La voie existe déjà ! voie = " + pVoie.getNomVoie()+" dans le secteur d'Id "+pVoie.getSecteur().getId());
+	        vEx.printStackTrace();
 	        return false;
 	    }
 	    
@@ -127,6 +131,14 @@ public class VoieDaoImpl extends AbstractDAO implements VoieManagerDao{
 		return listVoie;
 
 	
+	}
+
+	@Override
+	public int lastId() {
+        JdbcTemplate vJdbcTemplate = new JdbcTemplate(getDataSource());
+
+        int lastId = vJdbcTemplate.queryForObject("SELECT COUNT(*) FROM voie", Integer.class);
+		return lastId;
 	}
 
 }

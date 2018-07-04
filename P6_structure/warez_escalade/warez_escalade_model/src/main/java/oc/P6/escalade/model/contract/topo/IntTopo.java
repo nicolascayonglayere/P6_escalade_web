@@ -27,4 +27,7 @@ public interface IntTopo {
 	
 	int getNbreEx();
 	void setNbreEx(int pNbreEx);
+	
+	boolean getConstruction();
+	void setConstruction(boolean pConstruction);
 }

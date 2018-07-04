@@ -46,4 +46,10 @@ public interface VoieManagerDao {
 	 * @return la liste des {@link Voie}
 	 */
 	ArrayList<Voie> getlistVoie(Secteur pSecteur);
+	
+	/**
+	 * Méthode pour obtenir le dernier id de la table
+	 * @return id
+	 */
+	int lastId();
 }

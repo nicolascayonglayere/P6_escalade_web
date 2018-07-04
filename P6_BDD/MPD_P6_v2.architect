@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<architect-project version="1.0" appversion="1.0.8">
+ <project-name>MPD_P6_v2</project-name>
+ <print-settings numCopies="1" zoom="1.0" pageNumbersPrinted="true" orientation="1" paperWidth="612.0" paperHeight="792.0" leftBorder="50.0" rightBorder="50.0" topBorder="50.0" bottomBorder="50.0" />
+ <project-data-sources>
+  <data-source id="DS0">
+   <property key="Logical" value="PlayPen Database" />
+  </data-source>
+ </project-data-sources>
+ <source-databases>
+ </source-databases>
+ <target-database id="ppdb" dbcs-ref="DS0">
+  <table id="TAB1" populated="true" UUID="5d711573-2058-4460-a9a4-c8cac295a750" name="utilisateur" objectType="TABLE" physicalName="utilisateur" >
+   <remarks></remarks>
+   <folder id="FOLTAB11" populated="true" name="Columns" physicalName="Columns" type="1">
+    <column id="COL2" populated="true" UUID="db31f948-d58a-4bde-823e-77ef9a8d5e86" autoIncrement="true" autoIncrementSequenceName="utilisateur_id_seq" defaultValue="" name="id_utilisateur" nullable="0" physicalName="id_utilisateur" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks></remarks>
+    </column>
+    <column id="COL3" populated="true" UUID="f7900a3f-f9aa-4653-aecc-1035cb8739bc" autoIncrement="false" autoIncrementSequenceName="utilisateur_nom_seq" defaultValue="" name="nom" nullable="0" physicalName="nom" precision="20" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL4" populated="true" UUID="a536881c-5f34-40cd-a313-8d8f3a7dcf9d" autoIncrement="false" autoIncrementSequenceName="utilisateur_prenom_seq" defaultValue="" name="prenom" nullable="0" physicalName="prenom" precision="20" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL5" populated="true" UUID="e65b3ed8-2acb-4558-ac69-d5280aac0555" autoIncrement="false" autoIncrementSequenceName="utilisateur_pseudo_seq" defaultValue="" name="pseudo" nullable="0" physicalName="pseudo" precision="30" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL6" populated="true" UUID="d5a8eced-b9da-4b4b-a5e1-e0003f8cf448" autoIncrement="false" autoIncrementSequenceName="utilisateur_password_seq" defaultValue="" name="password" nullable="0" physicalName="password" precision="60" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL7" populated="true" UUID="03499ab9-4a46-4a54-8cd3-4c34fba68dd2" autoIncrement="false" autoIncrementSequenceName="role_utilisateur_id_role_seq" defaultValue="" name="id_role" nullable="0" physicalName="id_role" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks></remarks>
+    </column>
+    </folder>
+    <folder id="FOLTAB13" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+    </folder>
+    <folder id="FOLTAB12" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+    </folder>
+    <folder id="FOLTAB14" populated="true" name="Indices" physicalName="Indices" type="4">
+    <index id="IDX8" populated="true" UUID="2d111f10-e059-42d7-8194-915b512b1e88" clustered="false" name="utilisateur_pk" physicalName="utilisateur_pk" primaryKeyIndex="true" unique="false" >
+     <index-column id="IDC9" populated="true" UUID="cebd0912-d316-450d-a5e2-51dc6184200e" ascendingOrDescending="UNSPECIFIED" column-ref="COL2" name="id_utilisateur" physicalName="id_utilisateur" />
+    </index>
+   </folder>
+  </table>
+  <table id="TAB10" populated="true" UUID="00e3bff2-66c4-47c6-ac37-e5b840776183" name="role_utilisateur" objectType="TABLE" physicalName="role_utilisateur" >
+   <remarks></remarks>
+   <folder id="FOLTAB101" populated="true" name="Columns" physicalName="Columns" type="1">
+    <column id="COL11" populated="true" UUID="11e98601-1d8f-4ac5-80c3-517dc7538655" autoIncrement="true" autoIncrementSequenceName="role_utilisateur_id_role_seq_1" defaultValue="" name="id_role" nullable="0" physicalName="id_role" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks></remarks>
+    </column>
+    <column id="COL12" populated="true" UUID="5b901e2f-9f81-44c1-b523-55ad52ff9782" autoIncrement="false" autoIncrementSequenceName="role_utilisateur_role_seq" defaultValue="" name="role" nullable="0" physicalName="role" precision="30" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    </folder>
+    <folder id="FOLTAB103" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+    </folder>
+    <folder id="FOLTAB102" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+    </folder>
+    <folder id="FOLTAB104" populated="true" name="Indices" physicalName="Indices" type="4">
+    <index id="IDX13" populated="true" UUID="587eade3-8ca7-46b7-a75f-3616d7e4da2e" clustered="false" name="role_utilisateur_pk" physicalName="role_utilisateur_pk" primaryKeyIndex="true" unique="false" >
+     <index-column id="IDC14" populated="true" UUID="91dc9f38-1b81-49c6-83d0-d76b91307805" ascendingOrDescending="UNSPECIFIED" column-ref="COL11" name="id_role" physicalName="id_role" />
+    </index>
+   </folder>
+  </table>
+  <table id="TAB15" populated="true" UUID="6526457b-475f-4bd0-8bfc-15ff13af858c" name="coordonnee_utilisateur" objectType="TABLE" physicalName="coordonnee_utilisateur" >
+   <remarks></remarks>
+   <folder id="FOLTAB151" populated="true" name="Columns" physicalName="Columns" type="1">
+    <column id="COL16" populated="true" UUID="09e27a19-36c9-4ba3-985e-004de73b393e" autoIncrement="true" autoIncrementSequenceName="coordonnee_utilisateur_id_coordonnee_seq" defaultValue="" name="id_coordonnee" nullable="0" physicalName="id_coordonnee" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks></remarks>
+    </column>
+    <column id="COL17" populated="true" UUID="c5b0de27-3862-4258-844d-3d55a62dd868" autoIncrement="false" autoIncrementSequenceName="coordonnee_utilisateur_email_seq" defaultValue="" name="email" nullable="0" physicalName="email" precision="30" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL18" populated="true" UUID="55a57e2a-c3dd-4ad0-bb3f-24519e6be161" autoIncrement="false" autoIncrementSequenceName="coordonnee_utilisateur_adresse_postale_seq" defaultValue="" name="adresse_postale" nullable="0" physicalName="adresse_postale" precision="60" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL19" populated="true" UUID="f48df148-5a71-42fc-bc80-51a663c6068f" autoIncrement="false" autoIncrementSequenceName="utilisateur_id_seq_1" defaultValue="" name="id_utilisateur" nullable="0" physicalName="id_utilisateur" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks></remarks>
+    </column>
+    </folder>
+    <folder id="FOLTAB153" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+    </folder>
+    <folder id="FOLTAB152" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+    </folder>
+    <folder id="FOLTAB154" populated="true" name="Indices" physicalName="Indices" type="4">
+    <index id="IDX20" populated="true" UUID="01b0fbc6-556f-4667-abaa-d5dfb29cb484" clustered="false" name="coordonnee_utilisateur_pk" physicalName="coordonnee_utilisateur_pk" primaryKeyIndex="true" unique="false" >
+     <index-column id="IDC21" populated="true" UUID="4a949119-b1b1-4527-aa54-ea98dab8e43f" ascendingOrDescending="UNSPECIFIED" column-ref="COL16" name="id_coordonnee" physicalName="id_coordonnee" />
+    </index>
+   </folder>
+  </table>
+  <table id="TAB22" populated="true" UUID="8b335bc6-5dd4-4621-b51e-aa7a24750ffe" name="topo_emprunt" objectType="TABLE" physicalName="topo_emprunt" >
+   <remarks></remarks>
+   <folder id="FOLTAB221" populated="true" name="Columns" physicalName="Columns" type="1">
+    <column id="COL23" populated="true" UUID="b6a6d228-b443-4d41-a775-b3886daa6bd4" autoIncrement="true" autoIncrementSequenceName="topo_emprunt_id_topo_emprunt_seq" defaultValue="" name="id_topo_emprunt" nullable="0" physicalName="id_topo_emprunt" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks></remarks>
+    </column>
+    <column id="COL24" populated="true" UUID="97489698-cfdd-4974-bb15-5ce5ed3a6da2" autoIncrement="false" autoIncrementSequenceName="topo_emprunt_date_retrait_seq" defaultValue="" name="date_retrait" nullable="0" physicalName="date_retrait" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="91" userDefinedTypeUUID="ee349be3-6af2-46e1-b305-975f5354b009" >
+     <remarks></remarks>
+    </column>
+    <column id="COL25" populated="true" UUID="58a51422-86d5-4562-ac12-95a6fe908660" autoIncrement="false" autoIncrementSequenceName="utilisateur_id_seq_2" defaultValue="" name="id_utilisateur" nullable="0" physicalName="id_utilisateur" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks></remarks>
+    </column>
+    <column id="COL26" populated="true" UUID="42b31491-954f-48a0-a3ad-ba696f05572f" autoIncrement="false" autoIncrementSequenceName="topo_id_topo_seq" defaultValue="" name="id_topo" nullable="0" physicalName="id_topo" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks></remarks>
+    </column>
+    </folder>
+    <folder id="FOLTAB223" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+    </folder>
+    <folder id="FOLTAB222" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+    </folder>
+    <folder id="FOLTAB224" populated="true" name="Indices" physicalName="Indices" type="4">
+    <index id="IDX27" populated="true" UUID="761269e5-576e-426e-969e-e82ea1a48166" clustered="false" name="topo_emprunt_pk" physicalName="topo_emprunt_pk" primaryKeyIndex="true" unique="false" >
+     <index-column id="IDC28" populated="true" UUID="4e7cdf0b-b782-4203-abc2-dbfd9d0a4db4" ascendingOrDescending="UNSPECIFIED" column-ref="COL23" name="id_topo_emprunt" physicalName="id_topo_emprunt" />
+    </index>
+   </folder>
+  </table>
+  <table id="TAB29" populated="true" UUID="8dc3667c-7278-422c-bdca-bea8113ec330" name="topo" objectType="TABLE" physicalName="topo" >
+   <remarks></remarks>
+   <folder id="FOLTAB291" populated="true" name="Columns" physicalName="Columns" type="1">
+    <column id="COL30" populated="true" UUID="6b0e90b9-b0a5-495a-ae05-598fcfbe9187" autoIncrement="true" autoIncrementSequenceName="topo_id_topo_seq_1" defaultValue="" name="id_topo" nullable="0" physicalName="id_topo" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks></remarks>
+    </column>
+    <column id="COL31" populated="true" UUID="b564e3e6-69c9-4e87-b290-93ea2184dcae" autoIncrement="false" autoIncrementSequenceName="topo_nom_seq" defaultValue="" name="nom" nullable="0" physicalName="nom" precision="60" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL32" populated="true" UUID="23143caa-5789-4930-a99b-00a86b122825" autoIncrement="false" autoIncrementSequenceName="utilisateur_id_seq_3" defaultValue="" name="id_utilisateur" nullable="0" physicalName="id_utilisateur" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks></remarks>
+    </column>
+    <column id="COL33" populated="true" UUID="a5e307e0-1b47-46aa-b96e-30ef836b6d23" autoIncrement="false" autoIncrementSequenceName="topo_nombre_exemplaires_seq" defaultValue="" name="nombre_exemplaires" nullable="1" physicalName="nombre_exemplaires" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks></remarks>
+    </column>
+    <column id="COL34" populated="true" UUID="f6465ced-5a3c-44a0-9119-445a2b529336" autoIncrement="false" autoIncrementSequenceName="topo_description_seq" defaultValue="" name="description" nullable="1" physicalName="description" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="-1" userDefinedTypeUUID="9a814859-ab26-4acd-9415-ea82291bcac1" >
+     <remarks></remarks>
+    </column>
+    <column id="COL35" populated="true" UUID="08e5ede3-4ad9-458e-b746-b163ac5e5e4f" autoIncrement="false" autoIncrementSequenceName="topo_longitude_seq" defaultValue="" name="longitude" nullable="0" physicalName="longitude" precision="8" referenceCount="1" scale="3" sourceDataTypeName="UserDefinedSQLType" type="3" userDefinedTypeUUID="cc1304ea-628a-4fc5-a84a-06ba14759152" >
+     <remarks></remarks>
+    </column>
+    <column id="COL36" populated="true" UUID="580efa07-d652-4296-b9d2-d66900fc6ad3" autoIncrement="false" autoIncrementSequenceName="topo_latitude_seq" defaultValue="" name="latitude" nullable="0" physicalName="latitude" precision="8" referenceCount="1" scale="3" sourceDataTypeName="UserDefinedSQLType" type="3" userDefinedTypeUUID="cc1304ea-628a-4fc5-a84a-06ba14759152" >
+     <remarks></remarks>
+    </column>
+    <column id="COL37" populated="true" UUID="449741a3-1c9f-4fea-a797-5a11ad76e9d6" autoIncrement="false" autoIncrementSequenceName="topo_image_seq" defaultValue="" name="image" nullable="1" physicalName="image" precision="60" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL38" populated="true" UUID="db4df3bc-7026-401b-9abf-44c3f323f5dd" autoIncrement="false" autoIncrementSequenceName="topo_construction_seq" defaultValue="" name="construction" nullable="0" physicalName="construction" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="16" userDefinedTypeUUID="a26374aa-3026-4bb8-b564-eb2e186dfa5d" >
+     <remarks></remarks>
+    </column>
+    </folder>
+    <folder id="FOLTAB293" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+    </folder>
+    <folder id="FOLTAB292" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+    </folder>
+    <folder id="FOLTAB294" populated="true" name="Indices" physicalName="Indices" type="4">
+    <index id="IDX39" populated="true" UUID="d63bffa1-57da-4de2-80b4-9c9c3a4d71d9" clustered="false" name="topo_pk" physicalName="topo_pk" primaryKeyIndex="true" unique="false" >
+     <index-column id="IDC40" populated="true" UUID="58a15da3-c7cd-4628-821e-67427166b218" ascendingOrDescending="UNSPECIFIED" column-ref="COL30" name="id_topo" physicalName="id_topo" />
+    </index>
+   </folder>
+  </table>
+  <table id="TAB41" populated="true" UUID="e66ac03d-4af8-47fd-aee3-dfaddbb7aeba" name="site" objectType="TABLE" physicalName="site" >
+   <remarks></remarks>
+   <folder id="FOLTAB411" populated="true" name="Columns" physicalName="Columns" type="1">
+    <column id="COL42" populated="true" UUID="1fecf8d6-905f-4032-8f18-9e4de27a0d11" autoIncrement="true" autoIncrementSequenceName="site_id_site_seq" defaultValue="" name="id_site" nullable="0" physicalName="id_site" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks></remarks>
+    </column>
+    <column id="COL43" populated="true" UUID="d015c12e-b9e6-4d86-98c7-b2d561dcce0e" autoIncrement="false" autoIncrementSequenceName="site_nom_seq" defaultValue="" name="nom" nullable="1" physicalName="nom" precision="60" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL44" populated="true" UUID="cc2c0484-ba7b-4967-a8da-d3412b287123" autoIncrement="false" autoIncrementSequenceName="site_description_seq" defaultValue="" name="description" nullable="1" physicalName="description" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="-1" userDefinedTypeUUID="9a814859-ab26-4acd-9415-ea82291bcac1" >
+     <remarks></remarks>
+    </column>
+    <column id="COL45" populated="true" UUID="680808b7-c4c6-4d94-9790-c21c5cc03d0c" autoIncrement="false" autoIncrementSequenceName="topo_id_topo_seq_2" defaultValue="" name="id_topo" nullable="0" physicalName="id_topo" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks></remarks>
+    </column>
+    </folder>
+    <folder id="FOLTAB413" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+    </folder>
+    <folder id="FOLTAB412" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+    </folder>
+    <folder id="FOLTAB414" populated="true" name="Indices" physicalName="Indices" type="4">
+    <index id="IDX46" populated="true" UUID="36f5dc85-014a-4143-b4be-a91f1855c8b0" clustered="false" name="site_pk" physicalName="site_pk" primaryKeyIndex="true" unique="false" >
+     <index-column id="IDC47" populated="true" UUID="36757f60-73c7-4281-a6d8-beb1ceb8d64e" ascendingOrDescending="UNSPECIFIED" column-ref="COL42" name="id_site" physicalName="id_site" />
+    </index>
+   </folder>
+  </table>
+  <table id="TAB48" populated="true" UUID="14960a70-cb3d-4f68-b55c-517f15023afd" name="secteur" objectType="TABLE" physicalName="secteur" >
+   <remarks></remarks>
+   <folder id="FOLTAB481" populated="true" name="Columns" physicalName="Columns" type="1">
+    <column id="COL49" populated="true" UUID="84d4f5ef-b1a3-4dfa-a6c1-2e36d55e72fc" autoIncrement="true" autoIncrementSequenceName="secteur_id_secteur_seq" defaultValue="" name="id_secteur" nullable="0" physicalName="id_secteur" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks></remarks>
+    </column>
+    <column id="COL50" populated="true" UUID="5fcb1a3d-702d-4b59-a64b-f6bba247bcd3" autoIncrement="false" autoIncrementSequenceName="secteur_nom_seq" defaultValue="" name="nom" nullable="1" physicalName="nom" precision="60" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL51" populated="true" UUID="3a76a165-53da-4009-bdc4-a42c64756fe9" autoIncrement="false" autoIncrementSequenceName="secteur_description_seq" defaultValue="" name="description" nullable="1" physicalName="description" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="-1" userDefinedTypeUUID="9a814859-ab26-4acd-9415-ea82291bcac1" >
+     <remarks></remarks>
+    </column>
+    <column id="COL52" populated="true" UUID="e7617f00-24dd-422b-a2d0-9bfd334696a3" autoIncrement="false" autoIncrementSequenceName="site_id_site_seq_1" defaultValue="" name="id_site" nullable="0" physicalName="id_site" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks></remarks>
+    </column>
+    <column id="COL53" populated="true" UUID="9fc8b3c5-e00d-4c11-bdac-6d1dc7ceb5ec" autoIncrement="false" autoIncrementSequenceName="secteur_image_seq" defaultValue="" name="image" nullable="1" physicalName="image" precision="60" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    </folder>
+    <folder id="FOLTAB483" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+    </folder>
+    <folder id="FOLTAB482" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+    </folder>
+    <folder id="FOLTAB484" populated="true" name="Indices" physicalName="Indices" type="4">
+    <index id="IDX54" populated="true" UUID="bde3b00c-50e4-46ca-831d-d067bd542bbc" clustered="false" name="secteur_pk" physicalName="secteur_pk" primaryKeyIndex="true" unique="false" >
+     <index-column id="IDC55" populated="true" UUID="4112c762-6b94-4380-a25f-dcf533e84f5c" ascendingOrDescending="UNSPECIFIED" column-ref="COL49" name="id_secteur" physicalName="id_secteur" />
+    </index>
+   </folder>
+  </table>
+  <table id="TAB56" populated="true" UUID="9cf3bb76-a9ca-47f9-8233-11856017641a" name="voie" objectType="TABLE" physicalName="voie" >
+   <remarks></remarks>
+   <folder id="FOLTAB561" populated="true" name="Columns" physicalName="Columns" type="1">
+    <column id="COL57" populated="true" UUID="ae0fafa7-af26-4515-a459-c9af459746ff" autoIncrement="true" autoIncrementSequenceName="voie_id_voie_seq" defaultValue="" name="id_voie" nullable="0" physicalName="id_voie" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks></remarks>
+    </column>
+    <column id="COL58" populated="true" UUID="87e6d8f3-4de6-4981-ae3c-69a02884bd83" autoIncrement="false" autoIncrementSequenceName="voie_nom_seq" defaultValue="" name="nom" nullable="1" physicalName="nom" precision="60" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL59" populated="true" UUID="ad26e191-53cf-471d-8743-6a90af2c852b" autoIncrement="false" autoIncrementSequenceName="voie_cotation_seq" defaultValue="" name="cotation" nullable="0" physicalName="cotation" precision="10" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL60" populated="true" UUID="d0d4b038-24c0-461d-9983-3ccf894bd8e4" autoIncrement="false" autoIncrementSequenceName="voie_hauteur_seq" defaultValue="" name="hauteur" nullable="0" physicalName="hauteur" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks></remarks>
+    </column>
+    <column id="COL61" populated="true" UUID="7e7c2af6-495c-48b7-908a-cb3099618186" autoIncrement="false" autoIncrementSequenceName="voie_nombre_longueur_seq" defaultValue="" name="nombre_longueur" nullable="0" physicalName="nombre_longueur" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks></remarks>
+    </column>
+    <column id="COL62" populated="true" UUID="5dcacff6-002f-48f9-86a9-16a59bdb3440" autoIncrement="false" autoIncrementSequenceName="voie_nombre_point_seq" defaultValue="" name="nombre_point" nullable="0" physicalName="nombre_point" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks></remarks>
+    </column>
+    <column id="COL63" populated="true" UUID="421c5d68-879c-45a2-8b19-37df8c6bdfe0" autoIncrement="false" autoIncrementSequenceName="secteur_id_secteur_seq_1" defaultValue="" name="id_secteur" nullable="0" physicalName="id_secteur" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks></remarks>
+    </column>
+    <column id="COL64" populated="true" UUID="0a1235c4-4138-4f78-b07a-ff5c84295f2d" autoIncrement="false" autoIncrementSequenceName="voie_description_seq" defaultValue="" name="description" nullable="1" physicalName="description" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="-1" userDefinedTypeUUID="9a814859-ab26-4acd-9415-ea82291bcac1" >
+     <remarks></remarks>
+    </column>
+    </folder>
+    <folder id="FOLTAB563" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+    </folder>
+    <folder id="FOLTAB562" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+    </folder>
+    <folder id="FOLTAB564" populated="true" name="Indices" physicalName="Indices" type="4">
+    <index id="IDX65" populated="true" UUID="8995f11e-5cf6-4ba5-ae70-0ecd575b11ca" clustered="false" name="voie_pk" physicalName="voie_pk" primaryKeyIndex="true" unique="false" >
+     <index-column id="IDC66" populated="true" UUID="665414d2-737d-45b5-b982-d508ebc891de" ascendingOrDescending="UNSPECIFIED" column-ref="COL57" name="id_voie" physicalName="id_voie" />
+    </index>
+   </folder>
+  </table>
+  <table id="TAB67" populated="true" UUID="070b9673-dc7d-4779-aadd-8d39128c6daa" name="commentaire_topo" objectType="TABLE" physicalName="commentaire_topo" >
+   <remarks></remarks>
+   <folder id="FOLTAB671" populated="true" name="Columns" physicalName="Columns" type="1">
+    <column id="COL68" populated="true" UUID="df92b2ed-3c4b-4f01-9586-186a54329d85" autoIncrement="true" autoIncrementSequenceName="commentaire_topo_id_commentaire_topo_seq" defaultValue="" name="id_commentaire_topo" nullable="0" physicalName="id_commentaire_topo" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks></remarks>
+    </column>
+    <column id="COL69" populated="true" UUID="f5c57706-b0c6-43e4-949d-96b9e3253132" autoIncrement="false" autoIncrementSequenceName="topo_id_topo_seq_3" defaultValue="" name="id_topo" nullable="0" physicalName="id_topo" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks></remarks>
+    </column>
+    <column id="COL70" populated="true" UUID="a41ec2b6-eda4-4e2b-a76e-696a16598ea8" autoIncrement="false" autoIncrementSequenceName="utilisateur_id_seq_4" defaultValue="" name="id_utilisateur" nullable="1" physicalName="id_utilisateur" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks></remarks>
+    </column>
+    <column id="COL71" populated="true" UUID="1afa9d81-64fd-4ef0-a38e-377055debd3a" autoIncrement="false" autoIncrementSequenceName="commentaire_topo_date_seq" defaultValue="" name="date" nullable="0" physicalName="date" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="93" userDefinedTypeUUID="6497d8de-0e00-40d6-a42e-e2adca83be64" >
+     <remarks></remarks>
+    </column>
+    <column id="COL72" populated="true" UUID="b21d16a7-7297-49b3-9bf2-0037a7bf9d62" autoIncrement="false" autoIncrementSequenceName="commentaire_topo_commentaire_seq" defaultValue="" name="commentaire" nullable="0" physicalName="commentaire" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="-1" userDefinedTypeUUID="9a814859-ab26-4acd-9415-ea82291bcac1" >
+     <remarks></remarks>
+    </column>
+    <column id="COL73" populated="true" UUID="6842b47e-d2c1-4953-bc90-6ef677163785" autoIncrement="false" autoIncrementSequenceName="commentaire_topo_validation_seq" defaultValue="" name="validation" nullable="0" physicalName="validation" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="16" userDefinedTypeUUID="a26374aa-3026-4bb8-b564-eb2e186dfa5d" >
+     <remarks></remarks>
+    </column>
+    </folder>
+    <folder id="FOLTAB673" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+    </folder>
+    <folder id="FOLTAB672" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+    </folder>
+    <folder id="FOLTAB674" populated="true" name="Indices" physicalName="Indices" type="4">
+    <index id="IDX74" populated="true" UUID="08f827a4-5326-4847-8341-2996886051f9" clustered="false" name="commentaire_topo_pk" physicalName="commentaire_topo_pk" primaryKeyIndex="true" unique="false" >
+     <index-column id="IDC75" populated="true" UUID="c056c0a7-2b18-488a-bb03-a72b3d9f5673" ascendingOrDescending="UNSPECIFIED" column-ref="COL68" name="id_commentaire_topo" physicalName="id_commentaire_topo" />
+    </index>
+   </folder>
+  </table>
+  <relationships>
+   <relationship id="REL76" populated="true" UUID="85ae25c9-663d-48a4-8120-e0e969023bd0" deferrability="7" deleteRule="3" fk-table-ref="TAB15" fkCardinality="7" identifying="false" name="utilisateur_coordonnee_utilisateur_fk" physicalName="utilisateur_coordonnee_utilisateur_fk" pk-table-ref="TAB1" pkCardinality="2" updateRule="3" >
+    <column-mapping id="CMP77" populated="true" UUID="fdef4675-7478-46fa-9434-42138c42414b" fk-column-ref="COL19" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL2" />
+   </relationship>
+   <relationship id="REL78" populated="true" UUID="42bacd86-634e-4236-b198-b85876929307" deferrability="7" deleteRule="3" fk-table-ref="TAB22" fkCardinality="7" identifying="false" name="utilisateur_topo_emprunt_fk" physicalName="utilisateur_topo_emprunt_fk" pk-table-ref="TAB1" pkCardinality="2" updateRule="3" >
+    <column-mapping id="CMP79" populated="true" UUID="47367c3d-1c04-43d9-9186-e63d31ccb860" fk-column-ref="COL25" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL2" />
+   </relationship>
+   <relationship id="REL80" populated="true" UUID="d6bef1f5-7c82-4c9b-bf2c-b568cd815891" deferrability="7" deleteRule="3" fk-table-ref="TAB29" fkCardinality="7" identifying="false" name="utilisateur_topo_fk" physicalName="utilisateur_topo_fk" pk-table-ref="TAB1" pkCardinality="2" updateRule="3" >
+    <column-mapping id="CMP81" populated="true" UUID="f08a6013-96de-4331-a9a9-27160984f2dc" fk-column-ref="COL32" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL2" />
+   </relationship>
+   <relationship id="REL82" populated="true" UUID="0067ca0f-2915-4a2d-b44b-dcbe9f7edcda" deferrability="7" deleteRule="3" fk-table-ref="TAB67" fkCardinality="7" identifying="false" name="utilisateur_commentaire_topo_fk" physicalName="utilisateur_commentaire_topo_fk" pk-table-ref="TAB1" pkCardinality="2" updateRule="3" >
+    <column-mapping id="CMP83" populated="true" UUID="f3d1b381-b317-4e50-b711-f0c1dd00b418" fk-column-ref="COL70" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL2" />
+   </relationship>
+   <relationship id="REL84" populated="true" UUID="9f5dc240-3724-4a44-8cef-e02218e69617" deferrability="7" deleteRule="3" fk-table-ref="TAB1" fkCardinality="7" identifying="false" name="role_utilisateur_utilisateur_fk" physicalName="role_utilisateur_utilisateur_fk" pk-table-ref="TAB10" pkCardinality="2" updateRule="3" >
+    <column-mapping id="CMP85" populated="true" UUID="dc0a651c-f21a-43ac-8ced-6e9f25335397" fk-column-ref="COL7" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL11" />
+   </relationship>
+   <relationship id="REL86" populated="true" UUID="80424de0-840c-4a3f-98c9-38c81c45f115" deferrability="7" deleteRule="3" fk-table-ref="TAB22" fkCardinality="7" identifying="false" name="topo_topo_emprunt_fk" physicalName="topo_topo_emprunt_fk" pk-table-ref="TAB29" pkCardinality="2" updateRule="3" >
+    <column-mapping id="CMP87" populated="true" UUID="ce8a82f0-535f-4979-80a5-567ecc95e9a8" fk-column-ref="COL26" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL30" />
+   </relationship>
+   <relationship id="REL88" populated="true" UUID="9a1e9ed8-1134-4a16-87f8-a4202bc976bf" deferrability="7" deleteRule="3" fk-table-ref="TAB41" fkCardinality="7" identifying="false" name="topo_site_fk" physicalName="topo_site_fk" pk-table-ref="TAB29" pkCardinality="2" updateRule="3" >
+    <column-mapping id="CMP89" populated="true" UUID="e998121d-c620-462e-a295-bb9d0221fda3" fk-column-ref="COL45" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL30" />
+   </relationship>
+   <relationship id="REL90" populated="true" UUID="54f74ec0-bc3a-478e-99bd-4fa244dc169e" deferrability="7" deleteRule="3" fk-table-ref="TAB67" fkCardinality="7" identifying="false" name="topo_commentaire_topo_fk" physicalName="topo_commentaire_topo_fk" pk-table-ref="TAB29" pkCardinality="2" updateRule="3" >
+    <column-mapping id="CMP91" populated="true" UUID="9d3bcbe8-ad0e-47e0-8493-8c6a9a5b5539" fk-column-ref="COL69" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL30" />
+   </relationship>
+   <relationship id="REL92" populated="true" UUID="a1c86b7d-b868-4862-ab9a-33277ad326bf" deferrability="7" deleteRule="3" fk-table-ref="TAB48" fkCardinality="7" identifying="false" name="site_secteur_fk" physicalName="site_secteur_fk" pk-table-ref="TAB41" pkCardinality="2" updateRule="3" >
+    <column-mapping id="CMP93" populated="true" UUID="1a154cf4-f91b-4b95-a1cb-67a8682146d6" fk-column-ref="COL52" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL42" />
+   </relationship>
+   <relationship id="REL94" populated="true" UUID="349d8337-6c02-4235-8ea7-d496321ec894" deferrability="7" deleteRule="3" fk-table-ref="TAB56" fkCardinality="7" identifying="false" name="secteur_voie_fk" physicalName="secteur_voie_fk" pk-table-ref="TAB48" pkCardinality="2" updateRule="3" >
+    <column-mapping id="CMP95" populated="true" UUID="0690d921-3bc7-42fc-b973-d9ab81cef21c" fk-column-ref="COL63" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL49" />
+   </relationship>
+  </relationships>
+ </target-database>
+ <ddl-generator type="ca.sqlpower.architect.ddl.PostgresDDLGenerator" allow-connection="true" target-schema="public"> </ddl-generator>
+ <liquibase-settings useSeparateChangeSets="false" generateId="false" idStart="1"/>
+ <create-kettle-job-settings filePath="" jobName="" schemaName="" kettleJoinType="0" savingToFile="true" />
+ <play-pen zoom="1.0" viewportX="0" viewportY="0" relationship-style="rectilinear" names-displayLogicalNames="true" showPrimaryTag="true" showForeignTag="true" showAlternateTag="true" columnVisibility="ALL" relationshipLabelVisibility="true">
+  <table-pane table-ref="TAB1" x="62" y="463" bgColor="0xb9bbf6" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-pane table-ref="TAB10" x="26" y="45" bgColor="0xb9bbf6" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-pane table-ref="TAB15" x="171" y="163" bgColor="0xb9bbf6" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-pane table-ref="TAB22" x="540" y="44" bgColor="0xeec994" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-pane table-ref="TAB29" x="475" y="294" bgColor="0xf6bcbc" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-pane table-ref="TAB41" x="818" y="331" bgColor="0xf6bcbc" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-pane table-ref="TAB48" x="1102" y="327" bgColor="0xf6bcbc" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-pane table-ref="TAB56" x="1409" y="318" bgColor="0xf6bcbc" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-pane table-ref="TAB67" x="451" y="542" bgColor="0xe4e4b8" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-link relationship-ref="REL84" pkConnection="0.6285714285714286" fkConnection="0.25980392156862747" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="132"/>
+  <table-link relationship-ref="REL76" pkConnection="0.5245098039215687" fkConnection="0.4790697674418605" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="72"/>
+  <table-link relationship-ref="REL78" pkConnection="0.20353982300884957" fkConnection="0.16470588235294117" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="33"/>
+  <table-link relationship-ref="REL80" pkConnection="0.4778761061946903" fkConnection="0.2647058823529412" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="65"/>
+  <table-link relationship-ref="REL86" pkConnection="0.35294117647058826" fkConnection="0.6533333333333333" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="72"/>
+  <table-link relationship-ref="REL88" pkConnection="0.4507042253521127" fkConnection="0.5352112676056338" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="33"/>
+  <table-link relationship-ref="REL92" pkConnection="0.8591549295774648" fkConnection="0.14084507042253522" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="33"/>
+  <table-link relationship-ref="REL94" pkConnection="0.8591549295774648" fkConnection="0.2125984251968504" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="33"/>
+  <table-link relationship-ref="REL90" pkConnection="0.5098039215686274" fkConnection="0.483739837398374" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="132"/>
+  <table-link relationship-ref="REL82" pkConnection="0.7876106194690266" fkConnection="0.1717171717171717" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="33"/>
+ </play-pen>
+ <critic-manager>
+  <critic-grouping platformType="Generic" enabled="true">
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.PrimaryKeyCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.RelationshipMappingTypeCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.EmptyRelationshipCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.AlphaNumericNameCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.AlphaNumericSequenceNameCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.SetDefaultOnColumnWithNoDefaultCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.SetNullOnNonNullableColumnCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.DuplicateNameCritic" severity="ERROR"/>
+  </critic-grouping>
+  <critic-grouping platformType="DB2" enabled="true">
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.DB2UnsupportedFeaturesCritic" severity="ERROR"/>
+  </critic-grouping>
+  <critic-grouping platformType="H2" enabled="true">
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.H2UnsupportedFeaturesCritic" severity="ERROR"/>
+  </critic-grouping>
+  <critic-grouping platformType="HSQLDB" enabled="true">
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.HSQLDBUnsupportedFeaturesCritic" severity="ERROR"/>
+  </critic-grouping>
+  <critic-grouping platformType="MySQL" enabled="true">
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.MySQLCommentCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.MySQLReservedWordsCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.MySQLUnsupportedFeaturesCritic" severity="ERROR"/>
+  </critic-grouping>
+  <critic-grouping platformType="Oracle" enabled="true">
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.OraclePhysicalNameCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.OracleReservedWordsCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.OracleUnsupportedFeaturesCritic" severity="ERROR"/>
+  </critic-grouping>
+  <critic-grouping platformType="PostgreSQL" enabled="true">
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.PostgreSQLReservedWordsCritic" severity="ERROR"/>
+  </critic-grouping>
+  <critic-grouping platformType="SQL Server" enabled="true">
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.SQLServerUnsupportedFeaturesCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.SQLServerReservedWordsCritic" severity="ERROR"/>
+  </critic-grouping>
+  <critic-grouping platformType="SQL Server 2000" enabled="true">
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.SQLServer2000UnsupportedFeaturesCritic" severity="ERROR"/>
+  </critic-grouping>
+  <critic-grouping platformType="SQL Server 2005" enabled="true">
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.SQLServer2005UnsupportedFeaturesCritic" severity="ERROR"/>
+  </critic-grouping>
+ </critic-manager>
+ <profiles topNCount="10">
+  </profiles>
+  <olap>
+  </olap>
+  <olap-gui>
+  </olap-gui>
+</architect-project>

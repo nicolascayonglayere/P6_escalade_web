@@ -46,6 +46,7 @@ public class SecteurDaoImpl extends AbstractDAO implements SecteurManagerDao{
 	        vJdbcTemplate.update(vSQL, vParams);
 	    } catch (DuplicateKeyException vEx) {
 	        System.out.println("Le secteur existe déjà ! secteur=" + pSecteur.getNomSecteur()+" dans le site "+pSecteur.getSite().getNomSite());
+	        vEx.printStackTrace();
 	        return false;
 	    }
 	    
