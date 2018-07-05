@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.SessionAware;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -49,10 +50,11 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
 	public String loginRegisterUser() {
 		String vResult="";
 		System.out.println(utilisateur.getPseudo()+" - "+utilisateur.getPassword());
-		Utilisateur vUser = managerFactory.getUtilisateurManager().getUtilisateurPass(utilisateur.getPassword(), utilisateur.getPseudo());
+		Utilisateur vUser = managerFactory.getUtilisateurManager().getUtilisateur(utilisateur.getPseudo());
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 		if(vUser.getNom() != null && !(vUser.getRole()).equals("banni")) {
-			if ((utilisateur.getPseudo().equals(vUser.getPseudo()))&&(utilisateur.getPassword().equals(vUser.getPassword()))) {
+			if ((utilisateur.getPseudo().equals(vUser.getPseudo()))&&(passwordEncoder.matches(utilisateur.getPassword(), vUser.getPassword()))) {//(hashedPassword.equals(vUser.getPassword()))) {
 				session.put("utilisateur", utilisateur);
 				vResult = ActionSupport.SUCCESS;
 			}

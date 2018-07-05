@@ -15,6 +15,7 @@ D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_esca
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\java\oc\P6\escalade\actions\topo\ModifierSite.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\java\oc\P6\escalade\actions\utilisateur\RechercheUtilisateurAction.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\java\oc\P6\escalade\actions\topo\SupprimerSite.java
+D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\java\oc\P6\escalade\actions\UploadAction.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\java\oc\P6\escalade\actions\utilisateur\BanUtilisateurAction.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\java\oc\P6\escalade\actions\topo\CreerSite.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\java\oc\P6\escalade\actions\CommenterAction.java

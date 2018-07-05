@@ -42,7 +42,7 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 	        vJdbcTemplate.update(vSQL, vParams);
 	    } catch (DuplicateKeyException vEx) {
 	        System.out.println("L'utilisateur existe déjà ! pseudo=" + pUtilisateur.getPseudo());
-	        //throw runtimeException
+	        vEx.printStackTrace();
 	        return false;
 	    }
 	    

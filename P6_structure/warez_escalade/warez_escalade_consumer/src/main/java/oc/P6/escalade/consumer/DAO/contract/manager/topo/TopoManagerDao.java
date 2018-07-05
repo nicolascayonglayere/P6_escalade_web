@@ -53,6 +53,13 @@ public interface TopoManagerDao {
 	ArrayList<Topo> listerTopo();
 	
 	/**
+	 * Méthode pour obtenir la liste des {@link Topo} dans la base de donnée à partir du nom de l'auteur donné en paramètre
+	 * @param pNom
+	 * @return la liste des {@link Topo} en construction
+	 */
+	ArrayList<Topo> listerTopo(String pNom);
+	
+	/**
 	 * Méthode pour obtenir la liste des {@link Topo} de la base de donnée à partir d'un nom donné en paramètre
 	 * @param pNom
 	 * @return la liste des {@link Topo}

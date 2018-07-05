@@ -65,6 +65,29 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 	}
 
 	/**
+	 * Méthode pour obtenir la liste des {@link Topo} en construction dont l'auteur est donné en paramètre 
+	 */
+	@Override
+	public ArrayList<Topo> getListTopoConstr(String pNom) {
+		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
+		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+		vDefinition.setTimeout(30); // 30 secondes
+        TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
+        topoDAO = daoFactory.getTopoManagerDao();
+        ArrayList<Topo> listTopoConstr = new ArrayList<Topo>();
+        try {
+        	listTopoConstr= topoDAO.listerTopo(pNom);
+		    TransactionStatus vTScommit = vTransactionStatus;
+		    vTransactionStatus = null;
+		    platformTransactionManager.commit(vTScommit);
+		}finally {
+			if (vTransactionStatus != null) 
+				platformTransactionManager.rollback(vTransactionStatus); 			
+		}
+		return listTopoConstr;
+	}
+	
+	/**
 	 * Méthode pour obtenir le {@link Topo} dont le nom est donné en paramètre
 	 */
 	@Override
@@ -74,7 +97,7 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 		vDefinition.setTimeout(30); // 30 secondes
         TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
         topoDAO = daoFactory.getTopoManagerDao();
-
+        System.out.println(pNom);
 		if (topoDAO.find(pNom) != null) {
 			try {
 			topo = topoDAO.find(pNom);
@@ -254,5 +277,6 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 	public void setTopo(IntTopo topo) {
 		this.topo = topo;
 	}
+
 
 }

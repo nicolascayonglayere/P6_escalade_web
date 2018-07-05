@@ -68,6 +68,29 @@
 			</s:elseif>
 			
 			<!-- un recap des topo en cours de creation -->
+			<table class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th><s:text name="compteUser.nom"/></th>
+						<th><s:text name="compteUser.topo"/></th>
+					</tr>
+				</thead>
+					<s:iterator value="listTopoConstr" var="topo">
+						<tr>
+					    	<td style="text-align:left;"><s:property value="#topo.auteur.pseudo"/></td>
+					    	<td style="text-align:right;"><s:property value="#topo.nomTopo" /></td>
+					    	<td>
+					    		<s:a action="ajouter_voie" namespace="/jsp/utilisateur">
+					    			<s:param name="nomTopo" value="#topo.nomTopo"/>
+					    			<s:submit class="btn btn-default" value="%{getText('bouton.modifier')}"/>
+					    		</s:a>	
+					    	</td>
+					   	</tr>
+				 	</s:iterator>
+			</table>			
+			
+			
+			
 			
 			<!-- un tab recapitulatif des topos emrpuntés (historique tot ou partiel ?)-->
 			<table class="table table-bordered table-striped">

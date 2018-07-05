@@ -27,8 +27,6 @@
 			 	 </s:submit>
 			</s:form>
 
-				<!-- un if test pour l'affichage -->
-
 				<s:iterator value="listTopo">
 					<ul>
 						<s:a action="go_modifTopo" namespace="/jsp/utilisateur">

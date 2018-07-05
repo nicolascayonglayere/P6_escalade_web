@@ -11,6 +11,7 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import oc.P6.escalade.business.contract.ManagerFactory;
 import oc.P6.escalade.model.bean.emprunt.TopoEmprunt;
+import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateur;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
@@ -27,6 +28,7 @@ public class MonCompteAction extends ActionSupport implements SessionAware{
 	private String role;
 	private ArrayList<TopoEmprunt> listTopoEmprunt;
 	private CoordonneeUtilisateur coordonneeUtilisateur;
+	private ArrayList<Topo> listTopoConstr;
 	private Map<String, Object> session;
 
 	public Utilisateur getUtilisateur() {
@@ -77,6 +79,8 @@ public class MonCompteAction extends ActionSupport implements SessionAware{
 		listTopoEmprunt = managerFactory.getTopoEmpruntManager().getListTopoEmprunt(utilisateur.getId());
 		coordonneeUtilisateur = managerFactory.getCoordonneeUtilisateurManager().getCoordonnee(utilisateur.getId());
 		role = utilisateur.getRole();
+		if(role.equals("administrateur"))
+			listTopoConstr = managerFactory.getTopoManager().getListTopoConstr(utilisateur.getPseudo());
 		System.out.println("Compte : "+username1+" - "+utilisateur.getRole()+" - "+utilisateur.getNom()+" - "+listTopoEmprunt.size()+" - "+coordonneeUtilisateur.getEmail());
 		return SUCCESS;
 	}
@@ -93,5 +97,13 @@ public class MonCompteAction extends ActionSupport implements SessionAware{
 
 	public void setManagerFactory(ManagerFactory managerFactory) {
 		this.managerFactory = managerFactory;
+	}
+
+	public ArrayList<Topo> getListTopoConstr() {
+		return listTopoConstr;
+	}
+
+	public void setListTopoConstr(ArrayList<Topo> listTopoConstr) {
+		this.listTopoConstr = listTopoConstr;
 	}
 }

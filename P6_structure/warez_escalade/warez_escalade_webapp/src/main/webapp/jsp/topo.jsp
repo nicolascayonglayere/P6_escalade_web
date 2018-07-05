@@ -41,7 +41,13 @@
 			
 				</div>
 			</div>
-
+			
+			<div class="row">
+				<s:if test="topo.construction">
+					<h2>EN CONSTRUCTION</h2>
+				</s:if>
+			</div>
+			
 			<div class="row">
 			    <!-- Caroussel -->
 			    <div id="monCarousel" class="carousel slide col-sm" data-ride="carousel">

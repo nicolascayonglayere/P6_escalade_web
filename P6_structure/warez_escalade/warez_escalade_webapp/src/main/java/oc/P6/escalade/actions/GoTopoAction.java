@@ -1,7 +1,12 @@
 package oc.P6.escalade.actions;
 
 import java.io.File;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.inject.Inject;
 
@@ -120,15 +125,32 @@ public class GoTopoAction extends ActionSupport {
     		repoId = topo.getImage();
     		//System.out.println(topo.getImage());
      		//File repertoire = new File("webapp\\assets\\images\\"+topo.getImage());
+    		Path chemin = Paths.get("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\", topo.getImage());
     		File repertoire = new File("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\"+topo.getImage());//
-    		//System.out.println(repertoire.getPath()+" - "+repertoire.isDirectory());//+" - "+repertoire.listFiles().length);
+    		System.out.println(repertoire.getPath()+" - "+repertoire.isDirectory());//+" - "+repertoire.listFiles().length);
     		listImage = new ArrayList<String>();
-    		if((repertoire.listFiles()).length > 0) {
-    			for (File img : repertoire.listFiles())
-    				listImage.add(repoId+"\\"+img.getName());//repertoire.getPath()+"\\"+img.getName());
+    	    DirectoryStream<Path> stream = Files.newDirectoryStream(chemin);
+    	    try { 
+    	      Iterator<Path> iterator = stream.iterator();
+    	      while(iterator.hasNext()) {
+    	        Path p = iterator.next();
+    	        System.out.println(p);
+    	        listImage.add(repoId+"\\"+p.getFileName().toString());
+    	        imageId = listImage.get(0);
+    	      }
+  				
+    	    } finally { 
+    	      stream.close(); 
+    	    }
+    		
+    		
+    		//
+    		//if((repertoire.listFiles()).length > 0) {
+    			//for (File img : repertoire.listFiles())
+    				//listImage.add(repoId+"\\"+img.getName());//repertoire.getPath()+"\\"+img.getName());
     	        //System.out.println(topo.getNom());
-    			imageId = listImage.get(0);
-    		}
+
+    		//}
     		//System.out.println(imageId);        	
         	listSite = (ArrayList<Site>) managerFactory.getSiteManager().getSite(topo);
         	for (Site s : listSite) {

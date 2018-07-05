@@ -34,23 +34,30 @@
 	     			 <s:token/>
 				</s:form>
 				
-				<s:a action="ajouter_secteur" namespace="/jsp/utilisateur">
-					<s:submit class="btn btn-default" value="%{getText('bouton.ajouterSecteur')}">
-						<s:param name="topo.nomTopo">${session.topo.nomTopo}</s:param>
-					</s:submit>						
-				</s:a>
-				
-				<s:a action="ajouter_site" namespace="/jsp/utilisateur">
-					<s:submit class="btn btn-default" value="%{getText('bouton.ajouterSite')}">
-						<s:param name="topo.nomTopo">${session.topo.nomTopo}</s:param>
-					</s:submit>	
-				</s:a>
-				
-				<s:a action="ajouter_voie" namespace="/jsp/utilisateur">
+				<s:if test="#session.site">
+					<s:a action="ajouter_secteur" namespace="/jsp/utilisateur">
+						<s:submit class="btn btn-default" value="%{getText('bouton.ajouterSecteur')}">
+							<s:param name="topo.nomTopo">${session.topo.nomTopo}</s:param>
+						</s:submit>						
+					</s:a>
+					
+					<s:a action="ajouter_site" namespace="/jsp/utilisateur">
+						<s:submit class="btn btn-default" value="%{getText('bouton.ajouterSite')}">
+							<s:param name="topo.nomTopo">${session.topo.nomTopo}</s:param>
+						</s:submit>	
+					</s:a>
+				</s:if>
+				<!--<s:a action="ajouter_voie" namespace="/jsp/utilisateur">
 					<s:submit class="btn btn-default" value="%{getText('bouton.ajouterVoie')}">
 						<s:param name="topo.nomTopo">${session.topo.nomTopo}</s:param>
 					</s:submit>
-				</s:a>			
+				</s:a>
+
+				<s:a action="ajouter_image" namespace="/jsp/utilisateur">
+					<s:submit class="btn btn-default" value="%{getText('bouton.ajouterImage')}">
+						<s:param name="topo.nomTopo">${session.topo.nomTopo}</s:param>
+					</s:submit>
+				</s:a>-->							
 		</div>
 		
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

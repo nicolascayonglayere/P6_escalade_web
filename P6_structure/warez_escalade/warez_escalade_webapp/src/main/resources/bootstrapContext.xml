@@ -26,5 +26,6 @@
     <import resource="classpath:*/oc/P6/escalade/business/businessContext.xml" />
     <import resource="classpath:*/oc/P6/escalade/model/modelContext.xml" />    
     <import resource="classpath:*/oc/P6/escalade/consumer/consumerContext.xml" />
+    <import resource="classpath:*/src/main/webapp/WEB-INF/spring/security.xml" />
 
 </beans>

@@ -7,6 +7,7 @@ oc\P6\escalade\actions\topo\CreerSecteur.class
 oc\P6\escalade\actions\utilisateur\BanUtilisateurAction.class
 oc\P6\escalade\actions\topo\SupprimerTopo.class
 oc\P6\escalade\actions\topo\FinaliserTopo.class
+oc\P6\escalade\actions\UploadAction.class
 oc\P6\escalade\actions\topo\CreerSite.class
 oc\P6\escalade\actions\ContactAction.class
 oc\P6\escalade\actions\topo\SupprimerSite.class

@@ -3,7 +3,9 @@ package oc.P6.escalade.actions.topo;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
+import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -14,7 +16,7 @@ import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.topo.Voie;
 
-public class CreerVoie extends ActionSupport implements SessionAware {
+public class CreerVoie extends ActionSupport implements SessionAware, ServletRequestAware {
 
 	/**
 	 * 
@@ -28,6 +30,7 @@ public class CreerVoie extends ActionSupport implements SessionAware {
 	private Secteur secteur;
 	private Site site;
 	private Map<String, Object> session;
+	private HttpServletRequest request;
 	
 	public Voie getVoie() {
 		return voie;
@@ -57,12 +60,20 @@ public class CreerVoie extends ActionSupport implements SessionAware {
 		
 	public String execute() {
 		System.out.println("trace creation voie");
-		nomTopo = ((Topo)session.get("topo")).getNomTopo();
+		if ((Topo)session.get("topo") != null)
+			nomTopo = ((Topo)session.get("topo")).getNomTopo();
+		else
+			nomTopo = request.getParameter("nomTopo");
 		topo = managerFactory.getTopoManager().getTopo(nomTopo);
-		nomSite=((Site)session.get("site")).getNomSite();
+		
+		if ((Site)session.get("site") != null)
+			nomSite=((Site)session.get("site")).getNomSite();
 		site = managerFactory.getSiteManager().getSite(nomSite, topo);
-		nomSecteur = ((Secteur)session.get("secteur")).getNomSecteur();
+		
+		if((Secteur)session.get("secteur") != null)
+			nomSecteur = ((Secteur)session.get("secteur")).getNomSecteur();
 		secteur = managerFactory.getSecteurManager().getSecteur(nomSecteur, site);
+		
 		voie.setSecteur(secteur);
 		System.out.println(nomTopo+" - "+nomSite+" - "+nomSecteur+" - "+voie.getCotation());
 		managerFactory.getVoieManager().creerVoie(voie);
@@ -97,6 +108,11 @@ public class CreerVoie extends ActionSupport implements SessionAware {
 	@Override
 	public void setSession(Map<String, Object> session) {
 		this.session = session;
+		
+	}
+	@Override
+	public void setServletRequest(HttpServletRequest request) {
+		this.request = request;
 		
 	}
 	

@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import org.apache.struts2.interceptor.SessionAware;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -65,8 +66,11 @@ public class InscriptionAction extends ActionSupport implements SessionAware {
 		}
 		
 		else {//if (vResult != ActionSupport.INPUT) {
+			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+			String hashedPassword = passwordEncoder.encode(utilisateur.getPassword());
+			utilisateur.setPassword(hashedPassword);
 			managerFactory.getUtilisateurManager().creerUtilisateur(utilisateur);
-			managerFactory.getUtilisateurManager().modifierPassUtilisateur(utilisateur);
+			//managerFactory.getUtilisateurManager().modifierPassUtilisateur(utilisateur);
 			coordonnee.setUtilisateur(managerFactory.getUtilisateurManager().getUtilisateur(utilisateur.getPseudo()));
 			System.out.println(utilisateur.getPseudo()+" - "+ coordonnee.getIdUtilisateur());
 			managerFactory.getCoordonneeUtilisateurManager().creerCoordonnee(coordonnee);

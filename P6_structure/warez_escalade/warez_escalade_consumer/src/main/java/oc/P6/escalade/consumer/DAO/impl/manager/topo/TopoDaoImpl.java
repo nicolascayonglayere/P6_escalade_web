@@ -164,6 +164,19 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 		return vListTopo;
 	}
 
+	@Override
+	public ArrayList<Topo> listerTopo(String pNom) {
+		ArrayList<Topo> listeTopo = new ArrayList<Topo>();
+		String vSQL = "SELECT * FROM topo WHERE construction = true AND id_utilisateur = :id_utilisateur ";
+		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
+		MapSqlParameterSource vParams = new MapSqlParameterSource();
+		Utilisateur auteur = daoFacto.getUtilisateurManagerDAO().find(pNom);
+        vParams.addValue("id_utilisateur", auteur.getId(), Types.INTEGER);
+        
+		listeTopo = (ArrayList<Topo>) vJdbcTemplate.query(vSQL, vParams, topoRowMapper);
+		return listeTopo;
+	}
+
 
 	
 }

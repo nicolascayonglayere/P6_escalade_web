@@ -18,6 +18,13 @@ public interface TopoManager {
 	ArrayList<Topo> getListTopo();
 	
 	/**
+	 * Retourne la liste des {@link Topo} en construction d'après le nom de l'auteur donné en paramètre
+	 * @param pNom
+	 * @return
+	 */
+	ArrayList<Topo> getListTopoConstr(String pNom);
+	
+	/**
 	 * Retourne le {@link Topo} dont le nom est donné en parmètre
 	 * @param pNom
 	 * @return {@link Topo}

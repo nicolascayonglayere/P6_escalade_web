@@ -238,15 +238,9 @@
 		</action>
 		
 		<action name="upload_image" class="oc.P6.escalade.actions.UploadAction" method="execute">
-    		<result name="success" type="redirectAction">
-				<param name="actionName">deplacer_image</param>
-				<param name="namespace">/jsp/utilisateur</param>
-			</result>
+    		<result name="success">/jsp/admin/creer_voie.jsp</result>
+			<result name="input">/jsp/admin/upload_image.jsp</result>
 		</action>
-
-		<action name="deplacer_image" class="oc.P6.escalade.actions.UploadAction" method="deplacer">
-			<result>/jsp/admin/creer_voie.jsp</result>
-		</action> 		
 		
 		<!--Toutes les actions de creation de topo -->
 		<action name="go_creerTopo" class="oc.P6.escalade.actions.GoCreerTopo" method="execute">
@@ -306,7 +300,7 @@
 			<result name="input">/jsp/admin/creer_voie.jsp</result>			
 		</action>
 			
-		<action name="ajouter_voie">
+		<action name="ajouter_voie">		
 			<result>/jsp/admin/creer_voie.jsp</result>
 		</action>	
 				  
@@ -390,6 +384,7 @@
 
 		<!-- page de modification d'une voie -->
 		<action name="go_modifVoie">
+		    <interceptor-ref name="defaultStack" />
 			<result>/jsp/admin/modif_voie.jsp</result>
 		</action>		
 		

@@ -9,18 +9,10 @@ COMMIT;
 
 --table utilisateur--
 BEGIN TRANSACTION;
-INSERT INTO utilisateur (id_utilisateur, nom, prenom, pseudo, password, id_role) VALUES (1, 'ncg', 'nicolas', 'yogj', 'admin', 1);
-INSERT INTO utilisateur (id_utilisateur, nom, prenom, pseudo, password, id_role) VALUES (2, 'abdsc', 'nicole', 'nico', 'modo', 2);
-INSERT INTO utilisateur (id_utilisateur, nom, prenom, pseudo, password, id_role) VALUES (3, 'qsdfg', 'benoit', 'ben', 'user', 3);
-INSERT INTO utilisateur (id_utilisateur, nom, prenom, pseudo, password, id_role) VALUES (4, 'wxcvb', 'andre', 'ban', 'user', 4);
-COMMIT;
-
---- cryptage des mots de passe
-BEGIN TRANSACTION;
-UPDATE public.utilisateur SET password = crypt('admin', gen_salt('bf',8)) WHERE id_utilisateur = 1;
-UPDATE public.utilisateur SET password = crypt('modo', gen_salt('bf',8)) WHERE id_utilisateur = 2;
-UPDATE public.utilisateur SET password = crypt('user', gen_salt('bf',8)) WHERE id_utilisateur = 3;
-UPDATE public.utilisateur SET password = crypt('user', gen_salt('bf',8)) WHERE id_utilisateur = 4;
+INSERT INTO utilisateur (id_utilisateur, nom, prenom, pseudo, password, id_role) VALUES (1, 'ncg', 'nicolas', 'yogj', '$2a$10$PkyNIKEAqbMrZNeQ/QPRyeOV0gB.Q3LFxdjU94YlqUCzj.BhwVaVa', 1);
+INSERT INTO utilisateur (id_utilisateur, nom, prenom, pseudo, password, id_role) VALUES (2, 'abdsc', 'nicole', 'nico', '$2a$10$A/ZfYQ4jybiU5sChtDbSTOsxokbXhpY/2ZHwvuL6fYg2YcZPkncMe', 2);
+INSERT INTO utilisateur (id_utilisateur, nom, prenom, pseudo, password, id_role) VALUES (3, 'qsdfg', 'benoit', 'ben', '$2a$10$GBXyWWH.TkFD1OyrTTfLXerqmHRHClzd2T8HHGAIFU.8dV2xeHf4a', 3);
+INSERT INTO utilisateur (id_utilisateur, nom, prenom, pseudo, password, id_role) VALUES (4, 'wxcvb', 'andre', 'ban', '$2a$10$jpZv/CpgtqUMFYeK3BkAA.QI2sKxbR4l2bQ9kZRBLs4fuFaxqt9ya', 4);
 COMMIT;
 
 --table coordonnee_utilisateur--

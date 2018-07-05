@@ -66,6 +66,12 @@
 					</s:submit>
 				</s:a>
 				
+				<s:a action="ajouter_image" namespace="/jsp/utilisateur">
+					<s:submit class="btn btn-default" value="%{getText('bouton.ajouterImage')}">
+						<s:param name="topo.nomTopo">${session.topo.nomTopo}</s:param>
+					</s:submit>
+				</s:a>				
+				
 				<s:a action="finaliser_topo" namespace="/jsp/utilisateur">
 					<s:submit class="btn btn-default" value="%{getText('bouton.finaliser')}" position="right">
 						<s:param name="nomTopo">${session.topo.nomTopo}</s:param>
