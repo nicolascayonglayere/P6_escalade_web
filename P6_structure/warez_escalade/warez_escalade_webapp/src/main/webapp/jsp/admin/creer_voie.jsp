@@ -73,7 +73,7 @@
 				</s:a>				
 				
 				<s:a action="finaliser_topo" namespace="/jsp/utilisateur">
-					<s:submit class="btn btn-default" value="%{getText('bouton.finaliser')}" position="right">
+					<s:submit class="btn btn-default" value="%{getText('bouton.finaliser')}">
 						<s:param name="nomTopo">${session.topo.nomTopo}</s:param>
 					</s:submit>
 				</s:a>		

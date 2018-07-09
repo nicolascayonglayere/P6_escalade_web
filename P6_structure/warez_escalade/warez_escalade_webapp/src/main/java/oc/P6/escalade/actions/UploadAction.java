@@ -9,10 +9,14 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.nio.channels.SeekableByteChannel;
+import java.nio.file.CopyOption;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -54,55 +58,30 @@ public class UploadAction extends ActionSupport implements SessionAware{
 	}
 	@Override
 	public String execute() throws Exception {
-		int bytesRead = 0;
+		byte[] bytesRead;
 		String nomImg="";
 		String nomTopo = ((Topo)session.get("topo")).getNomTopo().replaceAll("\\p{Space}", "");
 		Path cheminUpload = Paths.get("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images");
-	    Path stockImg = Paths.get("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\"
-	    							+nomTopo+"\\"+nomImg);
+
 		System.out.println("\n\n upload1");
 		System.out.println("files:");
 		for (File u : upload) {
-			System.out.println("*** " + u + "\t" + u.length());
-			try (InputStream is = new FileInputStream(u)){
-				nomImg = u.getName();
-				FileChannel inChannel = ( (FileInputStream) is).getChannel();
-				ByteBuffer buf = ByteBuffer.allocate(48);
-				bytesRead = inChannel.read(buf);
-				inChannel.close();
-			}catch (FileNotFoundException e) {
+			try {
+				System.out.println("*** " + u + "\t" + u.length());
+				nomImg = uploadFileName.get(upload.indexOf(u));
+				Path stockImg = Paths.get("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\"
+						+nomTopo, nomImg);
+				System.out.println(nomImg+" - "+stockImg.toString());
+				Path uPath = Paths.get(u.getAbsolutePath());
+				System.out.println(uPath.toString());
+				Files.copy(uPath, stockImg, StandardCopyOption.COPY_ATTRIBUTES);
+			}catch(FileNotFoundException e) {
 				e.printStackTrace();
 			}catch (IOException e) {
 				e.printStackTrace();
 				addActionMessage("Erreur lors de l'upload. Veuillez recommencer.");
 				return ActionSupport.INPUT;
-			} 
-			
-			
-			try (OutputStream os = new FileOutputStream(stockImg.toFile())) {
-				   FileChannel outChannel = ((FileOutputStream) os).getChannel();
-
-				   ByteBuffer bufo = ByteBuffer.allocate(48);
-				   bufo.clear();
-				   bufo.putInt(bytesRead);
-
-				   bufo.flip();
-
-				   while(bufo.hasRemaining()) {
-				      outChannel.write(bufo);
-				   }
-				  // Files.write(stockImg, bytesRead);
-				   
-            	   //Files.copy(Paths.get(u.getAbsolutePath()), os);
-            	   addActionMessage("Vos images ont bien été enregistrées.");
-            	   outChannel.close();
-		       }catch (FileNotFoundException e) {
-					e.printStackTrace();
-				}catch (IOException e) {
-					e.printStackTrace();
-					addActionMessage("Erreur lors de l'upload. Veuillez recommencer.");
-					return ActionSupport.INPUT;
-				} 
+			}
 		}
 		System.out.println("filenames:");
 		for (String n : uploadFileName) {

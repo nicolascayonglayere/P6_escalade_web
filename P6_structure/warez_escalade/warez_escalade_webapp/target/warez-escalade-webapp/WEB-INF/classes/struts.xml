@@ -209,19 +209,30 @@
 			<interceptor-ref name="store">
 				<param name="operationMode">STORE</param>
 		    </interceptor-ref>
-		    <interceptor-ref name="loginStack">
+		    <interceptor-ref name="commentaireStack">
 		   		<param name="params.excludeParams">dojo..*,^struts..*,^session..*,^request..*,^application..*,^servlet(Request|Response)..*,parameters...*,submit,token,struts.token.name</param>
 		   	</interceptor-ref>
-		    <!--  <interceptor-ref name="commentaireStack" />-->        
-        	<result name="success" type="redirectAction">
+			<result name="success">/jsp/topo.jsp</result>        
+        	<!--  <result name="success" type="redirectAction">
         		<param name="actionName">go_topo</param>
         		<param name="namespace">/</param>
-        	</result>
+        	</result>-->
         	<result name="input">/jsp/topo.jsp</result>
         </action>      
    
 		<!--Toutes les actions de gestion de commentaires -->
-		<action name="validerCommentaire" class="oc.P6.escalade.actions.ValidationCommentaireAction" method="valider">
+		<action name="valider_commentaire" class="oc.P6.escalade.actions.utilisateur.ValidationCommentaireAction" method="valider">
+       		<interceptor-ref name="store">
+				<param name="operationMode">STORE</param>
+		    </interceptor-ref>
+		    <interceptor-ref name="defaultStack" />		
+    		<result name="success" type="redirectAction">
+    			<param name="actionName">go_monCompte</param>
+    			<param name="namespace">/jsp/utilisateur</param>
+    		</result>
+		</action>
+		
+		<action name="rejeter_commentaire" class="oc.P6.escalade.actions.utilisateur.ValidationCommentaireAction" method="rejeter">
        		<interceptor-ref name="store">
 				<param name="operationMode">STORE</param>
 		    </interceptor-ref>
@@ -384,6 +395,9 @@
 
 		<!-- page de modification d'une voie -->
 		<action name="go_modifVoie">
+		    <interceptor-ref name="defaultStack" >
+		   		<param name="params.excludeParams">dojo..*,^struts..*,^session..*,^request..*,^application..*,^servlet(Request|Response)..*,parameters...*,submit,token,struts.token.name</param>
+		   	</interceptor-ref>		
 			<result>/jsp/admin/modif_voie.jsp</result>
 		</action>		
 		

@@ -20,12 +20,12 @@
 		<%@include file="../_include/entete.jsp" %>
 		<s:actionmessage/>
 		<div class="container">
-			<h3><s:text name="modifTopo.topo"/> <s:property value="#topo.nomTopo"/></h3>
+			<h3><s:text name="modifTopo.topo"/> <s:property value="#request.nomTopo"/></h3>
 			<h4><s:text name="modifTopo.titreSite"/></h4>
 				<s:form action="creer_site" cssClass="form-horizontal" namespace="/jsp/utilisateur">
 					<s:textfield name="site.nomSite" placeholder="nom du site" label="%{getText('form.nomSite')}" requiredLabel="false"/>
 					<s:textfield name="site.description" placeholder="description" label="%{getText('form.description')}" requiredLabel="false"/>
-					<s:textfield name="topo.nomTopo" placeholder="#topo.nomTopo" label="%{getText('form.nomTopo')}" requiredLabel="true"/>
+					<s:textfield name="topo.nomTopo" placeholder="#request.nomTopo" label="%{getText('form.nomTopo')}" requiredLabel="true"/>
 					<s:submit class="btn btn-default" value="%{getText('bouton.valider')}">
 	      				<s:param name="nomSite">${site.nomSite}</s:param>
 	      				<s:param name="description">${site.description}</s:param>

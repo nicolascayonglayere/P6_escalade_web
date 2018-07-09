@@ -3,11 +3,6 @@
 		"http://struts.apache.org/dtds/xwork-validator-1.0.3.dtd">
 
 <validators>
-    <field name="utilisateur.pseudo">
-        <field-validator type="requiredstring">
-        	<message key="required.pseudo"/>
-        </field-validator>
-    </field>    
     <field name="commentaireTopo.message">
         <field-validator type="requiredstring" short-circuit="true">
         	<message key="required.commentaire"/>

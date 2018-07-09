@@ -20,12 +20,14 @@
 		<%@include file="../_include/entete.jsp" %>
 		<s:actionmessage/>
 		<div class="container">
+			<h2><s:text name="image.titre"/></h2>
 			<h3><s:text name="creerTopo.topo"/> <s:property value="#session.topo.nomTopo"/></h3>		
 				<s:form action="upload_image" method="POST" enctype="multipart/form-data">
-  					<s:file label="fichierImage (1)" name="upload" />
-  					<s:file label="fichierImage (2)" name="upload" />
-  					<s:file label="fichierImage (3)" name="upload" />
-  					<s:submit cssClass="btn btn-primary"/>
+  					<s:file label="%{getText('form.imgCouv')}" name="upload" />
+  					<s:file label="%{getText('form.img')}" name="upload" />
+  					<s:file label="%{getText('form.img')}" name="upload" />
+  					<s:file label="%{getText('form.img')}" name="upload" />
+  					<s:submit cssClass="btn btn-primary" value="%{getText('bouton.valider')}"/>
 				</s:form>		
 		
 		</div>

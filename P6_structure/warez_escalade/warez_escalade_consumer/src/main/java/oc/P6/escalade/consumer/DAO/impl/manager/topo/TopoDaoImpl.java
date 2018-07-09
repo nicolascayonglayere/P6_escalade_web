@@ -78,7 +78,7 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 
 	@Override
 	public boolean update(Topo pTopo) {
-		String vSQL = "UPDATE topo SET nom = :nom, id_utilisateur = :id, nombre_exemplaires = :nbreEx, description = :description, longitude = :longitude, latitude = :latitude, image = :image "
+		String vSQL = "UPDATE topo SET nom = :nom, id_utilisateur = :id, nombre_exemplaires = :nbreEx, description = :description, longitude = :longitude, latitude = :latitude, image = :image, construction = :construction "
 					+ " WHERE id_topo = :id_topo";
 		Utilisateur auteur = daoFacto.getUtilisateurManagerDAO().find(pTopo.getAuteur().getPseudo());
 		

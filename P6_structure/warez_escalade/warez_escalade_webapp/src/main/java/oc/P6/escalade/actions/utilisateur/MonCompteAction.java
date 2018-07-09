@@ -10,6 +10,7 @@ import org.apache.struts2.interceptor.SessionAware;
 import com.opensymphony.xwork2.ActionSupport;
 
 import oc.P6.escalade.business.contract.ManagerFactory;
+import oc.P6.escalade.model.bean.commentaire.CommentaireTopo;
 import oc.P6.escalade.model.bean.emprunt.TopoEmprunt;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateur;
@@ -29,6 +30,7 @@ public class MonCompteAction extends ActionSupport implements SessionAware{
 	private ArrayList<TopoEmprunt> listTopoEmprunt;
 	private CoordonneeUtilisateur coordonneeUtilisateur;
 	private ArrayList<Topo> listTopoConstr;
+	private ArrayList<CommentaireTopo> listCommentaire;
 	private Map<String, Object> session;
 
 	public Utilisateur getUtilisateur() {
@@ -81,6 +83,8 @@ public class MonCompteAction extends ActionSupport implements SessionAware{
 		role = utilisateur.getRole();
 		if(role.equals("administrateur"))
 			listTopoConstr = managerFactory.getTopoManager().getListTopoConstr(utilisateur.getPseudo());
+		if(role.equals("moderateur"))
+			listCommentaire = managerFactory.getCommentaireTopoManager().getListCommentaireTopo();
 		System.out.println("Compte : "+username1+" - "+utilisateur.getRole()+" - "+utilisateur.getNom()+" - "+listTopoEmprunt.size()+" - "+coordonneeUtilisateur.getEmail());
 		return SUCCESS;
 	}
@@ -105,5 +109,13 @@ public class MonCompteAction extends ActionSupport implements SessionAware{
 
 	public void setListTopoConstr(ArrayList<Topo> listTopoConstr) {
 		this.listTopoConstr = listTopoConstr;
+	}
+
+	public ArrayList<CommentaireTopo> getListCommentaire() {
+		return listCommentaire;
+	}
+
+	public void setListCommentaire(ArrayList<CommentaireTopo> listCommentaire) {
+		this.listCommentaire = listCommentaire;
 	}
 }

@@ -28,22 +28,23 @@
 			<s:actionmessage/>			
 			<!-- pour les modérateurs, une liste des commentaires à valider -->
 			<s:if test="%{utilisateur.role == 'moderateur'}">
-				<s:iterator value="listCommentaire" var="commentaire">
+				<s:iterator value="listCommentaire" var="commentaireTopo">
 					<ul>
 						<li>
-							<i class="fas fa-user"> <s:property value="#commentaire.auteur.pseudo"/></i>
-							<s:property value="#commentaire.message"/>
+							<i class="fas fa-user"> <s:property value="#commentaireTopo.auteur.pseudo"/></i>
+							<s:property value="#commentaireTopo.message"/>
+							<s:property value="#commentaireTopo.topo.nomTopo"/>
 							<s:a action="valider_commentaire" namespace="/jsp/utilisateur">
-								<s:submit class="btn btn-default" value="%{getText('bouton.valider')}">
-				    				<s:param name="commentaire" value="#commentaire.message"/>
-				    				<s:param name="pseudo" value="#commentaire.auteur.pseudo"/>
-				    			</s:submit>
+								<s:param name="nomTopo" value="#commentaireTopo.topo.nomTopo"/>
+								<s:param name="pseudo" value="#commentaireTopo.auteur.pseudo"/>
+								<s:param name="message" value="#commentaireTopo.message"/>
+								<s:submit class="btn btn-default" value="%{getText('bouton.valider')}"/>
 				    		</s:a>
 							<s:a action="rejeter_commentaire" namespace="/jsp/utilisateur">
-								<s:submit class="btn btn-default" value="%{getText('bouton.rejeter')}">
-				    				<s:param name="commentaire" value="#commentaire.message"/>
-				    				<s:param name="pseudo" value="#commentaire.auteur.pseudo"/>
-				    			</s:submit>
+								<s:param name="nomTopo" value="#commentaireTopo.topo.nomTopo"/>
+				    			<s:param name="message" value="#commentaireTopo.message"/>
+				    			<s:param name="pseudo" value="#commentaireTopo.auteur.pseudo"/>								
+								<s:submit class="btn btn-default" value="%{getText('bouton.rejeter')}"/>
 				    		</s:a>				    		
 						</li>
 					</ul>
@@ -65,30 +66,30 @@
 	    		<s:a action="go_chercherTopo" namespace="/jsp/utilisateur">
 	    			<s:text name="compteUser.supprTopo"/>
 	    		</s:a>				
-			</s:elseif>
+
 			
-			<!-- un recap des topo en cours de creation -->
-			<table class="table table-bordered table-striped">
-				<thead>
-					<tr>
-						<th><s:text name="compteUser.nom"/></th>
-						<th><s:text name="compteUser.topo"/></th>
-					</tr>
-				</thead>
-					<s:iterator value="listTopoConstr" var="topo">
+				<!-- un recap des topo en cours de creation -->
+				<table class="table table-bordered table-striped">
+					<thead>
 						<tr>
-					    	<td style="text-align:left;"><s:property value="#topo.auteur.pseudo"/></td>
-					    	<td style="text-align:right;"><s:property value="#topo.nomTopo" /></td>
-					    	<td>
-					    		<s:a action="ajouter_voie" namespace="/jsp/utilisateur">
-					    			<s:param name="nomTopo" value="#topo.nomTopo"/>
-					    			<s:submit class="btn btn-default" value="%{getText('bouton.modifier')}"/>
-					    		</s:a>	
-					    	</td>
-					   	</tr>
-				 	</s:iterator>
-			</table>			
-			
+							<th><s:text name="compteUser.nom"/></th>
+							<th><s:text name="compteUser.topo"/></th>
+						</tr>
+					</thead>
+						<s:iterator value="listTopoConstr" var="topo">
+							<tr>
+						    	<td style="text-align:left;"><s:property value="#topo.auteur.pseudo"/></td>
+						    	<td style="text-align:right;"><s:property value="#topo.nomTopo" /></td>
+						    	<td>
+						    		<s:a action="ajouter_voie" namespace="/jsp/utilisateur">
+						    			<s:param name="nomTopo" value="#topo.nomTopo"/>
+						    			<s:submit class="btn btn-default" value="%{getText('bouton.modifier')}"/>
+						    		</s:a>	
+						    	</td>
+						   	</tr>
+					 	</s:iterator>
+				</table>			
+			</s:elseif>
 			
 			
 			

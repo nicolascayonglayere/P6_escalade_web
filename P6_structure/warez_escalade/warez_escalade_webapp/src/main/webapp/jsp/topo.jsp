@@ -140,14 +140,29 @@
 
 		
 			<!-- commentaire Topo/secteur/site -->
+			<s:if test="listCommentaire">
+				<s:iterator value="listCommentaire" var="commentaireTopo">
+						<ul id="listCommentaireTopo">
+							<li>
+								<i class="fas fa-user"> <s:property value="#commentaireTopo.auteur.pseudo"/></i>
+								<s:property value="#commentaireTopo.topo.nomTopo"/>
+								<s:property value="#commentaireTopo.message"/>
+								<s:property value="#commentaireTopo.date"/>
+							</li>	
+						</ul>				
+				</s:iterator>
+			</s:if>
+			
+			
 			<s:if test="#session.utilisateur">
 				<h3><s:text name="topo.commentaire"></s:text></h3>		
 				<div class="row">
 		
 					<s:form id="commentaireForm" action="commenter" namespace="/jsp/utilisateur">
+						<s:hidden name="topo.nomTopo" value="%{topo.nomTopo}"></s:hidden>
 						<s:textarea name="commentaireTopo.message" placeholder="commentaire" label="%{getText('form.commentaire')}" requiredLabel="true"  cols="100" rows="10"/>		
 						<s:submit id="btEnvoi" class="btn btn-default" value="%{getText('bouton.envoi')}">
-			      			<s:param name="nom" value="topo.nomTopo"/>
+			      			<s:param name="nomTopo">${topo.nomTopo }</s:param>
 			      			<s:param name="message">${commentaireTopo.message}</s:param>
 			     		 </s:submit>
 			     		 <s:token/>

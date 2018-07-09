@@ -16,6 +16,7 @@ public class CommentaireTopo implements IntCommentaireTopo{
 	private Utilisateur auteur;
 	private Date date;
 	private String message;
+	private boolean validation;
 	
 	public CommentaireTopo() {
 		super();
@@ -59,6 +60,16 @@ public class CommentaireTopo implements IntCommentaireTopo{
 
 	public void setMessage(String message) {
 		this.message = message;
+	}
+
+	@Override
+	public boolean getValidation() {
+		return this.validation;
+	}
+
+	@Override
+	public void setValidation(boolean pValidation) {
+		this.validation = pValidation;
 	}
 	
 	

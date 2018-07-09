@@ -13,6 +13,7 @@ oc\P6\escalade\consumer\DAO\contract\manager\commentaire\CommentaireSiteDao.clas
 oc\P6\escalade\consumer\DAO\contract\manager\topo\SiteManagerDAO.class
 oc\P6\escalade\consumer\DAO\impl\manager\topo\VoieDaoImpl.class
 oc\P6\escalade\consumer\DAO\impl\manager\utilisateur\UtilisateurDaoImpl.class
+oc\P6\escalade\consumer\DAO\impl\rowmapper\CommentaireTopoRowMapper.class
 oc\P6\escalade\consumer\DAO\impl\manager\TopoEmpruntDaoImpl.class
 oc\P6\escalade\consumer\DAO\impl\rowmapper\SecteurRowMapper.class
 oc\P6\escalade\consumer\DAO\contract\manager\utilisateur\CoordonneeUtilisateurDao.class

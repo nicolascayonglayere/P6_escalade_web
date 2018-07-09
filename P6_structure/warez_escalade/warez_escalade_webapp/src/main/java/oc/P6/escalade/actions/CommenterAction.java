@@ -1,12 +1,11 @@
 package oc.P6.escalade.actions;
 
+
+import java.util.Calendar;
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 
-import org.apache.struts2.ServletActionContext;
-import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -16,7 +15,7 @@ import oc.P6.escalade.model.bean.commentaire.CommentaireTopo;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
-public class CommenterAction extends ActionSupport implements ServletRequestAware, SessionAware{
+public class CommenterAction extends ActionSupport implements SessionAware{
 
 	/**
 	 * 
@@ -30,7 +29,6 @@ public class CommenterAction extends ActionSupport implements ServletRequestAwar
 	private String message;
 	private CommentaireTopo commentaireTopo;
 	private Topo topo;
-	private HttpServletRequest servletRequest;
 	private Map<String, Object> session; 
 	
 	public Utilisateur getUtilisateur() {
@@ -38,12 +36,6 @@ public class CommenterAction extends ActionSupport implements ServletRequestAwar
 	}
 	public void setUtilisateur(Utilisateur utilisateur) {
 		this.utilisateur = utilisateur;
-	}
-	public String getNom() {
-		return nom;
-	}
-	public void setNom(String nom) {
-		this.nom = nom;
 	}
 	public Topo getTopo() {
 		return topo;
@@ -61,25 +53,22 @@ public class CommenterAction extends ActionSupport implements ServletRequestAwar
 	
 	public String execute() {
 		System.out.println(((Utilisateur) session.get("utilisateur")).getPseudo());
-		HttpServletRequest request = ServletActionContext.getRequest();
-		String nameTopo = request.getParameter("nom");
 		utilisateur = (Utilisateur) (session.get("utilisateur"));
-		//System.out.println(nameTopo);
-		System.out.println("comentaire du topo "+nom+" - "+utilisateur.getPseudo()+" - "+message);
+		System.out.println("comentaire du topo "+topo.getNomTopo()+" - "+utilisateur.getPseudo()+" - "+commentaireTopo.getMessage());
 		utilisateur = managerFactory.getUtilisateurManager().getUtilisateur(utilisateur.getPseudo());
-		topo = managerFactory.getTopoManager().getTopo(nom);
-		commentaireTopo.setMessage(message);
+		topo = managerFactory.getTopoManager().getTopo(topo.getNomTopo());
+		commentaireTopo.setMessage(commentaireTopo.getMessage());
 		commentaireTopo.setAuteur(utilisateur);
 		commentaireTopo.setTopo(topo);
+		commentaireTopo.setDate(Calendar.getInstance().getTime());
+		commentaireTopo.setValidation(false);
 		managerFactory.getCommentaireTopoManager().creerCommentaireTopo(commentaireTopo);
+
 		addActionMessage("Votre commentaire a bien été envoyé");
 		return ActionSupport.SUCCESS;
 		
 	}
-	@Override
-	public void setServletRequest(HttpServletRequest request) {
-		this.servletRequest = request;		
-	}
+
 	@Override
 	public void setSession(Map<String, Object> session) {
 		this.session = session;
@@ -102,4 +91,11 @@ public class CommenterAction extends ActionSupport implements ServletRequestAwar
 	public void setMessage(String message) {
 		this.message = message;
 	}
+	public String getNom() {
+		return nom;
+	}
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
 }

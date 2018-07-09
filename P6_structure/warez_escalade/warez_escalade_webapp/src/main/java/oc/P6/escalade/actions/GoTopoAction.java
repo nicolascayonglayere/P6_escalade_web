@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import com.opensymphony.xwork2.ActionSupport;
 
 import oc.P6.escalade.business.contract.ManagerFactory;
+import oc.P6.escalade.model.bean.commentaire.CommentaireTopo;
 import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
@@ -37,6 +38,7 @@ public class GoTopoAction extends ActionSupport {
 	private ArrayList<Secteur> listSecteur;
 	private ArrayList<Voie> listVoie;
 	private ArrayList<String>listImage;
+	private ArrayList<CommentaireTopo> listCommentaire;
 	private String[] listLieux = {"topo", "site", "secteur"};
 	
 	public Topo getTopo() {
@@ -117,7 +119,6 @@ public class GoTopoAction extends ActionSupport {
 	}
 	
 	public String execute() throws Exception {
-        //call Service class to store personBean's state in database
 		//--recupe le nom du topo dans la requete
 		System.out.println(nom);
 		topo = (Topo) managerFactory.getTopoManager().getTopo(nom);
@@ -126,11 +127,10 @@ public class GoTopoAction extends ActionSupport {
     		//System.out.println(topo.getImage());
      		//File repertoire = new File("webapp\\assets\\images\\"+topo.getImage());
     		Path chemin = Paths.get("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\", topo.getImage());
-    		File repertoire = new File("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\"+topo.getImage());//
-    		System.out.println(repertoire.getPath()+" - "+repertoire.isDirectory());//+" - "+repertoire.listFiles().length);
+    		//File repertoire = new File("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\"+topo.getImage());//
+    		//System.out.println(repertoire.getPath()+" - "+repertoire.isDirectory());//+" - "+repertoire.listFiles().length);
     		listImage = new ArrayList<String>();
-    	    DirectoryStream<Path> stream = Files.newDirectoryStream(chemin);
-    	    try { 
+    	    try (DirectoryStream<Path> stream = Files.newDirectoryStream(chemin)){ 
     	      Iterator<Path> iterator = stream.iterator();
     	      while(iterator.hasNext()) {
     	        Path p = iterator.next();
@@ -138,10 +138,7 @@ public class GoTopoAction extends ActionSupport {
     	        listImage.add(repoId+"\\"+p.getFileName().toString());
     	        imageId = listImage.get(0);
     	      }
-  				
-    	    } finally { 
-    	      stream.close(); 
-    	    }
+    	    } 
     		
     		
     		//
@@ -158,7 +155,7 @@ public class GoTopoAction extends ActionSupport {
         		for (Secteur sect : listSecteur) 
         			listVoie = (ArrayList<Voie>) managerFactory.getVoieManager().getListVoie(sect);
         	}
-
+        	listCommentaire = managerFactory.getCommentaireTopoManager().getListValid(topo.getId());
         	return SUCCESS;
         }
         else {
@@ -176,6 +173,12 @@ public class GoTopoAction extends ActionSupport {
 	}
 	public void setManagerFactory(ManagerFactory managerFactory) {
 		this.managerFactory = managerFactory;
+	}
+	public ArrayList<CommentaireTopo> getListCommentaire() {
+		return listCommentaire;
+	}
+	public void setListCommentaire(ArrayList<CommentaireTopo> listCommentaire) {
+		this.listCommentaire = listCommentaire;
 	}
 
 }

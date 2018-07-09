@@ -19,6 +19,8 @@
 	<body>
 		<%@include file="_include/entete.jsp" %>
 		<div class="container text-center">
+			<h3><s:text name="%{getText('contact.titre')}"/></h3>
+			</br>
 			<s:form id="contactForm" action="envoi_message" cssClass="form-vertical" namespace="/">
 				<s:textfield name="coordonneeUtilisateur.email" placeholder="email" label="%{getText('form.email')}" requiredLabel="true"/>
 				<s:textfield name="utilisateur.pseudo" placeholder="pseudo" label="%{getText('form.pseudo')}" requiredLabel="true"/>

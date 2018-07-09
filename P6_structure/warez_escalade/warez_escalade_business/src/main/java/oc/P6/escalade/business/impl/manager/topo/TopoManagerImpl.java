@@ -185,7 +185,7 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 			try {
 				pTopo.setId(topoDAO.find(pTopo.getNomTopo()).getId());
 				pTopo.setConstruction(false);
-				topoDAO.update((Topo)topo);
+				topoDAO.update(pTopo);
 				
 			    TransactionStatus vTScommit = vTransactionStatus;
 			    vTransactionStatus = null;

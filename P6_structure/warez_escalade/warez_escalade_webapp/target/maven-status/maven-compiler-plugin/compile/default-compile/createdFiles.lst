@@ -29,8 +29,10 @@ oc\P6\escalade\actions\topo\SupprimerSecteur.class
 oc\P6\escalade\actions\topo\ModifierSite.class
 oc\P6\escalade\actions\PresentationAction.class
 oc\P6\escalade\actions\utilisateur\MonCompteAction.class
+oc\P6\escalade\WebappHelper\PasswordEncoder.class
 oc\P6\escalade\actions\topo\SupprimerVoie.class
 oc\P6\escalade\actions\images\CustomImageBytesResult.class
+oc\P6\escalade\actions\utilisateur\ValidationCommentaireAction.class
 oc\P6\escalade\actions\GoTopoAction.class
 oc\P6\escalade\WebappHelper\WebappHelper.class
 oc\P6\escalade\interceptor\LoginInterceptor.class

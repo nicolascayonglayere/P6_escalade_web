@@ -18,7 +18,7 @@
 
 	<body>
 		<%@include file="_include/entete.jsp" %>
-		<div class="container-fluid">
+		<div class="container">
 			<h2><s:text name="presentation.titre"/></h2>
 			<section>
 				<h3><s:text name="presentation.sousTitre"/></h3>

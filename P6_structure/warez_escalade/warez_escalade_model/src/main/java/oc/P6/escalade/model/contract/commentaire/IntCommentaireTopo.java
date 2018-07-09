@@ -22,5 +22,6 @@ public interface IntCommentaireTopo {
 	Topo getTopo();
 	void setTopo(Topo pTopo);
 	
-	
+	boolean getValidation();
+	void setValidation(boolean pValidation);
 }
