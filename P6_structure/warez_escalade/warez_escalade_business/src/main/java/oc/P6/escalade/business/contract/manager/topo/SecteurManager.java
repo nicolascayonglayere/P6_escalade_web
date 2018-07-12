@@ -27,6 +27,13 @@ public interface SecteurManager {
 	Secteur getSecteur(String pNom, Site pSite);
 	
 	/**
+	 * Retourne le {@link Secteur} d'id donné en paramètre
+	 * @param pId
+	 * @return {@link Secteur}
+	 */
+	Secteur getSecteur(int pId);
+	
+	/**
 	 * Crée le {@link Secteur} donné en paramètre
 	 * @param pSecteur
 	 */

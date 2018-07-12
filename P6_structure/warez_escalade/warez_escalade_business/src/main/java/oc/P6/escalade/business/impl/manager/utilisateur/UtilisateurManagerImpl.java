@@ -60,13 +60,6 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
     		try {
             	LOGGER.debug(userDAO.find(pPseudo).getPseudo());
             	System.out.println(userDAO.find(pPseudo).getPseudo());
-    	  //utilisateur.setNom(userDAO.find(pPseudo).getNom());
-    	  //utilisateur.setPrenom(userDAO.find(pPseudo).getPrenom());
-    	  //utilisateur.setPseudo(pPseudo);
-    	  //utilisateur.setPassword(userDAO.find(pPseudo).getPassword());
-    	  //utilisateur.setId_Role(userDAO.find(pPseudo).getId_Role());
-    	  //utilisateur.setRole(userDAO.find(pPseudo).getRole());
-    	  //utilisateur.setId(userDAO.find(pPseudo).getId());
     	    	
     	    	utilisateur = userDAO.find(pPseudo);
     	    	utilisateur.setListTopoEmprunt(topoEmpDAO.getListTopoEmprunt(utilisateur.getId()));
@@ -118,14 +111,9 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 		else {
 			System.out.println("trace+");
 			try {
-				//utilisateur.setId(id);
-				utilisateur.setNom(pUtilisateur.getNom());
-				utilisateur.setPrenom(pUtilisateur.getPrenom());
-				utilisateur.setPseudo(pUtilisateur.getPseudo());
-				utilisateur.setPassword(pUtilisateur.getPassword());
-				//utilisateur.setCoordonnee(pUtilisateur.getCoordonnee());
-				utilisateur.setId_Role(3);//(RoleUtilisateur.Utilisateur.getId());
-				userDAO.create((Utilisateur)utilisateur);
+
+				pUtilisateur.setId_Role(3);//(RoleUtilisateur.Utilisateur.getId());
+				userDAO.create(pUtilisateur);
 				
 			    TransactionStatus vTScommit = vTransactionStatus;
 			    vTransactionStatus = null;
@@ -216,14 +204,9 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 		else {
 			System.out.println("trace+");
 			try {
-				utilisateur.setId(pUtilisateur.getId());
-				utilisateur.setNom(pUtilisateur.getNom());
-				utilisateur.setPrenom(pUtilisateur.getPrenom());
-				utilisateur.setPseudo(pUtilisateur.getPseudo());
-				utilisateur.setPassword(pUtilisateur.getPassword());
-				//utilisateur.setCoordonnee(pUtilisateur.getCoordonnee());
+
 				utilisateur.setId_Role(pUtilisateur.getId_Role());//(RoleUtilisateur.Utilisateur.getId());
-				userDAO.update((Utilisateur)utilisateur);
+				userDAO.update(pUtilisateur);
 				
 			    TransactionStatus vTScommit = vTransactionStatus;
 			    vTransactionStatus = null;
@@ -260,14 +243,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 		else {
 			System.out.println("trace+");
 			try {
-				utilisateur.setId(pUtilisateur.getId());
-				utilisateur.setNom(pUtilisateur.getNom());
-				utilisateur.setPrenom(pUtilisateur.getPrenom());
-				utilisateur.setPseudo(pUtilisateur.getPseudo());
-				utilisateur.setPassword(pUtilisateur.getPassword());
-				//utilisateur.setCoordonnee(pUtilisateur.getCoordonnee());
-				utilisateur.setId_Role(3);//(RoleUtilisateur.Utilisateur.getId());
-				userDAO.delete((Utilisateur)utilisateur);
+				userDAO.delete(pUtilisateur);
 				
 			    TransactionStatus vTScommit = vTransactionStatus;
 			    vTransactionStatus = null;
@@ -375,14 +351,8 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 		System.out.println("CTRL "+pUtilisateur.getPseudo());
 		userDAO = (UtilisateurDaoImpl) daoFactory.getUtilisateurManagerDAO();
 			try {
-				utilisateur.setId(pUtilisateur.getId());
-				utilisateur.setNom(pUtilisateur.getNom());
-				utilisateur.setPrenom(pUtilisateur.getPrenom());
-				utilisateur.setPseudo(pUtilisateur.getPseudo());
-				utilisateur.setPassword(pUtilisateur.getPassword());
-				//utilisateur.setCoordonnee(pUtilisateur.getCoordonnee());
-				utilisateur.setId_Role(4);//(RoleUtilisateur.Utilisateur.getId());
-				userDAO.update((Utilisateur)utilisateur);
+				pUtilisateur.setId_Role(4);//(RoleUtilisateur.Utilisateur.getId());
+				userDAO.update(pUtilisateur);
 				
 			    TransactionStatus vTScommit = vTransactionStatus;
 			    vTransactionStatus = null;

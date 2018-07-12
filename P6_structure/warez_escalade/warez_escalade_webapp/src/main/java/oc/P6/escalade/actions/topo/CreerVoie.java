@@ -1,5 +1,6 @@
 package oc.P6.escalade.actions.topo;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -29,8 +30,12 @@ public class CreerVoie extends ActionSupport implements SessionAware, ServletReq
 	private Topo topo;
 	private Secteur secteur;
 	private Site site;
+	private int id;
+	private int selectedSecteur;
+	private ArrayList<Secteur> listSecteur;
 	private Map<String, Object> session;
 	private HttpServletRequest request;
+	private ArrayList<Site> listSite;
 	
 	public Voie getVoie() {
 		return voie;
@@ -60,24 +65,48 @@ public class CreerVoie extends ActionSupport implements SessionAware, ServletReq
 		
 	public String execute() {
 		System.out.println("trace creation voie");
-		if ((Topo)session.get("topo") != null)
+		if ((Topo)session.get("topo") != null) {
 			nomTopo = ((Topo)session.get("topo")).getNomTopo();
-		else
-			nomTopo = request.getParameter("nomTopo");
-		topo = managerFactory.getTopoManager().getTopo(nomTopo);
-		
-		if ((Site)session.get("site") != null)
-			nomSite=((Site)session.get("site")).getNomSite();
-		site = managerFactory.getSiteManager().getSite(nomSite, topo);
-		
-		if((Secteur)session.get("secteur") != null)
+			topo = managerFactory.getTopoManager().getTopo(nomTopo);
+		}
+
+	//if ((Site)session.get("site") != null) {
+	//	nomSite=((Site)session.get("site")).getNomSite();
+	//	site = managerFactory.getSiteManager().getSite(nomSite, topo);
+	//}
+		if((Secteur)session.get("secteur") != null) {
 			nomSecteur = ((Secteur)session.get("secteur")).getNomSecteur();
-		secteur = managerFactory.getSecteurManager().getSecteur(nomSecteur, site);
-		
+			Site vSite = ((Secteur)session.get("secteur")).getSite();
+			secteur = managerFactory.getSecteurManager().getSecteur(nomSecteur, vSite);
+		}
+		System.out.println(secteur.getNomSecteur()+" - "+topo.getNomTopo());
 		voie.setSecteur(secteur);
-		System.out.println(nomTopo+" - "+nomSite+" - "+nomSecteur+" - "+voie.getCotation());
+		System.out.println(voie.getNomVoie()+" - "+voie.getCotation());
 		managerFactory.getVoieManager().creerVoie(voie);
+		listSite = managerFactory.getSiteManager().getSite(topo);
+		for(Site s : listSite)
+			listSecteur = managerFactory.getSecteurManager().getListSecteur(s);
 		addActionMessage("La voie "+voie.getNomVoie()+" a bien été créee.");
+		return ActionSupport.SUCCESS;
+	}
+	
+	public String input() {
+		System.out.println("selection : "+selectedSecteur);
+		if (nomTopo != null)
+			topo = managerFactory.getTopoManager().getTopo(nomTopo);
+		else
+			topo = managerFactory.getTopoManager().getTopo(topo.getNomTopo());
+		this.session.put("topo", topo);
+		secteur = managerFactory.getSecteurManager().getSecteur(selectedSecteur);
+		this.session.put("secteur", secteur);
+		listSite = managerFactory.getSiteManager().getSite(topo);
+		for(Site s : listSite)
+			listSecteur = managerFactory.getSecteurManager().getListSecteur(s);
+		return ActionSupport.SUCCESS;
+	}
+	
+	public String select() {
+		secteur = managerFactory.getSecteurManager().getSecteur(id);
 		return ActionSupport.SUCCESS;
 	}
 	
@@ -114,6 +143,30 @@ public class CreerVoie extends ActionSupport implements SessionAware, ServletReq
 	public void setServletRequest(HttpServletRequest request) {
 		this.request = request;
 		
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public ArrayList<Secteur> getListSecteur() {
+		return listSecteur;
+	}
+	public void setListSecteur(ArrayList<Secteur> listSecteur) {
+		this.listSecteur = listSecteur;
+	}
+	public int getSelectedSecteur() {
+		return selectedSecteur;
+	}
+	public void setSelectedSecteur(int selectedSecteur) {
+		this.selectedSecteur = selectedSecteur;
+	}
+	public ArrayList<Site> getListSite() {
+		return listSite;
+	}
+	public void setListSite(ArrayList<Site> listSite) {
+		this.listSite = listSite;
 	}
 	
 

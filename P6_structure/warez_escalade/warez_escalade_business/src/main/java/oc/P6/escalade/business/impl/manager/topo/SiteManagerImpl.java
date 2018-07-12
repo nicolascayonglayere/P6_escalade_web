@@ -14,8 +14,10 @@ import oc.P6.escalade.business.contract.manager.AbstractDAOManager;
 import oc.P6.escalade.business.contract.manager.topo.SiteManager;
 import oc.P6.escalade.consumer.DAO.DAOFactory;
 import oc.P6.escalade.consumer.DAO.contract.manager.topo.SiteManagerDAO;
+import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
+import oc.P6.escalade.model.bean.topo.Voie;
 import oc.P6.escalade.model.contract.topo.IntSite;
 
 /**
@@ -97,10 +99,7 @@ public class SiteManagerImpl extends AbstractDAOManager implements SiteManager{
 		}
 		else {
 			try {
-				site.setNomSite(pSite.getNomSite());
-				site.setDescription(pSite.getDescription());
-				site.setTopo(pSite.getTopo());
-				siteDAO.create((Site)site);
+				siteDAO.create(pSite);
 			    TransactionStatus vTScommit = vTransactionStatus;
 			    vTransactionStatus = null;
 			    platformTransactionManager.commit(vTScommit);
@@ -152,7 +151,7 @@ public class SiteManagerImpl extends AbstractDAOManager implements SiteManager{
         TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
 		siteDAO = daoFactory.getSiteManagerDao();
 		System.out.println("CTRL "+pSite.getNomSite());
-		if (siteDAO.find(pSite.getNomSite(), pSite.getTopo().getId()) == null) {
+		if (siteDAO.get(pSite.getId()) == null) {
 			try {
 				throw new Exception("Le site n'existe pas.");
 			} catch (Exception e) {
@@ -162,11 +161,7 @@ public class SiteManagerImpl extends AbstractDAOManager implements SiteManager{
 		}
 		else {
 			try {
-				site.setId(siteDAO.find(pSite.getNomSite(), pSite.getTopo().getId()).getId());
-				site.setNomSite(pSite.getNomSite());
-				site.setDescription(pSite.getDescription());
-				site.setTopo(pSite.getTopo());
-				siteDAO.update((Site)site);
+				siteDAO.update(pSite);
 			    TransactionStatus vTScommit = vTransactionStatus;
 			    vTransactionStatus = null;
 			    platformTransactionManager.commit(vTScommit);
@@ -225,11 +220,14 @@ public class SiteManagerImpl extends AbstractDAOManager implements SiteManager{
 		}
 		else {
 			try {
-				site.setId(siteDAO.find(pSite.getNomSite(), pSite.getTopo().getId()).getId());
-				site.setNomSite(pSite.getNomSite());
-				site.setDescription(pSite.getDescription());
-				site.setTopo(pSite.getTopo());
-				siteDAO.delete((Site)site);
+				pSite.setId(siteDAO.find(pSite.getNomSite(), pSite.getTopo().getId()).getId());
+				for (Secteur s : daoFactory.getSecteurManagerDao().getListeSecteur(pSite)) {
+					for (Voie v : daoFactory.getVoieManagerDao().getlistVoie(s)) {
+						daoFactory.getVoieManagerDao().delete(v);
+					}
+					daoFactory.getSecteurManagerDao().delete(s);
+				}
+				siteDAO.delete(pSite);
 			    TransactionStatus vTScommit = vTransactionStatus;
 			    vTransactionStatus = null;
 			    platformTransactionManager.commit(vTScommit);

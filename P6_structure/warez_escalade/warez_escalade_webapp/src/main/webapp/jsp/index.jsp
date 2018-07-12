@@ -5,48 +5,54 @@
 
 <html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<link rel="stylesheet" type="text/css" href="jsp/style.css" />
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+		<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>		
 		<title>Accueil</title>
-		<sb:head includeScripts="true"/>
-		<style type="text/css">
-	        body {
-	            padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-	        }
-    	</style>		
+		<!--<sb:head includeScripts="true"/>-->
+		<sb:head/>	
 	</head>
 
 
 	<body>
 		<%@include file="_include/entete.jsp" %>
-		<h2><s:text name="index.bienvenue"/></h2>
-		<s:actionmessage/>
-		<!-- liste des topo ds la bdd -->
-		<div class = "container">
-			<table class="table table-bordered table-striped">
-				<s:iterator value="listTopo">
-					<tr>
-				    	<td style="text-align:left;">
+		<div id="blocPge">
+			<div class = "container">
+				
+				<h2 id="titre"><s:text name="index.bienvenue"/></h2>
+				<s:actionmessage/>
+				<s:if test="#session.utilisateur">
+					<p><s:text name="index.bonjour"/> <s:property value="#session.utilisateur.pseudo"/></p>	
+				</s:if>
+				<s:else>
+					<p><s:text name="index.connexion"/></p>
+				</s:else>	
+					
+				<div class="row">
+					<s:iterator value="listTopo" var="topo">
+				    	<div style="text-align:center;" class="col-lg-3">
 				    		<s:a action="go_topo" namespace="/">
-				            	<s:property value="nomTopo"/>
-			                    <s:param name="nom" value="nomTopo" />	
+				    			<!-- mettre l'image de couv -->
+								<s:url action="ImageAction" namespace="/" var="URLTag">
+									<s:param name="imageId" value="%{#topo.image}"/>
+								</s:url>
+								<img src="<s:property value="#URLTag"/>"/>			    			
+				            	<s:property value="#topo.nomTopo"/></br>
+				            	<s:property value="%{#topo.auteur.pseudo}"/>
+			                    <s:param name="nomTopo" value="nomTopo" />	
 			               	</s:a>
-				    	</td>
-				    	<td style="text-align:right;"><s:property value="site.nomSite" /></td>
-				    	<!-- <td style="text-align:right;"><s:property value="voie" /></td>-->
-				    	<td>
-
-				    		<s:a action="emprunt_topo" namespace="/jsp/utilisateur">
-			    				<s:param name="nom" value="nomTopo"/>
-				    			<s:submit class="btn btn-default" value="%{getText('bouton.emprunt')}"/>
-				    		</s:a>
-				    		
-				    	</td>
-				   	</tr>
-			 	</s:iterator>
-			</table>		
-		</div>
+				    	</div>
+				 	</s:iterator>
+				</div>
+	  					
+			</div>	
+		</div>		
+		
 
 		
 		
@@ -54,6 +60,7 @@
 	  	<script  src="https://code.jquery.com/jquery-3.3.1.min.js"  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="  crossorigin="anonymous"></script>
 	  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 	  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-	  	<%@include file="_include/footer.jsp" %>
+		<%@include file="_include/footer.jsp" %>
+
 	</body>
 </html>

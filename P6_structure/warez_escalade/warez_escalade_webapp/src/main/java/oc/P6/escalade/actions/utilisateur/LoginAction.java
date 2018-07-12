@@ -98,7 +98,6 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
 
 	@Override
 	public void setServletRequest(HttpServletRequest pRequest) {
-		// TODO Auto-generated method stub
 		this.servletRequest = pRequest;
 	}
 

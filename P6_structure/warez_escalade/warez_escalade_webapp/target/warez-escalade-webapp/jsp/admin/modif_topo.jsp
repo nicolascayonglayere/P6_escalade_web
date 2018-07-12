@@ -19,8 +19,8 @@
 	<body>
 		<%@include file="../_include/entete.jsp" %>
 		<s:actionmessage/>
-		<div class="container">	
-			<h3><s:text name="modifierTopo.titre"/></h3>
+		<div class="container text-center">	
+			<h3><s:text name="modifierTopo.titre"/> <s:property value="topo.nomTopo"/></h3>
 			<s:form action="modifier_topo" cssClass="form-horizontal" namespace="/jsp/utilisateur">
 				<s:textfield name="topo.nomTopo" placeholder="topo.nomTopo" label="%{getText('form.nomTopo')}" requiredLabel="true"/>
 				<s:textfield name="topo.nbreEx" placeholder="topo.nbreEx" label="%{getText('form.exemplaire')}" requiredLabel="true"/>
@@ -28,7 +28,7 @@
 				<s:textfield name="topo.longitude" placeholder="topo.longitude" label="%{getText('form.longitude')}" requiredLabel="true"/>
 				<s:textfield name="topo.latitude" placeholder="topo.latitude" label="%{getText('form.latitude')}" requiredLabel="true"/>
 				<s:submit class="btn btn-default" value="%{getText('bouton.valider')}">
-      				<s:param name="nom">${topo.nomTopo}</s:param>
+      				<s:param name="nomTopo">${topo.nomTopo}</s:param>
       				<s:param name="nbreEx">${topo.nbreEx}</s:param>
       				<s:param name="description">${topo.description}</s:param>
       				<s:param name="longitude">${topo.longitude}</s:param>

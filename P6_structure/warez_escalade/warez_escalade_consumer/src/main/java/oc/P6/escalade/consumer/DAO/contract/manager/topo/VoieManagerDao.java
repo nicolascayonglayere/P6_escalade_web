@@ -34,6 +34,13 @@ public interface VoieManagerDao {
 	boolean update (Voie pVoie);
 	
 	/**
+	 * Méthode pour obtenir la {@link Voie} d'id donnée en paramètre
+	 * @param pId
+	 * @return {@link Voie}
+	 */
+	Voie find(int pId);
+	
+	/**
 	 * Méthode pour obtenir la {@link Voie} de nom pNom du {@link secteur} d'id pId dans la base de donnée
 	 * @param pVoie
 	 * @return {@link Voie}
@@ -46,10 +53,4 @@ public interface VoieManagerDao {
 	 * @return la liste des {@link Voie}
 	 */
 	ArrayList<Voie> getlistVoie(Secteur pSecteur);
-	
-	/**
-	 * Méthode pour obtenir le dernier id de la table
-	 * @return id
-	 */
-	int lastId();
 }

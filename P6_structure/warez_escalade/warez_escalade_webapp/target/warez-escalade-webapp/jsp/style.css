@@ -1,0 +1,37 @@
+@charset "UTF-8";
+@font-face{ 
+	font-family: 'open_sansregular';
+    src: url('../assets/police/OpenSans-Regular-webfont.eot');
+    src: url('../assets/police/OpenSans-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../assets/police/OpenSans-Regular-webfont.woff') format('woff'),
+         url('../assets/police/OpenSans-Regular-webfont.ttf') format('truetype'),
+         url('../assets/police/OpenSans-Regular-webfont.svg#open_sansregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body
+{
+
+	font-family: open_sansregular, Arial, Verdana, sans-serif;
+	margin: 0;
+	padding-top: 60px;
+	/*background: url("../assets/images/imgFd.jpg") fixed;*/
+	background-color : #ffe28a; /*rgba (255,214,90,1);*/
+
+}
+
+#blocPge
+{
+	background-color : #ffe28a;
+}
+
+#menuTop
+{
+	/*background: url("../assets/images/imgFond.jpg") fixed no-repeat top left;*/
+	background-color : rgba(243, 183,134,1);	
+}
+
+#map, img {
+	height: auto;
+}

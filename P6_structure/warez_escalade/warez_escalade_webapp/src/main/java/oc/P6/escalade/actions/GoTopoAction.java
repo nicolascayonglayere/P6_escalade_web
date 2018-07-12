@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.inject.Inject;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.struts2.interceptor.ServletResponseAware;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -19,7 +23,7 @@ import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.topo.Voie;
 
-public class GoTopoAction extends ActionSupport {
+public class GoTopoAction extends ActionSupport implements ServletResponseAware{
 
 	/**
 	 * 
@@ -28,7 +32,7 @@ public class GoTopoAction extends ActionSupport {
 	@Inject
 	private ManagerFactory managerFactory;	
 	private Topo topo;
-	private String nom;
+	private String nomTopo;
 	private Secteur secteur;
 	private Site site;
 	private Voie voie;
@@ -40,6 +44,7 @@ public class GoTopoAction extends ActionSupport {
 	private ArrayList<String>listImage;
 	private ArrayList<CommentaireTopo> listCommentaire;
 	private String[] listLieux = {"topo", "site", "secteur"};
+	private HttpServletResponse response;
 	
 	public Topo getTopo() {
 		return topo;
@@ -76,15 +81,13 @@ public class GoTopoAction extends ActionSupport {
 	}
 	public void setListVoie(ArrayList<Voie> listVoie) {
 		this.listVoie = listVoie;
+	}	
+	public String getNomTopo() {
+		return nomTopo;
 	}
-
-	public String getNom() {
-		return nom;
+	public void setNomTopo(String nomTopo) {
+		this.nomTopo = nomTopo;
 	}
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
-	
 	public ArrayList<String> getListImage() {
 		return listImage;
 	}
@@ -120,8 +123,8 @@ public class GoTopoAction extends ActionSupport {
 	
 	public String execute() throws Exception {
 		//--recupe le nom du topo dans la requete
-		System.out.println(nom);
-		topo = (Topo) managerFactory.getTopoManager().getTopo(nom);
+		System.out.println(nomTopo);
+		topo = (Topo) managerFactory.getTopoManager().getTopo(nomTopo);//--utilise nomTopo
         if (topo != null) {
     		repoId = topo.getImage();
     		//System.out.println(topo.getImage());
@@ -139,15 +142,6 @@ public class GoTopoAction extends ActionSupport {
     	        imageId = listImage.get(0);
     	      }
     	    } 
-    		
-    		
-    		//
-    		//if((repertoire.listFiles()).length > 0) {
-    			//for (File img : repertoire.listFiles())
-    				//listImage.add(repoId+"\\"+img.getName());//repertoire.getPath()+"\\"+img.getName());
-    	        //System.out.println(topo.getNom());
-
-    		//}
     		//System.out.println(imageId);        	
         	listSite = (ArrayList<Site>) managerFactory.getSiteManager().getSite(topo);
         	for (Site s : listSite) {
@@ -156,6 +150,11 @@ public class GoTopoAction extends ActionSupport {
         			listVoie = (ArrayList<Voie>) managerFactory.getVoieManager().getListVoie(sect);
         	}
         	listCommentaire = managerFactory.getCommentaireTopoManager().getListValid(topo.getId());
+
+        	Cookie cookie = new Cookie("topo", "topo");
+        	cookie.setMaxAge(1296000);
+        	response.addCookie(cookie);
+        	
         	return SUCCESS;
         }
         else {
@@ -179,6 +178,10 @@ public class GoTopoAction extends ActionSupport {
 	}
 	public void setListCommentaire(ArrayList<CommentaireTopo> listCommentaire) {
 		this.listCommentaire = listCommentaire;
+	}
+	@Override
+	public void setServletResponse(HttpServletResponse response) {
+		this.response = response;		
 	}
 
 }

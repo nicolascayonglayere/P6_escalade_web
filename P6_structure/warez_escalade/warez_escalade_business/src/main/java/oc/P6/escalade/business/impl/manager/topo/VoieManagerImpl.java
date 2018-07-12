@@ -107,7 +107,7 @@ public class VoieManagerImpl extends AbstractDAOManager implements VoieManager{
         TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
 		voieDao = daoFactory.getVoieManagerDao();
 		System.out.println("CTRL "+pVoie.getNomVoie());
-		if (voieDao.find(pVoie.getNomVoie(), pVoie.getSecteur().getId()) == null) {
+		if (voieDao.find(pVoie.getId()) == null) {
 			try {
 				throw new Exception("La voie n'existe pas.");
 			} catch (Exception e) {
@@ -117,15 +117,7 @@ public class VoieManagerImpl extends AbstractDAOManager implements VoieManager{
 		}
 		else {
 			try {
-				voie.setId(voieDao.find(pVoie.getNomVoie(), pVoie.getSecteur().getId()).getId());
-				voie.setCotation(pVoie.getCotation());
-				voie.setDescription(pVoie.getDescription());
-				voie.setHauteur(pVoie.getHauteur());
-				voie.setNbLgueur(pVoie.getNbLgueur());
-				voie.setNbPoint(pVoie.getNbPoint());
-				voie.setNomVoie(pVoie.getNomVoie());
-				voie.setSecteur(pVoie.getSecteur());
-				voieDao.update((Voie)voie);
+				voieDao.update(pVoie);
 				
 			    TransactionStatus vTScommit = vTransactionStatus;
 			    vTransactionStatus = null;
@@ -138,6 +130,15 @@ public class VoieManagerImpl extends AbstractDAOManager implements VoieManager{
 		}
 	}
 
+	/**
+	 * Méthode pour obtenir la {@link Voie} d'id donnée en paramètre
+	 */
+	@Override
+	public Voie getVoie(int pId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	/**
 	 * Méthode pour obtenir la {@link Voie} du {@link Secteur} avec son nom donné en paramètre
 	 */
@@ -162,7 +163,7 @@ public class VoieManagerImpl extends AbstractDAOManager implements VoieManager{
 		}
 		else {
 			try {
-				throw new Exception("Le secteur n'existe pas.");
+				throw new Exception("La voie n'existe pas.");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -192,15 +193,8 @@ public class VoieManagerImpl extends AbstractDAOManager implements VoieManager{
 		}
 		else {
 			try {
-			voie.setId(voieDao.find(pVoie.getNomVoie(), pVoie.getSecteur().getId()).getId());
-			voie.setCotation(pVoie.getCotation());
-			voie.setDescription(pVoie.getDescription());
-			voie.setHauteur(pVoie.getHauteur());
-			voie.setNbLgueur(pVoie.getNbLgueur());
-			voie.setNbPoint(pVoie.getNbPoint());
-			voie.setNomVoie(pVoie.getNomVoie());
-			voie.setSecteur(pVoie.getSecteur());
-			voieDao.delete((Voie)voie);
+			pVoie.setId(voieDao.find(pVoie.getNomVoie(), pVoie.getSecteur().getId()).getId());
+			voieDao.delete(pVoie);
 			
 		    TransactionStatus vTScommit = vTransactionStatus;
 		    vTransactionStatus = null;
@@ -219,5 +213,6 @@ public class VoieManagerImpl extends AbstractDAOManager implements VoieManager{
 	public void setDaoFactory(DAOFactory daoFactory) {
 		this.daoFactory = daoFactory;
 	}
+
 
 }

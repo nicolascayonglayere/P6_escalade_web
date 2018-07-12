@@ -3,6 +3,9 @@ package oc.P6.escalade.actions.topo;
 import java.util.ArrayList;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts2.interceptor.ServletRequestAware;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -12,7 +15,7 @@ import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.topo.Voie;
 
-public class RechercheTopo extends ActionSupport {
+public class RechercheTopo extends ActionSupport implements ServletRequestAware{
 
 	/**
 	 * 
@@ -25,7 +28,8 @@ public class RechercheTopo extends ActionSupport {
 	private ArrayList<Site> listSite = new ArrayList<Site>();
 	private ArrayList<Secteur> listSecteur = new ArrayList<Secteur>();
 	private ArrayList<Voie>listVoie = new ArrayList<Voie>();
-	private String nomTopo;
+	private String nomTopo, nomSite, nomSecteur;
+	private HttpServletRequest request;
 	
 	
 	public String execute() {
@@ -38,6 +42,12 @@ public class RechercheTopo extends ActionSupport {
 		for(Secteur se : listSecteur)
 			listVoie.addAll(managerFactory.getVoieManager().getListVoie(se));
 		System.out.println(listTopo.size());
+		return ActionSupport.SUCCESS;
+	}
+	
+	public String input() {
+		System.out.println(nomTopo);
+		topo = managerFactory.getTopoManager().getTopo(nomTopo);
 		return ActionSupport.SUCCESS;
 	}
 	
@@ -94,6 +104,27 @@ public class RechercheTopo extends ActionSupport {
 
 	public void setNomTopo(String nomTopo) {
 		this.nomTopo = nomTopo;
+	}
+
+	public String getNomSite() {
+		return nomSite;
+	}
+
+	public void setNomSite(String nomSite) {
+		this.nomSite = nomSite;
+	}
+
+	public String getNomSecteur() {
+		return nomSecteur;
+	}
+
+	public void setNomSecteur(String nomSecteur) {
+		this.nomSecteur = nomSecteur;
+	}
+
+	@Override
+	public void setServletRequest(HttpServletRequest request) {
+		this.request = request;
 	}
 	
 	

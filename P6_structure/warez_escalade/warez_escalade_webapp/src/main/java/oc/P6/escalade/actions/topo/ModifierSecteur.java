@@ -1,6 +1,10 @@
 package oc.P6.escalade.actions.topo;
 
+import java.util.Map;
+
 import javax.inject.Inject;
+
+import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -9,7 +13,7 @@ import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
 
-public class ModifierSecteur extends ActionSupport {
+public class ModifierSecteur extends ActionSupport implements SessionAware{
 
 	/**
 	 * 
@@ -17,18 +21,36 @@ public class ModifierSecteur extends ActionSupport {
 	private static final long serialVersionUID = 1L;
 	@Inject
 	private ManagerFactory managerFactory;
-	private String nom, nomTopo, nomSite;
+	private String nomSecteur, nomTopo, nomSite;
 	private Secteur secteur;
+	private Site site;
+	private Topo topo;
+	private int id;
+	private Map<String, Object> session;
 	
 	public String execute() {
-		System.out.println(nom+" - "+nomTopo);
-		Topo topo = managerFactory.getTopoManager().getTopo(nomTopo);
-		Site site = managerFactory.getSiteManager().getSite(nomSite, topo);
-		secteur.setSite(site);
-		managerFactory.getSecteurManager().modifierSecteur(secteur);
-		
-		addActionMessage("Le secteur "+secteur.getNomSecteur()+"a bien été modifié.");
-		return ActionSupport.SUCCESS;	
+		System.out.println(secteur.getNomSecteur()+" - "+topo.getNomTopo());
+		secteur.setId(((Secteur)session.get("secteurModif")).getId());
+		secteur.setSite(((Secteur)session.get("secteurModif")).getSite());
+		if (secteur.equals(((Secteur)session.get("secteurModif")))) {
+			addActionMessage("Aucune modification enregistrée ! ");
+			return ActionSupport.INPUT;
+		}
+		else {
+			managerFactory.getSecteurManager().modifierSecteur(secteur);
+			this.session.remove("secteurModif");
+			addActionMessage("Le secteur "+secteur.getNomSecteur()+"a bien été modifié.");
+			return ActionSupport.SUCCESS;			
+		}
+	
+	}
+	
+	public String input() {
+		topo = managerFactory.getTopoManager().getTopo(nomTopo);
+		site = managerFactory.getSiteManager().getSite(nomSite, topo);
+		secteur = managerFactory.getSecteurManager().getSecteur(nomSecteur, site);
+		this.session.put("secteurModif", secteur);
+		return ActionSupport.SUCCESS;
 	}
 	
 	public ManagerFactory getManagerFactory() {
@@ -50,13 +72,51 @@ public class ModifierSecteur extends ActionSupport {
 		this.secteur = secteur;
 	}
 
-	public String getNom() {
-		return nom;
+	public String getNomSecteur() {
+		return nomSecteur;
 	}
 
-	public void setNom(String nom) {
-		this.nom = nom;
+	public void setNomSecteur(String nomSecteur) {
+		this.nomSecteur = nomSecteur;
 	}
+
+	public String getNomSite() {
+		return nomSite;
+	}
+
+	public void setNomSite(String nomSite) {
+		this.nomSite = nomSite;
+	}
+
+	public Site getSite() {
+		return site;
+	}
+
+	public void setSite(Site site) {
+		this.site = site;
+	}
+
+	public Topo getTopo() {
+		return topo;
+	}
+
+	public void setTopo(Topo topo) {
+		this.topo = topo;
+	}
+
+	@Override
+	public void setSession(Map<String, Object> session) {
+		this.session = session;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	
 
 }

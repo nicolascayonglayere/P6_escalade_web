@@ -16,6 +16,7 @@ import oc.P6.escalade.consumer.DAO.DAOFactory;
 import oc.P6.escalade.consumer.DAO.contract.manager.topo.SecteurManagerDao;
 import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Site;
+import oc.P6.escalade.model.bean.topo.Voie;
 import oc.P6.escalade.model.contract.topo.IntSecteur;
 
 /**
@@ -91,6 +92,35 @@ public class SecteurManagerImpl extends AbstractDAOManager implements SecteurMan
 		}
 		return (Secteur) secteur;
 	}
+	
+	@Override
+	public Secteur getSecteur(int pId) {
+		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
+		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+		vDefinition.setTimeout(30); // 30 secondes
+        TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
+		secteurDAO = daoFactory.getSecteurManagerDao();
+		if (secteurDAO.find(pId) != null) {
+			try {
+				secteur = secteurDAO.find(pId);
+			    TransactionStatus vTScommit = vTransactionStatus;
+			    vTransactionStatus = null;
+			    platformTransactionManager.commit(vTScommit);
+			}finally {
+				if (vTransactionStatus != null) 
+					platformTransactionManager.rollback(vTransactionStatus); 			
+			}
+		}
+		else {
+			try {
+				throw new Exception("Le secteur n'existe pas.");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return (Secteur) secteur;
+	}
 
 	/**
 	 * Méthode pour créer un {@link Secteur} donné en paramètre
@@ -113,10 +143,7 @@ public class SecteurManagerImpl extends AbstractDAOManager implements SecteurMan
 		}
 		else {
 			try {
-				secteur.setNomSecteur(pSecteur.getNomSecteur());
-				secteur.setDescription(pSecteur.getDescription());
-				secteur.setSite(pSecteur.getSite());
-				secteurDAO.create((Secteur)secteur);
+				secteurDAO.create(pSecteur);
 			    TransactionStatus vTScommit = vTransactionStatus;
 			    vTransactionStatus = null;
 			    platformTransactionManager.commit(vTScommit);
@@ -136,7 +163,7 @@ public class SecteurManagerImpl extends AbstractDAOManager implements SecteurMan
         TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
 		secteurDAO = daoFactory.getSecteurManagerDao();
 		System.out.println("CTRL "+pSecteur.getNomSecteur());
-		if (secteurDAO.find(pSecteur.getNomSecteur(), pSecteur.getSite().getId()) == null) {
+		if (secteurDAO.find(pSecteur.getId()) == null) {
 			try {
 				throw new Exception("Le secteur n'existe pas.");
 			} catch (Exception e) {
@@ -146,11 +173,7 @@ public class SecteurManagerImpl extends AbstractDAOManager implements SecteurMan
 		}
 		else {
 			try {
-				secteur.setId(secteurDAO.find(pSecteur.getNomSecteur(), pSecteur.getSite().getId()).getId());
-				secteur.setNomSecteur(pSecteur.getNomSecteur());
-				secteur.setDescription(pSecteur.getDescription());
-				secteur.setSite(pSecteur.getSite());
-				secteurDAO.update((Secteur)secteur);
+				secteurDAO.update(pSecteur);
 			    TransactionStatus vTScommit = vTransactionStatus;
 			    vTransactionStatus = null;
 			    platformTransactionManager.commit(vTScommit);
@@ -183,11 +206,11 @@ public class SecteurManagerImpl extends AbstractDAOManager implements SecteurMan
 		}
 		else {
 			try {
-				secteur.setId(secteurDAO.find(pSecteur.getNomSecteur(), pSecteur.getSite().getId()).getId());
-				secteur.setNomSecteur(pSecteur.getNomSecteur());
-				secteur.setDescription(pSecteur.getDescription());
-				secteur.setSite(pSecteur.getSite());
-				secteurDAO.delete((Secteur)secteur);
+				pSecteur.setId(secteurDAO.find(pSecteur.getNomSecteur(), pSecteur.getSite().getId()).getId());
+				for (Voie v : daoFactory.getVoieManagerDao().getlistVoie(pSecteur)) {
+					daoFactory.getVoieManagerDao().delete(v);
+				}
+				secteurDAO.delete(pSecteur);
 			    TransactionStatus vTScommit = vTransactionStatus;
 			    vTransactionStatus = null;
 			    platformTransactionManager.commit(vTScommit);
@@ -222,5 +245,7 @@ public class SecteurManagerImpl extends AbstractDAOManager implements SecteurMan
 	public void setPlatformTransactionManager(PlatformTransactionManager platformTransactionManager) {
 		this.platformTransactionManager = platformTransactionManager;
 	}
+
+
 
 }

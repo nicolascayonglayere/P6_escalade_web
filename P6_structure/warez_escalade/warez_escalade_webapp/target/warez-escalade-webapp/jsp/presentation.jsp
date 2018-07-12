@@ -6,19 +6,15 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link rel="stylesheet" href="jsp/style.css" />		
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">		
 		<title>Présentation</title>
 		<sb:head includeScripts="true"/>
-		<style type="text/css">
-	        body {
-	            padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-	        }
-    	</style>		
 	</head>
 
 	<body>
 		<%@include file="_include/entete.jsp" %>
-		<div class="container-fluid">
+		<div class="container">
 			<h2><s:text name="presentation.titre"/></h2>
 			<section>
 				<h3><s:text name="presentation.sousTitre"/></h3>

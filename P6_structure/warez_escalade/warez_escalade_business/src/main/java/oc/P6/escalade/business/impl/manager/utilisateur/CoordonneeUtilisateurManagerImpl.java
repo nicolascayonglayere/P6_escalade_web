@@ -53,11 +53,6 @@ public class CoordonneeUtilisateurManagerImpl extends AbstractDAOManager impleme
         coordonneeDao = (CoordonneeUtilisateurDaoImpl) daoFactory.getCoordonneeUtilisateurDao();
 		if(userDAO.find(pId) != null) {
 			try {
-			//coordonnee.setUtilisateur(userDAO.find(pId));
-			//coordonnee.setAdresse(coordonneeDao.find(userDAO.find(pId)).getAdresse());
-			//coordonnee.setEmail(coordonneeDao.find(userDAO.find(pId)).getEmail());
-			//coordonnee.setIdUtilisateur(pId);
-			//coordonnee.setId(coordonneeDao.find(userDAO.find(pId)).getId());
 				coordonnee = coordonneeDao.find(userDAO.find(pId));
 			    TransactionStatus vTScommit = vTransactionStatus;
 			    vTransactionStatus = null;
@@ -93,9 +88,6 @@ public class CoordonneeUtilisateurManagerImpl extends AbstractDAOManager impleme
 		System.out.println("CTRL coord "+pCoordinneeUtilisateur.getEmail()+" - "+pCoordinneeUtilisateur.getUtilisateur().getId());
         coordonneeDao = (CoordonneeUtilisateurDaoImpl) daoFactory.getCoordonneeUtilisateurDao();
 		try {
-			coordonnee.setEmail(pCoordinneeUtilisateur.getEmail());
-			coordonnee.setAdresse(pCoordinneeUtilisateur.getAdresse());
-			coordonnee.setIdUtilisateur(pCoordinneeUtilisateur.getUtilisateur().getId());
 			coordonneeDao.create(pCoordinneeUtilisateur);
 			
 		    TransactionStatus vTScommit = vTransactionStatus;
@@ -121,10 +113,7 @@ public class CoordonneeUtilisateurManagerImpl extends AbstractDAOManager impleme
         coordonneeDao = (CoordonneeUtilisateurDaoImpl) daoFactory.getCoordonneeUtilisateurDao();
         System.out.println("CTRL coord "+pCoordinneeUtilisateur.getEmail()+" - "+pCoordinneeUtilisateur.getUtilisateur().getId());
 		try {
-			coordonnee.setId(coordonneeDao.find(pCoordinneeUtilisateur.getUtilisateur()).getId());
-			coordonnee.setEmail(pCoordinneeUtilisateur.getEmail());
-			coordonnee.setAdresse(pCoordinneeUtilisateur.getAdresse());
-			coordonnee.setIdUtilisateur(pCoordinneeUtilisateur.getUtilisateur().getId());
+			pCoordinneeUtilisateur.setId(coordonneeDao.find(pCoordinneeUtilisateur.getUtilisateur()).getId());
 			coordonneeDao.update(pCoordinneeUtilisateur);
 			
 		    TransactionStatus vTScommit = vTransactionStatus;
@@ -150,10 +139,7 @@ public class CoordonneeUtilisateurManagerImpl extends AbstractDAOManager impleme
         coordonneeDao = (CoordonneeUtilisateurDaoImpl) daoFactory.getCoordonneeUtilisateurDao();
 		System.out.println("CTRL coord "+pCoordonneeUtilisateur.getEmail()+" - "+pCoordonneeUtilisateur.getUtilisateur().getId());
 		try {
-			coordonnee.setId(coordonneeDao.find(pCoordonneeUtilisateur.getUtilisateur()).getId());
-			coordonnee.setEmail(pCoordonneeUtilisateur.getEmail());
-			coordonnee.setAdresse(pCoordonneeUtilisateur.getAdresse());
-			coordonnee.setIdUtilisateur(pCoordonneeUtilisateur.getUtilisateur().getId());
+			pCoordonneeUtilisateur.setId(coordonneeDao.find(pCoordonneeUtilisateur.getUtilisateur()).getId());
 			coordonneeDao.delete(pCoordonneeUtilisateur);
 			
 		    TransactionStatus vTScommit = vTransactionStatus;

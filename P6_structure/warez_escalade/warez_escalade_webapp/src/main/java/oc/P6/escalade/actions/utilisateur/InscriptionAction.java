@@ -71,7 +71,7 @@ public class InscriptionAction extends ActionSupport implements SessionAware {
 			utilisateur.setPassword(hashedPassword);
 			managerFactory.getUtilisateurManager().creerUtilisateur(utilisateur);
 			//managerFactory.getUtilisateurManager().modifierPassUtilisateur(utilisateur);
-			coordonnee.setUtilisateur(managerFactory.getUtilisateurManager().getUtilisateur(utilisateur.getPseudo()));
+			coordonnee.setUtilisateur(managerFactory.getUtilisateurManager().getUtilisateur(utilisateur.getPseudo()));//--recup utilisateur
 			System.out.println(utilisateur.getPseudo()+" - "+ coordonnee.getIdUtilisateur());
 			managerFactory.getCoordonneeUtilisateurManager().creerCoordonnee(coordonnee);
 			session.put("utilisateur", utilisateur);

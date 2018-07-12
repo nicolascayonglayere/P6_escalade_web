@@ -6,6 +6,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link rel="stylesheet" href="jsp/style.css" />		
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 		<title>CONTACT</title>
 		<sb:head includeScripts="true"/>
@@ -19,6 +20,8 @@
 	<body>
 		<%@include file="_include/entete.jsp" %>
 		<div class="container text-center">
+			<h3><s:text name="%{getText('contact.titre')}"/></h3>
+			</br>
 			<s:form id="contactForm" action="envoi_message" cssClass="form-vertical" namespace="/">
 				<s:textfield name="coordonneeUtilisateur.email" placeholder="email" label="%{getText('form.email')}" requiredLabel="true"/>
 				<s:textfield name="utilisateur.pseudo" placeholder="pseudo" label="%{getText('form.pseudo')}" requiredLabel="true"/>

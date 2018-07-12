@@ -19,7 +19,7 @@
 	<body>
 		<%@include file="../_include/entete.jsp" %>
 		<s:actionmessage/>
-		<div class="container">
+		<div class="container text-center">
 			<h3><s:text name="creerTopo.titre"/></h3>
 			<s:form action="creer_topo" cssClass="form-horizontal" namespace="/jsp/utilisateur">
 				<s:textfield name="topo.nomTopo" placeholder="nom du topo" label="%{getText('form.nomTopo')}" requiredLabel="true"/>

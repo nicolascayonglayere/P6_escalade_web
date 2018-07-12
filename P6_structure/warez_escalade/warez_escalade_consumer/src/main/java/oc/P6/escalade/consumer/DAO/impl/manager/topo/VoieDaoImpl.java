@@ -27,12 +27,12 @@ public class VoieDaoImpl extends AbstractDAO implements VoieManagerDao{
 	@Override
 	public boolean create(Voie pVoie) {
 		System.out.println(pVoie.getNomVoie()+" - "+pVoie.getCotation());
-		String vSQL = "INSERT INTO voie (id_voie, nom, cotation, hauteur, nombre_longueur, nombre_point, id_secteur, description)"
-				+ " VALUES (:id_voie, :nom, :cotation, :hauteur, :nbLongueur, :nbPoint, :id_secteur, :description)";
+		String vSQL = "INSERT INTO voie ( nom, cotation, hauteur, nombre_longueur, nombre_point, id_secteur, description)"
+				+ " VALUES ( :nom, :cotation, :hauteur, :nbLongueur, :nbPoint, :id_secteur, :description)";
 
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
-		vParams.addValue("id_voie", voieDAO.lastId()+1, Types.INTEGER);
+		//vParams.addValue("id_voie", voieDAO.lastId()+1, Types.INTEGER);
 		vParams.addValue("nom", pVoie.getNomVoie(), Types.VARCHAR);
 		vParams.addValue("cotation", pVoie.getCotation(), Types.VARCHAR);
 		vParams.addValue("hauteur", pVoie.getHauteur(), Types.INTEGER);
@@ -75,7 +75,7 @@ public class VoieDaoImpl extends AbstractDAO implements VoieManagerDao{
 	@Override
 	public boolean update(Voie pVoie) {
 		System.out.println(pVoie.getNomVoie()+" - "+pVoie.getCotation());
-		String vSQL = "UPDATE voie SET nom = :nom, cotation = :cotation, hauteur = :hauteur, nombre_longueur = :nbLongueur, nombre_point = :nbPoint, id_secteur = :id_secteur, description = :description)"
+		String vSQL = "UPDATE voie SET nom = :nom, cotation = :cotation, hauteur = :hauteur, nombre_longueur = :nbLongueur, nombre_point = :nbPoint, id_secteur = :id_secteur, description = :description "
 				+ " WHERE id_voie = :id_voie";
 
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
@@ -100,6 +100,22 @@ public class VoieDaoImpl extends AbstractDAO implements VoieManagerDao{
 		return true;
 	}
 
+	@Override
+	public Voie find(int pId) {
+		String vSQL = "SELECT * FROM voie WHERE id_voie = :id_voie";
+		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
+		MapSqlParameterSource vParams = new MapSqlParameterSource();
+        vParams.addValue("id_voie", pId, Types.INTEGER);
+	
+		Voie voie;
+		if (vJdbcTemplate.query(vSQL,vParams,voieRowMapper).size() != 0)
+			voie = vJdbcTemplate.query(vSQL,vParams,voieRowMapper).get(0);
+		else
+			voie = null;
+		
+		return voie;
+	}
+	
 	@Override
 	public Voie find(String pNom, int pIdSecteur) {
 		String vSQL = "SELECT * FROM voie WHERE id_secteur = :id_secteur AND nom = :nom";
@@ -131,14 +147,6 @@ public class VoieDaoImpl extends AbstractDAO implements VoieManagerDao{
 		return listVoie;
 
 	
-	}
-
-	@Override
-	public int lastId() {
-        JdbcTemplate vJdbcTemplate = new JdbcTemplate(getDataSource());
-
-        int lastId = vJdbcTemplate.queryForObject("SELECT COUNT(*) FROM voie", Integer.class);
-		return lastId;
 	}
 
 }

@@ -77,6 +77,7 @@ public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 		vParams.addValue("nom", pSite.getNomSite(), Types.VARCHAR);
 		vParams.addValue("description", pSite.getDescription(), Types.LONGVARCHAR);
 		vParams.addValue("id_topo", pSite.getTopo().getId(), Types.INTEGER);
+		vParams.addValue("id_site", pSite.getId(), Types.INTEGER);
 	
 	    
 	    try {

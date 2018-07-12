@@ -6,10 +6,11 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link rel="stylesheet" href="jsp/style.css" />
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 		<title>TOPO</title>
-		<style>
+		<!--<style>
       	/* Always set the map height explicitly to define the size of the div
        	* element that contains the map. */
       	#map, img {
@@ -21,7 +22,7 @@
         	padding: 0;
         	padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
       	}
-	    </style>
+	    </style>-->
 		<sb:head includeScripts="true"/>
 	</head>
 	<body>

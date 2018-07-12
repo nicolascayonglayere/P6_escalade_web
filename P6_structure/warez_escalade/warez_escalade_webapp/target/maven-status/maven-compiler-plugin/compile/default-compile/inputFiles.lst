@@ -3,6 +3,7 @@ D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_esca
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\java\oc\P6\escalade\interceptor\LoginInterceptor.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\java\oc\P6\escalade\actions\ContactAction.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\java\oc\P6\escalade\actions\utilisateur\InscriptionAction.java
+D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\java\oc\P6\escalade\actions\utilisateur\ModifRoleUtilisateur.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\java\oc\P6\escalade\actions\GoTopoAction.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\java\oc\P6\escalade\actions\topo\SelectTopoAction.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\java\oc\P6\escalade\actions\utilisateur\LoginAction.java
@@ -10,6 +11,7 @@ D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_esca
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\java\oc\P6\escalade\actions\images\ImageAction.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\java\oc\P6\escalade\actions\PresentationAction.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\java\oc\P6\escalade\actions\utilisateur\ModifierUserAction.java
+D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\java\oc\P6\escalade\actions\AccueilAction.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\java\oc\P6\escalade\WebappHelper\WebappHelper.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\java\oc\P6\escalade\actions\GoCreerTopo.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\java\oc\P6\escalade\actions\topo\RechercheTopo.java

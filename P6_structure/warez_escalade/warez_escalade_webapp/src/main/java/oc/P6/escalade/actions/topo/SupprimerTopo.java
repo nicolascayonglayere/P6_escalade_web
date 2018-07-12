@@ -15,11 +15,11 @@ public class SupprimerTopo extends ActionSupport {
 	private static final long serialVersionUID = 1L;
 	@Inject
 	private ManagerFactory managerFactory;
-	private String nom;
+	private String nomTopo;
 	
 	public String execute() {
-		System.out.println(nom);
-		Topo topo = managerFactory.getTopoManager().getTopo(nom);
+		System.out.println(nomTopo);
+		Topo topo = managerFactory.getTopoManager().getTopo(nomTopo);
 		managerFactory.getTopoManager().supprimerTopo(topo);
 		addActionMessage("Vous avez supprimé le topo "+topo.getNomTopo());
 		return ActionSupport.SUCCESS;
@@ -31,11 +31,13 @@ public class SupprimerTopo extends ActionSupport {
 	public void setManagerFactory(ManagerFactory managerFactory) {
 		this.managerFactory = managerFactory;
 	}
-	public String getNom() {
-		return nom;
+
+	public String getNomTopo() {
+		return nomTopo;
 	}
-	public void setNom(String nom) {
-		this.nom = nom;
+
+	public void setNomTopo(String nomTopo) {
+		this.nomTopo = nomTopo;
 	}
 
 }

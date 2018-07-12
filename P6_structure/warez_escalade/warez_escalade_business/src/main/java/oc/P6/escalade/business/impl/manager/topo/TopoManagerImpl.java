@@ -18,7 +18,10 @@ import oc.P6.escalade.business.contract.manager.AbstractDAOManager;
 import oc.P6.escalade.business.contract.manager.topo.TopoManager;
 import oc.P6.escalade.consumer.DAO.DAOFactory;
 import oc.P6.escalade.consumer.DAO.contract.manager.topo.TopoManagerDao;
+import oc.P6.escalade.model.bean.topo.Secteur;
+import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
+import oc.P6.escalade.model.bean.topo.Voie;
 import oc.P6.escalade.model.contract.topo.IntTopo;
 
 /**
@@ -173,7 +176,7 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
         TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
         topoDAO = daoFactory.getTopoManagerDao();
 		System.out.println("CTRL "+pTopo.getNomTopo());
-		if (topoDAO.find(pTopo.getNomTopo()) == null) {
+		if (topoDAO.find(pTopo.getId()) == null) {
 			try {
 				throw new Exception("Le topo n'existe pas.");
 			} catch (Exception e) {
@@ -183,7 +186,6 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 		}
 		else {
 			try {
-				pTopo.setId(topoDAO.find(pTopo.getNomTopo()).getId());
 				pTopo.setConstruction(false);
 				topoDAO.update(pTopo);
 				
@@ -241,15 +243,26 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 		}
 		else {
 			try {
-				topo.setId(topoDAO.find(pTopo.getNomTopo()).getId());
-				topo.setNomTopo(pTopo.getNomTopo());
-				topo.setAuteur(pTopo.getAuteur());
-				topo.setNbreEx(pTopo.getNbreEx());
-				topo.setDescription(pTopo.getDescription());
-				topo.setLatitude(pTopo.getLatitude());
-				topo.setLongitude(pTopo.getLongitude());
-				topo.setImage(pTopo.getNomTopo().replaceAll("\\p{Space}", ""));
-				topoDAO.delete((Topo) topo);
+				pTopo.setId(topoDAO.find(pTopo.getNomTopo()).getId());
+				for(Site si : daoFactory.getSiteManagerDao().find(pTopo.getId())) {
+					for (Secteur se : daoFactory.getSecteurManagerDao().getListeSecteur(si)) {
+						for (Voie v : daoFactory.getVoieManagerDao().getlistVoie(se)) {
+							daoFactory.getVoieManagerDao().delete(v);
+						}
+						daoFactory.getSecteurManagerDao().delete(se);
+					}
+					daoFactory.getSiteManagerDao().delete(si);
+				}			
+
+				topoDAO.delete(pTopo);
+				
+				Path chemin = Paths.get("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\"+pTopo.getImage());
+				try {
+					Files.delete(chemin);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 			    TransactionStatus vTScommit = vTransactionStatus;
 			    vTransactionStatus = null;

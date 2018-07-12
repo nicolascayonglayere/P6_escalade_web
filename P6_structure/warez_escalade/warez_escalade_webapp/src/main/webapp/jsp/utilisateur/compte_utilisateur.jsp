@@ -8,24 +8,20 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-		
+		<link rel="stylesheet" type="text/css" href="../style.css" />
 		<title>Mon compte</title>
-		<sb:head/>
-		<style type="text/css">
-	        body {
-	            padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-	        }
-    	</style>		
+		<sb:head/>		
 	</head>
 	
 	<body>
 		<%@include file="../_include/entete.jsp" %>	
+		<div id="blocPge">
 		<div class="container" >
 			<div class="row">
-				<div class="col text-center">
-					<h2><s:text name="compteUser.titre"/><s:property value="#session.utilisateur.pseudo"/></h2>
-					<h3><s:text name="compteUser.bonjour"/><s:property value="utilisateur.nom"/> <s:property value="utilisateur.prenom"/></h3>
-					<h4><s:text name="compteUser.role"/><s:property value="utilisateur.role"/></h4>
+				<div class="col-lg">
+					<h2 id="titre"><s:text name="compteUser.titre"/><s:property value="#session.utilisateur.pseudo"/></h2>
+					<h3 id="titre"><s:text name="compteUser.bonjour"/><s:property value="utilisateur.nom"/> <s:property value="utilisateur.prenom"/></h3>
+					<h4 id="titre"><s:text name="compteUser.role"/><s:property value="utilisateur.role"/></h4>
 					<s:actionmessage/>
 				</div>			
 				<!-- pour les modérateurs, une liste des commentaires à valider -->
@@ -54,9 +50,15 @@
 				</s:if>
 				<!-- pour les admin, des liens vers les actions réservées -->
 				<s:elseif test="%{utilisateur.role =='administrateur'}">
-					<div class="navbar navbar-light bg-light col-lg-2">
+					<div class="navbar navbar-light col-lg-2" id="menuTop">
 						<div class="collapse navbar-collapse"  >
 							<ul class="navbar-nav mr-auto">
+								<h4 id="titre" class="dropdown-header"><s:text name="%{getText('compteUser.utilisateur')}"/></h4>
+								<li class="nav-item active">
+									<s:a action="go_modifUser" namespace="/jsp/utilisateur">
+										<s:text name="compteUser.modifUser"/>
+						    		</s:a>							
+								</li>							
 								<li class="nav-item active">
 									<s:a action="go_ban" namespace="/jsp/utilisateur">
 										<s:text name="compteUser.ban"/>
@@ -64,7 +66,7 @@
 								</li>
 								<!-- Un séparateur -->
 								<div class="dropdown-divider"></div>
-								<h4 class="dropdown-header"><s:text name="%{getText('compteUser.topo')}"/></h4>
+								<h4 id="titre" class="dropdown-header"><s:text name="%{getText('compteUser.topo')}"/></h4>
 								<li class="nav-item active">
 						    		<s:a action="go_creerTopo" namespace="/jsp/utilisateur">
 						    			<s:text name="compteUser.creerTopo"/>
@@ -86,7 +88,7 @@
 				</div>
 				<div>
 					<!-- un recap des topo en cours de creation -->
-					<h4><s:text name="%{getText('compteUser.creation')}"/></h4>
+					<h4 id="titre"><s:text name="%{getText('compteUser.creation')}"/></h4>
 					<table class="table table-bordered table-striped">
 							<thead>
 								<tr>
@@ -99,9 +101,11 @@
 								    	<td style="text-align:left;"><s:property value="#topo.auteur.pseudo"/></td>
 								    	<td style="text-align:right;"><s:property value="#topo.nomTopo" /></td>
 								    	<td>
-								    		<s:a action="ajouter_voie" namespace="/jsp/utilisateur">
-								    			<s:param name="nomTopo" value="#topo.nomTopo"/>
-								    			<s:submit class="btn btn-default" value="%{getText('bouton.modifier')}"/>
+								    		<s:a action="recap_topo" namespace="/jsp/utilisateur">
+								    			<!--<s:param name="nomTopo" value="#topo.nomTopo"/>-->
+								    			<s:submit class="btn btn-default" value="%{getText('bouton.modifier')}">
+								    				<s:param name="nomTopo" value="#topo.nomTopo"/>
+								    			</s:submit>
 								    		</s:a>	
 								    	</td>
 								   	</tr>
@@ -109,7 +113,7 @@
 						</table>			
 					</s:elseif>
 				</div>	
-					<h4><s:text name="%{getText('compteUser.emprunt')}"/></h4>
+					<h4 id="titre"><s:text name="%{getText('compteUser.emprunt')}"/></h4>
 					
 					<!-- un tab recapitulatif des topos emrpuntés (historique tot ou partiel ?)-->
 					<table class="table table-bordered table-striped">
@@ -140,7 +144,7 @@
 				
 				<!-- un formulaire pour modifier ses param pseudo et mdp et coordonnee -->
 				<div class="container" style="border-color: gray; border-style: solid; border-width: medium">
-					<h5><s:text name="compteUser.modifier"/></h5>
+					<h4 id="titre"><s:text name="compteUser.modifier"/></h4>
 					<s:form action="modifier_user" cssClass="form-vertical" namespace="/jsp/utilisateur">
 						<s:textfield name="utilisateur.pseudo" placeholder="pseudo" label="%{getText('form.pseudo')}" requiredLabel="true"/>
 						<s:textfield name="utilisateur.password" placeholder="password" label="%{getText('form.mdp')}" requiredLabel="true"/>
@@ -158,14 +162,14 @@
 				</br>
 			
 				<div class="container" style="border-color: gray; border-style: solid; border-width: medium">
-					<h5><s:text name="compteUser.supprimer"/></h5>
+					<h5 id="titre"><s:text name="compteUser.supprimer"/></h5>
 					<p><s:text name="compteUser.supprMessage"/> 
 						<s:a action = "supprimer_compte" namespace="/jsp/utilisateur">
 							<s:submit class="btn btn-default" value="%{getText('bouton.supprimer')}"/>			
 						</s:a>
 					</p>		
 				</div>
-
+		</div>
 		
 	
 					

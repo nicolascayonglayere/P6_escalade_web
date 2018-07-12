@@ -26,6 +26,13 @@ public interface VoieManager {
 	Voie getVoie(String pNom, Secteur pSecteur);
 	
 	/**
+	 * Renvoie la {@link Voie} d'id donné en paramètre
+	 * @param pId
+	 * @return {@link Voie}
+	 */
+	Voie getVoie(int pId);
+	
+	/**
 	 * Cree la {@link Voie} donnée en paramètre
 	 * @param pVoie
 	 */

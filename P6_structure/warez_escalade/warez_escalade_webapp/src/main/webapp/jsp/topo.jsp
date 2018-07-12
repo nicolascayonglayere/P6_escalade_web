@@ -6,36 +6,25 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<link rel="stylesheet" href="jsp/style.css" />
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 		<title>TOPO</title>
-		<style>
-      	/* Always set the map height explicitly to define the size of the div
-       	* element that contains the map. */
-      	#map, img {
-        	height: auto;
-    	 }
-    	html, body {
-        	height: 100%;
-        	margin: 0;
-        	padding: 0;
-        	padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-      	}
-	    </style>
 		<sb:head includeScripts="true"/>
 	</head>
 	<body>
 		<%@include file="_include/entete.jsp" %>
+		<div id="blocPge">
 		<s:actionmessage/>
 
 		
 		<div class="container">
 			<div class="row">
 				<div class="col-sm">
-					<h2><s:property value="topo.nomTopo"/></h2>
+					<h2 id="titre"><s:property value="topo.nomTopo"/></h2>
 					<p><s:property value="topo.description"/></br></p>
 					<s:iterator value="listSite" var="site">
-						<h3><s:property value="#site.nomSite"/></h3>
+						<h3 id="titre"><s:property value="#site.nomSite"/></h3>
 						<p><s:property value="#site.description"/></p>				
 					</s:iterator>
 			
@@ -44,7 +33,7 @@
 			
 			<div class="row">
 				<s:if test="topo.construction">
-					<h2>EN CONSTRUCTION</h2>
+					<h2 id="titre"><s:text name="topo.construction"/></h2>
 				</s:if>
 			</div>
 			
@@ -171,7 +160,7 @@
 			</s:if>
 
 		</div>		
-		
+		</div>
 	    
 
 		

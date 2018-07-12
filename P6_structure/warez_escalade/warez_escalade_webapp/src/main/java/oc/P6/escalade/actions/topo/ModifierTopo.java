@@ -1,17 +1,20 @@
 package oc.P6.escalade.actions.topo;
 
 
+import java.util.Map;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.interceptor.ServletRequestAware;
+import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.ActionSupport;
 
 import oc.P6.escalade.business.contract.ManagerFactory;
 import oc.P6.escalade.model.bean.topo.Topo;
 
-public class ModifierTopo extends ActionSupport implements ServletRequestAware {
+public class ModifierTopo extends ActionSupport implements SessionAware {
 
 	/**
 	 * 
@@ -21,17 +24,29 @@ public class ModifierTopo extends ActionSupport implements ServletRequestAware {
 	ManagerFactory managerFactory;
 	private Topo topo;
 	private String nom;
-	private HttpServletRequest request;
 	private String nomTopo;
+	private Map<String, Object> session;
 
 	public String execute() {
-		//HttpServletRequest request = ServletActionContext.getRequest();
-		System.out.println(request.getParameter("nomTopo")+" - "+nomTopo);
-		nom = request.getParameter("nomTopo");
-		System.out.println(nom);
-		topo = managerFactory.getTopoManager().getTopo(nom);
-		managerFactory.getTopoManager().modifTopo(topo);
-		addActionMessage("le topo "+topo.getNomTopo()+" a bien été modifié.");
+		System.out.println(topo.getNomTopo());
+		topo.setId(((Topo)session.get("topoModif")).getId());
+		if (topo.equals((Topo)session.get("topoModif"))) {
+			addActionMessage("Aucune modification enregistrée ! ");
+			return ActionSupport.INPUT;			
+		}
+		else {
+			managerFactory.getTopoManager().modifTopo(topo);
+			this.session.remove("topoModif");
+			addActionMessage("le topo "+topo.getNomTopo()+" a bien été modifié.");
+			return ActionSupport.SUCCESS;			
+		}
+
+
+	}
+	
+	public String input() {
+		topo = managerFactory.getTopoManager().getTopo(nomTopo);
+		this.session.put("topoModif", topo);
 		return ActionSupport.SUCCESS;
 	}
 
@@ -51,11 +66,6 @@ public class ModifierTopo extends ActionSupport implements ServletRequestAware {
 		this.nom = nom;
 	}
 
-	@Override
-	public void setServletRequest(HttpServletRequest request) {
-		this.request = request;		
-	}
-
 	public String getNomTopo() {
 		return nomTopo;
 	}
@@ -64,4 +74,17 @@ public class ModifierTopo extends ActionSupport implements ServletRequestAware {
 		this.nomTopo = nomTopo;
 	}
 
+	public Topo getTopo() {
+		return topo;
+	}
+
+	public void setTopo(Topo topo) {
+		this.topo = topo;
+	}
+
+	@Override
+	public void setSession(Map<String, Object> session) {
+		this.session = session;		
+	}
+	
 }

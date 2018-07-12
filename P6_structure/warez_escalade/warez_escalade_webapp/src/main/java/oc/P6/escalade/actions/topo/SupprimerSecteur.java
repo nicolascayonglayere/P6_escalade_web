@@ -24,8 +24,8 @@ public class SupprimerSecteur extends ActionSupport implements ServletRequestAwa
 	private HttpServletRequest request;
 	
 	public String execute() {
-		nomSecteur = request.getParameter("nomSecteur");
-		nomTopo = request.getParameter("nomTopo");
+		//nomSecteur = request.getParameter("nomSecteur");
+		//nomTopo = request.getParameter("nomTopo");
 		System.out.println(nomSecteur+" - "+nomSite+" - "+nomTopo);
 		Topo topo = managerFactory.getTopoManager().getTopo(nomTopo);
 		Site site = managerFactory.getSiteManager().getSite(nomSite, topo);

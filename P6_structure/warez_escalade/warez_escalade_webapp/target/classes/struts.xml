@@ -22,18 +22,18 @@
 			<interceptor-stack name="loginStack">
 				<interceptor-ref name="loginInterceptor"/>
 				<interceptor-ref name="defaultStack" />
-       			<!--<interceptor-ref name="store">
+       			<interceptor-ref name="store">
 					<param name="operationMode">RETRIEVE</param>
-		    	</interceptor-ref>-->				
+		    	</interceptor-ref>	
 			</interceptor-stack>
 			
 			<interceptor class="oc.P6.escalade.interceptor.CommentaireInterceptor" name="commentaireInterceptor"/>
 			<interceptor-stack name="commentaireStack">
 				<interceptor-ref name="commentaireInterceptor" />
 				<interceptor-ref name="defaultStack" />
-       			<!--  <interceptor-ref name="store">
+       			<interceptor-ref name="store">
 					<param name="operationMode">RETRIEVE</param>
-		    	</interceptor-ref>-->				
+		    	</interceptor-ref>				
 			</interceptor-stack>			
 		</interceptors>
 
@@ -48,10 +48,16 @@
 
 		
         <!-- Action "index" -->
-        <action name="index">
-            <result>/jsp/index.jsp</result>
+        <action name="index" >
+            <result type="redirectAction">
+            	<param name="actionName">accueil</param>
+            	<param name="namespace">/</param>
+            </result>
         </action>
-
+        
+		<action name="accueil" class="oc.P6.escalade.actions.AccueilAction" method="execute">
+			<result name="success">/jsp/index.jsp</result>
+		</action> 
 	
 		<!--   login action  -->		
 		<action name="loginUser" class="oc.P6.escalade.actions.utilisateur.LoginAction" method="loginRegisterUser">
@@ -62,7 +68,7 @@
 			 	<param name="params.excludeParams">dojo..*,^struts..*,^session..*,^request..*,^application..*,^servlet(Request|Response)..*,parameters...*,submit,token,struts.token.name</param>
 			</interceptor-ref>
 			<result name="success" type="redirectAction">
-				<param name="actionName">lister_topo</param>
+				<param name="actionName">accueil</param>
 				<param name="namespace">/</param>
 			</result>
 			<result name="login">/jsp/_include/login.jsp</result>
@@ -72,14 +78,14 @@
 		<!-- home link action -->
 		<action name="homeAction" class="oc.P6.escalade.actions.utilisateur.LoginAction" method="home">
 			<result name="success" type="redirectAction">
-				<param name="actionName">index</param>
+				<param name="actionName">accueil</param>
 				<param name="namespace">/</param>
 			</result>
 		</action>
 
         <!-- Actions de lister les topos -->
         <action name="lister_topo" class="oc.P6.escalade.actions.topo.SelectTopoAction" method="doListTopo">
-        	<result name="success">/jsp/index.jsp</result>
+        	<result name="success">/jsp/emprunt_topo.jsp</result>
         </action>
         
         <!--Construction et affichage du topo-->
@@ -89,7 +95,7 @@
 			</interceptor-ref>        
 		   	<interceptor-ref name="defaultStack" />
         	<result name="input" type="redirectAction">
-        		<param name="actionName">index</param>
+        		<param name="actionName">accueil</param>
         		<param name="namespace">/</param>
         	</result>
         	<result name="success">/jsp/topo.jsp</result>
@@ -109,11 +115,11 @@
 		   		<param name="params.excludeParams">dojo..*,^struts..*,^session..*,^request..*,^application..*,^servlet(Request|Response)..*,parameters...*,submit,token,struts.token.name</param>
 		   	</interceptor-ref>
         	<result name="success" type="redirectAction">
-        		<param name="actionName">index</param>
+        		<param name="actionName">accueil</param>
         		<param name="namespace">/</param>
         	</result>
         	<result name="input" type="redirectAction">
-        		<param name="actionName">index</param>
+        		<param name="actionName">accueil</param>
         		<param name="namespace">/</param>
         	</result>        	
         </action>        
@@ -137,7 +143,10 @@
 		   		<param name="params.excludeParams">dojo..*,^struts..*,^session..*,^request..*,^application..*,^servlet(Request|Response)..*,parameters...*,submit,token,struts.token.name</param>
 		   	</interceptor-ref>		            
         	<result name="input">/jsp/creer_user.jsp</result>
-        	<result name="success">/jsp/utilisateur/accueil_utilisateur.jsp</result>
+			<result name="success" type="redirectAction">
+				<param name="actionName">accueil</param>
+				<param name="namespace">/</param>
+			</result>
         </action>
         
         <!-- Action pour obtenir une image -->
@@ -152,7 +161,7 @@
 		<!--   logout action  -->
 		<action name="logOut" class="oc.P6.escalade.actions.utilisateur.LoginAction" method="logOut">
 			<result name="success" type="redirectAction">
-				<param name="actionName">index</param>
+				<param name="actionName">accueil</param>
 				<param name="namespace">/</param>
 			</result>
 		</action>
@@ -201,7 +210,10 @@
 		    </interceptor-ref>
 		    <!--  <interceptor-ref name="createSession"/>-->
 		    <interceptor-ref name="defaultStack" />        
-			<result name="success">/jsp/index.jsp</result>
+			<result name="success" type="redirectAction">
+				<param name="actionName">accueil</param>
+				<param name="namespace">/</param>
+			</result>
         </action>
         
         <!-- action pour commenter un topo -->
@@ -281,7 +293,7 @@
 			<result name="input">/jsp/admin/creer_site.jsp</result>			
 		</action>			   
 
-		<action name="ajouter_site">
+		<action name="ajouter_site" class="oc.P6.escalade.actions.topo.CreerSite" method="input">
 			<result>/jsp/admin/creer_site.jsp</result>
 		</action>
 
@@ -296,7 +308,7 @@
 			<result name="input">/jsp/admin/creer_secteur.jsp</result>			
 		</action>
 
-		<action name="ajouter_secteur">
+		<action name="ajouter_secteur" class="oc.P6.escalade.actions.topo.CreerSecteur" method="input">
 			<result>/jsp/admin/creer_secteur.jsp</result>
 		</action>
 
@@ -311,19 +323,25 @@
 			<result name="input">/jsp/admin/creer_voie.jsp</result>			
 		</action>
 			
-		<action name="ajouter_voie">		
+		<action name="ajouter_voie" class="oc.P6.escalade.actions.topo.CreerVoie" method="input">		
 			<result>/jsp/admin/creer_voie.jsp</result>
+		</action>
+		
+		<action name="select_secteur" class="oc.P6.escalade.actions.topo.CreerVoie" method="select">		
+			<result name="success">/jsp/admin/recherche_topo.jsp</result>
+			<result name="input">/jsp/admin/recherche_topo.jsp</result>
 		</action>	
+				
+		<action name="recap_topo" class="oc.P6.escalade.actions.topo.RechercheTopo" method="input">
+			<result>/jsp/admin/recherche_topo.jsp</result>
+		</action>		
 				  
 		<action name="finaliser_topo" class="oc.P6.escalade.actions.topo.FinaliserTopo" method="execute">
        		<interceptor-ref name="store">
 				<param name="operationMode">STORE</param>
 		    </interceptor-ref>
 		    <interceptor-ref name="defaultStack" />			
-			<result name="success" type="redirectAction">
-				<param name="actionName">go_topo</param>
-				<param name="namespace">/</param>
-			</result>
+			<result name="success">/jsp/topo.jsp</result>
 			<result name="input">/jsp/admin/creer_topo.jsp</result>
 		</action>		    
 		
@@ -339,7 +357,7 @@
 		
 		<!--Toutes les actions de modification de topo/site/secteur/voie -->
 		<!-- page de modification d'un topo -->
-		<action name="go_modifTopo">
+		<action name="go_modifTopo" class="oc.P6.escalade.actions.topo.ModifierTopo" method="input">
 			<result>/jsp/admin/modif_topo.jsp</result>
 			<!--  <result type="redirectAction">
 				<param name="actionName">modifier_topo</param>
@@ -360,7 +378,7 @@
 		</action>
 
 		<!-- page de modification d'un site -->
-		<action name="go_modifSite">
+		<action name="go_modifSite" class="oc.P6.escalade.actions.topo.ModifierSite" method="input">
 			<result>/jsp/admin/modif_site.jsp</result>
 		</action>
 		
@@ -377,7 +395,7 @@
 		</action>			   
 
 		<!-- page de modification d'un secteur -->
-		<action name="go_modifSecteur">
+		<action name="go_modifSecteur" class="oc.P6.escalade.actions.topo.ModifierSecteur" method="input">
 			<result>/jsp/admin/modif_secteur.jsp</result>
 		</action>
 		
@@ -390,14 +408,11 @@
 		   		<param name="params.excludeParams">dojo..*,^struts..*,^session..*,^request..*,^application..*,^servlet(Request|Response)..*,parameters...*,submit,token,struts.token.name</param>
 		   	</interceptor-ref>		
 			<result name="success">/jsp/topo.jsp</result>
-			<result name="input">/jsp/admin/modif_site.jsp</result>			
+			<result name="input">/jsp/admin/modif_secteur.jsp</result>			
 		</action>
 
 		<!-- page de modification d'une voie -->
-		<action name="go_modifVoie">
-		    <interceptor-ref name="defaultStack" >
-		   		<param name="params.excludeParams">dojo..*,^struts..*,^session..*,^request..*,^application..*,^servlet(Request|Response)..*,parameters...*,submit,token,struts.token.name</param>
-		   	</interceptor-ref>		
+		<action name="go_modifVoie" class="oc.P6.escalade.actions.topo.ModifierVoie"	method="input">	
 			<result>/jsp/admin/modif_voie.jsp</result>
 		</action>		
 		
@@ -410,24 +425,36 @@
 		   		<param name="params.excludeParams">dojo..*,^struts..*,^session..*,^request..*,^application..*,^servlet(Request|Response)..*,parameters...*,submit,token,struts.token.name</param>
 		   	</interceptor-ref>		
 			<result name="success">/jsp/topo.jsp</result>
-			<result name="input">/jsp/admin/modif_site.jsp</result>			
+			<result name="input">/jsp/admin/modif_voie.jsp</result>			
 		</action>
 		
 		<!--Toutes les actions de suppression de topo/site/secteur/voie -->
 		<action name="supprimerTopo" class="oc.P6.escalade.actions.topo.SupprimerTopo" method="execute">
-			<result>/jsp/topo.jsp</result>
+			<result name="success" type="redirectAction">
+				<param name="actionName">accueil</param>
+				<param name="namespace">/</param>
+			</result>
 		</action>
 		
 		<action name="supprimerSite" class="oc.P6.escalade.actions.topo.SupprimerSite" method="execute">
-			<result>/jsp/topo.jsp</result>
+			<result name="success" type="redirectAction">
+				<param name="actionName">accueil</param>
+				<param name="namespace">/</param>
+			</result>
 		</action>
 
 		<action name="supprimerSecteur" class="oc.P6.escalade.actions.topo.SupprimerSecteur" method="execute">
-			<result>/jsp/topo.jsp</result>
+			<result name="success" type="redirectAction">
+				<param name="actionName">accueil</param>
+				<param name="namespace">/</param>
+			</result>
 		</action>
 			
 		<action name="supprimerVoie" class="oc.P6.escalade.actions.topo.SupprimerVoie" method="execute">
-			<result>/jsp/topo.jsp</result>
+			<result name="success" type="redirectAction">
+				<param name="actionName">accueil</param>
+				<param name="namespace">/</param>
+			</result>
 		</action>
 						
 		<!-- Actions de ban -->
@@ -454,7 +481,28 @@
 			</result>
 		</action>
 		
-  
+		<!-- action pour changer le role d'un utilisateur -->
+		<!-- page de recherche de l'utilisateur -->
+  		<action name="go_modifUser">
+  			<result>/jsp/admin/modif_role.jsp</result>
+  		</action>
+  		
+  		<!-- action de recherche de l'utilisateur -->
+		<action name="recherche_utilisateurModif" class="oc.P6.escalade.actions.utilisateur.RechercheUtilisateurAction" method="execute">
+			<result name="success">/jsp/admin/modif_role.jsp</result>
+		</action>
+		
+		<!-- action de modification du role -->
+		<action name="modif_role" class="oc.P6.escalade.actions.utilisateur.ModifRoleUtilisateur" method="execute">
+       		<interceptor-ref name="store">
+				<param name="operationMode">STORE</param>
+		    </interceptor-ref>
+		    <interceptor-ref name="defaultStack" />		
+			<result name="success" type="redirectAction">
+				<param name="actionName">go_monCompte</param>
+				<param name="namespace">/jsp/utilisateur</param>
+			</result>
+		</action>		
 	</package>
 </struts>
 

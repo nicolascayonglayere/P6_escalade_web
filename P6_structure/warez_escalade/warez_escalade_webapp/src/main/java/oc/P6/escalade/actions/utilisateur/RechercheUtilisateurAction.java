@@ -21,6 +21,7 @@ public class RechercheUtilisateurAction extends ActionSupport {
 	private ArrayList<Utilisateur> listUtilisateur;
 	private Utilisateur utilisateur;
 	private ArrayList<TopoEmprunt> listTopoEmprunt;
+	private ArrayList<String> listRole = new ArrayList<String>();
 	
 	public ArrayList<Utilisateur> getListUtilisateur() {
 		return listUtilisateur;
@@ -49,6 +50,9 @@ public class RechercheUtilisateurAction extends ActionSupport {
 	public String execute() {
 		System.out.println(utilisateur.getPseudo());
 		listUtilisateur = managerFactory.getUtilisateurManager().getListUtilisateur(utilisateur.getPseudo());
+		listRole.add("administrateur");
+		listRole.add("moderateur");
+		listRole.add("utilisateur");
 		System.out.println("ctrl topo emp "+listUtilisateur.get(0).getListTopoEmprunt());
 		return ActionSupport.SUCCESS;
 	}
@@ -59,6 +63,14 @@ public class RechercheUtilisateurAction extends ActionSupport {
 
 	public void setManagerFactory(ManagerFactory managerFactory) {
 		this.managerFactory = managerFactory;
+	}
+
+	public ArrayList<String> getListRole() {
+		return listRole;
+	}
+
+	public void setListRole(ArrayList<String> listRole) {
+		this.listRole = listRole;
 	}
 
 }

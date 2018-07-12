@@ -1,5 +1,6 @@
 package oc.P6.escalade.actions.topo;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -27,6 +28,10 @@ public class CreerSecteur extends ActionSupport implements SessionAware {
 	private Topo topo;
 	private Site site;
 	private String nomTopo, nomSite;
+	private int selectedSite;
+	private int id;
+	private ArrayList<Site> listSite;
+	private ArrayList<Secteur> listSecteur;
 	private Map<String, Object> session;
 	
 	public Secteur getSecteur() {
@@ -50,14 +55,33 @@ public class CreerSecteur extends ActionSupport implements SessionAware {
 	}
 	
 	public String execute() {
-		nomTopo = ((Topo)(session.get("topo"))).getNomTopo();
-		topo = managerFactory.getTopoManager().getTopo(nomTopo);
-		nomSite= ((Site)session.get("site")).getNomSite();
-		site = managerFactory.getSiteManager().getSite(nomSite, topo);
+		if (((Topo)(session.get("topo"))).getNomTopo().length() > 0) {
+			nomTopo = ((Topo)(session.get("topo"))).getNomTopo();
+			topo = managerFactory.getTopoManager().getTopo(nomTopo);
+		}
+		if((Site)session.get("site") != null) {
+			nomSite= ((Site)session.get("site")).getNomSite();
+			site = managerFactory.getSiteManager().getSite(nomSite, topo);
+		}
+		System.out.println(site.getId());
 		secteur.setSite(site);
 		managerFactory.getSecteurManager().creerSecteur(secteur);
+		listSite = managerFactory.getSiteManager().getSite(topo);
+		for(Site s : listSite)
+			setListSecteur(managerFactory.getSecteurManager().getListSecteur(s));
+		//secteur = managerFactory.getSecteurManager().getSecteur(secteur.getNomSecteur(), site);
 		addActionMessage("Le secteur "+secteur.getNomSecteur()+" a bien été crée.");
 		session.put("secteur", secteur);
+		return ActionSupport.SUCCESS;
+	}
+	
+	public String input() {
+		System.out.println("selection : "+selectedSite);
+		topo = managerFactory.getTopoManager().getTopo(topo.getNomTopo());
+		this.session.put("topo", topo);
+		site = managerFactory.getSiteManager().getSite(selectedSite);
+		this.session.put("site", site);
+		System.out.println("input "+site.getId());
 		return ActionSupport.SUCCESS;
 	}
 	public ManagerFactory getManagerFactory() {
@@ -81,6 +105,30 @@ public class CreerSecteur extends ActionSupport implements SessionAware {
 	}
 	public void setSite(Site site) {
 		this.site = site;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public ArrayList<Site> getListSite() {
+		return listSite;
+	}
+	public void setListSite(ArrayList<Site> listSite) {
+		this.listSite = listSite;
+	}
+	public int getSelectedSite() {
+		return selectedSite;
+	}
+	public void setSelectedSite(int selectedSite) {
+		this.selectedSite = selectedSite;
+	}
+	public ArrayList<Secteur> getListSecteur() {
+		return listSecteur;
+	}
+	public void setListSecteur(ArrayList<Secteur> listSecteur) {
+		this.listSecteur = listSecteur;
 	}
 	
 }

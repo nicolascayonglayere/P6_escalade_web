@@ -81,8 +81,8 @@ public class SecteurDaoImpl extends AbstractDAO implements SecteurManagerDao{
 	 */
 	@Override
 	public boolean update(Secteur pSecteur) {
-		String vSQL = "UPDATE secteur SET nom = :nom, description = :description, id_site = :id_site, image = :image"
-				+ "WHERE id_secteur = :id_secteur";
+		String vSQL = "UPDATE secteur SET nom = :nom, description = :description, id_site = :id_site, image = :image "
+				+ " WHERE id_secteur = :id_secteur";
 
 	
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
@@ -91,6 +91,7 @@ public class SecteurDaoImpl extends AbstractDAO implements SecteurManagerDao{
 		vParams.addValue("description", pSecteur.getDescription(), Types.LONGVARCHAR);
 		vParams.addValue("image", pSecteur.getImage(), Types.VARCHAR);
 		vParams.addValue("id_site", pSecteur.getSite().getId(), Types.INTEGER);
+		vParams.addValue("id_secteur", pSecteur.getId(), Types.INTEGER);
 	
 	    
 	    try {

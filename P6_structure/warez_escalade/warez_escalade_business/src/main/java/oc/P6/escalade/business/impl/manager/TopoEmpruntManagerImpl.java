@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Scope;
+import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
@@ -148,6 +148,7 @@ public class TopoEmpruntManagerImpl extends AbstractDAOManager implements TopoEm
     			TransactionStatus vTScommit = vTransactionStatus;
     			vTransactionStatus = null;
     			platformTransactionManager.commit(vTScommit);
+    			((AbstractApplicationContext)context).close();
     		}finally {
     			if (vTransactionStatus != null) 
     				platformTransactionManager.rollback(vTransactionStatus); 			

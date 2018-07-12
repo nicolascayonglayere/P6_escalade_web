@@ -18,14 +18,14 @@ public class SupprimerVoie extends ActionSupport {
 	private static final long serialVersionUID = 1L;
 	@Inject
 	private ManagerFactory managerFactory;
-	private String nomSite, nomTopo, nomSecteur, nom;
+	private String nomSite, nomTopo, nomSecteur, nomVoie;
 	
 	public String execute() {
-		System.out.println(nom+" - "+nomSecteur+" - "+nomSite+" - "+nomTopo);
+		System.out.println(nomVoie+" - "+nomSecteur+" - "+nomSite+" - "+nomTopo);
 		Topo topo = managerFactory.getTopoManager().getTopo(nomTopo);
 		Site site = managerFactory.getSiteManager().getSite(nomSite, topo);
 		Secteur secteur = managerFactory.getSecteurManager().getSecteur(nomSecteur, site);
-		Voie voie = managerFactory.getVoieManager().getVoie(nom, secteur);
+		Voie voie = managerFactory.getVoieManager().getVoie(nomVoie, secteur);
 		managerFactory.getVoieManager().supprimerVoie(voie);;
 		addActionMessage("Vous avez supprimé la voie "+voie.getNomVoie()+" du topo "+topo.getNomTopo());
 		return ActionSupport.SUCCESS;
@@ -62,12 +62,14 @@ public class SupprimerVoie extends ActionSupport {
 		this.nomSecteur = nomSecteur;
 	}
 
-	public String getNom() {
-		return nom;
+	public String getNomVoie() {
+		return nomVoie;
 	}
 
-	public void setNom(String nom) {
-		this.nom = nom;
+	public void setNomVoie(String nomVoie) {
+		this.nomVoie = nomVoie;
 	}
+
+
 
 }

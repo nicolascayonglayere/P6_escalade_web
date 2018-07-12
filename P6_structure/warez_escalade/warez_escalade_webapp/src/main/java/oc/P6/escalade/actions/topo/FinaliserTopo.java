@@ -32,7 +32,12 @@ public class FinaliserTopo extends ActionSupport implements SessionAware {
 
 	public String execute() {
 		//--recup le topo en construction et maj de son statut
-		topo = (Topo)session.get("topo");
+		if ((Topo)session.get("topo") != null) {
+			nomTopo = ((Topo)session.get("topo")).getNomTopo();
+			topo = managerFactory.getTopoManager().getTopo(nomTopo);
+		}
+		else
+			topo = managerFactory.getTopoManager().getTopo(topo.getNomTopo());
 		managerFactory.getTopoManager().modifTopo(topo);
 		this.session.remove("topo");
 		this.session.remove("secteur");
