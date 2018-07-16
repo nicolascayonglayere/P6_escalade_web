@@ -14,9 +14,9 @@ public interface UtilisateurManagerDAO {
 	/**
 	 * Méthode pour créer un {@link Utilisateur} donné en paramètre dans la base de donnée
 	 * @param pUtilisateur
-	 * @return
+	 * @return {@link} crée
 	 */
-	boolean create(Utilisateur pUtilisateur);
+	Utilisateur create(Utilisateur pUtilisateur);
 
 	/**
 	 * Méthode pour supprimer un {@link Utilisateur} donné en paramètre dans la base de donnée
@@ -26,17 +26,31 @@ public interface UtilisateurManagerDAO {
 	boolean delete (Utilisateur pUtilisateur);
 	
 	/**
-	 * Méthode pour modifier un {@link Utilisateur} donné en paramètre dans la base de donnée
+	 * Méthode pour modifier le mot de passe de {@link Utilisateur} donné en paramètre dans la base de donnée
+	 * @param pUtilisateur
+	 * @return {@link} modifié
+	 */
+	Utilisateur updatePass (Utilisateur pUtilisateur);
+	
+	/**
+	 * Méthode pour modifier le pseudo du {@link Utilisateur} donné en paramètre dans la base de donnée
 	 * @param pUtilisateur
 	 * @return
 	 */
-	boolean update (Utilisateur pUtilisateur);
+	Utilisateur updatePseudo (Utilisateur pUtilisateur);
+	
+	/**
+	 * Méthode pour modifier le role de {@link Utilisateur} donné en paramètre dans la base de donnée
+	 * @param pUtilisateur
+	 * @return
+	 */
+	boolean updateRole(Utilisateur pUtilisateur);
 	
 	/**
 	 * Méthode pour obtenir un {@link Utilisateur} avec son pseudo donné en paramètre dans la base de donnée
 	 * @param pUtilisateur
 	 * @return {@link Utilisateur}
-	 */
+	 */	
 	Utilisateur find(String pPseudo);
 	
 	/**

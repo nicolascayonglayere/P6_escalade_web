@@ -9,6 +9,8 @@ import javax.inject.Named;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 
 import oc.P6.escalade.consumer.DAO.contract.manager.TopoEmpruntDao;
 import oc.P6.escalade.consumer.DAO.impl.rowmapper.TopoEmpruntRowMapper;
@@ -29,10 +31,10 @@ public class TopoEmpruntDaoImpl extends AbstractDAO implements TopoEmpruntDao{
 	 * Méthode de création dans la base de donnée du {@link TopoEmprunt} donné en paramètre
 	 */
 	@Override
-	public boolean create(TopoEmprunt pTopoEmprunt) {
-		
+	public TopoEmprunt create(TopoEmprunt pTopoEmprunt) {
+
 		String vSQL = "INSERT INTO topo_emprunt (date_retrait, id_utilisateur, id_topo ) VALUES ( :dateEmprunt, :id_utilisateur, :id_topo)";
-	    
+		KeyHolder keyHolder = new GeneratedKeyHolder();
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
 		vParams.addValue("dateEmprunt", pTopoEmprunt.getDateEmprunt(), Types.DATE);
@@ -40,15 +42,15 @@ public class TopoEmpruntDaoImpl extends AbstractDAO implements TopoEmpruntDao{
 		vParams.addValue("id_topo", pTopoEmprunt.getTopo().getId(), Types.INTEGER);
 	    
 	    try {
-	        vJdbcTemplate.update(vSQL, vParams);
+	        vJdbcTemplate.update(vSQL, vParams, keyHolder, new String[] { "id_topo_emprunt" });
+	        pTopoEmprunt.setId(keyHolder.getKey().intValue());
 	    } catch (DuplicateKeyException vEx) {
 	        System.out.println("Le topo ne peut etre emprunter 2 fois ! topo=" + pTopoEmprunt.getTopo().getNomTopo());
-	        //throw runtimeException
-	        return false;
+	        return pTopoEmprunt;
 	    }
 	    
 	    
-		return true;
+		return pTopoEmprunt;
 	}
 
 	/**
@@ -64,9 +66,8 @@ public class TopoEmpruntDaoImpl extends AbstractDAO implements TopoEmpruntDao{
 	    
 	    try {
 	        vJdbcTemplate.update(vSQL, vParams);
-	    } catch (DuplicateKeyException vEx) {
+	    } catch (Exception vEx) {
 	        System.out.println("Erreur ! topo=" + pTopoEmprunt.getTopo().getNomTopo());
-	        //throw runtimeException
 	        return false;
 	    }
 		

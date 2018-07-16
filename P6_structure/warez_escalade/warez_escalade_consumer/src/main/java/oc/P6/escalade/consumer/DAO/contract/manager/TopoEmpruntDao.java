@@ -14,9 +14,9 @@ public interface TopoEmpruntDao {
 	/**
 	 * Méthode pour créer un {@link TopoEmprunt} donné en paramètre dans la base de donnée
 	 * @param pTopoEmprunt
-	 * @return
+	 * @return le {@link TopoEmprunt} crée
 	 */
-	boolean create(TopoEmprunt pTopoEmprunt);
+	TopoEmprunt create(TopoEmprunt pTopoEmprunt);
 	
 	/**
 	 * Méthode pour supprimer un {@link TopoEmprunt} donné en paramètre dans la base de donnée 

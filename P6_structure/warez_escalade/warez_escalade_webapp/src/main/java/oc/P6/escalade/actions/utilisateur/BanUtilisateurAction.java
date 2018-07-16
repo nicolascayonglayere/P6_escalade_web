@@ -52,9 +52,7 @@ public class BanUtilisateurAction extends ActionSupport implements SessionAware,
 		System.out.println(checkMe);
 		utilisateur = managerFactory.getUtilisateurManager().getUtilisateur(checkMe);
 		managerFactory.getUtilisateurManager().banUtilisateur(utilisateur);
-		this.session.remove("utilisateur");
 		addActionMessage("Vous avez banni l'utilisateur "+utilisateur.getPseudo());
-		this.servletRequest.getSession().invalidate();
 		return ActionSupport.SUCCESS;
 	}
 	@Override

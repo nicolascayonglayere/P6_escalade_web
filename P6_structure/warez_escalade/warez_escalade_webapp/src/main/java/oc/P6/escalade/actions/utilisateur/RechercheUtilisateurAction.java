@@ -8,6 +8,7 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import oc.P6.escalade.business.contract.ManagerFactory;
 import oc.P6.escalade.model.bean.emprunt.TopoEmprunt;
+import oc.P6.escalade.model.bean.utilisateur.Role;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
 public class RechercheUtilisateurAction extends ActionSupport {
@@ -21,7 +22,7 @@ public class RechercheUtilisateurAction extends ActionSupport {
 	private ArrayList<Utilisateur> listUtilisateur;
 	private Utilisateur utilisateur;
 	private ArrayList<TopoEmprunt> listTopoEmprunt;
-	private ArrayList<String> listRole = new ArrayList<String>();
+	private ArrayList<Role> listRole = new ArrayList<Role>();
 	
 	public ArrayList<Utilisateur> getListUtilisateur() {
 		return listUtilisateur;
@@ -50,10 +51,7 @@ public class RechercheUtilisateurAction extends ActionSupport {
 	public String execute() {
 		System.out.println(utilisateur.getPseudo());
 		listUtilisateur = managerFactory.getUtilisateurManager().getListUtilisateur(utilisateur.getPseudo());
-		listRole.add("administrateur");
-		listRole.add("moderateur");
-		listRole.add("utilisateur");
-		System.out.println("ctrl topo emp "+listUtilisateur.get(0).getListTopoEmprunt());
+		listRole = managerFactory.getRoleManager().getListRole();
 		return ActionSupport.SUCCESS;
 	}
 
@@ -65,12 +63,13 @@ public class RechercheUtilisateurAction extends ActionSupport {
 		this.managerFactory = managerFactory;
 	}
 
-	public ArrayList<String> getListRole() {
+	public ArrayList<Role> getListRole() {
 		return listRole;
 	}
 
-	public void setListRole(ArrayList<String> listRole) {
+	public void setListRole(ArrayList<Role> listRole) {
 		this.listRole = listRole;
 	}
+
 
 }

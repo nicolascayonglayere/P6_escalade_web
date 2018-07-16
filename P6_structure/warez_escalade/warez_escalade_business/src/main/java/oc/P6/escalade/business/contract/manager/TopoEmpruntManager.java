@@ -32,8 +32,9 @@ public interface TopoEmpruntManager {
 	 * Crée le {@link TopoEmprunt} du {@link Topo} donné en paramètre pour {@link Utilisateur} donné en paramètre
 	 * @param topo
 	 * @param pEmprunteur
+	 * @return le {@link TopoEmprunt} crée
 	 */
-	void creerTopoEmprunt(Topo topo, Utilisateur pEmprunteur);
+	TopoEmprunt creerTopoEmprunt(Topo topo, Utilisateur pEmprunteur);
 	
 	/**
 	 * 

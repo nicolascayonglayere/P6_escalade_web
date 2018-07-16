@@ -17,8 +17,11 @@ import oc.P6.escalade.business.contract.manager.utilisateur.UtilisateurManager;
 import oc.P6.escalade.consumer.DAO.contract.manager.TopoEmpruntDao;
 import oc.P6.escalade.consumer.DAO.impl.DAOFactoryImpl;
 import oc.P6.escalade.consumer.DAO.impl.manager.TopoEmpruntDaoImpl;
+import oc.P6.escalade.consumer.DAO.impl.manager.utilisateur.CoordonneeUtilisateurDaoImpl;
 import oc.P6.escalade.consumer.DAO.impl.manager.utilisateur.UtilisateurDaoImpl;
+import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateur;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
+import oc.P6.escalade.model.contract.utilisateur.IntCoordonneeUtilisateur;
 import oc.P6.escalade.model.contract.utilisateur.IntUtilisateur;
 
 /**
@@ -37,9 +40,11 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 
     @Inject
     private IntUtilisateur utilisateur;
-
-    private UtilisateurDaoImpl userDAO; 
+    @Inject
+    private IntCoordonneeUtilisateur coordonneeUtilisateur;
     
+    private UtilisateurDaoImpl userDAO; 
+    private CoordonneeUtilisateurDaoImpl coordonneeDAO;
     @Inject
     @Named("platformTransactionManager")
     private PlatformTransactionManager platformTransactionManager;
@@ -68,8 +73,16 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 			    vTransactionStatus = null;
 			    platformTransactionManager.commit(vTScommit);
     		}finally {
-				if (vTransactionStatus != null) 
-					platformTransactionManager.rollback(vTransactionStatus); 			
+				if (vTransactionStatus != null) { 
+					platformTransactionManager.rollback(vTransactionStatus);
+					try {
+						throw new Exception("Utilisateur non trouvé : PSEUDO=" + pPseudo);
+						
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
     		}
     	}
     	else {
@@ -92,40 +105,39 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 	 * Méthode pour créer un {@link Utilisateur} donné en paramètre
 	 */
 	@Override
-	public void creerUtilisateur(Utilisateur pUtilisateur) {
+	public Utilisateur creerUtilisateur(Utilisateur pUtilisateur) {
 		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
 		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		vDefinition.setTimeout(30); // 30 secondes
         TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
   		System.out.println("CTRL "+pUtilisateur.getPseudo());
-		userDAO = (UtilisateurDaoImpl) daoFactory.getUtilisateurManagerDAO();
-		if (userDAO.find(pUtilisateur.getNom())!= null) {
-			System.out.println("trace-");
-			try {
-				throw new Exception("Le pseudo est deja utilisé. Choisissez un autre pseudo.");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+  		
+		try {
+			userDAO = (UtilisateurDaoImpl) daoFactory.getUtilisateurManagerDAO();
+			coordonneeDAO = (CoordonneeUtilisateurDaoImpl) daoFactory.getCoordonneeUtilisateurDao();
+			pUtilisateur.setId_Role(3);
+			utilisateur = userDAO.create(pUtilisateur); 
+			if(utilisateur.getId() != 0) {
+				coordonneeUtilisateur = pUtilisateur.getCoordonnee();
+				coordonneeUtilisateur.setUtilisateur((Utilisateur) utilisateur);
+				utilisateur.setCoordonnee(coordonneeDAO.create((CoordonneeUtilisateur) coordonneeUtilisateur));
 			}
-		}
-		else {
-			System.out.println("trace+");
-			try {
-
-				pUtilisateur.setId_Role(3);//(RoleUtilisateur.Utilisateur.getId());
-				userDAO.create(pUtilisateur);
-				
-			    TransactionStatus vTScommit = vTransactionStatus;
-			    vTransactionStatus = null;
-			    platformTransactionManager.commit(vTScommit);
-			} finally {
-				if (vTransactionStatus != null) {
-					platformTransactionManager.rollback(vTransactionStatus);
-			    }
-			}
-
-		}
 			
+		    TransactionStatus vTScommit = vTransactionStatus;
+		    vTransactionStatus = null;
+		    platformTransactionManager.commit(vTScommit);
+		} finally {
+			if (vTransactionStatus != null) {
+				platformTransactionManager.rollback(vTransactionStatus);
+				try {
+					throw new Exception("L'utilisateur existe deja.");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		    }
+		}
+		return (Utilisateur) utilisateur;			
 	}
 
 	/**
@@ -184,7 +196,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 	 * Méthode pour modifier {@link Utilisateur} donné en paramètre
 	 */
 	@Override
-	public void modifierUtilisateur(Utilisateur pUtilisateur) {
+	public Utilisateur modifierPseudoUtilisateur(Utilisateur pUtilisateur) {
 		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
 		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		vDefinition.setTimeout(30); // 30 secondes
@@ -192,32 +204,27 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
            
 		System.out.println("CTRL "+pUtilisateur.getPseudo());
 		userDAO = (UtilisateurDaoImpl) daoFactory.getUtilisateurManagerDAO();
-		if (userDAO.find(pUtilisateur.getPseudo())!= null && userDAO.find(pUtilisateur.getPseudo()).getPassword() != pUtilisateur.getPassword()) {
-			System.out.println("trace-");
-			try {
-				throw new Exception("Le pseudo est deja utilisé. Choisissez un autre pseudo.");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		else {
-			System.out.println("trace+");
-			try {
 
-				utilisateur.setId_Role(pUtilisateur.getId_Role());//(RoleUtilisateur.Utilisateur.getId());
-				userDAO.update(pUtilisateur);
-				
-			    TransactionStatus vTScommit = vTransactionStatus;
-			    vTransactionStatus = null;
-			    platformTransactionManager.commit(vTScommit);
-			} finally {
-				if (vTransactionStatus != null) {
-					platformTransactionManager.rollback(vTransactionStatus);
-			    }
-			}
+		try {
+			
+			utilisateur = userDAO.updatePseudo(pUtilisateur);
 
+		    TransactionStatus vTScommit = vTransactionStatus;
+		    vTransactionStatus = null;
+		    platformTransactionManager.commit(vTScommit);
+		} finally {
+			if (vTransactionStatus != null) {
+				platformTransactionManager.rollback(vTransactionStatus);
+				try {
+					throw new Exception("Erreur lors de la modification : mot de passe ou email déjà existant.");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		    }
 		}
+
+		return (Utilisateur) utilisateur;
 	}
 	/**
 	 * Méthode pour supprimmer {@link Utilisateur} donné en paramètre
@@ -231,17 +238,6 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
            
 		System.out.println("CTRL "+pUtilisateur.getPseudo());
 		userDAO = (UtilisateurDaoImpl) daoFactory.getUtilisateurManagerDAO();
-		if (userDAO.find(pUtilisateur.getPseudo())== null) {
-			System.out.println("trace-");
-			try {
-				throw new Exception("L'utilisateur n'existe pas.");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		else {
-			System.out.println("trace+");
 			try {
 				userDAO.delete(pUtilisateur);
 				
@@ -251,11 +247,14 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 			} finally {
 				if (vTransactionStatus != null) {
 					platformTransactionManager.rollback(vTransactionStatus);
+					try {
+						throw new Exception("L'utilisateur n'existe pas.");
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 			    }
 			}
-
-		}
-		
 	}
 	
 	/**
@@ -303,13 +302,6 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
     	if(userDAO.findPass(pPassword, pPseudo) != null) { 
         	System.out.println(userDAO.findPass(pPassword, pPseudo).getPseudo());
         	try {
-        	//utilisateur.setNom(userDAO.findPass(pPassword, pPseudo).getNom());
-        	//utilisateur.setPrenom(userDAO.findPass(pPassword, pPseudo).getPrenom());
-    	    //utilisateur.setPseudo(pPseudo);
-    		//utilisateur.setPassword(pPassword);
-    		//utilisateur.setId_Role(userDAO.findPass(pPassword, pPseudo).getId_Role());
-    		//utilisateur.setRole(userDAO.findPass(pPassword, pPseudo).getRole());
-    		//utilisateur.setId(userDAO.findPass(pPassword, pPseudo).getId());
     			
     			utilisateur = userDAO.findPass(pPassword, pPseudo);
     			utilisateur.setPassword(pPassword);
@@ -317,7 +309,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
     		    vTransactionStatus = null;
     		    platformTransactionManager.commit(vTScommit);
     		    
-        		} finally {
+        	} finally {
     			if (vTransactionStatus != null) {
     				platformTransactionManager.rollback(vTransactionStatus);
     		    }
@@ -350,18 +342,24 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
          
 		System.out.println("CTRL "+pUtilisateur.getPseudo());
 		userDAO = (UtilisateurDaoImpl) daoFactory.getUtilisateurManagerDAO();
-			try {
-				pUtilisateur.setId_Role(4);//(RoleUtilisateur.Utilisateur.getId());
-				userDAO.update(pUtilisateur);
-				
-			    TransactionStatus vTScommit = vTransactionStatus;
-			    vTransactionStatus = null;
-			    platformTransactionManager.commit(vTScommit);
-			} finally {
-				if (vTransactionStatus != null) {
-					platformTransactionManager.rollback(vTransactionStatus);
-			    }
-			}
+		try {
+			pUtilisateur.setId_Role(4);//(RoleUtilisateur.Utilisateur.getId());
+			userDAO.updateRole(pUtilisateur);
+			
+		    TransactionStatus vTScommit = vTransactionStatus;
+		    vTransactionStatus = null;
+		    platformTransactionManager.commit(vTScommit);
+		} finally {
+			if (vTransactionStatus != null) {
+				platformTransactionManager.rollback(vTransactionStatus);
+				try {
+					throw new Exception("L'utilisateur n'existe pas.");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		    }
+		}
 
 	}
 	
@@ -370,7 +368,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 	 * Cryptage
 	 */
 	@Override
-	public void modifierPassUtilisateur(Utilisateur pUtilisateur) {
+	public Utilisateur modifierPassUtilisateur(Utilisateur pUtilisateur) {
 		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
 		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		vDefinition.setTimeout(30); // 30 secondes
@@ -378,39 +376,61 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
          
 		userDAO = (UtilisateurDaoImpl) daoFactory.getUtilisateurManagerDAO();
 		System.out.println("CTRL "+pUtilisateur.getPseudo()+" - "+userDAO.find(pUtilisateur.getPseudo()).getId()+" - "+userDAO.find(pUtilisateur.getPseudo()).getId_Role());
-		if (userDAO.find(pUtilisateur.getPseudo()) == null ) {
-			System.out.println("trace-");
-			try {
-				throw new Exception("Le pseudo n'existe pas.");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		else {
-			System.out.println("trace+");
-			try {
-				utilisateur.setId(userDAO.find(pUtilisateur.getPseudo()).getId());
-				utilisateur.setNom(pUtilisateur.getNom());
-				utilisateur.setPrenom(pUtilisateur.getPrenom());
-				utilisateur.setPseudo(pUtilisateur.getPseudo());
-				utilisateur.setPassword(pUtilisateur.getPassword());
-				//utilisateur.setCoordonnee(pUtilisateur.getCoordonnee());
-				utilisateur.setId_Role(userDAO.find(pUtilisateur.getPseudo()).getId_Role());//(RoleUtilisateur.Utilisateur.getId());
-				userDAO.update((Utilisateur)utilisateur);
-				
-			    TransactionStatus vTScommit = vTransactionStatus;
-			    vTransactionStatus = null;
-			    platformTransactionManager.commit(vTScommit);
-			} finally {
-				if (vTransactionStatus != null) {
-					platformTransactionManager.rollback(vTransactionStatus);
-			    }
-			}
 
+		try {
+			utilisateur = userDAO.updatePass(pUtilisateur);
+			
+		    TransactionStatus vTScommit = vTransactionStatus;
+		    vTransactionStatus = null;
+		    platformTransactionManager.commit(vTScommit);
+		} finally {
+			if (vTransactionStatus != null) {
+				platformTransactionManager.rollback(vTransactionStatus);
+				try {
+					throw new Exception("L'utilisateur n'existe pas.");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		    }
+		}
+	
+		return (Utilisateur) utilisateur;
+		
+	}
+	/**
+	 * Méthode qui modifie le role de {@link Utilisateur} donné en paramètre
+	 */
+	@Override
+	public void modifierRoleUtilisateur(Utilisateur pUtilisateur) {
+		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
+		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+		vDefinition.setTimeout(30); // 30 secondes
+        TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
+        
+		System.out.println("CTRL "+pUtilisateur.getPseudo());
+		userDAO = (UtilisateurDaoImpl) daoFactory.getUtilisateurManagerDAO();
+		try {
+			userDAO.updateRole(pUtilisateur);
+			
+		    TransactionStatus vTScommit = vTransactionStatus;
+		    vTransactionStatus = null;
+		    platformTransactionManager.commit(vTScommit);
+		} finally {
+			if (vTransactionStatus != null) {
+				platformTransactionManager.rollback(vTransactionStatus);
+				try {
+					throw new Exception("L'utilisateur n'existe pas.");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		    }
 		}
 		
 	}
+	
+	
 	public DAOFactoryImpl getDaoFactory() {
 		return daoFactory;
 	}
@@ -423,5 +443,12 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 	public void setPlatformTransactionManager(PlatformTransactionManager platformTransactionManager) {
 		this.platformTransactionManager = platformTransactionManager;
 	}
+	public IntCoordonneeUtilisateur getCoordonneeUtilisateur() {
+		return coordonneeUtilisateur;
+	}
+	public void setCoordonneeUtilisateur(IntCoordonneeUtilisateur coordonneeUtilisateur) {
+		this.coordonneeUtilisateur = coordonneeUtilisateur;
+	}
+
 
 }

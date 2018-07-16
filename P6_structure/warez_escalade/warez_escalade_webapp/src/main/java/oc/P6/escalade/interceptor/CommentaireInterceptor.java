@@ -1,7 +1,10 @@
 package oc.P6.escalade.interceptor;
 
+import com.opensymphony.xwork2.Action;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.Interceptor;
+import com.opensymphony.xwork2.interceptor.ValidationAware;
 
 public class CommentaireInterceptor implements Interceptor {
 
@@ -24,8 +27,8 @@ public class CommentaireInterceptor implements Interceptor {
 
 	@Override
 	public String intercept(ActionInvocation invocation) throws Exception {
-		String message = invocation.getInvocationContext().getParameters().get("message").getValue();
-		System.out.println(message);
+		String message = invocation.getInvocationContext().getParameters().get("commentaireTopo.message").getValue();
+		System.out.println("intercept "+message);
 		String vResult = "";
 		//ici je souhaite filtrer les messages injurieux, qui contiennent des string non souhaitees
 		if(message != null) {
@@ -33,7 +36,8 @@ public class CommentaireInterceptor implements Interceptor {
 				if (knuthMorrisPratt(s, message) < 0)
 					vResult = invocation.invoke(); 			
 				else {
-					vResult = "INPUT";
+					addActionError(invocation, "Merci de rester courtois !");
+					vResult =  Action.INPUT;
 					break;
 				}
 			}
@@ -43,6 +47,13 @@ public class CommentaireInterceptor implements Interceptor {
 
 		return vResult;
 
+	}
+	
+	private void addActionError(ActionInvocation invocation, String message) {
+		Object action = invocation.getAction();
+		if(action instanceof ValidationAware) {
+			((ValidationAware) action).addActionError(message);
+		}
 	}
 	
 	/** 

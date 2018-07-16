@@ -39,7 +39,7 @@ public class GestionFichierProperties {
 
 	
 	public Properties lireProp() {
-		//--Si le fichier existe, on verifie s'il n'est pas vide auquel cas on le lit et on cree le contenu de notre listJoueur
+		//--Si le fichier existe, on verifie s'il n'est pas vide auquel cas on le lit et on cree le contenu de notre liste de propritété
 		try {
 			System.out.println(configFile.exists());
 			if (configFile.exists()) {

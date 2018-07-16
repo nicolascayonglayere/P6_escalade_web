@@ -31,7 +31,7 @@ import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 	     * Renvoie l'{@link Utilisateur} demandé pour l'authentification
 	     * @param pPassword
 	     * @param pPseudo
-	     * @returnLe {@link Utilisateur}
+	     * @return Le {@link Utilisateur}
 	     */
 	    Utilisateur getUtilisateurPass(String pPassword, String pPseudo);
 
@@ -40,8 +40,9 @@ import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 	     *
 	     * @param pUtilisateur -
 	     * @throws FunctionalException Si le pseudo est déjà utilisé
+	     * @return le {@link Utilisateur} crée
 	     */
-	    void creerUtilisateur(Utilisateur pUtilisateur); // throws FunctionalException;
+	    Utilisateur creerUtilisateur(Utilisateur pUtilisateur); // throws FunctionalException;
 
 	    /**
 	     * Supprime un {@link Utilisateur}
@@ -65,18 +66,26 @@ import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 	    /**
 	     * Modifie l'{@link Utilisateur} donné en paramètre
 	     * @param pUtilisateur
+	     * @return {@link} modifié
 	     */
-	    void modifierUtilisateur(Utilisateur pUtilisateur);
+	    Utilisateur modifierPseudoUtilisateur(Utilisateur pUtilisateur);
 	    
 	    /**
 	     * Modifie le mot de passe de l'{@link Utilisateur} donné en paramètre (cryptage en bdd)
 	     * @param pUtilisateur
+	     * @return {@link Utilisateur}
 	     */
-	    void modifierPassUtilisateur(Utilisateur pUtilisateur);
+	    Utilisateur modifierPassUtilisateur(Utilisateur pUtilisateur);
 	    
 	    /**
 	     * Banni l'{@link Utilisateur} donné en paramètre (modifie son role)
 	     * @param pUtilisateur
 	     */
 	    void banUtilisateur(Utilisateur pUtilisateur);
+	    
+	    /**
+	     * Modifie le role de {@link Utilisateur} donné en paramètre
+	     * @param pUtilisateur
+	     */
+	    void modifierRoleUtilisateur(Utilisateur pUtilisateur);
 }

@@ -32,7 +32,9 @@ body
 #menuTop
 {
 	/*background: url("../assets/images/imgFond.jpg") fixed no-repeat top left;*/
-	background-color : rgba(243, 183,134,1);	
+	background-color : rgba(243, 183,134,1);
+	
+		
 }
 
 #map, img {
@@ -47,6 +49,11 @@ body
 #footer
 {
 	background-color : rgba(243, 183,134,1);
-	padding-top : 10px;
+	padding-top : 5px;
 	padding-bottom : 10px;
+}
+
+#carouselMap
+{
+	margin-bottom : 10px;
 }

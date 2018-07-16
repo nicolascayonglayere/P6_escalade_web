@@ -13,9 +13,9 @@ public interface CoordonneeUtilisateurDao {
 	/**
 	 * Méthode pour créer les {@link Coordonneeutilisateur} données en paramètre dans la base de donnée
 	 * @param pCoordonneeUtilisateur
-	 * @return
+	 * @return les {@link CoordonneeUtilisateur} créees dans la base de donnée
 	 */
-	boolean create(CoordonneeUtilisateur pCoordonneeUtilisateur);
+	CoordonneeUtilisateur create(CoordonneeUtilisateur pCoordonneeUtilisateur);
 
 	/**
 	 * Méthode pour supprimer les {@link Coordonneeutilisateur} données en paramètre dans la base de donnée
@@ -25,11 +25,18 @@ public interface CoordonneeUtilisateurDao {
 	boolean delete (CoordonneeUtilisateur pCoordonneeUtilisateur);
 	
 	/**
-	 * Méthode pour modifier les {@link Coordonneeutilisateur} données en paramètre dans la base de donnée
+	 * Méthode pour modifier l'adresse des {@link Coordonneeutilisateur} données en paramètre dans la base de donnée
 	 * @param pCoordonneeUtilisateur
-	 * @return
+	 * @return les {@link CoordonneeUtilisateur} modifiées dans la base de donnée
 	 */
-	boolean update (CoordonneeUtilisateur pCoordonneeUtilisateur);
+	CoordonneeUtilisateur updateAdresse (CoordonneeUtilisateur pCoordonneeUtilisateur);
+	
+	/**
+	 * Méthode pour modifier l'email des {@link Coordonneeutilisateur} données en paramètre dans la base de donnée
+	 * @param pCoordonneeUtilisateur
+	 * @return les {@link CoordonneeUtilisateur} modifiées dans la base de donnée
+	 */
+	CoordonneeUtilisateur updateEmail (CoordonneeUtilisateur pCoordonneeUtilisateur);
 	
 	/**
 	 * Méthode pour obtenir les {@link Coordonneeutilisateur} de {@link Utilisateur} donné en paramètre dans la base de donnée

@@ -55,7 +55,7 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
 
 		if(vUser.getNom() != null && !(vUser.getRole()).equals("banni")) {
 			if ((utilisateur.getPseudo().equals(vUser.getPseudo()))&&(passwordEncoder.matches(utilisateur.getPassword(), vUser.getPassword()))) {//(hashedPassword.equals(vUser.getPassword()))) {
-				session.put("utilisateur", utilisateur);
+				session.put("utilisateur", vUser);
 				vResult = ActionSupport.SUCCESS;
 			}
 			else {

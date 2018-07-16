@@ -10,6 +10,7 @@ import oc.P6.escalade.business.contract.manager.topo.SiteManager;
 import oc.P6.escalade.business.contract.manager.topo.TopoManager;
 import oc.P6.escalade.business.contract.manager.topo.VoieManager;
 import oc.P6.escalade.business.contract.manager.utilisateur.CoordonneeUtilisateurManager;
+import oc.P6.escalade.business.contract.manager.utilisateur.RoleManager;
 import oc.P6.escalade.business.contract.manager.utilisateur.UtilisateurManager;
 
 /**
@@ -33,4 +34,6 @@ public interface ManagerFactory {
 	CommentaireVoieManager getCommentaireVoieManager();
 	
 	TopoEmpruntManager getTopoEmpruntManager();
+	
+	RoleManager getRoleManager();
 }

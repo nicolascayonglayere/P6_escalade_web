@@ -3,7 +3,9 @@ package oc.P6.escalade.actions.utilisateur;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
+import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -12,7 +14,7 @@ import oc.P6.escalade.business.contract.ManagerFactory;
 import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateur;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
-public class SupprimerUserAction extends ActionSupport implements SessionAware {
+public class SupprimerUserAction extends ActionSupport implements SessionAware, ServletRequestAware {
 
 	/**
 	 * 
@@ -23,18 +25,21 @@ public class SupprimerUserAction extends ActionSupport implements SessionAware {
 	private Utilisateur utilisateur;
 	private CoordonneeUtilisateur coordonneeUtilisateur;
 	private Map<String, Object> session;
+	private HttpServletRequest request;
 
 	
 	
 	public String execute() {
-		String pseudo = ((Utilisateur) session.get("utilisateur")).getPseudo();
-		System.out.println("pseudo : "+pseudo);
-		utilisateur = managerFactory.getUtilisateurManager().getUtilisateur(pseudo);
+		utilisateur = (Utilisateur) session.get("utilisateur");
+		//String pseudo = ((Utilisateur) session.get("utilisateur")).getPseudo();
+		System.out.println("pseudo : "+utilisateur.getPseudo());
+		//utilisateur = managerFactory.getUtilisateurManager().getUtilisateur(pseudo);
 		coordonneeUtilisateur = managerFactory.getCoordonneeUtilisateurManager().getCoordonnee(utilisateur.getId());
+		
 		managerFactory.getCoordonneeUtilisateurManager().supprimerCoordonnee(coordonneeUtilisateur);
 		managerFactory.getUtilisateurManager().deleteUtilisateur(utilisateur);
 		session.remove("utilisateur");
-		//this.servletRequest.getSession().invalidate();
+		this.request.getSession().invalidate();
 		this.addActionMessage("Votre compte a bien été supprimé.");
 		return SUCCESS;
 	}
@@ -59,6 +64,13 @@ public class SupprimerUserAction extends ActionSupport implements SessionAware {
 	@Override
 	public void setSession(Map<String, Object> session) {
 		this.session = session;
+	}
+
+
+	@Override
+	public void setServletRequest(HttpServletRequest request) {
+		this.request = request;
+		
 	}
 
 

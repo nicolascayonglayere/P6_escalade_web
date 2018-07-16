@@ -3,10 +3,10 @@
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
 
 <footer class="footer" >
-	<div class="container fixed-bottom" id="footer">
-		<div class="row">
+	<!--  <div class="container" >-->
+		<div class="row fixed-bottom align-items-end" id="footer" >
 			<s:if test="#session.utilisateur">
-				<div class="col-lg-2">
+				<div class="col-lg-3">
 					<s:url var="goCompteURL" action="go_monCompte" namespace="/jsp/utilisateur"/>				
 					<s:a href="%{goCompteURL}">
 						<s:text name="footer.utilisateur"/><s:property value="#session.utilisateur.pseudo"/>
@@ -20,7 +20,7 @@
 				</div>
 			</s:if>
 			<s:else>
-				<div class="col-lg-4">
+				<div class="col-lg-3">
 					<s:text name="footer.inconnu"/>
 				</div>
 				<div class="col-lg-2">					
@@ -31,7 +31,7 @@
 					<%@include file="login.jsp" %>
 				</div>
 			</s:else>
-				<div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-5">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-7 mt-2 mt-sm-5">
 					<div class="social text-center">
 						<s:a class="btn btn-default btn-sm" href="https://www.facebook.com"><i class="fab fa-facebook"></i></s:a>
 						<s:a class="btn btn-default btn-sm" href="https://www.twitter.com"><i class="fab fa-twitter-square"></i></s:a>
@@ -46,7 +46,7 @@
 				</hr>
 		
 		</div>
-	</div>
+	<!--  </div>-->
     
 
 	  

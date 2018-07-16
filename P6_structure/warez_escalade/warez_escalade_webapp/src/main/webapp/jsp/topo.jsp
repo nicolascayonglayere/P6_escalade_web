@@ -6,19 +6,22 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<link rel="stylesheet" href="jsp/style.css" />
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" >
+		<link rel="stylesheet" href="jsp/style.css" />
 		<title>TOPO</title>
 		<sb:head includeScripts="true"/>
 	</head>
 	<body>
-		<%@include file="_include/entete.jsp" %>
-		<div id="blocPge">
-		<s:actionmessage/>
 
-		
+
+	<div id="blocPge">
 		<div class="container">
+			<%@include file="_include/entete.jsp" %>
+			<s:actionmessage/>		
+			<s:set var="vTopo">${topo.nomTopo}</s:set>
+			<div id="vLatitude"><s:property value="topo.latitude"/></div>
+			<div id="vLongitude"><s:property value="topo.longitude"/></div>
 			<div class="row">
 				<div class="col-sm">
 					<h2 id="titre"><s:property value="topo.nomTopo"/></h2>
@@ -37,7 +40,7 @@
 				</s:if>
 			</div>
 			
-			<div class="row">
+			<div class="row" id="carouselMap">
 			    <!-- Caroussel -->
 			    <div id="monCarousel" class="carousel slide col-sm" data-ride="carousel">
 			      <!-- Indicateurs -->
@@ -89,7 +92,7 @@
 				<div class="col-sm">
 					<table>
 						<s:iterator value="listSecteur" var="secteur">
-							<tr>
+							<tr class="table-primary">
 								<td style="text-align:center;">
 									<s:text name="topo.secteur"/> <s:property value="#secteur.nomSecteur"/>
 									<p><s:property value="#secteur.description"/></p>
@@ -100,7 +103,7 @@
 								<td>
 									<table class="table table-bordered table-striped">
 										<thead>
-											<tr>
+											<tr class="table-primary">
 												<th><s:text name="topo.nom"/></th>
 												<th><s:text name="topo.cotation"/></th>
 												<th><s:text name="topo.hauteur"/></th>
@@ -175,20 +178,22 @@
 		<!-- les scripts google Map API -->
 		<script>
 	      function initMap() {
-	        var chicago = new google.maps.LatLng(41.850, -87.650);
+	    	var lat = Number(document.getElementById('vLatitude'));
+	    	var longi = Number(document.getElementById('#vLongitude'));
+	        var monTopo = new google.maps.LatLng(lat, longi);
 	
 	        var map = new google.maps.Map(document.getElementById('map'), {
-	          center: chicago,
+	          center: monTopo,
 	          zoom: 10
 	        });
 	
 	        var coordInfoWindow = new google.maps.InfoWindow();
-	        coordInfoWindow.setContent(createInfoWindowContent(chicago, map.getZoom()));
-	        coordInfoWindow.setPosition(chicago);
+	        coordInfoWindow.setContent(createInfoWindowContent(monTopo, map.getZoom()));
+	        coordInfoWindow.setPosition(monTopo);
 	        coordInfoWindow.open(map);
 	
 	        map.addListener('zoom_changed', function() {
-	          coordInfoWindow.setContent(createInfoWindowContent(chicago, map.getZoom()));
+	          coordInfoWindow.setContent(createInfoWindowContent(monTopo, map.getZoom()));
 	          coordInfoWindow.open(map);
 	        });
 	      }
@@ -209,7 +214,7 @@
 	            Math.floor(worldCoordinate.y * scale / TILE_SIZE));
 	
 	        return [
-	          'Chicago, IL',
+	          'monTopo, IL',
 	          'LatLng: ' + latLng,
 	          'Zoom level: ' + zoom,
 	          'World Coordinate: ' + worldCoordinate,

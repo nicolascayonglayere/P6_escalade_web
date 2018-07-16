@@ -15,9 +15,10 @@
 
 
 	<body>
-		<%@include file="_include/entete.jsp" %>
+
 		<div id="blocPge">
 			<div class = "container text-center">
+			<%@include file="_include/entete.jsp" %>			
 				<h2 id="titre"><s:text name="emprunt.titre"/></h2>
 				<s:actionmessage/>
 				<table class="table table-bordered table-striped">

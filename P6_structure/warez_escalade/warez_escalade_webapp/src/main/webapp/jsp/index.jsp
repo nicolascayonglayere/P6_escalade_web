@@ -14,16 +14,15 @@
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>		
 		<title>Accueil</title>
-		<!--<sb:head includeScripts="true"/>-->
-		<sb:head/>	
+		<sb:head includeScripts="true"/>	
 	</head>
 
 
 	<body>
-		<%@include file="_include/entete.jsp" %>
+		
 		<div id="blocPge">
-			<div class = "container">
-				
+			<div class = "container-fluid">
+				<%@include file="_include/entete.jsp" %>
 				<h2 id="titre"><s:text name="index.bienvenue"/></h2>
 				<s:actionmessage/>
 				<s:if test="#session.utilisateur">
@@ -51,7 +50,7 @@
 				</div>
 	  					
 			</div>	
-		</div>		
+				
 		
 
 		
@@ -61,6 +60,6 @@
 	  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 	  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 		<%@include file="_include/footer.jsp" %>
-
+		</div>
 	</body>
 </html>

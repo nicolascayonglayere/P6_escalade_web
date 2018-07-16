@@ -10,6 +10,7 @@ import oc.P6.escalade.consumer.DAO.contract.manager.topo.SiteManagerDAO;
 import oc.P6.escalade.consumer.DAO.contract.manager.topo.TopoManagerDao;
 import oc.P6.escalade.consumer.DAO.contract.manager.topo.VoieManagerDao;
 import oc.P6.escalade.consumer.DAO.contract.manager.utilisateur.CoordonneeUtilisateurDao;
+import oc.P6.escalade.consumer.DAO.contract.manager.utilisateur.RoleDao;
 import oc.P6.escalade.consumer.DAO.contract.manager.utilisateur.UtilisateurManagerDAO;
 
 /**
@@ -33,4 +34,6 @@ public interface DAOFactory {
 	CommentaireVoieDao getCommentaireVoieDao();
 	
 	TopoEmpruntDao getTopoEmpruntDao();
+	
+	RoleDao getRoleDao();
 }
