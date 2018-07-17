@@ -6,10 +6,12 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">		
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 		<link rel="stylesheet" type="text/css" href="../style.css" />	
 		<title>Modification du Site</title>
-		<sb:head/>
+		<!--<sb:head includeScripts="false" includeStyles="true"/>-->
 	</head>
 
 	<body>
@@ -17,9 +19,9 @@
 		<div id="blocPge">
 			<s:actionmessage/>
 			<div class="container text-center">
-				<h3 id="titre"><s:text name="modifierTopo.topo"/> <s:property value="topo.nomTopo"/></h3>
+				<h1 id="titre"><s:text name="modifierTopo.topo"/> <s:property value="topo.nomTopo"/></h1>
 				<h4 id="titre"><s:text name="modifierTopo.titreSite"/> <s:property value="site.nomSite"/></h4>
-					<s:form action="modifier_site" cssClass="form-horizontal" namespace="/jsp/utilisateur">
+					<s:form action="modifier_site" cssClass="form-vertical" namespace="/jsp/utilisateur">
 						<s:textfield name="site.nomSite" placeholder="nom du site" label="%{getText('form.nomSite')}" requiredLabel="false"/>
 						<s:textfield name="site.description" placeholder="description" label="%{getText('form.description')}" requiredLabel="false"/>
 						<s:textfield name="topo.nomTopo" placeholder="topo.nomTopo" label="%{getText('form.nomTopo')}" requiredLabel="true"/>

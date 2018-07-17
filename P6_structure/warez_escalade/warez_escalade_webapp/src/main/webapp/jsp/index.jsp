@@ -5,25 +5,23 @@
 
 <html>
 	<head>
-		 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+		
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">		
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 		<link rel="stylesheet" type="text/css" href="jsp/style.css" />
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-		<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>		
 		<title>Accueil</title>
-		<sb:head includeScripts="true"/>	
+		<!--<sb:head includeScripts="false" includeStyles="true"/>-->	
 	</head>
 
 
 	<body>
-		
+		<%@include file="_include/entete.jsp" %>
 		<div id="blocPge">
-			<div class = "container-fluid">
-				<%@include file="_include/entete.jsp" %>
-				<h2 id="titre"><s:text name="index.bienvenue"/></h2>
+			<div class = "container">
+
+				<h1 id="titre"><s:text name="index.bienvenue"/></h1>
 				<s:actionmessage/>
 				<s:if test="#session.utilisateur">
 					<p><s:text name="index.bonjour"/> <s:property value="#session.utilisateur.pseudo"/></p>	
@@ -56,10 +54,13 @@
 		
 		
 
-	  	<script  src="https://code.jquery.com/jquery-3.3.1.min.js"  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="  crossorigin="anonymous"></script>
+
+
+		
+		</div>
+		<%@include file="_include/footer.jsp" %>
+		<script  src="https://code.jquery.com/jquery-3.3.1.min.js"  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="  crossorigin="anonymous"></script>
 	  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 	  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-		<%@include file="_include/footer.jsp" %>
-		</div>
 	</body>
 </html>

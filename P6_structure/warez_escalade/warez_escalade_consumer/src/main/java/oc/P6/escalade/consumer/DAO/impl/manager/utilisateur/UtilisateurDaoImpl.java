@@ -45,7 +45,7 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 	        pUtilisateur.setId(keyHolder.getKey().intValue());
 	    } catch (DuplicateKeyException vEx) {
 	        System.out.println("L'utilisateur existe déjà ! pseudo=" + pUtilisateur.getPseudo());
-	        vEx.printStackTrace();
+	        //vEx.printStackTrace();
 	        return pUtilisateur;
 	    }
 	    

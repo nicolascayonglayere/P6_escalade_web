@@ -6,10 +6,12 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">		
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 		<link rel="stylesheet" type="text/css" href="../style.css" />
 		<title>Creer Secteur</title>
-		<sb:head/>
+		<!--<sb:head includeScripts="false" includeStyles="true"/>-->
 	</head>
 	
 	<body>
@@ -17,10 +19,10 @@
 		<div id="blocPge">
 			<s:actionmessage/>
 			<div class="container text-center">
-				<h3 id="titre"><s:text name="creerTopo.topo"/> <s:property value="topo.nomTopo"/></h3>
+				<h1 id="titre"><s:text name="creerTopo.topo"/> <s:property value="topo.nomTopo"/></h1>
 				<h4 id="titre"><s:text name="creerTopo.site"/> <s:property value="site.nomSite"/></h4>
 				<h4 id="titre"><s:text name="creerTopo.titreSecteur"/></h4>
-					<s:form action="creer_secteur" cssClass="form-horizontal" namespace="/jsp/utilisateur">
+					<s:form action="creer_secteur" cssClass="form-vertical" namespace="/jsp/utilisateur">
 						<s:textfield name="secteur.nomSecteur" placeholder="nom du secteur" label="%{getText('form.nomSecteur')}" requiredLabel="true"/>
 						<s:textfield name="secteur.description" placeholder="description" label="%{getText('form.description')}" requiredLabel="false"/>
 						<s:textfield name="site.nomSite" placeholder="site.nomSite" label="%{getText('form.nomSite')}" requiredLabel="true"/>

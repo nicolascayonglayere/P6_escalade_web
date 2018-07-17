@@ -6,10 +6,12 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">		
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 		<link rel="stylesheet" type="text/css" href="../style.css" />
 		<title>Creer Voie</title>
-		<sb:head/>
+		<!--<sb:head includeScripts="false" includeStyles="true"/>-->
 	</head>
 	
 	<body>
@@ -67,11 +69,11 @@
 				</div>
 				
 				<div class="col-lg-9 text-center">
-					<h3 id="titre"><s:text name="creerTopo.topo"/> <s:property value="topo.nomTopo"/></h3>
+					<h1 id="titre"><s:text name="creerTopo.topo"/> <s:property value="topo.nomTopo"/></h1>
 					<h4 id="titre"><s:text name="creerTopo.site"/> <s:property value="site.nomSite"/></h4>
 					<h4 id="titre"><s:text name="creerTopo.secteur"/> <s:property value="secteur.nomSecteur"/></h4>
 					<h4 id="titre"><s:text name="creerTopo.titreVoie"/></h4>
-					<s:form action="creer_voie" cssClass="form-horizontal" namespace="/jsp/utilisateur">
+					<s:form action="creer_voie" cssClass="form-vertical" namespace="/jsp/utilisateur">
 						<s:textfield name="voie.nomVoie" placeholder="nom de la voie" label="%{getText('form.nom')}" requiredLabel="false"/>
 						<s:textfield name="voie.cotation" placeholder="cotation" label="%{getText('form.cotation')}" requiredLabel="true"/>
 						<s:textfield name="voie.hauteur" placeholder="hauteur" label="%{getText('form.hauteur')}" requiredLabel="true"/>

@@ -8,7 +8,7 @@
 
 
      		 <div class="navbar navbar-expand-md navbar-light navbar-fixed-top" id="menuTop">
-      			<div class="container">
+      			<div class="container align-items-center">
       				<!--  <div class="row align-items-center">-->
       					
 						<!-- <div class="navbar-header">-->

@@ -6,25 +6,26 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">		
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" >
-		<link rel="stylesheet" href="jsp/style.css" />
+		<link rel="stylesheet" type="text/css" href="jsp/style.css" />
 		<title>TOPO</title>
-		<sb:head includeScripts="true"/>
+		<!--<sb:head includeScripts="false" includeStyles="true"/>-->
 	</head>
 	<body>
-
+	<%@include file="_include/entete.jsp" %>
 
 	<div id="blocPge">
 		<div class="container">
-			<%@include file="_include/entete.jsp" %>
+			
 			<s:actionmessage/>		
 			<s:set var="vTopo">${topo.nomTopo}</s:set>
 			<div id="vLatitude"><s:property value="topo.latitude"/></div>
 			<div id="vLongitude"><s:property value="topo.longitude"/></div>
 			<div class="row">
 				<div class="col-sm">
-					<h2 id="titre"><s:property value="topo.nomTopo"/></h2>
+					<h1 id="titre"><s:property value="topo.nomTopo"/></h1>
 					<p><s:property value="topo.description"/></br></p>
 					<s:iterator value="listSite" var="site">
 						<h3 id="titre"><s:property value="#site.nomSite"/></h3>

@@ -2,9 +2,10 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
 
-<footer class="footer" >
+<footer class="footer container" >
 	<!--  <div class="container" >-->
-		<div class="row fixed-bottom align-items-end" id="footer" >
+		<div class="fixed-bottom align-items-center" id="footer" >
+			<div class="row">
 			<s:if test="#session.utilisateur">
 				<div class="col-lg-3">
 					<s:url var="goCompteURL" action="go_monCompte" namespace="/jsp/utilisateur"/>				
@@ -31,7 +32,7 @@
 					<%@include file="login.jsp" %>
 				</div>
 			</s:else>
-				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-7 mt-2 mt-sm-5">
+				<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 mt-2 mt-sm-5">
 					<div class="social text-center">
 						<s:a class="btn btn-default btn-sm" href="https://www.facebook.com"><i class="fab fa-facebook"></i></s:a>
 						<s:a class="btn btn-default btn-sm" href="https://www.twitter.com"><i class="fab fa-twitter-square"></i></s:a>
@@ -39,6 +40,7 @@
 						<s:a class="btn btn-default btn-sm" href="https://www.google.com"><i class="fab fa-google-plus"></i></s:a>
 					</div>
 				</div>
+			</div>	
 				</hr>	
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mt-2 mt-sm-5 text-center text-white">
 					<p><s:text name="footer.moi"/><s:a href="https://www.openclassrooms.com/fr/"><s:text name="footer.oc"/> </s:a></p>
@@ -53,8 +55,8 @@
 
 </footer>
 
-	<script type="text/javascript">
+	<!--<script type="text/javascript">
     $('#btCo').click(function(){
     	$('#myModal').modal('show');
     });
-	</script>
+	</script>-->
