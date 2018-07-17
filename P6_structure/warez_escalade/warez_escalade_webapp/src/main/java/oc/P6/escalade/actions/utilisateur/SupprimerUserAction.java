@@ -13,6 +13,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import oc.P6.escalade.business.contract.ManagerFactory;
 import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateur;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
+import oc.P6.escalade.model.bean.utilisateur.UtilisateurException;
 
 public class SupprimerUserAction extends ActionSupport implements SessionAware, ServletRequestAware {
 
@@ -37,11 +38,18 @@ public class SupprimerUserAction extends ActionSupport implements SessionAware, 
 		coordonneeUtilisateur = managerFactory.getCoordonneeUtilisateurManager().getCoordonnee(utilisateur.getId());
 		
 		managerFactory.getCoordonneeUtilisateurManager().supprimerCoordonnee(coordonneeUtilisateur);
-		managerFactory.getUtilisateurManager().deleteUtilisateur(utilisateur);
-		session.remove("utilisateur");
-		this.request.getSession().invalidate();
-		this.addActionMessage("Votre compte a bien été supprimé.");
-		return SUCCESS;
+		try {
+			managerFactory.getUtilisateurManager().deleteUtilisateur(utilisateur);
+			session.remove("utilisateur");
+			this.request.getSession().invalidate();
+			this.addActionMessage("Votre compte a bien été supprimé.");
+			return ActionSupport.SUCCESS;
+		} catch (UtilisateurException e) {
+			addActionMessage(e.getMessage());
+			e.printStackTrace();
+			return ActionSupport.INPUT;
+		}
+
 	}
 	
 	

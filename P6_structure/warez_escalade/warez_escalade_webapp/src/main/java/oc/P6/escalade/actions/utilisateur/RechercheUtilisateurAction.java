@@ -10,6 +10,7 @@ import oc.P6.escalade.business.contract.ManagerFactory;
 import oc.P6.escalade.model.bean.emprunt.TopoEmprunt;
 import oc.P6.escalade.model.bean.utilisateur.Role;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
+import oc.P6.escalade.model.bean.utilisateur.UtilisateurException;
 
 public class RechercheUtilisateurAction extends ActionSupport {
 
@@ -50,7 +51,13 @@ public class RechercheUtilisateurAction extends ActionSupport {
 
 	public String execute() {
 		System.out.println(utilisateur.getPseudo());
-		listUtilisateur = managerFactory.getUtilisateurManager().getListUtilisateur(utilisateur.getPseudo());
+		try {
+			listUtilisateur = managerFactory.getUtilisateurManager().getListUtilisateur(utilisateur.getPseudo());
+		} catch (UtilisateurException e) {
+			addActionMessage(e.getMessage());
+			e.printStackTrace();
+			return ActionSupport.INPUT;
+		}
 		listRole = managerFactory.getRoleManager().getListRole();
 		return ActionSupport.SUCCESS;
 	}

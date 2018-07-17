@@ -10,6 +10,7 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import oc.P6.escalade.business.contract.ManagerFactory;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
+import oc.P6.escalade.model.bean.utilisateur.UtilisateurException;
 
 public class GoBanAction extends ActionSupport implements SessionAware {
 
@@ -23,11 +24,12 @@ public class GoBanAction extends ActionSupport implements SessionAware {
 	private Map<String, Object>session;
 	
 	public String execute() {
-		utilisateur = managerFactory.getUtilisateurManager().getUtilisateur(((Utilisateur)session.get("utilisateur")).getPseudo());
-		if(utilisateur.getRole().equals("administrateur"))
+		try {
+			utilisateur = managerFactory.getUtilisateurManager().getUtilisateur(((Utilisateur)session.get("utilisateur")).getPseudo());
 			return ActionSupport.SUCCESS;
-		else {
-			addActionMessage("Vous n'avez pas les droits pour cela.");
+		} catch (UtilisateurException e) {
+			addActionMessage(e.getMessage());
+			e.printStackTrace();
 			return ActionSupport.INPUT;
 		}
 	}

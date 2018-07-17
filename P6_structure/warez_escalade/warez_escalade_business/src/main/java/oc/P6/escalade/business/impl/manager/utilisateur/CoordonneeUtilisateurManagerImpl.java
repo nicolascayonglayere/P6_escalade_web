@@ -14,6 +14,7 @@ import oc.P6.escalade.consumer.DAO.impl.DAOFactoryImpl;
 import oc.P6.escalade.consumer.DAO.impl.manager.utilisateur.CoordonneeUtilisateurDaoImpl;
 import oc.P6.escalade.consumer.DAO.impl.manager.utilisateur.UtilisateurDaoImpl;
 import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateur;
+import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateurException;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 import oc.P6.escalade.model.contract.utilisateur.IntCoordonneeUtilisateur;
 import oc.P6.escalade.model.contract.utilisateur.IntUtilisateur;
@@ -79,7 +80,7 @@ public class CoordonneeUtilisateurManagerImpl extends AbstractDAOManager impleme
 	 * Méthode pour créer {@link CoordonneeUtilisateur} donnée en paramètre
 	 */
 	@Override
-	public void creerCoordonnee(CoordonneeUtilisateur pCoordinneeUtilisateur) {
+	public void creerCoordonnee(CoordonneeUtilisateur pCoordinneeUtilisateur) throws CoordonneeUtilisateurException{
 		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
 		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		vDefinition.setTimeout(30); // 30 secondes
@@ -94,8 +95,10 @@ public class CoordonneeUtilisateurManagerImpl extends AbstractDAOManager impleme
 		    vTransactionStatus = null;
 		    platformTransactionManager.commit(vTScommit);
 		}finally {
-			if (vTransactionStatus != null) 
+			if (vTransactionStatus != null) { 
 				platformTransactionManager.rollback(vTransactionStatus);
+				throw new CoordonneeUtilisateurException("L'email existe deja.");
+			}
 		}
 		
 	}

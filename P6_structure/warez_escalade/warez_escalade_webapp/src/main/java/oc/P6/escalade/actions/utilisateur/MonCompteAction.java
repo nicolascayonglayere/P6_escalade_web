@@ -77,7 +77,7 @@ public class MonCompteAction extends ActionSupport implements SessionAware{
 	public String execute() {
 		String username1 = ((Utilisateur) session.get("utilisateur")).getPseudo();
 		System.out.println("Compte de "+username1);
-		utilisateur = managerFactory.getUtilisateurManager().getUtilisateur(username1);
+		utilisateur = (Utilisateur) session.get("utilisateur");
 		listTopoEmprunt = managerFactory.getTopoEmpruntManager().getListTopoEmprunt(utilisateur.getId());
 		coordonneeUtilisateur = managerFactory.getCoordonneeUtilisateurManager().getCoordonnee(utilisateur.getId());
 		role = utilisateur.getRole();

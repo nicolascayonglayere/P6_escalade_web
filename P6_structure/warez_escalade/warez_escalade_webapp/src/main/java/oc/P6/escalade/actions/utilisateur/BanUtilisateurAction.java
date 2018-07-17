@@ -12,6 +12,7 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import oc.P6.escalade.business.contract.ManagerFactory;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
+import oc.P6.escalade.model.bean.utilisateur.UtilisateurException;
 
 public class BanUtilisateurAction extends ActionSupport implements SessionAware, ServletRequestAware{
 
@@ -50,10 +51,23 @@ public class BanUtilisateurAction extends ActionSupport implements SessionAware,
 	
 	public String execute() {
 		System.out.println(checkMe);
-		utilisateur = managerFactory.getUtilisateurManager().getUtilisateur(checkMe);
-		managerFactory.getUtilisateurManager().banUtilisateur(utilisateur);
-		addActionMessage("Vous avez banni l'utilisateur "+utilisateur.getPseudo());
-		return ActionSupport.SUCCESS;
+		try {
+			utilisateur = managerFactory.getUtilisateurManager().getUtilisateur(checkMe);
+		} catch (UtilisateurException e1) {
+			e1.printStackTrace();
+			addActionMessage(e1.getMessage());
+			return ActionSupport.INPUT;
+		}
+
+		try {
+			managerFactory.getUtilisateurManager().banUtilisateur(utilisateur);
+			addActionMessage("Vous avez banni l'utilisateur "+utilisateur.getPseudo());
+			return ActionSupport.SUCCESS;
+		} catch (UtilisateurException e) {
+			e.printStackTrace();
+			addActionMessage(e.getMessage());
+			return ActionSupport.INPUT;
+		}
 	}
 	@Override
 	public void setServletRequest(HttpServletRequest request) {

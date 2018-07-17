@@ -16,6 +16,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import oc.P6.escalade.WebappHelper.GestionFichierProperties;
 import oc.P6.escalade.business.contract.ManagerFactory;
 import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateur;
+import oc.P6.escalade.model.bean.utilisateur.UtilisateurException;
 
 public class ContactAction extends ActionSupport {
 
@@ -35,9 +36,16 @@ public class ContactAction extends ActionSupport {
 	
 	public String execute() {
 		System.out.println("CTRL contact "+coordonneeUtilisateur.getEmail());
-		to = managerFactory.getCoordonneeUtilisateurManager().getCoordonnee(
-				managerFactory.getUtilisateurManager().getListAdmin().get(0).getId()).getEmail();
 	      String vReturn = SUCCESS;
+		try {
+			to = managerFactory.getCoordonneeUtilisateurManager().getCoordonnee(
+					managerFactory.getUtilisateurManager().getListAdmin().get(0).getId()).getEmail();
+		} catch (UtilisateurException e1) {
+			addActionMessage(e1.getMessage());
+			e1.printStackTrace();
+			vReturn = ActionSupport.INPUT;
+		}
+
 	    try {
 	    	properties = gfp.lireProp();
 		    System.out.println("SimpleEmail Start");

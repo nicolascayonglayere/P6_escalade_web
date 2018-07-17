@@ -19,7 +19,7 @@
 		<div id="blocPge">
 			<s:actionmessage/>
 			<div class="container">
-				<h1><s:text name="rechTopo.titre"/></h1>
+				<h1 id="titre"><s:text name="rechTopo.titre"/></h1>
 				<s:if test="%{#request.nomTopo}">
 					<s:set var="nomDuTopo"><s:property value="nomTopo"/></s:set>
 				</s:if>

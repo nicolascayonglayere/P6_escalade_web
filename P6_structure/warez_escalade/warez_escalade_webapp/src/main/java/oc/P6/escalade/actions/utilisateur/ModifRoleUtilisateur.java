@@ -6,6 +6,7 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import oc.P6.escalade.business.contract.ManagerFactory;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
+import oc.P6.escalade.model.bean.utilisateur.UtilisateurException;
 
 public class ModifRoleUtilisateur extends ActionSupport {
 
@@ -37,7 +38,13 @@ public class ModifRoleUtilisateur extends ActionSupport {
 	
 	public String execute() {
 		System.out.println(checkMe+" - "+selectedRole);
-		utilisateur = managerFactory.getUtilisateurManager().getUtilisateur(checkMe);
+		try {
+			utilisateur = managerFactory.getUtilisateurManager().getUtilisateur(checkMe);
+		} catch (UtilisateurException e) {
+			addActionMessage(e.getMessage());
+			e.printStackTrace();
+			return ActionSupport.INPUT;
+		}
 		utilisateur.setId_Role(selectedRole);
 		
 		managerFactory.getUtilisateurManager().modifierRoleUtilisateur(utilisateur);

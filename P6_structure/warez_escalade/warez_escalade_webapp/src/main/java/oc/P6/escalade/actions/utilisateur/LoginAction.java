@@ -13,6 +13,7 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import oc.P6.escalade.business.contract.ManagerFactory;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
+import oc.P6.escalade.model.bean.utilisateur.UtilisateurException;
 
 public class LoginAction extends ActionSupport implements SessionAware, ServletRequestAware {
 	/**
@@ -38,11 +39,17 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
 	public String logOut() {
 		String username1 = ((Utilisateur) this.session.get("utilisateur")).getPseudo();
 		System.out.println("deco - "+username1);
-		utilisateur = managerFactory.getUtilisateurManager().getUtilisateur(username1);
+		try {
+			utilisateur = managerFactory.getUtilisateurManager().getUtilisateur(username1);
+		} catch (UtilisateurException e) {
+			addActionMessage(e.getMessage());
+			e.printStackTrace();
+			return ActionSupport.INPUT;
+		}
 		session.remove("utilisateur");
 		this.servletRequest.getSession().invalidate();
 		addActionMessage("You Have Been Successfully Logged Out");
-		return SUCCESS;
+		return ActionSupport.SUCCESS;
 	}
 
 	// ---------------------------- Login register user
@@ -50,25 +57,31 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
 	public String loginRegisterUser() {
 		String vResult="";
 		System.out.println(utilisateur.getPseudo()+" - "+utilisateur.getPassword());
-		Utilisateur vUser = managerFactory.getUtilisateurManager().getUtilisateur(utilisateur.getPseudo());
-		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		Utilisateur vUser;
+		try {
+			vUser = managerFactory.getUtilisateurManager().getUtilisateur(utilisateur.getPseudo());
+			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-		if(vUser.getNom() != null && !(vUser.getRole()).equals("banni")) {
-			if ((utilisateur.getPseudo().equals(vUser.getPseudo()))&&(passwordEncoder.matches(utilisateur.getPassword(), vUser.getPassword()))) {//(hashedPassword.equals(vUser.getPassword()))) {
-				session.put("utilisateur", vUser);
-				vResult = ActionSupport.SUCCESS;
+			if(!(vUser.getRole().equals("banni"))) {
+				if ((utilisateur.getPseudo().equals(vUser.getPseudo()))&&(passwordEncoder.matches(utilisateur.getPassword(), vUser.getPassword()))) {//(hashedPassword.equals(vUser.getPassword()))) {
+					session.put("utilisateur", vUser);
+					vResult = ActionSupport.SUCCESS;
+				}
+				else {
+					addActionError("Entrer un mot de passe valide !");
+					vResult = ActionSupport.LOGIN;
+				}
 			}
 			else {
-				addActionError("Entrer un pseudo et un mot de passe valide !");
+				addActionError("Vous avez été banni de ce site.");
 				vResult = ActionSupport.LOGIN;
 			}
-		}
-		
-
-		else {
-			addActionError("Vous avez été banni de ce site.");
+		} catch (UtilisateurException e) {
+			addActionMessage(e.getMessage());
+			e.printStackTrace();
 			vResult = ActionSupport.LOGIN;
 		}
+
 		return vResult;
 	}
 

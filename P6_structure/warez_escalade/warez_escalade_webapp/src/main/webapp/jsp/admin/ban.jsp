@@ -18,7 +18,7 @@
 		<%@include file="../_include/entete.jsp" %>
 		<div id="blocPge">
 			<div class="container">
-				<h1><s:text name="modifRole.ban"/></h1>
+				<h1 id="titre"><s:text name="modifRole.ban"/></h1>
 				<s:form id="rechercheUtilisateur" action="recherche_utilisateur" cssClass="form-vertical" namespace="/jsp/utilisateur">
 					<s:textfield name="utilisateur.pseudo" placeholder="pseudo" label="%{getText('form.pseudo')}" requiredLabel="true"/>
 					<s:submit class="btn btn-default" value="%{getText('bouton.rechercher')}">

@@ -20,7 +20,9 @@ import oc.P6.escalade.consumer.DAO.impl.manager.TopoEmpruntDaoImpl;
 import oc.P6.escalade.consumer.DAO.impl.manager.utilisateur.CoordonneeUtilisateurDaoImpl;
 import oc.P6.escalade.consumer.DAO.impl.manager.utilisateur.UtilisateurDaoImpl;
 import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateur;
+import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateurException;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
+import oc.P6.escalade.model.bean.utilisateur.UtilisateurException;
 import oc.P6.escalade.model.contract.utilisateur.IntCoordonneeUtilisateur;
 import oc.P6.escalade.model.contract.utilisateur.IntUtilisateur;
 
@@ -53,7 +55,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
      * Méthode retournant {@link Utilisateur} dont le pseudo est donné en paramètre
      */
     @Override
-    public Utilisateur getUtilisateur(String pPseudo) {//throws NotFoundException {
+    public Utilisateur getUtilisateur(String pPseudo) throws UtilisateurException{//throws NotFoundException {
 		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
 		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		vDefinition.setTimeout(30); // 30 secondes
@@ -61,41 +63,24 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
     	//--chercher l'utilisateur ds la bdd
     	userDAO = (UtilisateurDaoImpl) daoFactory.getUtilisateurManagerDAO();
     	TopoEmpruntDao topoEmpDAO = (TopoEmpruntDaoImpl)daoFactory.getTopoEmpruntDao();
-    	if(userDAO.find(pPseudo) != null) {
-    		try {
-            	LOGGER.debug(userDAO.find(pPseudo).getPseudo());
-            	System.out.println(userDAO.find(pPseudo).getPseudo());
-    	    	
-    	    	utilisateur = userDAO.find(pPseudo);
-    	    	utilisateur.setListTopoEmprunt(topoEmpDAO.getListTopoEmprunt(utilisateur.getId()));
-    	    	
-			    TransactionStatus vTScommit = vTransactionStatus;
-			    vTransactionStatus = null;
-			    platformTransactionManager.commit(vTScommit);
-    		}finally {
-				if (vTransactionStatus != null) { 
-					platformTransactionManager.rollback(vTransactionStatus);
-					try {
-						throw new Exception("Utilisateur non trouvé : PSEUDO=" + pPseudo);
-						
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-    		}
-    	}
-    	else {
-    		utilisateur.setNom(null); 
-    		//utilisateur.setPseudo(pPseudo);
-			try {
-				throw new Exception("Utilisateur non trouvé : PSEUDO=" + pPseudo);
-				
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+
+	   	try {
+	        LOGGER.debug(userDAO.find(pPseudo).getPseudo());
+	        System.out.println(userDAO.find(pPseudo).getPseudo());
+	       	
+	       	utilisateur = userDAO.find(pPseudo);
+	       	utilisateur.setListTopoEmprunt(topoEmpDAO.getListTopoEmprunt(utilisateur.getId()));
+	       	
+		    TransactionStatus vTScommit = vTransactionStatus;
+		    vTransactionStatus = null;
+		    platformTransactionManager.commit(vTScommit);
+	   	}finally {
+			if (vTransactionStatus != null) { 
+				platformTransactionManager.rollback(vTransactionStatus);
+				throw new UtilisateurException("Utilisateur non trouvé : PSEUDO=" + pPseudo);
 			}
-    	}
+	   	}
+
     	//System.out.println("CTRL "+utilisateur.getPseudo()+" - "+utilisateur.getPassword()+" - "+utilisateur.getId());
     	return (Utilisateur)utilisateur;
         
@@ -105,7 +90,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 	 * Méthode pour créer un {@link Utilisateur} donné en paramètre
 	 */
 	@Override
-	public Utilisateur creerUtilisateur(Utilisateur pUtilisateur) {
+	public Utilisateur creerUtilisateur(Utilisateur pUtilisateur) throws UtilisateurException, CoordonneeUtilisateurException{
 		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
 		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		vDefinition.setTimeout(30); // 30 secondes
@@ -121,6 +106,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 				coordonneeUtilisateur = pUtilisateur.getCoordonnee();
 				coordonneeUtilisateur.setUtilisateur((Utilisateur) utilisateur);
 				utilisateur.setCoordonnee(coordonneeDAO.create((CoordonneeUtilisateur) coordonneeUtilisateur));
+
 			}
 			
 		    TransactionStatus vTScommit = vTransactionStatus;
@@ -129,12 +115,16 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 		} finally {
 			if (vTransactionStatus != null) {
 				platformTransactionManager.rollback(vTransactionStatus);
-				try {
-					throw new Exception("L'utilisateur existe deja.");
-				} catch (Exception e) {
+				if (utilisateur.getId() == 0)
+					throw new UtilisateurException("L'utilisateur existe deja "+pUtilisateur.getPseudo()+".");
+				else
+					throw new CoordonneeUtilisateurException("L'email existe deja "+pUtilisateur.getCoordonnee().getEmail()+".");
+				//try {
+					//throw new Exception("L'utilisateur existe deja.");
+				//} catch (Exception e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+					//e.printStackTrace();
+				//}
 		    }
 		}
 		return (Utilisateur) utilisateur;			
@@ -144,7 +134,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 	 * Méthode pour obtenir la liste des administrateurs
 	 */
 	@Override
-	public ArrayList<Utilisateur> getListAdmin() {
+	public ArrayList<Utilisateur> getListAdmin() throws UtilisateurException{
 		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
 		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		vDefinition.setTimeout(30); // 30 secondes
@@ -162,6 +152,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 		} finally {
 			if (vTransactionStatus != null) {
 				platformTransactionManager.rollback(vTransactionStatus);
+				throw new UtilisateurException("Aucun administrateur répertorié.");
 		    }
 		}
 
@@ -170,7 +161,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 	 * Méthode pour obtenir la liste des modérateurs
 	 */
 	@Override
-	public ArrayList<Utilisateur> getListModo() {
+	public ArrayList<Utilisateur> getListModo() throws UtilisateurException{
 		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
 		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		vDefinition.setTimeout(30); // 30 secondes
@@ -188,6 +179,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 		} finally {
 			if (vTransactionStatus != null) {
 				platformTransactionManager.rollback(vTransactionStatus);
+				throw new UtilisateurException("Aucun modérateur répertorié");
 		    }
 		}
 	}
@@ -230,7 +222,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 	 * Méthode pour supprimmer {@link Utilisateur} donné en paramètre
 	 */
 	@Override
-	public void deleteUtilisateur(Utilisateur pUtilisateur) {
+	public void deleteUtilisateur(Utilisateur pUtilisateur) throws UtilisateurException{
 		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
 		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		vDefinition.setTimeout(30); // 30 secondes
@@ -247,12 +239,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 			} finally {
 				if (vTransactionStatus != null) {
 					platformTransactionManager.rollback(vTransactionStatus);
-					try {
-						throw new Exception("L'utilisateur n'existe pas.");
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					throw new UtilisateurException("L'utilisateur n'existe pas : "+pUtilisateur.getPseudo()+".");
 			    }
 			}
 	}
@@ -261,7 +248,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 	 * Méthode pour obtenir la liste des utilisateurs à partir du pseudo (une partie pour une recherche)
 	 */
 	@Override
-	public ArrayList<Utilisateur> getListUtilisateur(String pPseudo) {
+	public ArrayList<Utilisateur> getListUtilisateur(String pPseudo) throws UtilisateurException{
 		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
 		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		vDefinition.setTimeout(30); // 30 secondes
@@ -283,6 +270,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 		} finally {
 			if (vTransactionStatus != null) {
 				platformTransactionManager.rollback(vTransactionStatus);
+				throw new UtilisateurException("Aucun utilisateur trouvé : "+pPseudo+".");
 		    }
 		}
 	}
@@ -332,9 +320,10 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 
 	/**
 	 * Méthode pour ban {@link Utilisateur} donné en paramètre	
+	 * @throws UtilisateurException 
 	 */
 	@Override
-	public void banUtilisateur(Utilisateur pUtilisateur) {
+	public void banUtilisateur(Utilisateur pUtilisateur) throws UtilisateurException  {
 		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
 		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		vDefinition.setTimeout(30); // 30 secondes
@@ -352,12 +341,13 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 		} finally {
 			if (vTransactionStatus != null) {
 				platformTransactionManager.rollback(vTransactionStatus);
-				try {
-					throw new Exception("L'utilisateur n'existe pas.");
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				throw new UtilisateurException("L'utilisateur "+pUtilisateur.getPseudo()+" n'existe pas.");
+			//try {
+			//	throw new Exception("L'utilisateur n'existe pas.");
+			//} catch (Exception e) {
+			//	// TODO Auto-generated catch block
+			//	e.printStackTrace();
+			//}
 		    }
 		}
 

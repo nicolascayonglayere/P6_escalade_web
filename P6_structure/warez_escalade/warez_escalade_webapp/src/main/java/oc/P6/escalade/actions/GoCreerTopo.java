@@ -10,6 +10,7 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import oc.P6.escalade.business.contract.ManagerFactory;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
+import oc.P6.escalade.model.bean.utilisateur.UtilisateurException;
 
 public class GoCreerTopo extends ActionSupport implements SessionAware{
 
@@ -38,12 +39,12 @@ public class GoCreerTopo extends ActionSupport implements SessionAware{
 
 	public String execute() {
 		System.out.println(((Utilisateur)session.get("utilisateur")).getPseudo());
-		utilisateur = managerFactory.getUtilisateurManager().getUtilisateur(((Utilisateur)session.get("utilisateur")).getPseudo());
-		System.out.println(utilisateur.getRole());
-		if(!(utilisateur.getRole().equals("utilisateur")))
+		try {
+			utilisateur = managerFactory.getUtilisateurManager().getUtilisateur(((Utilisateur)session.get("utilisateur")).getPseudo());
 			return ActionSupport.SUCCESS;
-		else {
-			addActionMessage("Vous n'avez pas les droits pour cela.");
+		} catch (UtilisateurException e) {
+			addActionMessage(e.getMessage());
+			e.printStackTrace();
 			return ActionSupport.INPUT;
 		}
 	}
