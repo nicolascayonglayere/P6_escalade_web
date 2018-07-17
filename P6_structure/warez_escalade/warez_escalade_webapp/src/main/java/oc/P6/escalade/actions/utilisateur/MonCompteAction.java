@@ -14,7 +14,9 @@ import oc.P6.escalade.model.bean.commentaire.CommentaireTopo;
 import oc.P6.escalade.model.bean.emprunt.TopoEmprunt;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateur;
+import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateurException;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
+import oc.P6.escalade.model.bean.utilisateur.UtilisateurException;
 
 public class MonCompteAction extends ActionSupport implements SessionAware{
 
@@ -78,8 +80,20 @@ public class MonCompteAction extends ActionSupport implements SessionAware{
 		String username1 = ((Utilisateur) session.get("utilisateur")).getPseudo();
 		System.out.println("Compte de "+username1);
 		utilisateur = (Utilisateur) session.get("utilisateur");
-		listTopoEmprunt = managerFactory.getTopoEmpruntManager().getListTopoEmprunt(utilisateur.getId());
-		coordonneeUtilisateur = managerFactory.getCoordonneeUtilisateurManager().getCoordonnee(utilisateur.getId());
+		try {
+			listTopoEmprunt = managerFactory.getTopoEmpruntManager().getListTopoEmprunt(utilisateur.getId());
+		} catch (UtilisateurException e1) {
+			addActionMessage(e1.getMessage());
+			e1.printStackTrace();
+			return ActionSupport.INPUT;
+		}
+		try {
+			coordonneeUtilisateur = managerFactory.getCoordonneeUtilisateurManager().getCoordonnee(utilisateur.getId());
+		} catch (CoordonneeUtilisateurException | UtilisateurException e) {
+			addActionMessage(e.getMessage());
+			e.printStackTrace();
+			return ActionSupport.INPUT;
+		}
 		role = utilisateur.getRole();
 		if(role.equals("administrateur"))
 			listTopoConstr = managerFactory.getTopoManager().getListTopoConstr(utilisateur.getPseudo());

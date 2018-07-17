@@ -12,6 +12,7 @@ import oc.P6.escalade.business.contract.ManagerFactory;
 import oc.P6.escalade.model.bean.emprunt.TopoEmprunt;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
+import oc.P6.escalade.model.bean.utilisateur.UtilisateurException;
 
 public class GestionPretAction extends ActionSupport implements SessionAware {
 
@@ -30,12 +31,18 @@ public class GestionPretAction extends ActionSupport implements SessionAware {
 	public String retourner() {
 		utilisateur = (Utilisateur) session.get("utilisateur");
 		System.out.println("nom topo retourner "+nom+" nom emprunteur "+pseudo);
-		TopoEmprunt vTopoEmp = managerFactory.getTopoEmpruntManager().getTopoEmprunt(nom, utilisateur);
-		if (vTopoEmp != null)
+		TopoEmprunt vTopoEmp;
+		try {
+			vTopoEmp = managerFactory.getTopoEmpruntManager().getTopoEmprunt(nom, utilisateur);
 			managerFactory.getTopoEmpruntManager().retourTopoEmprunt(vTopoEmp, utilisateur);
-		
-		addActionMessage("Vous avez rendu le topo "+vTopoEmp.getNom());
-		return SUCCESS;
+			
+			addActionMessage("Vous avez rendu le topo "+vTopoEmp.getNom());
+			return ActionSupport.SUCCESS;
+		} catch (UtilisateurException e) {
+			addActionMessage(e.getMessage());
+			e.printStackTrace();
+			return ActionSupport.INPUT;
+		}
 	}
 	
 	public String emprunter() {

@@ -2,6 +2,7 @@ package oc.P6.escalade.business.contract.manager.utilisateur;
 
 import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateur;
 import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateurException;
+import oc.P6.escalade.model.bean.utilisateur.UtilisateurException;
 
 /**
  * Interface CoordonneeUtilisateurManager et ses méthodes
@@ -14,8 +15,10 @@ public interface CoordonneeUtilisateurManager {
 	 * Renvoie les {@link CoordonneeUtilisateur} de {@link Utilisateur} d'id pId
 	 * @param pId
 	 * @return {@link CoordonneeUtilisateur}
+	 * @throws CoordonneeUtilisateurException 
+	 * @throws UtilisateurException 
 	 */
-	CoordonneeUtilisateur getCoordonnee(int pId);
+	CoordonneeUtilisateur getCoordonnee(int pId) throws CoordonneeUtilisateurException, UtilisateurException;
 	
 	/**
 	 * Cree les {@link CoordonneeUtilisateur} donnee en parametre
@@ -41,6 +44,7 @@ public interface CoordonneeUtilisateurManager {
 	/**
 	 * Supprimme les {@link CoordonneeUtilisateur} donnee en parametre
 	 * @param pCoordinneeUtilisateur
+	 * @throws CoordonneeUtilisateurException 
 	 */
-	void supprimerCoordonnee(CoordonneeUtilisateur pCoordonneeUtilisateur);
+	void supprimerCoordonnee(CoordonneeUtilisateur pCoordonneeUtilisateur) throws CoordonneeUtilisateurException;
 }

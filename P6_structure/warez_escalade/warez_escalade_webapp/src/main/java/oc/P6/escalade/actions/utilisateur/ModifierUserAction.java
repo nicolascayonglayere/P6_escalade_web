@@ -10,7 +10,9 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import oc.P6.escalade.business.contract.ManagerFactory;
 import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateur;
+import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateurException;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
+import oc.P6.escalade.model.bean.utilisateur.UtilisateurException;
 
 public class ModifierUserAction extends ActionSupport implements SessionAware {
 
@@ -48,7 +50,12 @@ public class ModifierUserAction extends ActionSupport implements SessionAware {
 	public String execute() {
 		String vResult = ActionSupport.INPUT;
 		Utilisateur vUser = (Utilisateur)session.get("utilisateur"); 
-		vUser.setCoordonnee(managerFactory.getCoordonneeUtilisateurManager().getCoordonnee(vUser.getId()));
+		try {
+			vUser.setCoordonnee(managerFactory.getCoordonneeUtilisateurManager().getCoordonnee(vUser.getId()));
+		} catch (CoordonneeUtilisateurException | UtilisateurException e) {
+			addActionMessage(e.getMessage());
+			e.printStackTrace();
+		}
 		System.out.println("pseudo : "+utilisateur.getPseudo()+" - adresse "+coordonneeUtilisateur.getAdresse()+" - email "+coordonneeUtilisateur.getEmail());
 		System.out.println("email "+vUser.getCoordonnee().getEmail());
 		System.out.println("adresse "+vUser.getCoordonnee().getAdresse());

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import oc.P6.escalade.model.bean.emprunt.TopoEmprunt;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
+import oc.P6.escalade.model.bean.utilisateur.UtilisateurException;
 
 /**
  * Interface TopoEmpruntManager et ses méthodes
@@ -17,16 +18,18 @@ public interface TopoEmpruntManager {
 	 * Retourne la liste des {@link TopoEmprunt} de l'{@link Utilisateur} dont l'id est donné en paramètre
 	 * @param pId_utilisateur
 	 * @return la liste des {@link TopoEmprunt}
+	 * @throws UtilisateurException 
 	 */
-	ArrayList<TopoEmprunt> getListTopoEmprunt(int pId_utilisateur);
+	ArrayList<TopoEmprunt> getListTopoEmprunt(int pId_utilisateur) throws UtilisateurException;
 	
 	/**
 	 * Retourne le {@link TopoEmprunt} nommé pNom de {@link Utilisateur} donné en paramètre
 	 * @param pNom
 	 * @param pEmprunteur
 	 * @return {@link TopoEmprunt}
+	 * @throws UtilisateurException 
 	 */
-	TopoEmprunt getTopoEmprunt(String pNom, Utilisateur pEmprunteur);
+	TopoEmprunt getTopoEmprunt(String pNom, Utilisateur pEmprunteur) throws UtilisateurException;
 	
 	/**
 	 * Crée le {@link TopoEmprunt} du {@link Topo} donné en paramètre pour {@link Utilisateur} donné en paramètre

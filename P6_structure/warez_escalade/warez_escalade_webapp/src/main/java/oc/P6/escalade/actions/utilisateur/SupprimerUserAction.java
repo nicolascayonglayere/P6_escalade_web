@@ -12,6 +12,7 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import oc.P6.escalade.business.contract.ManagerFactory;
 import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateur;
+import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateurException;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 import oc.P6.escalade.model.bean.utilisateur.UtilisateurException;
 
@@ -35,10 +36,16 @@ public class SupprimerUserAction extends ActionSupport implements SessionAware, 
 		//String pseudo = ((Utilisateur) session.get("utilisateur")).getPseudo();
 		System.out.println("pseudo : "+utilisateur.getPseudo());
 		//utilisateur = managerFactory.getUtilisateurManager().getUtilisateur(pseudo);
-		coordonneeUtilisateur = managerFactory.getCoordonneeUtilisateurManager().getCoordonnee(utilisateur.getId());
-		
-		managerFactory.getCoordonneeUtilisateurManager().supprimerCoordonnee(coordonneeUtilisateur);
 		try {
+			coordonneeUtilisateur = managerFactory.getCoordonneeUtilisateurManager().getCoordonnee(utilisateur.getId());
+		} catch (CoordonneeUtilisateurException | UtilisateurException e1) {
+			addActionMessage(e1.getMessage());
+			e1.printStackTrace();
+			return ActionSupport.INPUT;
+		}
+
+		try {
+			managerFactory.getCoordonneeUtilisateurManager().supprimerCoordonnee(coordonneeUtilisateur);
 			managerFactory.getUtilisateurManager().deleteUtilisateur(utilisateur);
 			session.remove("utilisateur");
 			this.request.getSession().invalidate();
@@ -47,6 +54,10 @@ public class SupprimerUserAction extends ActionSupport implements SessionAware, 
 		} catch (UtilisateurException e) {
 			addActionMessage(e.getMessage());
 			e.printStackTrace();
+			return ActionSupport.INPUT;
+		}catch (CoordonneeUtilisateurException e2) {
+			addActionMessage(e2.getMessage());
+			e2.printStackTrace();
 			return ActionSupport.INPUT;
 		}
 

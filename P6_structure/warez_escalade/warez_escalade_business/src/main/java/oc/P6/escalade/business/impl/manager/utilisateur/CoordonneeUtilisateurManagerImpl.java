@@ -16,6 +16,7 @@ import oc.P6.escalade.consumer.DAO.impl.manager.utilisateur.UtilisateurDaoImpl;
 import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateur;
 import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateurException;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
+import oc.P6.escalade.model.bean.utilisateur.UtilisateurException;
 import oc.P6.escalade.model.contract.utilisateur.IntCoordonneeUtilisateur;
 import oc.P6.escalade.model.contract.utilisateur.IntUtilisateur;
 /**
@@ -42,9 +43,10 @@ public class CoordonneeUtilisateurManagerImpl extends AbstractDAOManager impleme
 	
 	/**
 	 * Méthode pour obtenir les {@link CoordonneeUtilisateur} de {@link Utilisateur} dont l'id est donné en paramètre
+	 * @throws UtilisateurException 
 	 */
 	@Override
-	public CoordonneeUtilisateur getCoordonnee(int pId) {
+	public CoordonneeUtilisateur getCoordonnee(int pId) throws CoordonneeUtilisateurException, UtilisateurException{
 		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
 		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		vDefinition.setTimeout(30); // 30 secondes
@@ -59,18 +61,15 @@ public class CoordonneeUtilisateurManagerImpl extends AbstractDAOManager impleme
 			    vTransactionStatus = null;
 			    platformTransactionManager.commit(vTScommit);
 			}finally {
-				if (vTransactionStatus != null) 
-					platformTransactionManager.rollback(vTransactionStatus); 			
+				if (vTransactionStatus != null) { 
+					platformTransactionManager.rollback(vTransactionStatus);
+					throw new CoordonneeUtilisateurException("Coordonnee non trouvé : id=" + coordonneeDao.find(userDAO.find(pId)).getId());
+				} 			
     		}
 		}
 		
     	else {
-			try {
-				throw new Exception("Coordonnee non trouvé : id=" + coordonneeDao.find(userDAO.find(pId)).getId());
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			throw new UtilisateurException("Utilisateur inconnu");
     	}
      	System.out.println("CTRL "+coordonnee.getId()+" - "+coordonnee.getEmail());
     	return (CoordonneeUtilisateur) coordonnee;
@@ -172,7 +171,7 @@ public class CoordonneeUtilisateurManagerImpl extends AbstractDAOManager impleme
 	 * Méthode pour supprimer {@link CoordonneeUtilisateur} donnée en paramètre
 	 */
 	@Override
-	public void supprimerCoordonnee(CoordonneeUtilisateur pCoordonneeUtilisateur) {
+	public void supprimerCoordonnee(CoordonneeUtilisateur pCoordonneeUtilisateur) throws CoordonneeUtilisateurException{
 		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
 		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		vDefinition.setTimeout(30); // 30 secondes
@@ -188,8 +187,10 @@ public class CoordonneeUtilisateurManagerImpl extends AbstractDAOManager impleme
 		    vTransactionStatus = null;
 		    platformTransactionManager.commit(vTScommit);
 		}finally {
-			if (vTransactionStatus != null) 
+			if (vTransactionStatus != null) { 
 				platformTransactionManager.rollback(vTransactionStatus);
+				throw new CoordonneeUtilisateurException("Coordonnee non trouvé : id=" + pCoordonneeUtilisateur.getId());
+			}
 		}
 		
 	}

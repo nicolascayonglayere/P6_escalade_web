@@ -23,6 +23,7 @@ import oc.P6.escalade.consumer.DAO.contract.manager.utilisateur.UtilisateurManag
 import oc.P6.escalade.model.bean.emprunt.TopoEmprunt;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
+import oc.P6.escalade.model.bean.utilisateur.UtilisateurException;
 import oc.P6.escalade.model.contract.emprunt.IntTopoEmprunt;
 
 /**
@@ -50,7 +51,7 @@ public class TopoEmpruntManagerImpl extends AbstractDAOManager implements TopoEm
 	 * Méthode pour obtenir la liste des {@link TopoEmprunt} de {@link Utilisateur} dont l'id est donné en paramètre
 	 */
 	@Override
-	public ArrayList<TopoEmprunt> getListTopoEmprunt(int pId_utilisateur) {
+	public ArrayList<TopoEmprunt> getListTopoEmprunt(int pId_utilisateur) throws UtilisateurException{
 		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
 		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		vDefinition.setTimeout(30); // 30 secondes
@@ -63,8 +64,10 @@ public class TopoEmpruntManagerImpl extends AbstractDAOManager implements TopoEm
 			vTransactionStatus = null;
 			platformTransactionManager.commit(vTScommit);
 		}finally {
-			if (vTransactionStatus != null) 
-				platformTransactionManager.rollback(vTransactionStatus); 			
+			if (vTransactionStatus != null) {
+				platformTransactionManager.rollback(vTransactionStatus);
+				throw new UtilisateurException("Utilisateur inconnu");
+			} 			
 		}
 		return listTopoEmprunt;
 	}
@@ -73,7 +76,7 @@ public class TopoEmpruntManagerImpl extends AbstractDAOManager implements TopoEm
 	 * Méthode pour obtenir le {@link TopoEmprunt} nommé pNom de {@link Utilisateur} donné en paramètre
 	 */
 	@Override
-	public TopoEmprunt getTopoEmprunt(String pNom, Utilisateur pEmprunteur) {
+	public TopoEmprunt getTopoEmprunt(String pNom, Utilisateur pEmprunteur) throws UtilisateurException{
 		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
 		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		vDefinition.setTimeout(30); // 30 secondes
@@ -92,14 +95,9 @@ public class TopoEmpruntManagerImpl extends AbstractDAOManager implements TopoEm
 	   	}finally {
 	   		if (vTransactionStatus != null) { 
 	   			platformTransactionManager.rollback(vTransactionStatus);
-	   			try {
-	   				topoEmprunt = null ;
-	   				throw new Exception("Cet emprunt n'existe pas : NOM=" + pNom);
-	   				
-	   			} catch (Exception e) {
-	   				// TODO Auto-generated catch block
-	   				e.printStackTrace();
-	   			}
+	   			topoEmprunt = null ;
+	   			//throw new Exception("Cet emprunt n'existe pas : NOM=" + pNom);
+	   			throw new UtilisateurException("Utilisateur inconnu : pseudo "+pEmprunteur.getPseudo());	
 	   		} 			
 	   	}
 
