@@ -8,6 +8,13 @@ import oc.P6.escalade.model.bean.commentaire.CommentaireSite;
 import oc.P6.escalade.model.bean.commentaire.CommentaireTopo;
 import oc.P6.escalade.model.bean.commentaire.CommentaireVoie;
 import oc.P6.escalade.model.bean.emprunt.TopoEmprunt;
+import oc.P6.escalade.model.bean.exception.CommentaireTopoException;
+import oc.P6.escalade.model.bean.exception.CoordonneeUtilisateurException;
+import oc.P6.escalade.model.bean.exception.SecteurException;
+import oc.P6.escalade.model.bean.exception.SiteException;
+import oc.P6.escalade.model.bean.exception.TopoException;
+import oc.P6.escalade.model.bean.exception.UtilisateurException;
+import oc.P6.escalade.model.bean.exception.VoieException;
 import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
@@ -20,6 +27,13 @@ import oc.P6.escalade.model.contract.commentaire.IntCommentaireSite;
 import oc.P6.escalade.model.contract.commentaire.IntCommentaireTopo;
 import oc.P6.escalade.model.contract.commentaire.IntCommentaireVoie;
 import oc.P6.escalade.model.contract.emprunt.IntTopoEmprunt;
+import oc.P6.escalade.model.contract.exception.IntCommentaireTopoException;
+import oc.P6.escalade.model.contract.exception.IntCoordonneeUtilisateurException;
+import oc.P6.escalade.model.contract.exception.IntSecteurException;
+import oc.P6.escalade.model.contract.exception.IntSiteException;
+import oc.P6.escalade.model.contract.exception.IntTopoException;
+import oc.P6.escalade.model.contract.exception.IntUtilisateurException;
+import oc.P6.escalade.model.contract.exception.IntVoieException;
 import oc.P6.escalade.model.contract.topo.IntSecteur;
 import oc.P6.escalade.model.contract.topo.IntSite;
 import oc.P6.escalade.model.contract.topo.IntTopo;
@@ -106,5 +120,54 @@ public class ModelManagerFactoryImpl implements ModelManagerFactory {
 	public IntCommentaireVoie getCommentaireVoie() {
 		return commVoie;
 	}
+	
+//@Inject
+//CommentaireTopoException commentaireTopoException;
+//@Override
+//public IntCommentaireTopoException getCommentaireTopoException() {
+//	return commentaireTopoException;
+//}
+//
+//@Inject
+//CoordonneeUtilisateurException coordonneeUtilisateurException;
+//@Override
+//public IntCoordonneeUtilisateurException getCoordonneeUtilisateurException() {
+//	return coordonneeUtilisateurException;
+//}
+//
+//@Inject 
+//SecteurException secteurException;
+//@Override
+//public IntSecteurException getSecteurException() {
+//	return secteurException;
+//}
+//
+//@Inject
+//SiteException siteException;
+//@Override
+//public IntSiteException getSiteException() {
+//	return siteException;
+//}
+//
+//@Inject 
+//TopoException topoException;
+//@Override
+//public IntTopoException getTopoException() {
+//	return topoException;
+//}
+//
+//@Inject
+//VoieException voieException;
+//@Override
+//public IntVoieException getVoieException() {
+//	return voieException;
+//}
+//
+//@Inject
+//UtilisateurException utilisateurException;
+//@Override
+//public IntUtilisateurException getUtilisateurException() {
+//	return utilisateurException;
+//}
 
 }

@@ -24,6 +24,7 @@ oc\P6\escalade\model\bean\topo\Topo.class
 oc\P6\escalade\model\bean\commentaire\Commentaire.class
 oc\P6\escalade\model\bean\exception\TopoException.class
 oc\P6\escalade\model\contract\utilisateur\IntRole.class
+oc\P6\escalade\model\bean\exception\CommentaireTopoException.class
 oc\P6\escalade\model\contract\exception\IntUtilisateurException.class
 oc\P6\escalade\model\contract\topo\IntSecteur.class
 oc\P6\escalade\model\contract\utilisateur\IntUtilisateur.class
@@ -34,6 +35,7 @@ oc\P6\escalade\model\bean\exception\SecteurException.class
 oc\P6\escalade\model\contract\emprunt\IntTopoEmprunt.class
 oc\P6\escalade\model\contract\exception\IntSiteException.class
 oc\P6\escalade\model\bean\commentaire\CommentaireTopo.class
+oc\P6\escalade\model\contract\exception\IntCommentaireTopoException.class
 oc\P6\escalade\model\bean\exception\CoordonneeUtilisateurException.class
 oc\P6\escalade\model\bean\exception\UtilisateurException.class
 oc\P6\escalade\model\contract\topo\IntVoie.class

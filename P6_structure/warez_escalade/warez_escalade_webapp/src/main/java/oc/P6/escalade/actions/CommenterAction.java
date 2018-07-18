@@ -19,6 +19,7 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import oc.P6.escalade.business.contract.ManagerFactory;
 import oc.P6.escalade.model.bean.commentaire.CommentaireTopo;
+import oc.P6.escalade.model.bean.exception.CommentaireTopoException;
 import oc.P6.escalade.model.bean.exception.SecteurException;
 import oc.P6.escalade.model.bean.exception.SiteException;
 import oc.P6.escalade.model.bean.exception.TopoException;
@@ -125,22 +126,33 @@ public class CommenterAction extends ActionSupport implements SessionAware{
 			return ActionSupport.INPUT;
 		}
 
-    	listCommentaire = managerFactory.getCommentaireTopoManager().getListValid(topo.getId());
-		
-		if(!(commentaireTopo.getMessage()==(null))) {
-			commentaireTopo.setMessage(commentaireTopo.getMessage());
-			commentaireTopo.setAuteur(utilisateur);
-			commentaireTopo.setTopo(topo);
-			commentaireTopo.setDate(Calendar.getInstance().getTime());
-			commentaireTopo.setValidation(false);
-			managerFactory.getCommentaireTopoManager().creerCommentaireTopo(commentaireTopo);
-			addActionMessage("Votre commentaire a bien été envoyé");
-			return ActionSupport.SUCCESS;
-		}
-		else {
-			addActionMessage("Merci de rester courtois !");
+    	try {
+			listCommentaire = managerFactory.getCommentaireTopoManager().getListValid(topo.getId());
+			if(!(commentaireTopo.getMessage()==(null))) {
+				commentaireTopo.setMessage(commentaireTopo.getMessage());
+				commentaireTopo.setAuteur(utilisateur);
+				commentaireTopo.setTopo(topo);
+				commentaireTopo.setDate(Calendar.getInstance().getTime());
+				commentaireTopo.setValidation(false);
+				managerFactory.getCommentaireTopoManager().creerCommentaireTopo(commentaireTopo);
+				addActionMessage("Votre commentaire a bien été envoyé");
+				return ActionSupport.SUCCESS;
+			}
+			else {
+				addActionMessage("Merci de rester courtois !");
+				return ActionSupport.INPUT;
+			}
+		} catch (TopoException e5) {
+			addActionMessage(e5.getMessage());
+			e5.printStackTrace();
+			return ActionSupport.INPUT;			
+		} catch (CommentaireTopoException e6) {
+			addActionMessage(e6.getMessage());
+			e6.printStackTrace();
 			return ActionSupport.INPUT;
 		}
+		
+
 	}
 	
 	public String input() {

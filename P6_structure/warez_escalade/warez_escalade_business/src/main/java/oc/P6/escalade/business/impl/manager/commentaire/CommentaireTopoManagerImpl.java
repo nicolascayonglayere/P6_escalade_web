@@ -14,6 +14,8 @@ import oc.P6.escalade.business.contract.manager.AbstractDAOManager;
 import oc.P6.escalade.business.contract.manager.commentaire.CommentaireTopoManager;
 import oc.P6.escalade.consumer.DAO.contract.manager.commentaire.CommentaireTopoDao;
 import oc.P6.escalade.model.bean.commentaire.CommentaireTopo;
+import oc.P6.escalade.model.bean.exception.CommentaireTopoException;
+import oc.P6.escalade.model.bean.exception.TopoException;
 import oc.P6.escalade.model.contract.commentaire.IntCommentaireTopo;
 
 @Named
@@ -50,7 +52,7 @@ public class CommentaireTopoManagerImpl extends AbstractDAOManager implements Co
 	}
 
 	@Override
-	public ArrayList<CommentaireTopo> getListValid(int pIdTopo) {
+	public ArrayList<CommentaireTopo> getListValid(int pIdTopo) throws TopoException {
 		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
 		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		vDefinition.setTimeout(30); // 30 secondes
@@ -66,13 +68,14 @@ public class CommentaireTopoManagerImpl extends AbstractDAOManager implements Co
 		} finally {
 			if (vTransactionStatus != null) {
 				platformTransactionManager.rollback(vTransactionStatus);
+				throw new TopoException("Le topo d'id "+pIdTopo+" n'existe pas.");
 		    }
 		}
 		return listCommentaire;
 	}
 	
 	@Override
-	public CommentaireTopo getCommentaireTopo(String pNomTopo, String pPseudo, String pMessage) {
+	public CommentaireTopo getCommentaireTopo(String pNomTopo, String pPseudo, String pMessage) throws CommentaireTopoException {
 		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
 		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		vDefinition.setTimeout(30); // 30 secondes
@@ -88,6 +91,7 @@ public class CommentaireTopoManagerImpl extends AbstractDAOManager implements Co
 		} finally {
 			if (vTransactionStatus != null) {
 				platformTransactionManager.rollback(vTransactionStatus);
+				throw new CommentaireTopoException("Le commentaire n'existe pas.");
 		    }
 		}
 		System.out.println("CTRL business find "+commTopo.getTopo().getId());
@@ -95,7 +99,7 @@ public class CommentaireTopoManagerImpl extends AbstractDAOManager implements Co
 	}
 	
 	@Override
-	public void creerCommentaireTopo(CommentaireTopo pCommTopo) {
+	public void creerCommentaireTopo(CommentaireTopo pCommTopo) throws CommentaireTopoException {
 		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
 		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		vDefinition.setTimeout(30); // 30 secondes
@@ -111,12 +115,13 @@ public class CommentaireTopoManagerImpl extends AbstractDAOManager implements Co
 			} finally {
 				if (vTransactionStatus != null) {
 					platformTransactionManager.rollback(vTransactionStatus);
+					throw new CommentaireTopoException("Le commentaire existe deja. "+pCommTopo.getId());
 			    }
 			}
 	}
 
 	@Override
-	public void modifCommentaireTopo(CommentaireTopo pCommTopo) {
+	public void modifCommentaireTopo(CommentaireTopo pCommTopo) throws CommentaireTopoException {
 		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
 		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		vDefinition.setTimeout(30); // 30 secondes
@@ -132,12 +137,13 @@ public class CommentaireTopoManagerImpl extends AbstractDAOManager implements Co
 			} finally {
 				if (vTransactionStatus != null) {
 					platformTransactionManager.rollback(vTransactionStatus);
+					throw new CommentaireTopoException("Le commentaire n'existe pas. "+pCommTopo.getId());
 			    }
 			}
 	}
 
 	@Override
-	public void deleteCommentaireTopo(CommentaireTopo pCommTopo) {
+	public void deleteCommentaireTopo(CommentaireTopo pCommTopo) throws CommentaireTopoException {
 		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
 		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		vDefinition.setTimeout(30); // 30 secondes
@@ -153,6 +159,7 @@ public class CommentaireTopoManagerImpl extends AbstractDAOManager implements Co
 			} finally {
 				if (vTransactionStatus != null) {
 					platformTransactionManager.rollback(vTransactionStatus);
+					throw new CommentaireTopoException("Le commentaire n'existe pas. "+pCommTopo.getId());
 			    }
 			}
 		

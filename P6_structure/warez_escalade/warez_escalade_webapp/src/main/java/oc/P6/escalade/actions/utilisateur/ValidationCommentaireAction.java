@@ -6,6 +6,7 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import oc.P6.escalade.business.contract.ManagerFactory;
 import oc.P6.escalade.model.bean.commentaire.CommentaireTopo;
+import oc.P6.escalade.model.bean.exception.CommentaireTopoException;
 
 public class ValidationCommentaireAction extends ActionSupport {
 
@@ -24,18 +25,32 @@ public class ValidationCommentaireAction extends ActionSupport {
 	public String valider() {
 		//System.out.println(commentaireTopo.getAuteur().getPseudo()+" - "+commentaireTopo.getTopo().getNomTopo());
 		System.out.println(pseudo+" - "+nomTopo+" - "+message);
-		commentaireTopo = managerFactory.getCommentaireTopoManager().getCommentaireTopo(nomTopo, pseudo, message);
-		managerFactory.getCommentaireTopoManager().modifCommentaireTopo(commentaireTopo);
-		addActionMessage("Le commentaire de "+commentaireTopo.getAuteur().getPseudo()+" sur le topo "+commentaireTopo.getTopo().getNomTopo()+" a été validé." );
-		return ActionSupport.SUCCESS;
+		try {
+			commentaireTopo = managerFactory.getCommentaireTopoManager().getCommentaireTopo(nomTopo, pseudo, message);
+			managerFactory.getCommentaireTopoManager().modifCommentaireTopo(commentaireTopo);
+			addActionMessage("Le commentaire de "+commentaireTopo.getAuteur().getPseudo()+" sur le topo "+commentaireTopo.getTopo().getNomTopo()+" a été validé." );
+			return ActionSupport.SUCCESS;
+		} catch (CommentaireTopoException e) {
+			addActionMessage(e.getMessage());
+			e.printStackTrace();
+			return ActionSupport.INPUT;
+		}
+
 	}
 	
 	public String rejeter() {
 		System.out.println(pseudo+" - "+nomTopo+" - "+message);
-		commentaireTopo = managerFactory.getCommentaireTopoManager().getCommentaireTopo(nomTopo, pseudo, message);
-		managerFactory.getCommentaireTopoManager().deleteCommentaireTopo(commentaireTopo);
-		addActionMessage("Le commentaire de "+commentaireTopo.getAuteur().getPseudo()+" sur le topo "+commentaireTopo.getTopo().getNomTopo()+" a été supprimé." );
-		return ActionSupport.SUCCESS;
+		try {
+			commentaireTopo = managerFactory.getCommentaireTopoManager().getCommentaireTopo(nomTopo, pseudo, message);
+			managerFactory.getCommentaireTopoManager().deleteCommentaireTopo(commentaireTopo);
+			addActionMessage("Le commentaire de "+commentaireTopo.getAuteur().getPseudo()+" sur le topo "+commentaireTopo.getTopo().getNomTopo()+" a été supprimé." );
+			return ActionSupport.SUCCESS;
+		} catch (CommentaireTopoException e) {
+			addActionMessage(e.getMessage());
+			e.printStackTrace();
+			return ActionSupport.INPUT;
+		}
+
 	}
 
 	public ManagerFactory getManagerFactory() {

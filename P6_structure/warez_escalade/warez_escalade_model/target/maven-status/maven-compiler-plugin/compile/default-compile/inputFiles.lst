@@ -2,6 +2,7 @@ D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_esca
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_model\src\main\java\oc\P6\escalade\model\contract\exception\IntTopoException.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_model\src\main\java\oc\P6\escalade\model\contract\utilisateur\IntRole.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_model\src\main\java\oc\P6\escalade\model\bean\exception\UtilisateurException.java
+D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_model\src\main\java\oc\P6\escalade\model\contract\exception\IntCommentaireTopoException.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_model\src\main\java\oc\P6\escalade\model\contract\exception\IntCoordonneeUtilisateurException.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_model\src\main\java\oc\P6\escalade\model\contract\utilisateur\IntCoordonneeUtilisateur.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_model\src\main\java\oc\P6\escalade\model\contract\topo\IntSecteur.java
@@ -20,6 +21,7 @@ D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_esca
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_model\src\main\java\oc\P6\escalade\model\contract\exception\IntSiteException.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_model\src\main\java\oc\P6\escalade\model\bean\emprunt\TopoEmprunt.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_model\src\main\java\oc\P6\escalade\model\bean\commentaire\Commentaire.java
+D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_model\src\main\java\oc\P6\escalade\model\bean\exception\CommentaireTopoException.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_model\src\main\java\oc\P6\escalade\model\bean\exception\CoordonneeUtilisateurException.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_model\src\main\java\oc\P6\escalade\model\contract\commentaire\IntCommentaireSite.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_model\src\main\java\oc\P6\escalade\model\contract\commentaire\IntCommentaireSecteur.java
