@@ -27,7 +27,7 @@ public class RoleDaoImpl extends AbstractDAO implements RoleDao {
 			public Role mapRow(ResultSet rs, int rowNum) throws SQLException {
 				Role vRole = new Role();
 				vRole.setId_role(rs.getInt("id_role"));
-				vRole.setRole(rs.getString("role"));
+				vRole.setRole(rs.getString("role_utilisateur"));
 
 				return vRole;
 			}

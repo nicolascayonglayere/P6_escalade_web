@@ -18,8 +18,11 @@ import oc.P6.escalade.business.contract.manager.AbstractDAOManager;
 import oc.P6.escalade.business.contract.manager.topo.TopoManager;
 import oc.P6.escalade.consumer.DAO.DAOFactory;
 import oc.P6.escalade.consumer.DAO.contract.manager.topo.TopoManagerDao;
+import oc.P6.escalade.model.bean.exception.SecteurException;
+import oc.P6.escalade.model.bean.exception.SiteException;
 import oc.P6.escalade.model.bean.exception.TopoException;
 import oc.P6.escalade.model.bean.exception.UtilisateurException;
+import oc.P6.escalade.model.bean.exception.VoieException;
 import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
@@ -222,6 +225,7 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 
 		try {
 			pTopo.setId(topoDAO.find(pTopo.getNomTopo()).getId());
+			try {
 			for(Site si : daoFactory.getSiteManagerDao().find(pTopo.getId())) {
 				for (Secteur se : daoFactory.getSecteurManagerDao().getListeSecteur(si)) {
 					for (Voie v : daoFactory.getVoieManagerDao().getlistVoie(se)) {
@@ -231,7 +235,15 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 				}
 				daoFactory.getSiteManagerDao().delete(si);
 			}			
-	
+			}catch (VoieException e1){
+				e1.printStackTrace();
+			} catch (SecteurException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			} catch (SiteException e3) {
+				// TODO Auto-generated catch block
+				e3.printStackTrace();
+			}
 			topoDAO.delete(pTopo);
 			
 			Path chemin = Paths.get("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\"+pTopo.getImage());

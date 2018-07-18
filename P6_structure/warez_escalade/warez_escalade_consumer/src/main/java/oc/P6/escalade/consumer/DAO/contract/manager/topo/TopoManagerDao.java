@@ -2,6 +2,7 @@ package oc.P6.escalade.consumer.DAO.contract.manager.topo;
 
 import java.util.ArrayList;
 
+import oc.P6.escalade.model.bean.exception.TopoException;
 import oc.P6.escalade.model.bean.topo.Topo;
 
 /**
@@ -15,22 +16,25 @@ public interface TopoManagerDao {
 	 * Méthode pour créer le {@link Topo} donné en paramètre dans la base de donnée
 	 * @param pTopo
 	 * @return
+	 * @throws TopoException 
 	 */
-	boolean create(Topo pTopo);
+	boolean create(Topo pTopo) throws TopoException;
 
 	/**
 	 * Méthode pour supprimer le {@link Topo} donné en paramètre dans la base de donnée
 	 * @param pTopo
 	 * @return
+	 * @throws TopoException 
 	 */
-	boolean delete (Topo pTopo);
+	boolean delete (Topo pTopo) throws TopoException;
 	
 	/**
 	 * Méthode pour modifier le {@link Topo} donné en paramètre dans la base de donnée
 	 * @param pTopo
 	 * @return
+	 * @throws TopoException 
 	 */
-	boolean update (Topo pTopo);
+	boolean update (Topo pTopo) throws TopoException;
 	
 	/**
 	 * Méthode pour trouver le {@link Topo} dont le nom est donné en paramètre dans la base de donnée

@@ -16,6 +16,7 @@ import oc.P6.escalade.consumer.DAO.DAOFactory;
 import oc.P6.escalade.consumer.DAO.contract.manager.topo.SecteurManagerDao;
 import oc.P6.escalade.model.bean.exception.SecteurException;
 import oc.P6.escalade.model.bean.exception.SiteException;
+import oc.P6.escalade.model.bean.exception.VoieException;
 import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Voie;
@@ -181,7 +182,11 @@ public class SecteurManagerImpl extends AbstractDAOManager implements SecteurMan
 		try {
 			pSecteur.setId(secteurDAO.find(pSecteur.getNomSecteur(), pSecteur.getSite().getId()).getId());
 			for (Voie v : daoFactory.getVoieManagerDao().getlistVoie(pSecteur)) {
-				daoFactory.getVoieManagerDao().delete(v);
+				try {
+					daoFactory.getVoieManagerDao().delete(v);
+				} catch (VoieException e) {
+					e.printStackTrace();
+				}
 			}
 			secteurDAO.delete(pSecteur);
 		    TransactionStatus vTScommit = vTransactionStatus;

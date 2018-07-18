@@ -16,6 +16,7 @@ import oc.P6.escalade.consumer.DAO.contract.manager.commentaire.CommentaireTopoD
 import oc.P6.escalade.consumer.DAO.impl.manager.AbstractDAO;
 import oc.P6.escalade.consumer.DAO.impl.rowmapper.CommentaireTopoRowMapper;
 import oc.P6.escalade.model.bean.commentaire.CommentaireTopo;
+import oc.P6.escalade.model.bean.exception.CommentaireTopoException;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 import oc.P6.escalade.model.contract.commentaire.IntCommentaireTopo;
 
@@ -28,7 +29,7 @@ public class CommentaireTopoDaoImpl  extends AbstractDAO implements CommentaireT
 	CommentaireTopoRowMapper commentaireTopoRowMapper;
 	
 	@Override
-	public boolean create(CommentaireTopo pCommentaireTopo) {
+	public boolean create(CommentaireTopo pCommentaireTopo) throws CommentaireTopoException {
 		String vSQLCoordonnee = "INSERT INTO commentaire_topo (id_topo, id_utilisateur, date, commentaire, validation) VALUES (:id_topo, :id_utilisateur, :date, :commentaire, :validation)";
 		//--recuperer l'id de l'utilisateur
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
@@ -45,13 +46,14 @@ public class CommentaireTopoDaoImpl  extends AbstractDAO implements CommentaireT
 	    } catch (Exception vEx) {
 	        System.out.println("erreur creation commentaire "+pCommentaireTopo.getAuteur().getNom());
 	        vEx.printStackTrace();
-	        return false;
+	        throw new CommentaireTopoException("erreur creation commentaire "+pCommentaireTopo.getAuteur().getNom());
+	        //return false;
 	    }
 		return true;
 	}
 
 	@Override
-	public boolean delete(CommentaireTopo pCommentaireTopo) {
+	public boolean delete(CommentaireTopo pCommentaireTopo) throws CommentaireTopoException {
 		String vSQL = "DELETE FROM commentaire_topo WHERE id_commentaire_topo = :id_commentaire_topo";
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
@@ -62,7 +64,8 @@ public class CommentaireTopoDaoImpl  extends AbstractDAO implements CommentaireT
 	    } catch (Exception vEx) {
 	        System.out.println("Le commentaire n'existe pas ! topo=" + pCommentaireTopo.getTopo().getNomTopo());
 	        vEx.printStackTrace();
-	        return false;
+	        throw new CommentaireTopoException("Le commentaire n'existe pas ! topo=" + pCommentaireTopo.getTopo().getNomTopo());
+	        //return false;
 	    }
 	    
 	    
@@ -70,7 +73,7 @@ public class CommentaireTopoDaoImpl  extends AbstractDAO implements CommentaireT
 	}
 
 	@Override
-	public boolean update(CommentaireTopo pCommentaireTopo) {
+	public boolean update(CommentaireTopo pCommentaireTopo) throws CommentaireTopoException {
 		String vSQL = "UPDATE commentaire_topo SET id_topo = :id_topo, id_utilisateur = :id_utilisateur, date = :date, commentaire = :commentaire, validation = :validation "
 				+ " WHERE id_commentaire_topo = :id_commentaire_topo";
 		Utilisateur auteur = daoFacto.getUtilisateurManagerDAO().find(pCommentaireTopo.getAuteur().getPseudo());
@@ -88,7 +91,8 @@ public class CommentaireTopoDaoImpl  extends AbstractDAO implements CommentaireT
 	        vJdbcTemplate.update(vSQL, vParams);
 	    } catch (DuplicateKeyException vEx) {
 	        System.out.println("Erreur modif commentaire ! topo=" + pCommentaireTopo.getTopo().getNomTopo());
-	        return false;
+	        throw new CommentaireTopoException("Erreur modif commentaire ! topo=" + pCommentaireTopo.getTopo().getNomTopo());
+	        //return false;
 	    }
 	    
 	    

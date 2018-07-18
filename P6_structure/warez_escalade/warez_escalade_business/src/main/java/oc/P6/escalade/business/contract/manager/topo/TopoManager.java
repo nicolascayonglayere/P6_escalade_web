@@ -2,8 +2,11 @@ package oc.P6.escalade.business.contract.manager.topo;
 
 import java.util.ArrayList;
 
+import oc.P6.escalade.model.bean.exception.SecteurException;
+import oc.P6.escalade.model.bean.exception.SiteException;
 import oc.P6.escalade.model.bean.exception.TopoException;
 import oc.P6.escalade.model.bean.exception.UtilisateurException;
+import oc.P6.escalade.model.bean.exception.VoieException;
 import oc.P6.escalade.model.bean.topo.Topo;
 
 /**
@@ -60,6 +63,9 @@ public interface TopoManager {
 	 * Supprime le {@link Topo} donné en paramètre
 	 * @param pTopo
 	 * @throws TopoException 
+	 * @throws VoieException 
+	 * @throws SecteurException 
+	 * @throws SiteException 
 	 */
-	void supprimerTopo(Topo pTopo) throws TopoException;
+	void supprimerTopo(Topo pTopo) throws TopoException, VoieException, SecteurException, SiteException;
 }

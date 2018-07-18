@@ -2,6 +2,7 @@ package oc.P6.escalade.consumer.DAO.contract.manager.topo;
 
 import java.util.ArrayList;
 
+import oc.P6.escalade.model.bean.exception.VoieException;
 import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Voie;
 
@@ -16,22 +17,25 @@ public interface VoieManagerDao {
 	 * Méthode pour créer la {@link Voie} donnée en paramètre dans la base de donnée
 	 * @param pVoie
 	 * @return
+	 * @throws VoieException 
 	 */
-	boolean create(Voie pVoie);
+	boolean create(Voie pVoie) throws VoieException;
 
 	/**
 	 * Méthode pour supprimer la {@link Voie} donnée en paramètre dans la base de donnée
 	 * @param pVoie
 	 * @return
+	 * @throws VoieException 
 	 */
-	boolean delete (Voie pVoie);
+	boolean delete (Voie pVoie) throws VoieException;
 	
 	/**
 	 * Méthode pour modifier la {@link Voie} donnée en paramètre dans la base de donnée
 	 * @param pVoie
 	 * @return
+	 * @throws VoieException 
 	 */
-	boolean update (Voie pVoie);
+	boolean update (Voie pVoie) throws VoieException;
 	
 	/**
 	 * Méthode pour obtenir la {@link Voie} d'id donnée en paramètre

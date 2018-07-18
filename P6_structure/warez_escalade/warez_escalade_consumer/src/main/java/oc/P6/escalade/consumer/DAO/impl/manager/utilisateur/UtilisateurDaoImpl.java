@@ -18,6 +18,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import oc.P6.escalade.consumer.DAO.contract.manager.utilisateur.UtilisateurManagerDAO;
 import oc.P6.escalade.consumer.DAO.impl.manager.AbstractDAO;
 import oc.P6.escalade.consumer.DAO.impl.rowmapper.UtilisateurRowMapper;
+import oc.P6.escalade.model.bean.exception.UtilisateurException;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
 @Named("userDAO")
@@ -27,9 +28,9 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 	UtilisateurRowMapper vRowMapper;
 
 	@Override
-	public Utilisateur create(Utilisateur pUtilisateur) {
+	public Utilisateur create(Utilisateur pUtilisateur) throws UtilisateurException {
 		
-		String vSQL = "INSERT INTO utilisateur(nom, prenom, pseudo, password, id_role) VALUES ( :nom, :prenom, :pseudo, :password, :id_role)";
+		String vSQL = "INSERT INTO utilisateur(nom, prenom, pseudo, password_utilisateur, id_role) VALUES ( :nom, :prenom, :pseudo, :password, :id_role)";
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
@@ -45,8 +46,10 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 	        pUtilisateur.setId(keyHolder.getKey().intValue());
 	    } catch (DuplicateKeyException vEx) {
 	        System.out.println("L'utilisateur existe déjà ! pseudo=" + pUtilisateur.getPseudo());
+	        //return pUtilisateur;
+	        throw new UtilisateurException("L'utilisateur existe déjà ! pseudo=" + pUtilisateur.getPseudo());
 	        //vEx.printStackTrace();
-	        return pUtilisateur;
+	        
 	    }
 	    
 	    
@@ -54,7 +57,7 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 	}
 
 	@Override
-	public boolean delete(Utilisateur pUtilisateur) {
+	public boolean delete(Utilisateur pUtilisateur) throws UtilisateurException {
 		String vSQL = "DELETE FROM utilisateur WHERE id_utilisateur = :id_utilisateur";
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
@@ -65,7 +68,8 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 	    } catch (Exception vEx) {
 	        System.out.println("L'utilisateur n'existe pas ! pseudo=" + pUtilisateur.getPseudo());
 	        vEx.printStackTrace();
-	        return false;
+	        throw new UtilisateurException("L'utilisateur n'existe pas ! pseudo=" + pUtilisateur.getPseudo());
+	        //return false;
 	    }
 	    
 	    
@@ -74,7 +78,7 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 
 	@Override
 	public Utilisateur updatePass(Utilisateur pUtilisateur) {
-		String vSQL = "UPDATE utilisateur SET password = :password WHERE id_utilisateur = :id_utilisateur";
+		String vSQL = "UPDATE utilisateur SET password_utilisateur = :password WHERE id_utilisateur = :id_utilisateur";
 		
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
@@ -85,6 +89,7 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 	        vJdbcTemplate.update(vSQL, vParams);
 	    } catch (DuplicateKeyException vEx) {
 	        System.out.println("Le mot de passe existe déjà ! pseudo=" + pUtilisateur.getPseudo());
+	        
 	        return pUtilisateur;
 	    }    
 	    
@@ -142,9 +147,10 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 				Utilisateur vUtilisateur = new Utilisateur(rs.getString("pseudo"));
 				vUtilisateur.setNom(rs.getString("nom"));
 				vUtilisateur.setPrenom(rs.getString("prenom"));
-				vUtilisateur.setPassword(rs.getString("password"));
+				vUtilisateur.setPassword(rs.getString("password_utilisateur"));
 				vUtilisateur.setId(rs.getInt("id_utilisateur"));
 				vUtilisateur.setId_Role(rs.getInt("id_role"));
+				//vUtilisateur.setRole(rs.getString("role_utilisateur"));
 
 				return vUtilisateur;
 			}
@@ -171,7 +177,7 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 
 	@Override
 	public Utilisateur findPass(String pPassword, String pPseudo) {
-		String vSQL = "SELECT * FROM utilisateur INNER JOIN role_utilisateur ON utilisateur.id_role = role_utilisateur.id_role WHERE  password = :password AND pseudo = :pseudo; ";
+		String vSQL = "SELECT * FROM utilisateur INNER JOIN role_utilisateur ON utilisateur.id_role = role_utilisateur.id_role WHERE  password_utilisateur = :password AND pseudo = :pseudo; ";
 		
 		//JdbcTemplate vJdbcTemplate = new JdbcTemplate(getDataSource());
         NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());

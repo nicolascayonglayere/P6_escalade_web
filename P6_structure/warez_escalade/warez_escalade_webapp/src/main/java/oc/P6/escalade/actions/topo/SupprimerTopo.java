@@ -5,7 +5,10 @@ import javax.inject.Inject;
 import com.opensymphony.xwork2.ActionSupport;
 
 import oc.P6.escalade.business.contract.ManagerFactory;
+import oc.P6.escalade.model.bean.exception.SecteurException;
+import oc.P6.escalade.model.bean.exception.SiteException;
 import oc.P6.escalade.model.bean.exception.TopoException;
+import oc.P6.escalade.model.bean.exception.VoieException;
 import oc.P6.escalade.model.bean.topo.Topo;
 
 public class SupprimerTopo extends ActionSupport {
@@ -28,6 +31,15 @@ public class SupprimerTopo extends ActionSupport {
 		}catch (TopoException e2) {
 			addActionMessage(e2.getMessage());
 			e2.printStackTrace();
+			return ActionSupport.INPUT;
+		} catch (VoieException e3) {
+			e3.printStackTrace();
+			return ActionSupport.INPUT;
+		} catch (SecteurException e4) {
+			e4.printStackTrace();
+			return ActionSupport.INPUT;
+		} catch (SiteException e5) {
+			e5.printStackTrace();
 			return ActionSupport.INPUT;
 		}
 	}

@@ -1,18 +1,18 @@
 
 --table role_utilisateur--
 BEGIN TRANSACTION;
-INSERT INTO role_utilisateur (role) VALUES ('administrateur');
-INSERT INTO role_utilisateur (role) VALUES ('moderateur');
-INSERT INTO role_utilisateur (role) VALUES ('utilisateur');
-INSERT INTO role_utilisateur (role) VALUES ('banni');
+INSERT INTO role_utilisateur (role_utilisateur) VALUES ('administrateur');
+INSERT INTO role_utilisateur (role_utilisateur) VALUES ('moderateur');
+INSERT INTO role_utilisateur (role_utilisateur) VALUES ('utilisateur');
+INSERT INTO role_utilisateur (role_utilisateur) VALUES ('banni');
 COMMIT;
 
 --table utilisateur--
 BEGIN TRANSACTION;
-INSERT INTO utilisateur (nom, prenom, pseudo, password, id_role) VALUES ('ncg', 'nicolas', 'yogj', '$2a$10$PkyNIKEAqbMrZNeQ/QPRyeOV0gB.Q3LFxdjU94YlqUCzj.BhwVaVa', 1);
-INSERT INTO utilisateur (nom, prenom, pseudo, password, id_role) VALUES ('abdsc', 'nicole', 'nico', '$2a$10$A/ZfYQ4jybiU5sChtDbSTOsxokbXhpY/2ZHwvuL6fYg2YcZPkncMe', 2);
-INSERT INTO utilisateur (nom, prenom, pseudo, password, id_role) VALUES ('qsdfg', 'benoit', 'ben', '$2a$10$GBXyWWH.TkFD1OyrTTfLXerqmHRHClzd2T8HHGAIFU.8dV2xeHf4a', 3);
-INSERT INTO utilisateur (nom, prenom, pseudo, password, id_role) VALUES ('wxcvb', 'andre', 'ban', '$2a$10$jpZv/CpgtqUMFYeK3BkAA.QI2sKxbR4l2bQ9kZRBLs4fuFaxqt9ya', 4);
+INSERT INTO utilisateur (nom, prenom, pseudo, password_utilisateur, id_role) VALUES ('ncg', 'nicolas', 'yogj', '$2a$10$PkyNIKEAqbMrZNeQ/QPRyeOV0gB.Q3LFxdjU94YlqUCzj.BhwVaVa', 1);
+INSERT INTO utilisateur (nom, prenom, pseudo, password_utilisateur, id_role) VALUES ('abdsc', 'nicole', 'nico', '$2a$10$A/ZfYQ4jybiU5sChtDbSTOsxokbXhpY/2ZHwvuL6fYg2YcZPkncMe', 2);
+INSERT INTO utilisateur (nom, prenom, pseudo, password_utilisateur, id_role) VALUES ('qsdfg', 'benoit', 'ben', '$2a$10$GBXyWWH.TkFD1OyrTTfLXerqmHRHClzd2T8HHGAIFU.8dV2xeHf4a', 3);
+INSERT INTO utilisateur (nom, prenom, pseudo, password_utilisateur, id_role) VALUES ('wxcvb', 'andre', 'ban', '$2a$10$jpZv/CpgtqUMFYeK3BkAA.QI2sKxbR4l2bQ9kZRBLs4fuFaxqt9ya', 4);
 COMMIT;
 
 --table coordonnee_utilisateur--

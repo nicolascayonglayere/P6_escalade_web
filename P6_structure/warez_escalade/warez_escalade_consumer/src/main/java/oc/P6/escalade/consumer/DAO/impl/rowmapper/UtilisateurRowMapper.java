@@ -17,10 +17,10 @@ public class UtilisateurRowMapper implements RowMapper<Utilisateur> {
 		Utilisateur vUtilisateur = new Utilisateur(rs.getString("pseudo"));
 		vUtilisateur.setNom(rs.getString("nom"));
 		vUtilisateur.setPrenom(rs.getString("prenom"));
-		vUtilisateur.setPassword(rs.getString("password"));
+		vUtilisateur.setPassword(rs.getString("password_utilisateur"));
 		vUtilisateur.setId(rs.getInt("id_utilisateur"));
 		vUtilisateur.setId_Role(rs.getInt("id_role"));
-		vUtilisateur.setRole(rs.getString("role"));
+		vUtilisateur.setRole(rs.getString("role_utilisateur"));
 
 		return vUtilisateur;
 	}

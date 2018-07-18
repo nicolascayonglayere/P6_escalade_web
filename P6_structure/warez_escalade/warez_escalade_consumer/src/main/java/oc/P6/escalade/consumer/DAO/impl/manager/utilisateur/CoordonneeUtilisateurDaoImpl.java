@@ -16,6 +16,7 @@ import oc.P6.escalade.consumer.DAO.contract.manager.utilisateur.CoordonneeUtilis
 import oc.P6.escalade.consumer.DAO.contract.manager.utilisateur.UtilisateurManagerDAO;
 import oc.P6.escalade.consumer.DAO.impl.manager.AbstractDAO;
 import oc.P6.escalade.consumer.DAO.impl.rowmapper.CoordonneeUtilisateurRowMapper;
+import oc.P6.escalade.model.bean.exception.CoordonneeUtilisateurException;
 import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateur;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
@@ -26,8 +27,9 @@ public class CoordonneeUtilisateurDaoImpl extends AbstractDAO implements Coordon
 	private UtilisateurManagerDAO userDAO;
 	@Inject
 	CoordonneeUtilisateurRowMapper coordonneeUtilisateurRowMapper;
+	
 	@Override
-	public CoordonneeUtilisateur create(CoordonneeUtilisateur pCoordonneeUtilisateur) {
+	public CoordonneeUtilisateur create(CoordonneeUtilisateur pCoordonneeUtilisateur) throws CoordonneeUtilisateurException {
 		String vSQLCoordonnee = "INSERT INTO coordonnee_utilisateur (email, adresse_postale, id_utilisateur) VALUES (:email, :adresse, :idUtilisateur)";
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -43,13 +45,14 @@ public class CoordonneeUtilisateurDaoImpl extends AbstractDAO implements Coordon
 	    } catch (DuplicateKeyException vEx) {
 	        System.out.println("Coordonnee invalide email=" + pCoordonneeUtilisateur.getEmail());
 	        vEx.printStackTrace();
-	        return pCoordonneeUtilisateur;
+	        throw new CoordonneeUtilisateurException("Coordonnee invalide email=" + pCoordonneeUtilisateur.getEmail());
+	        //return pCoordonneeUtilisateur;
 	    }
 		return pCoordonneeUtilisateur;
 	}
 
 	@Override
-	public boolean delete(CoordonneeUtilisateur pCoordonneeUtilisateur) {
+	public boolean delete(CoordonneeUtilisateur pCoordonneeUtilisateur) throws CoordonneeUtilisateurException {
 		String vSQL = "DELETE FROM coordonnee_utilisateur WHERE id_coordonnee = :id_coordonnee";
 		System.out.println("CTRL DAO : "+pCoordonneeUtilisateur.getId());
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
@@ -61,7 +64,8 @@ public class CoordonneeUtilisateurDaoImpl extends AbstractDAO implements Coordon
 	    } catch (Exception vEx) {
 	        System.out.println("ERREUR pseudo=" + pCoordonneeUtilisateur.getUtilisateur().getPseudo());
 	        vEx.printStackTrace();
-	        return false;
+	        throw new CoordonneeUtilisateurException("ERREUR pseudo=" + pCoordonneeUtilisateur.getUtilisateur().getPseudo());
+	        //return false;
 	    }
 	    
 	    

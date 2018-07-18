@@ -15,6 +15,7 @@ import oc.P6.escalade.consumer.DAO.DAOFactory;
 import oc.P6.escalade.consumer.DAO.contract.manager.topo.TopoManagerDao;
 import oc.P6.escalade.consumer.DAO.impl.manager.AbstractDAO;
 import oc.P6.escalade.consumer.DAO.impl.rowmapper.TopoRowMapper;
+import oc.P6.escalade.model.bean.exception.TopoException;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
@@ -29,7 +30,7 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 	TopoRowMapper topoRowMapper;
 	
 	@Override
-	public boolean create(Topo pTopo) {
+	public boolean create(Topo pTopo) throws TopoException {
 		String vSQL = "INSERT INTO topo (nom, id_utilisateur, nombre_exemplaires, description, longitude, latitude, image, construction) VALUES (:nom, :id, :nbreEx, :description, :longitude, :latitude, :image, :construction)";
 		Utilisateur auteur = daoFacto.getUtilisateurManagerDAO().find(pTopo.getAuteur().getPseudo());
 		
@@ -49,7 +50,8 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 	        vJdbcTemplate.update(vSQL, vParams);
 	    } catch (DuplicateKeyException vEx) {
 	        System.out.println("Le topo existe déjà ! topo=" + pTopo.getNomTopo());
-	        return false;
+	        throw new TopoException("Le topo existe déjà ! topo=" + pTopo.getNomTopo());
+	        //return false;
 	    }
 	    
 	    
@@ -57,7 +59,7 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 	}
 
 	@Override
-	public boolean delete(Topo pTopo) {
+	public boolean delete(Topo pTopo) throws TopoException {
 		String vSQL = "DELETE FROM topo WHERE id_topo = :id_topo";
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
@@ -68,7 +70,8 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 	    } catch (Exception vEx) {
 	        System.out.println("Le topo n'existe pas ! topo=" + pTopo.getNomTopo());
 	        vEx.printStackTrace();
-	        return false;
+	        throw new TopoException("Le topo n'existe pas ! topo=" + pTopo.getNomTopo());
+	        //return false;
 	    }
 	    
 	    
@@ -77,7 +80,7 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 	}
 
 	@Override
-	public boolean update(Topo pTopo) {
+	public boolean update(Topo pTopo) throws TopoException {
 		String vSQL = "UPDATE topo SET nom = :nom, id_utilisateur = :id, nombre_exemplaires = :nbreEx, description = :description, longitude = :longitude, latitude = :latitude, image = :image, construction = :construction "
 					+ " WHERE id_topo = :id_topo";
 		Utilisateur auteur = daoFacto.getUtilisateurManagerDAO().find(pTopo.getAuteur().getPseudo());
@@ -98,7 +101,8 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 	        vJdbcTemplate.update(vSQL, vParams);
 	    } catch (DuplicateKeyException vEx) {
 	        System.out.println("Erreur modif ! topo=" + pTopo.getNomTopo());
-	        return false;
+	        throw new TopoException("Erreur modif ! topo=" + pTopo.getNomTopo());
+	        //return false;
 	    }
 	    
 	    

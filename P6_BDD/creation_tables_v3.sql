@@ -3,7 +3,7 @@ CREATE SEQUENCE public.role_utilisateur_id_role_seq_1;
 
 CREATE TABLE public.role_utilisateur (
                 id_role INTEGER NOT NULL DEFAULT nextval('public.role_utilisateur_id_role_seq_1'),
-                role VARCHAR(30) NOT NULL,
+                role_utilisateur VARCHAR(30) NOT NULL,
                 CONSTRAINT role_utilisateur_pk PRIMARY KEY (id_role)
 );
 
@@ -16,8 +16,8 @@ CREATE TABLE public.utilisateur (
                 id_utilisateur INTEGER NOT NULL DEFAULT nextval('public.utilisateur_id_seq'),
                 nom VARCHAR(20) NOT NULL,
                 prenom VARCHAR(20) NOT NULL,
-                pseudo VARCHAR(30) NOT NULL,
-                password VARCHAR(60) NOT NULL,
+                pseudo VARCHAR(30) UNIQUE NOT NULL,
+                password_utilisateur VARCHAR(60) NOT NULL,
                 id_role INTEGER NOT NULL,
                 CONSTRAINT utilisateur_pk PRIMARY KEY (id_utilisateur)
 );
@@ -29,7 +29,7 @@ CREATE SEQUENCE public.topo_id_topo_seq_1;
 
 CREATE TABLE public.topo (
                 id_topo INTEGER NOT NULL DEFAULT nextval('public.topo_id_topo_seq_1'),
-                nom VARCHAR(60) NOT NULL,
+                nom VARCHAR(60) UNIQUE NOT NULL,
                 id_utilisateur INTEGER NOT NULL,
                 nombre_exemplaires INTEGER,
                 description TEXT,
@@ -119,7 +119,7 @@ CREATE SEQUENCE public.coordonnee_utilisateur_id_coordonnee_seq;
 
 CREATE TABLE public.coordonnee_utilisateur (
                 id_coordonnee INTEGER NOT NULL DEFAULT nextval('public.coordonnee_utilisateur_id_coordonnee_seq'),
-                email VARCHAR(30) NOT NULL,
+                email VARCHAR(30) UNIQUE NOT NULL,
                 adresse_postale VARCHAR(60) NOT NULL,
                 id_utilisateur INTEGER NOT NULL,
                 CONSTRAINT coordonnee_utilisateur_pk PRIMARY KEY (id_coordonnee)

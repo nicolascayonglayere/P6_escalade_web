@@ -14,6 +14,7 @@ import oc.P6.escalade.consumer.DAO.contract.manager.topo.SiteManagerDAO;
 import oc.P6.escalade.consumer.DAO.contract.manager.topo.TopoManagerDao;
 import oc.P6.escalade.consumer.DAO.impl.manager.AbstractDAO;
 import oc.P6.escalade.consumer.DAO.impl.rowmapper.SiteRowMapper;
+import oc.P6.escalade.model.bean.exception.SiteException;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
 
@@ -25,7 +26,7 @@ public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 	SiteRowMapper siteRowMapper;
 
 	@Override
-	public boolean create(Site pSite) {
+	public boolean create(Site pSite) throws SiteException {
 		String vSQL = "INSERT INTO site (nom, description, id_topo) VALUES (:nom, :description, :id_topo)";
 		Topo topo = topoDAO.find(pSite.getTopo().getNomTopo());
 	
@@ -41,7 +42,8 @@ public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 	        vJdbcTemplate.update(vSQL, vParams);
 	    } catch (DuplicateKeyException vEx) {
 	        System.out.println("Le site existe déjà ! site=" + pSite.getNomSite()+" dans le topo "+pSite.getTopo().getNomTopo());
-	        return false;
+	        throw new SiteException("Le site existe déjà ! site=" + pSite.getNomSite()+" dans le topo "+pSite.getTopo().getNomTopo());
+	        //return false;
 	    }
 	    
 	    
@@ -49,7 +51,7 @@ public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 	}
 
 	@Override
-	public boolean delete(Site pSite) {
+	public boolean delete(Site pSite) throws SiteException {
 		String vSQL = "DELETE FROM site WHERE id_site = :id_site";
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
@@ -60,7 +62,8 @@ public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 	    } catch (Exception vEx) {
 	        System.out.println("Le site n'existe pas ! site=" + pSite.getNomSite());
 	        vEx.printStackTrace();
-	        return false;
+	        throw new SiteException("Le site n'existe pas ! site=" + pSite.getNomSite());
+	        //return false;
 	    }
 	    
 	    
@@ -68,7 +71,7 @@ public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 	}
 
 	@Override
-	public boolean update(Site pSite) {
+	public boolean update(Site pSite) throws SiteException {
 		String vSQL = "UPDATE site SET nom = :nom, description = :description, id_topo = :id_topo WHERE id_site = :id_site";
 
 	
@@ -84,7 +87,8 @@ public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 	        vJdbcTemplate.update(vSQL, vParams);
 	    } catch (DuplicateKeyException vEx) {
 	        System.out.println("Erreur modif ! site=" + pSite.getNomSite());
-	        return false;
+	        throw new SiteException("Erreur modif ! site=" + pSite.getNomSite());
+	        //return false;
 	    }
 	    
 	    

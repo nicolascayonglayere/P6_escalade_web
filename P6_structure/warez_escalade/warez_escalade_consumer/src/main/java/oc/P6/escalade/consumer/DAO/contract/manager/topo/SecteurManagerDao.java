@@ -2,6 +2,7 @@ package oc.P6.escalade.consumer.DAO.contract.manager.topo;
 
 import java.util.ArrayList;
 
+import oc.P6.escalade.model.bean.exception.SecteurException;
 import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Site;
 
@@ -16,22 +17,25 @@ public interface SecteurManagerDao {
 	 * Méthode pour créer un {@link Secteur} donné en paramètre dans la base de donnée
 	 * @param pSecteur
 	 * @return
+	 * @throws SecteurException 
 	 */
-	boolean create(Secteur pSecteur);
+	boolean create(Secteur pSecteur) throws SecteurException;
 	
 	/**
 	 * Méthode pour supprimer un {@link Secteur} donné en paramètre dans la base de donnée
 	 * @param pSecteur
 	 * @return
+	 * @throws SecteurException 
 	 */
-	boolean delete (Secteur pSecteur);
+	boolean delete (Secteur pSecteur) throws SecteurException;
 	
 	/**
 	 * Méthode pour modifier un {@link Secteur} donné en paramètre dans la base de donnée
 	 * @param pSecteur
 	 * @return
+	 * @throws SecteurException 
 	 */
-	boolean update (Secteur pSecteur);
+	boolean update (Secteur pSecteur) throws SecteurException;
 	
 	/**
 	 * Méthode pour trouver un {@link Secteur} nommé pNom dans le {@link Site} d'id donné en paramètre dans la base de donnée

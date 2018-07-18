@@ -2,6 +2,7 @@ package oc.P6.escalade.consumer.DAO.contract.manager.utilisateur;
 
 import java.util.ArrayList;
 
+import oc.P6.escalade.model.bean.exception.UtilisateurException;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
 /**
@@ -15,15 +16,17 @@ public interface UtilisateurManagerDAO {
 	 * Méthode pour créer un {@link Utilisateur} donné en paramètre dans la base de donnée
 	 * @param pUtilisateur
 	 * @return {@link} crée
+	 * @throws UtilisateurException 
 	 */
-	Utilisateur create(Utilisateur pUtilisateur);
+	Utilisateur create(Utilisateur pUtilisateur) throws UtilisateurException;
 
 	/**
 	 * Méthode pour supprimer un {@link Utilisateur} donné en paramètre dans la base de donnée
 	 * @param pUtilisateur
 	 * @return
+	 * @throws UtilisateurException 
 	 */
-	boolean delete (Utilisateur pUtilisateur);
+	boolean delete (Utilisateur pUtilisateur) throws UtilisateurException;
 	
 	/**
 	 * Méthode pour modifier le mot de passe de {@link Utilisateur} donné en paramètre dans la base de donnée

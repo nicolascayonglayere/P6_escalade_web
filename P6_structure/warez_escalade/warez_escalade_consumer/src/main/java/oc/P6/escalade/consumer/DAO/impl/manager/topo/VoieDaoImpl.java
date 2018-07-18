@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import oc.P6.escalade.consumer.DAO.contract.manager.topo.VoieManagerDao;
 import oc.P6.escalade.consumer.DAO.impl.manager.AbstractDAO;
 import oc.P6.escalade.consumer.DAO.impl.rowmapper.VoieRowMapper;
+import oc.P6.escalade.model.bean.exception.VoieException;
 import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Voie;
 
@@ -24,7 +25,7 @@ public class VoieDaoImpl extends AbstractDAO implements VoieManagerDao{
 	VoieRowMapper voieRowMapper;
 
 	@Override
-	public boolean create(Voie pVoie) {
+	public boolean create(Voie pVoie) throws VoieException {
 		System.out.println(pVoie.getNomVoie()+" - "+pVoie.getCotation());
 		String vSQL = "INSERT INTO voie ( nom, cotation, hauteur, nombre_longueur, nombre_point, id_secteur, description)"
 				+ " VALUES ( :nom, :cotation, :hauteur, :nbLongueur, :nbPoint, :id_secteur, :description)";
@@ -45,7 +46,8 @@ public class VoieDaoImpl extends AbstractDAO implements VoieManagerDao{
 	    } catch (DuplicateKeyException vEx) {
 	        System.out.println("La voie existe déjà ! voie = " + pVoie.getNomVoie()+" dans le secteur d'Id "+pVoie.getSecteur().getId());
 	        vEx.printStackTrace();
-	        return false;
+	        throw new VoieException("La voie existe déjà ! voie = " + pVoie.getNomVoie()+" dans le secteur d'Id "+pVoie.getSecteur().getId());
+	        //return false;
 	    }
 	    
 	    
@@ -53,7 +55,7 @@ public class VoieDaoImpl extends AbstractDAO implements VoieManagerDao{
 	}
 
 	@Override
-	public boolean delete(Voie pVoie) {
+	public boolean delete(Voie pVoie) throws VoieException {
 		String vSQL = "DELETE FROM voie WHERE id_voie = :id_voie";
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
@@ -64,7 +66,8 @@ public class VoieDaoImpl extends AbstractDAO implements VoieManagerDao{
 	    } catch (Exception vEx) {
 	        System.out.println("La voie n'existe pas ! secteur=" + pVoie.getNomVoie());
 	        vEx.printStackTrace();
-	        return false;
+	        throw new VoieException("La voie n'existe pas ! secteur=" + pVoie.getNomVoie());
+	        //return false;
 	    }
 	    
 	    
@@ -72,7 +75,7 @@ public class VoieDaoImpl extends AbstractDAO implements VoieManagerDao{
 	}
 
 	@Override
-	public boolean update(Voie pVoie) {
+	public boolean update(Voie pVoie) throws VoieException {
 		System.out.println(pVoie.getNomVoie()+" - "+pVoie.getCotation());
 		String vSQL = "UPDATE voie SET nom = :nom, cotation = :cotation, hauteur = :hauteur, nombre_longueur = :nbLongueur, nombre_point = :nbPoint, id_secteur = :id_secteur, description = :description "
 				+ " WHERE id_voie = :id_voie";
@@ -92,7 +95,8 @@ public class VoieDaoImpl extends AbstractDAO implements VoieManagerDao{
 	        vJdbcTemplate.update(vSQL, vParams);
 	    } catch (DuplicateKeyException vEx) {
 	        System.out.println("La voie existe déjà ! voie=" + pVoie.getNomVoie()+" dans le secteur "+pVoie.getSecteur().getNomSecteur());
-	        return false;
+	        throw new VoieException ("La voie existe déjà ! voie=" + pVoie.getNomVoie()+" dans le secteur "+pVoie.getSecteur().getNomSecteur());
+	        //return false;
 	    }
 	    
 	    

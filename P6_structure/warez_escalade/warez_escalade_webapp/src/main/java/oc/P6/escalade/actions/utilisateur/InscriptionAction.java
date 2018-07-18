@@ -53,7 +53,6 @@ public class InscriptionAction extends ActionSupport implements SessionAware {
     }
 	
 	public String creerUser() {
-		String vResult = "";
 		System.out.println("pseudo : "+utilisateur.getPseudo());
 		
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -62,53 +61,23 @@ public class InscriptionAction extends ActionSupport implements SessionAware {
 		utilisateur.setCoordonnee(coordonnee);
 		try {
 			utilisateur = managerFactory.getUtilisateurManager().creerUtilisateur(utilisateur);
-			session.put("utilisateur", utilisateur);
-			addActionMessage("Vous etes correctement inscrit et connecté.");
-			vResult = ActionSupport.SUCCESS;
 		} catch (UtilisateurException e) {
+			System.out.println(e.getMessage());
 			e.printStackTrace();
 			addActionMessage(e.getMessage());
 			addFieldError("utilisateur.pseudo", "Veuillez choisir un autre pseudo.");
-			vResult = ActionSupport.INPUT;
+			return ActionSupport.INPUT;
 		} catch (CoordonneeUtilisateurException ex) {
+			System.out.println(ex.getMessage());
 			ex.printStackTrace();
 			addActionMessage(ex.getMessage());
 			addFieldError("coordonnee.email", "Veuillez choisir un autre email.");
-			vResult = ActionSupport.INPUT;			
+			return ActionSupport.INPUT;			
 		}
-	//if((utilisateur).getId() !=0) {			
-	//	
-	//	if(utilisateur.getCoordonnee().getId() != 0) {
-	//		session.put("utilisateur", utilisateur);
-	//		addActionMessage("Vous etes correctement inscrit et connecté.");
-	//		vResult = ActionSupport.SUCCESS;				
-	//	}
-	//	else {
-	//		addFieldError("coordonnee.email", "Veuillez choisir un autre email.");
-	//		vResult = ActionSupport.INPUT;
-	//	}
-    //
-	//}
-	//else {
-	//	//--ctrl du pseudo
-	//	if (managerFactory.getUtilisateurManager().getUtilisateur(utilisateur.getPseudo()).getNom()!=null) {
-	//		addFieldError("utilisateur.pseudo", "Veuillez choisir un autre pseudo.");
-	//		vResult = ActionSupport.INPUT;
-	//	}
-	//	//--ctrl du nom/prenom -> eviter les doubles comptes
-	//	else if(managerFactory.getUtilisateurManager().getUtilisateur(utilisateur.getNom()).getNom() != null &&
-	//			managerFactory.getUtilisateurManager().getUtilisateur(utilisateur.getPrenom()).getPrenom() != null) {
-	//		addFieldError("utilisateur.nom", "Vous avez deja un compte.");
-	//		vResult = ActionSupport.INPUT;
-	//	}
-	//	//--ctrl du mot de passe
-	//	else if(managerFactory.getUtilisateurManager().getUtilisateur(utilisateur.getNom()).getPassword() != null) {
-	//		addFieldError("utilisateur.password", "Veuillez choisir un autre mot de passe.");
-	//		vResult=ActionSupport.INPUT;
-	//	}
-	//}
-		System.out.println(vResult);
-		return vResult;
+		session.put("utilisateur", utilisateur);
+		addActionMessage("Vous etes correctement inscrit et connecté.");
+		return ActionSupport.SUCCESS;
+
 	}
 
 	public ManagerFactory getManagerFactory() {

@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import oc.P6.escalade.consumer.DAO.contract.manager.topo.SecteurManagerDao;
 import oc.P6.escalade.consumer.DAO.impl.manager.AbstractDAO;
 import oc.P6.escalade.consumer.DAO.impl.rowmapper.SecteurRowMapper;
+import oc.P6.escalade.model.bean.exception.SecteurException;
 import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Site;
 
@@ -29,9 +30,10 @@ public class SecteurDaoImpl extends AbstractDAO implements SecteurManagerDao{
 
 	/**
 	 * Méthode pour créer un {@link Secteur} donné en paramètre dans la base de donnée
+	 * @throws SecteurException 
 	 */
 	@Override
-	public boolean create(Secteur pSecteur) {
+	public boolean create(Secteur pSecteur) throws SecteurException {
 		String vSQL = "INSERT INTO secteur (nom, description, id_site, image) VALUES (:nom, :description, :id_site, :image)";
 
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
@@ -47,7 +49,8 @@ public class SecteurDaoImpl extends AbstractDAO implements SecteurManagerDao{
 	    } catch (DuplicateKeyException vEx) {
 	        System.out.println("Le secteur existe déjà ! secteur=" + pSecteur.getNomSecteur()+" dans le site "+pSecteur.getSite().getNomSite());
 	        vEx.printStackTrace();
-	        return false;
+	        throw new SecteurException("Le secteur existe déjà ! secteur=" + pSecteur.getNomSecteur()+" dans le site "+pSecteur.getSite().getNomSite());
+	        //return false;
 	    }
 	    
 	    
@@ -56,9 +59,10 @@ public class SecteurDaoImpl extends AbstractDAO implements SecteurManagerDao{
 
 	/**
 	 * Méthode pour supprimer un {@link Secteur} donné en paramètre dans la base de donnée
+	 * @throws SecteurException 
 	 */
 	@Override
-	public boolean delete(Secteur pSecteur) {
+	public boolean delete(Secteur pSecteur) throws SecteurException {
 		String vSQL = "DELETE FROM secteur WHERE id_secteur = :id_secteur";
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
@@ -69,7 +73,8 @@ public class SecteurDaoImpl extends AbstractDAO implements SecteurManagerDao{
 	    } catch (Exception vEx) {
 	        System.out.println("Le secteur n'existe pas ! secteur=" + pSecteur.getNomSecteur());
 	        vEx.printStackTrace();
-	        return false;
+	        throw new SecteurException("Le secteur n'existe pas ! secteur=" + pSecteur.getNomSecteur());
+	        //return false;
 	    }
 	    
 	    
@@ -78,9 +83,10 @@ public class SecteurDaoImpl extends AbstractDAO implements SecteurManagerDao{
 
 	/**
 	 * Méthode pour modifier un {@link Secteur} donné en paramètre dans la base de donnée
+	 * @throws SecteurException 
 	 */
 	@Override
-	public boolean update(Secteur pSecteur) {
+	public boolean update(Secteur pSecteur) throws SecteurException {
 		String vSQL = "UPDATE secteur SET nom = :nom, description = :description, id_site = :id_site, image = :image "
 				+ " WHERE id_secteur = :id_secteur";
 
@@ -98,7 +104,8 @@ public class SecteurDaoImpl extends AbstractDAO implements SecteurManagerDao{
 	        vJdbcTemplate.update(vSQL, vParams);
 	    } catch (DuplicateKeyException vEx) {
 	        System.out.println("Erreur modif ! secteur=" + pSecteur.getNomSecteur());
-	        return false;
+	        throw new SecteurException("Erreur modif ! secteur=" + pSecteur.getNomSecteur());
+	        //return false;
 	    }
 	    
 	    

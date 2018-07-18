@@ -14,8 +14,10 @@ import oc.P6.escalade.business.contract.manager.AbstractDAOManager;
 import oc.P6.escalade.business.contract.manager.topo.SiteManager;
 import oc.P6.escalade.consumer.DAO.DAOFactory;
 import oc.P6.escalade.consumer.DAO.contract.manager.topo.SiteManagerDAO;
+import oc.P6.escalade.model.bean.exception.SecteurException;
 import oc.P6.escalade.model.bean.exception.SiteException;
 import oc.P6.escalade.model.bean.exception.TopoException;
+import oc.P6.escalade.model.bean.exception.VoieException;
 import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
@@ -186,11 +188,21 @@ public class SiteManagerImpl extends AbstractDAOManager implements SiteManager{
 
 		try {
 			pSite.setId(siteDAO.find(pSite.getNomSite(), pSite.getTopo().getId()).getId());
-			for (Secteur s : daoFactory.getSecteurManagerDao().getListeSecteur(pSite)) {
-				for (Voie v : daoFactory.getVoieManagerDao().getlistVoie(s)) {
-					daoFactory.getVoieManagerDao().delete(v);
+			try {
+				for (Secteur s : daoFactory.getSecteurManagerDao().getListeSecteur(pSite)) {
+					for (Voie v : daoFactory.getVoieManagerDao().getlistVoie(s)) {
+						
+							daoFactory.getVoieManagerDao().delete(v);
+	
+					}
+					daoFactory.getSecteurManagerDao().delete(s);
 				}
-				daoFactory.getSecteurManagerDao().delete(s);
+			} catch (VoieException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SecteurException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			siteDAO.delete(pSite);
 		    TransactionStatus vTScommit = vTransactionStatus;

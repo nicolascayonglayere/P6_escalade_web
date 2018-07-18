@@ -1,5 +1,6 @@
 package oc.P6.escalade.consumer.DAO.contract.manager.utilisateur;
 
+import oc.P6.escalade.model.bean.exception.CoordonneeUtilisateurException;
 import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateur;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
@@ -14,15 +15,17 @@ public interface CoordonneeUtilisateurDao {
 	 * Méthode pour créer les {@link Coordonneeutilisateur} données en paramètre dans la base de donnée
 	 * @param pCoordonneeUtilisateur
 	 * @return les {@link CoordonneeUtilisateur} créees dans la base de donnée
+	 * @throws CoordonneeUtilisateurException 
 	 */
-	CoordonneeUtilisateur create(CoordonneeUtilisateur pCoordonneeUtilisateur);
+	CoordonneeUtilisateur create(CoordonneeUtilisateur pCoordonneeUtilisateur) throws CoordonneeUtilisateurException;
 
 	/**
 	 * Méthode pour supprimer les {@link Coordonneeutilisateur} données en paramètre dans la base de donnée
 	 * @param pCoordonneeUtilisateur
 	 * @return
+	 * @throws CoordonneeUtilisateurException 
 	 */
-	boolean delete (CoordonneeUtilisateur pCoordonneeUtilisateur);
+	boolean delete (CoordonneeUtilisateur pCoordonneeUtilisateur) throws CoordonneeUtilisateurException;
 	
 	/**
 	 * Méthode pour modifier l'adresse des {@link Coordonneeutilisateur} données en paramètre dans la base de donnée
