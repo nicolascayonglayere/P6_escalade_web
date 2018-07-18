@@ -10,9 +10,10 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import oc.P6.escalade.business.contract.ManagerFactory;
 import oc.P6.escalade.model.bean.emprunt.TopoEmprunt;
+import oc.P6.escalade.model.bean.exception.TopoException;
+import oc.P6.escalade.model.bean.exception.UtilisateurException;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
-import oc.P6.escalade.model.bean.utilisateur.UtilisateurException;
 
 public class GestionPretAction extends ActionSupport implements SessionAware {
 
@@ -48,22 +49,30 @@ public class GestionPretAction extends ActionSupport implements SessionAware {
 	public String emprunter() {
 		System.out.println("emprunt : "+nom);
 		utilisateur = (Utilisateur) session.get("utilisateur");
-		Topo vTopo = managerFactory.getTopoManager().getTopo(nom);
-		topoEmprunt = managerFactory.getTopoEmpruntManager().creerTopoEmprunt(vTopo, utilisateur);
-		if (topoEmprunt == null) {
-			addActionMessage("Il n'y a plus d'exemplaires disponibles");
-			return ActionSupport.INPUT;
-		}
-		else {
-			if (topoEmprunt.getId() > 0) {
-				addActionMessage("Votre emprunt est bien enregistré");		
-				return ActionSupport.SUCCESS;
-			}
-			else {
-				addActionMessage("Vous avez deja emprunté ce topo.");
+		Topo vTopo;
+		try {
+			vTopo = managerFactory.getTopoManager().getTopo(nom);
+			topoEmprunt = managerFactory.getTopoEmpruntManager().creerTopoEmprunt(vTopo, utilisateur);
+			if (topoEmprunt == null) {
+				addActionMessage("Il n'y a plus d'exemplaires disponibles");
 				return ActionSupport.INPUT;
 			}
+			else {
+				if (topoEmprunt.getId() > 0) {
+					addActionMessage("Votre emprunt est bien enregistré");		
+					return ActionSupport.SUCCESS;
+				}
+				else {
+					addActionMessage("Vous avez deja emprunté ce topo.");
+					return ActionSupport.INPUT;
+				}
+			}
+		} catch (TopoException e) {
+			addActionMessage(e.getMessage());
+			e.printStackTrace();
+			return ActionSupport.INPUT;
 		}
+
 	}
 
 	public String getNom() {

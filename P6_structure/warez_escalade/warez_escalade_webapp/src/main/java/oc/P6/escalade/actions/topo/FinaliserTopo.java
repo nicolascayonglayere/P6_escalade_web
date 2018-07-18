@@ -9,6 +9,7 @@ import org.apache.struts2.interceptor.SessionAware;
 import com.opensymphony.xwork2.ActionSupport;
 
 import oc.P6.escalade.business.contract.ManagerFactory;
+import oc.P6.escalade.model.bean.exception.TopoException;
 import oc.P6.escalade.model.bean.topo.Topo;
 
 public class FinaliserTopo extends ActionSupport implements SessionAware {
@@ -31,20 +32,28 @@ public class FinaliserTopo extends ActionSupport implements SessionAware {
 	}
 
 	public String execute() {
-		//--recup le topo en construction et maj de son statut
-		if ((Topo)session.get("topo") != null) {
-			nomTopo = ((Topo)session.get("topo")).getNomTopo();
-			topo = managerFactory.getTopoManager().getTopo(nomTopo);
+
+		try {
+			//--recup le topo en construction et maj de son statut
+			if ((Topo)session.get("topo") != null) {
+				nomTopo = ((Topo)session.get("topo")).getNomTopo();
+				topo = managerFactory.getTopoManager().getTopo(nomTopo);
+			}
+			else
+				topo = managerFactory.getTopoManager().getTopo(topo.getNomTopo());
+			managerFactory.getTopoManager().modifTopo(topo);
+			this.session.remove("topo");
+			this.session.remove("secteur");
+			this.session.remove("site");
+			nomTopo = topo.getNomTopo();
+			addActionMessage("La construction du topo"+topo.getNomTopo()+" est terminée.");
+			return ActionSupport.SUCCESS;
+		} catch (TopoException e) {
+			addActionMessage(e.getMessage());
+			e.printStackTrace();
+			return ActionSupport.INPUT;
 		}
-		else
-			topo = managerFactory.getTopoManager().getTopo(topo.getNomTopo());
-		managerFactory.getTopoManager().modifTopo(topo);
-		this.session.remove("topo");
-		this.session.remove("secteur");
-		this.session.remove("site");
-		nomTopo = topo.getNomTopo();
-		addActionMessage("La construction du topo"+topo.getNomTopo()+" est terminée.");
-		return ActionSupport.SUCCESS;
+
 		
 	}
 	@Override

@@ -3,9 +3,9 @@ package oc.P6.escalade.business.contract.manager;
 import java.util.ArrayList;
 
 import oc.P6.escalade.model.bean.emprunt.TopoEmprunt;
+import oc.P6.escalade.model.bean.exception.UtilisateurException;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
-import oc.P6.escalade.model.bean.utilisateur.UtilisateurException;
 
 /**
  * Interface TopoEmpruntManager et ses méthodes

@@ -7,7 +7,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
@@ -142,8 +141,7 @@ public class VoieDaoImpl extends AbstractDAO implements VoieManagerDao{
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
 		System.out.println(pSecteur.getNomSecteur()+" - "+pSecteur.getId());
         vParams.addValue("id_secteur", pSecteur.getId(), Types.INTEGER);
-
-		listVoie = (ArrayList<Voie>) vJdbcTemplate.query(vSQL, vParams, voieRowMapper);
+        listVoie = (ArrayList<Voie>) vJdbcTemplate.query(vSQL, vParams, voieRowMapper);
 		return listVoie;
 
 	

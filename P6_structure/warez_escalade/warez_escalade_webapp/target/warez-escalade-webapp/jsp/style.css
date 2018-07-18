@@ -16,6 +16,7 @@ body
 	font-family: open_sansregular, Arial, Verdana, sans-serif;
 	margin: 0;
 	padding-top: 60px;
+	padding-bottom : 5000px;
 	/*background: url("../assets/images/imgFd.jpg") fixed;*/
 	background-color : #ffe28a; /*rgba (255,214,90,1);*/
 
@@ -24,14 +25,42 @@ body
 #blocPge
 {
 	background-color : #ffe28a;
+	padding-top : 10px;
+	padding-bottom : 5000px;
+	
 }
 
 #menuTop
 {
 	/*background: url("../assets/images/imgFond.jpg") fixed no-repeat top left;*/
-	background-color : rgba(243, 183,134,1);	
+	background-color : rgba(243, 183,134,1);
+	
+		
+}
+
+#menuTopUser
+{
+	background-color : rgba(243, 183,134,1);
+	top : 60px;
 }
 
 #map, img {
 	height: auto;
+}
+
+#titre
+{
+	text-align : center;
+}
+
+#footer
+{
+	background-color : rgba(243, 183,134,1);
+	padding-top : 5px;
+	padding-bottom : 5px;
+}
+
+#carouselMap
+{
+	margin-bottom : 10px;
 }

@@ -13,10 +13,10 @@ import oc.P6.escalade.business.contract.manager.utilisateur.CoordonneeUtilisateu
 import oc.P6.escalade.consumer.DAO.impl.DAOFactoryImpl;
 import oc.P6.escalade.consumer.DAO.impl.manager.utilisateur.CoordonneeUtilisateurDaoImpl;
 import oc.P6.escalade.consumer.DAO.impl.manager.utilisateur.UtilisateurDaoImpl;
+import oc.P6.escalade.model.bean.exception.CoordonneeUtilisateurException;
+import oc.P6.escalade.model.bean.exception.UtilisateurException;
 import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateur;
-import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateurException;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
-import oc.P6.escalade.model.bean.utilisateur.UtilisateurException;
 import oc.P6.escalade.model.contract.utilisateur.IntCoordonneeUtilisateur;
 import oc.P6.escalade.model.contract.utilisateur.IntUtilisateur;
 /**

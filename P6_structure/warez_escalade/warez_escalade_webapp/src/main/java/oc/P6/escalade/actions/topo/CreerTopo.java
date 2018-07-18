@@ -10,6 +10,7 @@ import org.apache.struts2.interceptor.SessionAware;
 import com.opensymphony.xwork2.ActionSupport;
 
 import oc.P6.escalade.business.contract.ManagerFactory;
+import oc.P6.escalade.model.bean.exception.TopoException;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
@@ -45,18 +46,19 @@ public class CreerTopo extends ActionSupport implements SessionAware{
 		utilisateur=(Utilisateur)session.get("utilisateur");
 
 		System.out.println(topo.getNomTopo());
-		if (managerFactory.getTopoManager().getTopo(topo.getNomTopo()) != null) {
-			addActionMessage("Le topo "+topo.getNomTopo()+" existe déja.");
-			return ActionSupport.INPUT;
-		}
-		else {
+
+		try {
 			topo.setAuteur(utilisateur);
 			managerFactory.getTopoManager().creerTopo(topo);
 			addActionMessage("Le topo "+topo.getNomTopo()+" a bien été crée.");
 			session.put("topo", topo);
-			return ActionSupport.SUCCESS;		
+			return ActionSupport.SUCCESS;
+		} catch (TopoException e) {
+			addActionMessage(e.getMessage());
+			e.printStackTrace();
+			return ActionSupport.INPUT;
 		}
-
+		
 	}
 	@Override
 	public void setSession(Map<String, Object> session) {

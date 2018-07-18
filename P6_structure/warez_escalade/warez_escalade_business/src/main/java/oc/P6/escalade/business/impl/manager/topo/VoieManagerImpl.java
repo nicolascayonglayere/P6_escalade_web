@@ -14,6 +14,8 @@ import oc.P6.escalade.business.contract.manager.AbstractDAOManager;
 import oc.P6.escalade.business.contract.manager.topo.VoieManager;
 import oc.P6.escalade.consumer.DAO.DAOFactory;
 import oc.P6.escalade.consumer.DAO.contract.manager.topo.VoieManagerDao;
+import oc.P6.escalade.model.bean.exception.SecteurException;
+import oc.P6.escalade.model.bean.exception.VoieException;
 import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Voie;
 import oc.P6.escalade.model.contract.topo.IntVoie;
@@ -38,9 +40,10 @@ public class VoieManagerImpl extends AbstractDAOManager implements VoieManager{
 	
 	/**
 	 * Méthode pour obtenir la liste des {@link Voie} du {@link Secteur} donné en paramètre
+	 * @throws SecteurException 
 	 */
 	@Override
-	public ArrayList<Voie> getListVoie(Secteur pSecteur) {
+	public ArrayList<Voie> getListVoie(Secteur pSecteur) throws SecteurException {
 		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
 		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		vDefinition.setTimeout(30); // 30 secondes
@@ -53,8 +56,10 @@ public class VoieManagerImpl extends AbstractDAOManager implements VoieManager{
 		    vTransactionStatus = null;
 		    platformTransactionManager.commit(vTScommit);
 		}finally {
-			if (vTransactionStatus != null) 
-				platformTransactionManager.rollback(vTransactionStatus); 			
+			if (vTransactionStatus != null) { 
+				platformTransactionManager.rollback(vTransactionStatus);
+				throw new SecteurException("Le secteur n'existe pas. "+pSecteur.getNomSecteur());
+			} 			
 		}
 
 		return listVoie;
@@ -62,72 +67,55 @@ public class VoieManagerImpl extends AbstractDAOManager implements VoieManager{
 
 	/**
 	 * Méthode pour créer la {@link Voie} donnée en paramètre
+	 * @throws VoieException 
 	 */
 	@Override
-	public void creerVoie(Voie pVoie) {
+	public void creerVoie(Voie pVoie) throws VoieException {
 		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
 		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		vDefinition.setTimeout(30); // 30 secondes
         TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
 		voieDao = daoFactory.getVoieManagerDao();
 		System.out.println("CTRL "+pVoie.getNomVoie());
-		if (voieDao.find(pVoie.getNomVoie(), pVoie.getSecteur().getId()) != null) {
-			try {
-				throw new Exception("La voie existe deja.");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		else {
-			try {
-				voieDao.create(pVoie);
-				
-			    TransactionStatus vTScommit = vTransactionStatus;
-			    vTransactionStatus = null;
-			    platformTransactionManager.commit(vTScommit);
-			}finally {
-				if (vTransactionStatus != null) 
-					platformTransactionManager.rollback(vTransactionStatus); 			
-    		}
+		try {
+			voieDao.create(pVoie);
 			
-
-		}
-		
+		    TransactionStatus vTScommit = vTransactionStatus;
+		    vTransactionStatus = null;
+		    platformTransactionManager.commit(vTScommit);
+		}finally {
+			if (vTransactionStatus != null) {
+				platformTransactionManager.rollback(vTransactionStatus);
+				throw new VoieException("La voie existe deja. "+pVoie.getNomVoie());
+			} 			
+	   	}		
 	}
 
 	/**
 	 * Méthode pour modifier la {@link Voie} donnée en paramètre
+	 * @throws VoieException 
 	 */
 	@Override
-	public void majVoie(Voie pVoie) {
+	public void majVoie(Voie pVoie) throws VoieException {
 		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
 		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		vDefinition.setTimeout(30); // 30 secondes
         TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
 		voieDao = daoFactory.getVoieManagerDao();
 		System.out.println("CTRL "+pVoie.getNomVoie());
-		if (voieDao.find(pVoie.getId()) == null) {
-			try {
-				throw new Exception("La voie n'existe pas.");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		else {
-			try {
-				voieDao.update(pVoie);
-				
-			    TransactionStatus vTScommit = vTransactionStatus;
-			    vTransactionStatus = null;
-			    platformTransactionManager.commit(vTScommit);				
-			}finally {
-				if (vTransactionStatus != null) 
-					platformTransactionManager.rollback(vTransactionStatus); 			
-    		}
 
-		}
+		try {
+			voieDao.update(pVoie);
+			
+		    TransactionStatus vTScommit = vTransactionStatus;
+		    vTransactionStatus = null;
+		    platformTransactionManager.commit(vTScommit);				
+		}finally {
+			if (vTransactionStatus != null) {
+				platformTransactionManager.rollback(vTransactionStatus);
+				throw new VoieException("La voie existe deja. "+pVoie.getNomVoie());
+			} 			
+	   	}
 	}
 
 	/**
@@ -141,69 +129,58 @@ public class VoieManagerImpl extends AbstractDAOManager implements VoieManager{
 	
 	/**
 	 * Méthode pour obtenir la {@link Voie} du {@link Secteur} avec son nom donné en paramètre
+	 * @throws VoieException 
 	 */
 	@Override
-	public Voie getVoie(String pNom, Secteur pSecteur) {
+	public Voie getVoie(String pNom, Secteur pSecteur) throws VoieException {
 		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
 		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		vDefinition.setTimeout(30); // 30 secondes
         TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
 		voieDao = daoFactory.getVoieManagerDao();
-		if (voieDao.find(pNom, pSecteur.getId()) != null) {
-			try {
-			voie = voieDao.find(pNom, pSecteur.getId());
-			
-		    TransactionStatus vTScommit = vTransactionStatus;
-		    vTransactionStatus = null;
-		    platformTransactionManager.commit(vTScommit);
-			}finally {
-				if (vTransactionStatus != null) 
-					platformTransactionManager.rollback(vTransactionStatus); 			
-    		}
-		}
-		else {
-			try {
-				throw new Exception("La voie n'existe pas.");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+
+		try {
+		voie = voieDao.find(pNom, pSecteur.getId());
+		
+			TransactionStatus vTScommit = vTransactionStatus;
+			vTransactionStatus = null;
+			platformTransactionManager.commit(vTScommit);
+		}finally {
+			if (vTransactionStatus != null) {
+				platformTransactionManager.rollback(vTransactionStatus);
+				throw new VoieException("La voie existe deja. "+pNom);
+			} 			
+	    }
+		
 		return (Voie) voie;
 	}
 
 	/**
 	 * Méthode pour supprime la {@link Voie} donnée en paramètre
+	 * @throws VoieException 
 	 */
 	@Override
-	public void supprimerVoie(Voie pVoie) {
+	public void supprimerVoie(Voie pVoie) throws VoieException {
 		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
 		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		vDefinition.setTimeout(30); // 30 secondes
         TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
 		voieDao = daoFactory.getVoieManagerDao();
 		System.out.println("CTRL "+pVoie.getNomVoie());
-		if (voieDao.find(pVoie.getNomVoie(), pVoie.getSecteur().getId()) == null) {
-			try {
-				throw new Exception("La voie n'existe pas.");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		else {
-			try {
-			pVoie.setId(voieDao.find(pVoie.getNomVoie(), pVoie.getSecteur().getId()).getId());
-			voieDao.delete(pVoie);
-			
-		    TransactionStatus vTScommit = vTransactionStatus;
-		    vTransactionStatus = null;
-		    platformTransactionManager.commit(vTScommit);
-			}finally {
-				if (vTransactionStatus != null) 
-					platformTransactionManager.rollback(vTransactionStatus); 			
-    		}
-		}
+
+		try {
+		pVoie.setId(voieDao.find(pVoie.getNomVoie(), pVoie.getSecteur().getId()).getId());
+		voieDao.delete(pVoie);
+		
+	    TransactionStatus vTScommit = vTransactionStatus;
+	    vTransactionStatus = null;
+	    platformTransactionManager.commit(vTScommit);
+		}finally {
+			if (vTransactionStatus != null) { 
+				platformTransactionManager.rollback(vTransactionStatus);
+				throw new VoieException("La voie n'existe pas.");
+			} 			
+	   	}
 	}
 
 	public DAOFactory getDaoFactory() {

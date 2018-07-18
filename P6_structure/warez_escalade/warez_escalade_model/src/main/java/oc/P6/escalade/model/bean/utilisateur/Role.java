@@ -1,7 +1,10 @@
 package oc.P6.escalade.model.bean.utilisateur;
 
+import javax.inject.Named;
+
 import oc.P6.escalade.model.contract.utilisateur.IntRole;
 
+@Named
 public class Role implements IntRole{
 
 

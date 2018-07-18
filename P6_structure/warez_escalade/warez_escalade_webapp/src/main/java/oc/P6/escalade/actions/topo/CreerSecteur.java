@@ -10,6 +10,9 @@ import org.apache.struts2.interceptor.SessionAware;
 import com.opensymphony.xwork2.ActionSupport;
 
 import oc.P6.escalade.business.contract.ManagerFactory;
+import oc.P6.escalade.model.bean.exception.SecteurException;
+import oc.P6.escalade.model.bean.exception.SiteException;
+import oc.P6.escalade.model.bean.exception.TopoException;
 import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
@@ -55,34 +58,60 @@ public class CreerSecteur extends ActionSupport implements SessionAware {
 	}
 	
 	public String execute() {
-		if (((Topo)(session.get("topo"))).getNomTopo().length() > 0) {
-			nomTopo = ((Topo)(session.get("topo"))).getNomTopo();
-			topo = managerFactory.getTopoManager().getTopo(nomTopo);
+		try {
+			if (((Topo)(session.get("topo"))).getNomTopo().length() > 0) {
+				nomTopo = ((Topo)(session.get("topo"))).getNomTopo();
+				topo = managerFactory.getTopoManager().getTopo(nomTopo);
+			}
+			if((Site)session.get("site") != null) {
+				nomSite= ((Site)session.get("site")).getNomSite();
+				site = managerFactory.getSiteManager().getSite(nomSite, topo);
+			}
+			System.out.println(site.getId());
+			secteur.setSite(site);
+			managerFactory.getSecteurManager().creerSecteur(secteur);
+			listSite = managerFactory.getSiteManager().getSite(topo);
+			for(Site s : listSite)
+				setListSecteur(managerFactory.getSecteurManager().getListSecteur(s));
+			//secteur = managerFactory.getSecteurManager().getSecteur(secteur.getNomSecteur(), site);
+			addActionMessage("Le secteur "+secteur.getNomSecteur()+" a bien été crée.");
+			session.put("secteur", secteur);
+			return ActionSupport.SUCCESS;			
+		}catch (TopoException e2) {
+			addActionMessage(e2.getMessage());
+			e2.printStackTrace();
+			return ActionSupport.INPUT;
+		} catch (SiteException e3) {
+			addActionMessage(e3.getMessage());
+			e3.printStackTrace();
+			return ActionSupport.INPUT;
+		} catch (SecteurException e4) {
+			addActionMessage(e4.getMessage());
+			e4.printStackTrace();
+			return ActionSupport.INPUT;
 		}
-		if((Site)session.get("site") != null) {
-			nomSite= ((Site)session.get("site")).getNomSite();
-			site = managerFactory.getSiteManager().getSite(nomSite, topo);
-		}
-		System.out.println(site.getId());
-		secteur.setSite(site);
-		managerFactory.getSecteurManager().creerSecteur(secteur);
-		listSite = managerFactory.getSiteManager().getSite(topo);
-		for(Site s : listSite)
-			setListSecteur(managerFactory.getSecteurManager().getListSecteur(s));
-		//secteur = managerFactory.getSecteurManager().getSecteur(secteur.getNomSecteur(), site);
-		addActionMessage("Le secteur "+secteur.getNomSecteur()+" a bien été crée.");
-		session.put("secteur", secteur);
-		return ActionSupport.SUCCESS;
+
 	}
 	
 	public String input() {
-		System.out.println("selection : "+selectedSite);
-		topo = managerFactory.getTopoManager().getTopo(topo.getNomTopo());
-		this.session.put("topo", topo);
-		site = managerFactory.getSiteManager().getSite(selectedSite);
-		this.session.put("site", site);
-		System.out.println("input "+site.getId());
-		return ActionSupport.SUCCESS;
+		try {
+			System.out.println("selection : "+selectedSite);
+			topo = managerFactory.getTopoManager().getTopo(topo.getNomTopo());
+			this.session.put("topo", topo);
+			site = managerFactory.getSiteManager().getSite(selectedSite);
+			this.session.put("site", site);
+			System.out.println("input "+site.getId());
+			return ActionSupport.SUCCESS;			
+		}catch (TopoException e2) {
+			addActionMessage(e2.getMessage());
+			e2.printStackTrace();
+			return ActionSupport.INPUT;
+		} catch (SiteException e3) {
+			addActionMessage(e3.getMessage());
+			e3.printStackTrace();
+			return ActionSupport.INPUT;
+		} 
+
 	}
 	public ManagerFactory getManagerFactory() {
 		return managerFactory;

@@ -12,6 +12,7 @@ oc\P6\escalade\business\impl\manager\topo\TopoManagerImpl.class
 oc\P6\escalade\business\impl\ManagerFactoryImpl.class
 oc\P6\escalade\business\impl\manager\commentaire\CommentaireVoieImpl.class
 oc\P6\escalade\business\contract\manager\commentaire\CommentaireVoieManager.class
+oc\P6\escalade\business\impl\manager\utilisateur\RoleManagerImpl.class
 oc\P6\escalade\business\contract\manager\topo\VoieManager.class
 oc\P6\escalade\business\impl\manager\commentaire\CommentaireTopoManagerImpl.class
 oc\P6\escalade\business\contract\manager\utilisateur\UtilisateurManager.class
@@ -20,6 +21,7 @@ oc\P6\escalade\business\contract\manager\topo\SiteManager.class
 oc\P6\escalade\business\impl\manager\utilisateur\UtilisateurManagerImpl.class
 oc\P6\escalade\business\contract\manager\topo\TopoManager.class
 oc\P6\escalade\business\contract\ManagerFactory.class
+oc\P6\escalade\business\contract\manager\utilisateur\RoleManager.class
 oc\P6\escalade\business\contract\manager\topo\SecteurManager.class
 oc\P6\escalade\business\impl\manager\commentaire\CommentaireSiteImpl.class
 oc\P6\escalade\business\impl\manager\topo\SiteManagerImpl.class

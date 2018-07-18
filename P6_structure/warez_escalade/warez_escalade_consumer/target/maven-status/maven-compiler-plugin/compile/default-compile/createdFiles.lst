@@ -2,9 +2,11 @@ oc\P6\escalade\consumer\DAO\impl\manager\commentaire\CommentaireSiteDaoImpl.clas
 oc\P6\escalade\consumer\DAO\contract\manager\commentaire\CommentaireTopoDao.class
 oc\P6\escalade\consumer\DAO\DAOFactory.class
 oc\P6\escalade\consumer\DAO\impl\manager\topo\SecteurDaoImpl.class
+oc\P6\escalade\consumer\DAO\impl\manager\utilisateur\RoleDaoImpl$1.class
 oc\P6\escalade\consumer\DAO\contract\manager\topo\SecteurManagerDao.class
 oc\P6\escalade\consumer\DAO\impl\manager\utilisateur\CoordonneeUtilisateurDaoImpl.class
 oc\P6\escalade\consumer\DAO\impl\manager\commentaire\CommentaireVoieDaoImpl.class
+oc\P6\escalade\consumer\DAO\impl\manager\utilisateur\RoleDaoImpl.class
 oc\P6\escalade\consumer\DAO\contract\manager\topo\TopoManagerDao.class
 oc\P6\escalade\consumer\DAO\contract\manager\commentaire\CommentaireSecteurDao.class
 oc\P6\escalade\consumer\DAO\impl\rowmapper\SiteRowMapper.class
@@ -14,6 +16,7 @@ oc\P6\escalade\consumer\DAO\contract\manager\topo\SiteManagerDAO.class
 oc\P6\escalade\consumer\DAO\impl\manager\topo\VoieDaoImpl.class
 oc\P6\escalade\consumer\DAO\impl\manager\utilisateur\UtilisateurDaoImpl.class
 oc\P6\escalade\consumer\DAO\impl\rowmapper\CommentaireTopoRowMapper.class
+oc\P6\escalade\consumer\DAO\contract\manager\utilisateur\RoleDao.class
 oc\P6\escalade\consumer\DAO\impl\manager\TopoEmpruntDaoImpl.class
 oc\P6\escalade\consumer\DAO\impl\rowmapper\SecteurRowMapper.class
 oc\P6\escalade\consumer\DAO\contract\manager\utilisateur\CoordonneeUtilisateurDao.class

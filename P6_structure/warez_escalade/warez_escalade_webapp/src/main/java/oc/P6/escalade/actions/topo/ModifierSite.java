@@ -9,6 +9,8 @@ import org.apache.struts2.interceptor.SessionAware;
 import com.opensymphony.xwork2.ActionSupport;
 
 import oc.P6.escalade.business.contract.ManagerFactory;
+import oc.P6.escalade.model.bean.exception.SiteException;
+import oc.P6.escalade.model.bean.exception.TopoException;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
 
@@ -34,19 +36,37 @@ public class ModifierSite extends ActionSupport implements SessionAware{
 			return ActionSupport.INPUT;
 		}
 		else {
-			managerFactory.getSiteManager().modifierSite(site);
-			this.session.remove("siteModif");
-			addActionMessage("Le site "+site.getNomSite()+"a bien été modifié.");
-			return ActionSupport.SUCCESS;			
+			try {
+				managerFactory.getSiteManager().modifierSite(site);
+				this.session.remove("siteModif");
+				addActionMessage("Le site "+site.getNomSite()+"a bien été modifié.");
+				return ActionSupport.SUCCESS;
+			} catch (SiteException e) {
+				addActionMessage(e.getMessage());
+				e.printStackTrace();
+				return ActionSupport.INPUT;
+			}
+			
 		}
 	
 	}
 	
 	public String input() {
-		topo = managerFactory.getTopoManager().getTopo(nomTopo);
-		site = managerFactory.getSiteManager().getSite(nomSite, topo);
-		this.session.put("siteModif", site);
-		return ActionSupport.SUCCESS;
+		try {
+			topo = managerFactory.getTopoManager().getTopo(nomTopo);
+			site = managerFactory.getSiteManager().getSite(nomSite, topo);
+			this.session.put("siteModif", site);
+			return ActionSupport.SUCCESS;
+		} catch (TopoException e1) {
+			addActionMessage(e1.getMessage());
+			e1.printStackTrace();
+			return ActionSupport.INPUT;
+		} catch (SiteException e2) {
+			addActionMessage(e2.getMessage());
+			e2.printStackTrace();
+			return ActionSupport.INPUT;
+		}
+
 	}
 	
 	public ManagerFactory getManagerFactory() {

@@ -25,7 +25,9 @@ D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_esca
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_consumer\src\main\java\oc\P6\escalade\consumer\DAO\impl\manager\topo\SiteDaoImpl.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_consumer\src\main\java\oc\P6\escalade\consumer\DAO\impl\manager\topo\VoieDaoImpl.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_consumer\src\main\java\oc\P6\escalade\consumer\DAO\contract\manager\topo\TopoManagerDao.java
+D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_consumer\src\main\java\oc\P6\escalade\consumer\DAO\impl\manager\utilisateur\RoleDaoImpl.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_consumer\src\main\java\oc\P6\escalade\consumer\DAO\contract\manager\commentaire\CommentaireTopoDao.java
+D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_consumer\src\main\java\oc\P6\escalade\consumer\DAO\contract\manager\utilisateur\RoleDao.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_consumer\src\main\java\oc\P6\escalade\consumer\DAO\impl\manager\commentaire\CommentaireSiteDaoImpl.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_consumer\src\main\java\oc\P6\escalade\consumer\DAO\contract\manager\topo\SecteurManagerDao.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_consumer\src\main\java\oc\P6\escalade\consumer\DAO\impl\rowmapper\TopoEmpruntRowMapper.java

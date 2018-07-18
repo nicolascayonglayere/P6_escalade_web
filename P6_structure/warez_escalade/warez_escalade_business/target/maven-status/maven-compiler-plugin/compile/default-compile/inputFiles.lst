@@ -1,6 +1,7 @@
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_business\src\main\java\oc\P6\escalade\business\impl\manager\commentaire\CommentaireTopoManagerImpl.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_business\src\main\java\oc\P6\escalade\business\impl\ManagerFactoryImpl.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_business\src\main\java\oc\P6\escalade\business\contract\manager\TopoEmpruntManager.java
+D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_business\src\main\java\oc\P6\escalade\business\impl\manager\utilisateur\RoleManagerImpl.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_business\src\main\java\oc\P6\escalade\business\impl\manager\TopoEmpruntManagerImpl.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_business\src\main\java\oc\P6\escalade\business\contract\manager\commentaire\CommentaireTopoManager.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_business\src\main\java\oc\P6\escalade\business\contract\ManagerFactory.java
@@ -15,6 +16,7 @@ D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_esca
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_business\src\main\java\oc\P6\escalade\business\contract\manager\utilisateur\CoordonneeUtilisateurManager.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_business\src\main\java\oc\P6\escalade\business\impl\manager\topo\VoieManagerImpl.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_business\src\main\java\oc\P6\escalade\business\impl\manager\commentaire\CommentaireSiteImpl.java
+D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_business\src\main\java\oc\P6\escalade\business\contract\manager\utilisateur\RoleManager.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_business\src\main\java\oc\P6\escalade\business\impl\manager\utilisateur\UtilisateurManagerImpl.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_business\src\main\java\oc\P6\escalade\business\contract\manager\commentaire\CommentaireVoieManager.java
 D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_business\src\main\java\oc\P6\escalade\business\contract\manager\utilisateur\UtilisateurManager.java

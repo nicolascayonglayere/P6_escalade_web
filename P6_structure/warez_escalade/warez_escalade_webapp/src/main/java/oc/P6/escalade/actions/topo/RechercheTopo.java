@@ -10,6 +10,9 @@ import org.apache.struts2.interceptor.ServletRequestAware;
 import com.opensymphony.xwork2.ActionSupport;
 
 import oc.P6.escalade.business.contract.ManagerFactory;
+import oc.P6.escalade.model.bean.exception.SecteurException;
+import oc.P6.escalade.model.bean.exception.SiteException;
+import oc.P6.escalade.model.bean.exception.TopoException;
 import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
@@ -33,22 +36,45 @@ public class RechercheTopo extends ActionSupport implements ServletRequestAware{
 	
 	
 	public String execute() {
-		System.out.println("recherche "+topo.getNomTopo());
-		listTopo = managerFactory.getTopoManager().rechercheTopo(topo.getNomTopo());
-		for (Topo t : listTopo)
-			listSite.addAll(managerFactory.getSiteManager().getSite(t));
-		for(Site si : listSite)
-			listSecteur.addAll(managerFactory.getSecteurManager().getListSecteur(si));
-		for(Secteur se : listSecteur)
-			listVoie.addAll(managerFactory.getVoieManager().getListVoie(se));
-		System.out.println(listTopo.size());
-		return ActionSupport.SUCCESS;
+
+			try {
+				System.out.println("recherche "+topo.getNomTopo());
+				listTopo = managerFactory.getTopoManager().rechercheTopo(topo.getNomTopo());
+				for (Topo t : listTopo)
+				listSite.addAll(managerFactory.getSiteManager().getSite(t));
+				for(Site si : listSite)
+					listSecteur.addAll(managerFactory.getSecteurManager().getListSecteur(si));
+				for(Secteur se : listSecteur)
+					listVoie.addAll(managerFactory.getVoieManager().getListVoie(se));
+				System.out.println(listTopo.size());
+				return ActionSupport.SUCCESS;
+			} catch (TopoException e2) {
+				addActionMessage(e2.getMessage());
+				e2.printStackTrace();
+				return ActionSupport.INPUT;
+			} catch (SiteException e3) {
+				addActionMessage(e3.getMessage());
+				e3.printStackTrace();
+				return ActionSupport.INPUT;
+			} catch (SecteurException e4) {
+				addActionMessage(e4.getMessage());
+				e4.printStackTrace();
+				return ActionSupport.INPUT;
+			}
+
 	}
 	
 	public String input() {
 		System.out.println(nomTopo);
-		topo = managerFactory.getTopoManager().getTopo(nomTopo);
-		return ActionSupport.SUCCESS;
+		try {
+			topo = managerFactory.getTopoManager().getTopo(nomTopo);
+			return ActionSupport.SUCCESS;
+		} catch (TopoException e) {
+			addActionMessage(e.getMessage());
+			e.printStackTrace();
+			return ActionSupport.INPUT;
+		}
+
 	}
 	
 	public ManagerFactory getManagerFactory() {

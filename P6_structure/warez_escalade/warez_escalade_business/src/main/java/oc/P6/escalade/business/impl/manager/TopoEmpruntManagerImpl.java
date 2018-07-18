@@ -21,9 +21,9 @@ import oc.P6.escalade.consumer.DAO.contract.manager.TopoEmpruntDao;
 import oc.P6.escalade.consumer.DAO.contract.manager.topo.TopoManagerDao;
 import oc.P6.escalade.consumer.DAO.contract.manager.utilisateur.UtilisateurManagerDAO;
 import oc.P6.escalade.model.bean.emprunt.TopoEmprunt;
+import oc.P6.escalade.model.bean.exception.UtilisateurException;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
-import oc.P6.escalade.model.bean.utilisateur.UtilisateurException;
 import oc.P6.escalade.model.contract.emprunt.IntTopoEmprunt;
 
 /**

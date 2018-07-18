@@ -1,7 +1,10 @@
-package oc.P6.escalade.model.bean.utilisateur;
+package oc.P6.escalade.model.bean.exception;
 
-import oc.P6.escalade.model.contract.utilisateur.IntCoordonneeUtilisateurException;
+import javax.inject.Named;
 
+import oc.P6.escalade.model.contract.exception.IntCoordonneeUtilisateurException;
+
+//@Named
 public class CoordonneeUtilisateurException extends Exception implements IntCoordonneeUtilisateurException {
 
 	/**

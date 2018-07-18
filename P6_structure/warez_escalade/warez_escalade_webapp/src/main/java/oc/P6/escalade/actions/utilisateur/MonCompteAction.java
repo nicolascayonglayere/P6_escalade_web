@@ -12,11 +12,11 @@ import com.opensymphony.xwork2.ActionSupport;
 import oc.P6.escalade.business.contract.ManagerFactory;
 import oc.P6.escalade.model.bean.commentaire.CommentaireTopo;
 import oc.P6.escalade.model.bean.emprunt.TopoEmprunt;
+import oc.P6.escalade.model.bean.exception.CoordonneeUtilisateurException;
+import oc.P6.escalade.model.bean.exception.UtilisateurException;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateur;
-import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateurException;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
-import oc.P6.escalade.model.bean.utilisateur.UtilisateurException;
 
 public class MonCompteAction extends ActionSupport implements SessionAware{
 
@@ -96,7 +96,13 @@ public class MonCompteAction extends ActionSupport implements SessionAware{
 		}
 		role = utilisateur.getRole();
 		if(role.equals("administrateur"))
-			listTopoConstr = managerFactory.getTopoManager().getListTopoConstr(utilisateur.getPseudo());
+			try {
+				listTopoConstr = managerFactory.getTopoManager().getListTopoConstr(utilisateur.getPseudo());
+			} catch (UtilisateurException e) {
+				addActionMessage(e.getMessage());
+				e.printStackTrace();
+				return ActionSupport.INPUT;
+			}
 		if(role.equals("moderateur"))
 			listCommentaire = managerFactory.getCommentaireTopoManager().getListCommentaireTopo();
 		System.out.println("Compte : "+username1+" - "+utilisateur.getRole()+" - "+utilisateur.getNom()+" - "+listTopoEmprunt.size()+" - "+coordonneeUtilisateur.getEmail());

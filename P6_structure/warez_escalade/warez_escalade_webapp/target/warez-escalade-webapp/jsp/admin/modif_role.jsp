@@ -6,53 +6,53 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">		
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<link rel="stylesheet" type="text/css" href="../style.css" />
 		<title>Modifier le role</title>
-		<sb:head/>
-		<style type="text/css">
-	        body {
-	            padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-	        }
-    	</style>
+		<!--<sb:head includeScripts="false" includeStyles="true"/>-->
 	</head>
 
 	<body>
 		<%@include file="../_include/entete.jsp" %>
-		<div class="container">
-			<s:form id="rechercheUtilisateur" action="recherche_utilisateurModif" cssClass="form-horizontal" namespace="/jsp/utilisateur">
-				<s:textfield name="utilisateur.pseudo" placeholder="pseudo" label="%{getText('form.pseudo')}" requiredLabel="true"/>
-				<s:submit class="btn btn-default" value="%{getText('bouton.rechercher')}">
-			  		<s:param name="pseudo">${utilisateur.pseudo}</s:param>
-			 	 </s:submit>
-			</s:form>		
-			
-			<s:if test="%{listUtilisateur}">
-			<s:form action="modif_role" cssClass="form-vertical" namespace="/jsp/utilisateur">
-				<ul>
-					<s:iterator value="listUtilisateur" var="utilisateur">
-						<li>
-							<s:checkbox name="checkMe" fieldValue="%{#utilisateur.pseudo}" label="%{#utilisateur.pseudo+' '+#utilisateur.nom+' '+#utilisateur.prenom}"/>
-						</li>
-						<ul>
-						<s:iterator value="%{#utilisateur.getlistTopoEmprunt}" var="topoEmprunt">
-							<li>
-								<s:property value="#topoEmprunt.nom"/> <s:property value="#topoEmprunt.dateRetour"/>
-							</li>
-						</s:iterator>
-						</ul>
-					</s:iterator>
-				</ul>
-				<!-- une selectBox pour definir le nouveau role -->
-				<s:select name="selectedRole" label="%{getText('modifRole.selectRole')}" list="listRole" size="1" listKey="id" listvalue="role"/>
+		<div id="blocPge">
+			<div class="container">
+				<h1 id="titre"><s:text name="modifRole.titre"/></h1>
+				<s:form id="rechercheUtilisateur" action="recherche_utilisateurModif" cssClass="form-vertical" namespace="/jsp/utilisateur">
+					<s:textfield name="utilisateur.pseudo" placeholder="pseudo" label="%{getText('form.pseudo')}" requiredLabel="true"/>
+					<s:submit class="btn btn-default" value="%{getText('bouton.rechercher')}">
+				  		<s:param name="pseudo">${utilisateur.pseudo}</s:param>
+				 	 </s:submit>
+				</s:form>		
 				
-				<s:submit class="btn btn-default" value="%{getText('bouton.modifier')}">
-					<s:param name="id" value="%{#selectedRole}"/>				
-				</s:submit>	
-				<s:token/>			
-			</s:form>
-			</s:if>		
-		</div>	
-	
+				<s:if test="%{listUtilisateur}">
+				<s:form action="modif_role" cssClass="form-vertical" namespace="/jsp/utilisateur">
+					<ul>
+						<s:iterator value="listUtilisateur" var="utilisateur">
+							<li>
+								<s:checkbox name="checkMe" fieldValue="%{#utilisateur.pseudo}" label="%{#utilisateur.pseudo+' '+#utilisateur.nom+' '+#utilisateur.prenom}"/>
+							</li>
+							<ul>
+							<s:iterator value="%{#utilisateur.getlistTopoEmprunt}" var="topoEmprunt">
+								<li>
+									<s:property value="#topoEmprunt.nom"/> <s:property value="#topoEmprunt.dateRetour"/>
+								</li>
+							</s:iterator>
+							</ul>
+						</s:iterator>
+					</ul>
+					<!-- une selectBox pour definir le nouveau role -->
+					<s:select name="selectedRole" label="%{getText('modifRole.selectRole')}" list="listRole" size="1" listKey="id_role" listvalue="role"/>
+					
+					<s:submit class="btn btn-default" value="%{getText('bouton.modifier')}">
+						<s:param name="id_role" value="%{#selectedRole}"/>				
+					</s:submit>	
+					<s:token/>			
+				</s:form>
+				</s:if>		
+			</div>	
+		</div>
 
 		
 				

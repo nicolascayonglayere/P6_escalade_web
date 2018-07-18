@@ -4,14 +4,13 @@ package oc.P6.escalade.actions.topo;
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 
-import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.ActionSupport;
 
 import oc.P6.escalade.business.contract.ManagerFactory;
+import oc.P6.escalade.model.bean.exception.TopoException;
 import oc.P6.escalade.model.bean.topo.Topo;
 
 public class ModifierTopo extends ActionSupport implements SessionAware {
@@ -35,19 +34,33 @@ public class ModifierTopo extends ActionSupport implements SessionAware {
 			return ActionSupport.INPUT;			
 		}
 		else {
-			managerFactory.getTopoManager().modifTopo(topo);
-			this.session.remove("topoModif");
-			addActionMessage("le topo "+topo.getNomTopo()+" a bien été modifié.");
-			return ActionSupport.SUCCESS;			
+			try {
+				managerFactory.getTopoManager().modifTopo(topo);
+				this.session.remove("topoModif");
+				addActionMessage("le topo "+topo.getNomTopo()+" a bien été modifié.");
+				return ActionSupport.SUCCESS;
+			} catch (TopoException e) {
+				addActionMessage(e.getMessage());
+				e.printStackTrace();
+				return ActionSupport.INPUT;
+			}
+			
 		}
 
 
 	}
 	
 	public String input() {
-		topo = managerFactory.getTopoManager().getTopo(nomTopo);
-		this.session.put("topoModif", topo);
-		return ActionSupport.SUCCESS;
+		try {
+			topo = managerFactory.getTopoManager().getTopo(nomTopo);
+			this.session.put("topoModif", topo);
+			return ActionSupport.SUCCESS;
+		} catch (TopoException e) {
+			addActionMessage(e.getMessage());
+			e.printStackTrace();
+			return ActionSupport.INPUT;
+		}
+
 	}
 
 	public ManagerFactory getManagerFactory() {

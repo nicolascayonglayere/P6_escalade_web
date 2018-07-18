@@ -18,6 +18,8 @@ import oc.P6.escalade.business.contract.manager.AbstractDAOManager;
 import oc.P6.escalade.business.contract.manager.topo.TopoManager;
 import oc.P6.escalade.consumer.DAO.DAOFactory;
 import oc.P6.escalade.consumer.DAO.contract.manager.topo.TopoManagerDao;
+import oc.P6.escalade.model.bean.exception.TopoException;
+import oc.P6.escalade.model.bean.exception.UtilisateurException;
 import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
@@ -71,7 +73,7 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 	 * Méthode pour obtenir la liste des {@link Topo} en construction dont l'auteur est donné en paramètre 
 	 */
 	@Override
-	public ArrayList<Topo> getListTopoConstr(String pNom) {
+	public ArrayList<Topo> getListTopoConstr(String pNom) throws UtilisateurException {
 		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
 		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		vDefinition.setTimeout(30); // 30 secondes
@@ -84,120 +86,104 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 		    vTransactionStatus = null;
 		    platformTransactionManager.commit(vTScommit);
 		}finally {
-			if (vTransactionStatus != null) 
-				platformTransactionManager.rollback(vTransactionStatus); 			
+			if (vTransactionStatus != null) { 
+				platformTransactionManager.rollback(vTransactionStatus);
+				throw new UtilisateurException("L'utilisateur n'existe pas. "+pNom);
+			} 			
 		}
 		return listTopoConstr;
 	}
 	
 	/**
 	 * Méthode pour obtenir le {@link Topo} dont le nom est donné en paramètre
+	 * @throws TopoException 
 	 */
 	@Override
-	public Topo getTopo(String pNom) {
+	public Topo getTopo(String pNom) throws TopoException {
 		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
 		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		vDefinition.setTimeout(30); // 30 secondes
         TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
         topoDAO = daoFactory.getTopoManagerDao();
         System.out.println(pNom);
-		if (topoDAO.find(pNom) != null) {
-			try {
+		try {
 			topo = topoDAO.find(pNom);
 		    TransactionStatus vTScommit = vTransactionStatus;
 		    vTransactionStatus = null;
 		    platformTransactionManager.commit(vTScommit);
 		}finally {
-			if (vTransactionStatus != null) 
-				platformTransactionManager.rollback(vTransactionStatus); 			
-			}			
-		}	
-		else
-			try {
+			if (vTransactionStatus != null) { 
+				platformTransactionManager.rollback(vTransactionStatus);
 				topo = null;
-				throw new Exception ("Le topo n'existe pas.");
-			}catch (Exception e) {
-				e.printStackTrace();
-			}
+				throw new TopoException ("Le topo n'existe pas.");
+			} 			
+		}			
+
 		return (Topo) topo;
 	}
 
 	/**
 	 * Méthode pour créer le {@link Topo} donné en paramètre
+	 * @throws TopoException 
 	 */
 	@Override
-	public void creerTopo(Topo pTopo) {
+	public void creerTopo(Topo pTopo) throws TopoException {
 		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
 		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		vDefinition.setTimeout(30); // 30 secondes
         TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
         topoDAO = daoFactory.getTopoManagerDao();
 		System.out.println("CTRL "+pTopo.getNomTopo());
-		if (topoDAO.find(pTopo.getNomTopo()) != null) {
+
+		try {
+			pTopo.setImage(pTopo.getNomTopo().replaceAll("\\p{Space}", ""));
+			Path chemin = Paths.get("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\"+pTopo.getImage());
 			try {
-				throw new Exception("Le topo existe deja.");
-			} catch (Exception e) {
+				Files.createDirectories(chemin);
+			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
-		else {
-			try {
-				pTopo.setImage(pTopo.getNomTopo().replaceAll("\\p{Space}", ""));
-				Path chemin = Paths.get("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\"+pTopo.getImage());
-				try {
-					Files.createDirectories(chemin);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				pTopo.setConstruction(true);
-				topoDAO.create(pTopo);
-				
-			    TransactionStatus vTScommit = vTransactionStatus;
-			    vTransactionStatus = null;
-			    platformTransactionManager.commit(vTScommit);
-			}finally {
-				if (vTransactionStatus != null) 
-					platformTransactionManager.rollback(vTransactionStatus); 			
-				}
-			}
-		
+			pTopo.setConstruction(true);
+			topoDAO.create(pTopo);
+			
+		    TransactionStatus vTScommit = vTransactionStatus;
+		    vTransactionStatus = null;
+		    platformTransactionManager.commit(vTScommit);
+		}finally {
+			if (vTransactionStatus != null) { 
+				platformTransactionManager.rollback(vTransactionStatus);
+				throw new TopoException("Le topo existe deja.");
+			} 			
+		}		
 	}
 
 	/**
 	 * Méthode pour modifier le {@link Topo} donné en paramètre
+	 * @throws TopoException 
 	 */
 	@Override
-	public void modifTopo(Topo pTopo) {
+	public void modifTopo(Topo pTopo) throws TopoException {
 		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
 		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		vDefinition.setTimeout(30); // 30 secondes
         TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
         topoDAO = daoFactory.getTopoManagerDao();
 		System.out.println("CTRL "+pTopo.getNomTopo());
-		if (topoDAO.find(pTopo.getId()) == null) {
-			try {
-				throw new Exception("Le topo n'existe pas.");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		else {
-			try {
-				pTopo.setConstruction(false);
-				topoDAO.update(pTopo);
-				
-			    TransactionStatus vTScommit = vTransactionStatus;
-			    vTransactionStatus = null;
-			    platformTransactionManager.commit(vTScommit);
-			}finally {
-				if (vTransactionStatus != null) 
-					platformTransactionManager.rollback(vTransactionStatus); 			
-				}
-			}
-		
+
+		try {
+			pTopo.setConstruction(false);
+			topoDAO.update(pTopo);
+			
+		    TransactionStatus vTScommit = vTransactionStatus;
+		    vTransactionStatus = null;
+		    platformTransactionManager.commit(vTScommit);
+		}finally {
+			if (vTransactionStatus != null) {
+				platformTransactionManager.rollback(vTransactionStatus);
+				throw new TopoException("Le topo n'existe pas.");
+			} 			
+		}		
 	}
 
 	/**
@@ -220,58 +206,51 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 		}finally {
 			if (vTransactionStatus != null) 
 				platformTransactionManager.rollback(vTransactionStatus); 			
-			}
+		}
 		return listTopo;
 	}
 
 
 	@Override
-	public void supprimerTopo(Topo pTopo) {
+	public void supprimerTopo(Topo pTopo) throws TopoException {
 		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
 		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		vDefinition.setTimeout(30); // 30 secondes
         TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
         topoDAO = daoFactory.getTopoManagerDao();
 		System.out.println("CTRL business "+pTopo.getNomTopo());
-		if (topoDAO.find(pTopo.getNomTopo()) == null) {
+
+		try {
+			pTopo.setId(topoDAO.find(pTopo.getNomTopo()).getId());
+			for(Site si : daoFactory.getSiteManagerDao().find(pTopo.getId())) {
+				for (Secteur se : daoFactory.getSecteurManagerDao().getListeSecteur(si)) {
+					for (Voie v : daoFactory.getVoieManagerDao().getlistVoie(se)) {
+						daoFactory.getVoieManagerDao().delete(v);
+					}
+					daoFactory.getSecteurManagerDao().delete(se);
+				}
+				daoFactory.getSiteManagerDao().delete(si);
+			}			
+	
+			topoDAO.delete(pTopo);
+			
+			Path chemin = Paths.get("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\"+pTopo.getImage());
 			try {
-				throw new Exception("Le topo n'existe pas.");
-			} catch (Exception e) {
+				Files.delete(chemin);
+			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+		    TransactionStatus vTScommit = vTransactionStatus;
+		    vTransactionStatus = null;
+		    platformTransactionManager.commit(vTScommit);
+		}finally {
+			if (vTransactionStatus != null) {
+				platformTransactionManager.rollback(vTransactionStatus);
+				throw new TopoException("Le topo n'existe pas.");
+			} 			
 		}
-		else {
-			try {
-				pTopo.setId(topoDAO.find(pTopo.getNomTopo()).getId());
-				for(Site si : daoFactory.getSiteManagerDao().find(pTopo.getId())) {
-					for (Secteur se : daoFactory.getSecteurManagerDao().getListeSecteur(si)) {
-						for (Voie v : daoFactory.getVoieManagerDao().getlistVoie(se)) {
-							daoFactory.getVoieManagerDao().delete(v);
-						}
-						daoFactory.getSecteurManagerDao().delete(se);
-					}
-					daoFactory.getSiteManagerDao().delete(si);
-				}			
-
-				topoDAO.delete(pTopo);
-				
-				Path chemin = Paths.get("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\"+pTopo.getImage());
-				try {
-					Files.delete(chemin);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-			    TransactionStatus vTScommit = vTransactionStatus;
-			    vTransactionStatus = null;
-			    platformTransactionManager.commit(vTScommit);
-			}finally {
-				if (vTransactionStatus != null) 
-					platformTransactionManager.rollback(vTransactionStatus); 			
-				}
-			}
 		
 	}
 

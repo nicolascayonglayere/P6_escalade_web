@@ -2,11 +2,11 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
 
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+	<div class="modal" id="myModal" tabindex="-1" role="dialog">
 	  <div class="modal-dialog modal-dialog-centered" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h5 class="modal-title"><s:text name="login.titre"/></h5>
+	        <h1 class="modal-title"><s:text name="login.titre"/></h1>
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	          <span aria-hidden="true">&times;</span>
 	        </button>

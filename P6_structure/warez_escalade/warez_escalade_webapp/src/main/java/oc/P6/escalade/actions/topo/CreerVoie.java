@@ -4,20 +4,22 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 
-import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.ActionSupport;
 
 import oc.P6.escalade.business.contract.ManagerFactory;
+import oc.P6.escalade.model.bean.exception.SecteurException;
+import oc.P6.escalade.model.bean.exception.SiteException;
+import oc.P6.escalade.model.bean.exception.TopoException;
+import oc.P6.escalade.model.bean.exception.VoieException;
 import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.topo.Voie;
 
-public class CreerVoie extends ActionSupport implements SessionAware, ServletRequestAware {
+public class CreerVoie extends ActionSupport implements SessionAware {
 
 	/**
 	 * 
@@ -34,7 +36,6 @@ public class CreerVoie extends ActionSupport implements SessionAware, ServletReq
 	private int selectedSecteur;
 	private ArrayList<Secteur> listSecteur;
 	private Map<String, Object> session;
-	private HttpServletRequest request;
 	private ArrayList<Site> listSite;
 	
 	public Voie getVoie() {
@@ -64,50 +65,85 @@ public class CreerVoie extends ActionSupport implements SessionAware, ServletReq
 	}
 		
 	public String execute() {
-		System.out.println("trace creation voie");
-		if ((Topo)session.get("topo") != null) {
-			nomTopo = ((Topo)session.get("topo")).getNomTopo();
-			topo = managerFactory.getTopoManager().getTopo(nomTopo);
-		}
+		try {
+			System.out.println("trace creation voie");
+			if ((Topo)session.get("topo") != null) {
+				nomTopo = ((Topo)session.get("topo")).getNomTopo();
+				topo = managerFactory.getTopoManager().getTopo(nomTopo);
+			}
+			if((Secteur)session.get("secteur") != null) {
+				nomSecteur = ((Secteur)session.get("secteur")).getNomSecteur();
+				Site vSite = ((Secteur)session.get("secteur")).getSite();
+				secteur = managerFactory.getSecteurManager().getSecteur(nomSecteur, vSite);
+			}
+			System.out.println(secteur.getNomSecteur()+" - "+topo.getNomTopo());
+			voie.setSecteur(secteur);
+			System.out.println(voie.getNomVoie()+" - "+voie.getCotation());
+			managerFactory.getVoieManager().creerVoie(voie);
+			listSite = managerFactory.getSiteManager().getSite(topo);
+			for(Site s : listSite)
+				listSecteur = managerFactory.getSecteurManager().getListSecteur(s);
+			addActionMessage("La voie "+voie.getNomVoie()+" a bien été créee.");
+			return ActionSupport.SUCCESS;			
+		}catch (TopoException e2) {
+			addActionMessage(e2.getMessage());
+			e2.printStackTrace();
+			return ActionSupport.INPUT;
+		} catch (SiteException e3) {
+			addActionMessage(e3.getMessage());
+			e3.printStackTrace();
+			return ActionSupport.INPUT;
+		} catch (SecteurException e4) {
+			addActionMessage(e4.getMessage());
+			e4.printStackTrace();
+			return ActionSupport.INPUT;
+		} catch (VoieException e5) {
+			addActionMessage (e5.getMessage());
+			e5.printStackTrace();
+			return ActionSupport.INPUT;
+		} 
 
-	//if ((Site)session.get("site") != null) {
-	//	nomSite=((Site)session.get("site")).getNomSite();
-	//	site = managerFactory.getSiteManager().getSite(nomSite, topo);
-	//}
-		if((Secteur)session.get("secteur") != null) {
-			nomSecteur = ((Secteur)session.get("secteur")).getNomSecteur();
-			Site vSite = ((Secteur)session.get("secteur")).getSite();
-			secteur = managerFactory.getSecteurManager().getSecteur(nomSecteur, vSite);
-		}
-		System.out.println(secteur.getNomSecteur()+" - "+topo.getNomTopo());
-		voie.setSecteur(secteur);
-		System.out.println(voie.getNomVoie()+" - "+voie.getCotation());
-		managerFactory.getVoieManager().creerVoie(voie);
-		listSite = managerFactory.getSiteManager().getSite(topo);
-		for(Site s : listSite)
-			listSecteur = managerFactory.getSecteurManager().getListSecteur(s);
-		addActionMessage("La voie "+voie.getNomVoie()+" a bien été créee.");
-		return ActionSupport.SUCCESS;
 	}
 	
 	public String input() {
-		System.out.println("selection : "+selectedSecteur);
-		if (nomTopo != null)
-			topo = managerFactory.getTopoManager().getTopo(nomTopo);
-		else
-			topo = managerFactory.getTopoManager().getTopo(topo.getNomTopo());
-		this.session.put("topo", topo);
-		secteur = managerFactory.getSecteurManager().getSecteur(selectedSecteur);
-		this.session.put("secteur", secteur);
-		listSite = managerFactory.getSiteManager().getSite(topo);
-		for(Site s : listSite)
-			listSecteur = managerFactory.getSecteurManager().getListSecteur(s);
-		return ActionSupport.SUCCESS;
+		try {
+			System.out.println("selection : "+selectedSecteur);
+			if (nomTopo != null)
+				topo = managerFactory.getTopoManager().getTopo(nomTopo);
+			else
+				topo = managerFactory.getTopoManager().getTopo(topo.getNomTopo());
+			this.session.put("topo", topo);
+			secteur = managerFactory.getSecteurManager().getSecteur(selectedSecteur);
+			this.session.put("secteur", secteur);
+			listSite = managerFactory.getSiteManager().getSite(topo);
+			for(Site s : listSite)
+				listSecteur = managerFactory.getSecteurManager().getListSecteur(s);
+			return ActionSupport.SUCCESS;			
+		}catch (TopoException e2) {
+			addActionMessage(e2.getMessage());
+			e2.printStackTrace();
+			return ActionSupport.INPUT;
+		} catch (SiteException e3) {
+			addActionMessage(e3.getMessage());
+			e3.printStackTrace();
+			return ActionSupport.INPUT;
+		} catch (SecteurException e4) {
+			addActionMessage(e4.getMessage());
+			e4.printStackTrace();
+			return ActionSupport.INPUT;
+		}
 	}
 	
 	public String select() {
-		secteur = managerFactory.getSecteurManager().getSecteur(id);
-		return ActionSupport.SUCCESS;
+		try {
+			secteur = managerFactory.getSecteurManager().getSecteur(id);
+			return ActionSupport.SUCCESS;
+		} catch (SecteurException e) {
+			addActionMessage(e.getMessage());
+			e.printStackTrace();
+			return ActionSupport.INPUT;
+		}
+		
 	}
 	
 	public ManagerFactory getManagerFactory() {
@@ -139,11 +175,7 @@ public class CreerVoie extends ActionSupport implements SessionAware, ServletReq
 		this.session = session;
 		
 	}
-	@Override
-	public void setServletRequest(HttpServletRequest request) {
-		this.request = request;
-		
-	}
+
 	public int getId() {
 		return id;
 	}

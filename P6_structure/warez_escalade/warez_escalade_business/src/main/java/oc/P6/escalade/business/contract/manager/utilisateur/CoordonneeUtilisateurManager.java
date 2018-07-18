@@ -1,8 +1,8 @@
 package oc.P6.escalade.business.contract.manager.utilisateur;
 
+import oc.P6.escalade.model.bean.exception.CoordonneeUtilisateurException;
+import oc.P6.escalade.model.bean.exception.UtilisateurException;
 import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateur;
-import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateurException;
-import oc.P6.escalade.model.bean.utilisateur.UtilisateurException;
 
 /**
  * Interface CoordonneeUtilisateurManager et ses méthodes

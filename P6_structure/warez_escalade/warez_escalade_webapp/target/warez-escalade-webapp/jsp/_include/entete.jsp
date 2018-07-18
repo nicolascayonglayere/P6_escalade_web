@@ -8,8 +8,9 @@
 
 
      		 <div class="navbar navbar-expand-md navbar-light navbar-fixed-top" id="menuTop">
-      			<div class="container-fluid">
-      				<div class="row">
+      			<div class="container align-items-center">
+      				<!--  <div class="row align-items-center">-->
+      					
 						<!-- <div class="navbar-header">-->
 	      					<s:a class="navbar-brand" action="homeAction" namespace="/"><s:text name="entete.titre"/></s:a>	
 	      				<!--  </div>-->
@@ -36,6 +37,6 @@
       			
       				
       				</div>
-		      	</div>
+		      	<!--  </div>-->
     		 </div>		
 		</header>

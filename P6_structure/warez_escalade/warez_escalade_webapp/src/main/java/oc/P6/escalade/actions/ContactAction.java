@@ -15,9 +15,9 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import oc.P6.escalade.WebappHelper.GestionFichierProperties;
 import oc.P6.escalade.business.contract.ManagerFactory;
+import oc.P6.escalade.model.bean.exception.CoordonneeUtilisateurException;
+import oc.P6.escalade.model.bean.exception.UtilisateurException;
 import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateur;
-import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateurException;
-import oc.P6.escalade.model.bean.utilisateur.UtilisateurException;
 
 public class ContactAction extends ActionSupport {
 

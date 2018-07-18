@@ -6,30 +6,28 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<link rel="stylesheet" href="jsp/style.css" />		
+		
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">		
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<link rel="stylesheet" type="text/css" href="jsp/style.css" />
 		<title>CONTACT</title>
-		<sb:head includeScripts="true"/>
-		<style type="text/css">
-	        body {
-	            padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-	        }
-    	</style>
+		<!--<sb:head includeScripts="false" includeStyles="true"/>-->
 	</head>
 
 	<body>
 		<%@include file="_include/entete.jsp" %>
-		<div class="container text-center">
-			<h3><s:text name="%{getText('contact.titre')}"/></h3>
-			</br>
-			<s:form id="contactForm" action="envoi_message" cssClass="form-vertical" namespace="/">
-				<s:textfield name="coordonneeUtilisateur.email" placeholder="email" label="%{getText('form.email')}" requiredLabel="true"/>
-				<s:textfield name="utilisateur.pseudo" placeholder="pseudo" label="%{getText('form.pseudo')}" requiredLabel="true"/>
-				<s:textarea name="message" placeholder="message" label="%{getText('form.message')}" requiredLabel="true"  cols="50" rows="10"/>
-				<s:submit class="btn btn-default" value="%{getText('bouton.envoi')}"/>		
-			<s:token/>
-			</s:form>	
-	
+		<div id="blocPge">
+			<div class="container text-center">
+				<h1 id="titre"><s:text name="%{getText('contact.titre')}"/></h1>
+				</br>
+				<s:form id="contactForm" action="envoi_message" cssClass="form-vertical" namespace="/">
+					<s:textfield name="coordonneeUtilisateur.email" placeholder="email" label="%{getText('form.email')}" requiredLabel="true"/>
+					<s:textfield name="utilisateur.pseudo" placeholder="pseudo" label="%{getText('form.pseudo')}" requiredLabel="true"/>
+					<s:textarea name="message" placeholder="message" label="%{getText('form.message')}" requiredLabel="true"  cols="50" rows="10"/>
+					<s:submit class="btn btn-default" value="%{getText('bouton.envoi')}"/>		
+				<s:token/>
+				</s:form>	
+			</div>
 		</div>
 
 		

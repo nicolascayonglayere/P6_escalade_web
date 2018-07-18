@@ -1,18 +1,18 @@
 package oc.P6.escalade.actions.topo;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.struts2.interceptor.ServletRequestAware;
 
 import com.opensymphony.xwork2.ActionSupport;
 
 import oc.P6.escalade.business.contract.ManagerFactory;
+import oc.P6.escalade.model.bean.exception.SecteurException;
+import oc.P6.escalade.model.bean.exception.SiteException;
+import oc.P6.escalade.model.bean.exception.TopoException;
 import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
 
-public class SupprimerSecteur extends ActionSupport implements ServletRequestAware{
+public class SupprimerSecteur extends ActionSupport {
 
 	/**
 	 * 
@@ -21,18 +21,30 @@ public class SupprimerSecteur extends ActionSupport implements ServletRequestAwa
 	@Inject
 	private ManagerFactory managerFactory;
 	private String nomSite, nomTopo, nomSecteur;
-	private HttpServletRequest request;
+
 	
 	public String execute() {
-		//nomSecteur = request.getParameter("nomSecteur");
-		//nomTopo = request.getParameter("nomTopo");
-		System.out.println(nomSecteur+" - "+nomSite+" - "+nomTopo);
-		Topo topo = managerFactory.getTopoManager().getTopo(nomTopo);
-		Site site = managerFactory.getSiteManager().getSite(nomSite, topo);
-		Secteur secteur = managerFactory.getSecteurManager().getSecteur(nomSecteur, site);
-		managerFactory.getSecteurManager().supprimerSecteur(secteur);
-		addActionMessage("Vous avez supprimé le secteur "+secteur.getNomSecteur()+" du topo "+topo.getNomTopo());
-		return ActionSupport.SUCCESS;
+		try {
+			System.out.println(nomSecteur+" - "+nomSite+" - "+nomTopo);
+			Topo topo = managerFactory.getTopoManager().getTopo(nomTopo);
+			Site site = managerFactory.getSiteManager().getSite(nomSite, topo);
+			Secteur secteur = managerFactory.getSecteurManager().getSecteur(nomSecteur, site);
+			managerFactory.getSecteurManager().supprimerSecteur(secteur);
+			addActionMessage("Vous avez supprimé le secteur "+secteur.getNomSecteur()+" du topo "+topo.getNomTopo());
+			return ActionSupport.SUCCESS;
+		}catch (TopoException e2) {
+			addActionMessage(e2.getMessage());
+			e2.printStackTrace();
+			return ActionSupport.INPUT;
+		} catch (SiteException e3) {
+			addActionMessage(e3.getMessage());
+			e3.printStackTrace();
+			return ActionSupport.INPUT;
+		} catch (SecteurException e4) {
+			addActionMessage(e4.getMessage());
+			e4.printStackTrace();
+			return ActionSupport.INPUT;
+		}
 	}
 	
 	public ManagerFactory getManagerFactory() {
@@ -65,13 +77,6 @@ public class SupprimerSecteur extends ActionSupport implements ServletRequestAwa
 	public void setNomSecteur(String nomSecteur) {
 		this.nomSecteur = nomSecteur;
 	}
-
-	@Override
-	public void setServletRequest(HttpServletRequest request) {
-		this.request = request;
-		
-	}
 	
-
 
 }
