@@ -19,7 +19,8 @@
 		<div id="blocPge">
 			<s:actionmessage/>
 			<div class="container">
-				<div class="navbar navbar-light col-lg-3">
+				<div class="navbar navbar-expand-md navbar-light navbar-fixed-top col-lg-3">
+					<div class="container align-items-center">
 					<div class="collapse navbar-collapse">
 						<ul class="navbar-nav mr-auto">
 							<li class="nav-item active">
@@ -65,6 +66,7 @@
 								</li>
 							</s:if>
 						</ul>
+					</div>
 					</div>
 				</div>
 				

@@ -15,10 +15,10 @@ public interface TopoManagerDao {
 	/**
 	 * Méthode pour créer le {@link Topo} donné en paramètre dans la base de donnée
 	 * @param pTopo
-	 * @return
+	 * @return le {@link Topo} crée
 	 * @throws TopoException 
 	 */
-	boolean create(Topo pTopo) throws TopoException;
+	Topo create(Topo pTopo) throws TopoException;
 
 	/**
 	 * Méthode pour supprimer le {@link Topo} donné en paramètre dans la base de donnée

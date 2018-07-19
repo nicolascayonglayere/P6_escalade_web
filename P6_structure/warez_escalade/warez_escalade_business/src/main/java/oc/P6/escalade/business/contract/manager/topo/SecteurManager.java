@@ -43,7 +43,7 @@ public interface SecteurManager {
 	 * @param pSecteur
 	 * @throws SecteurException 
 	 */
-	void creerSecteur(Secteur pSecteur) throws SecteurException;
+	Secteur creerSecteur(Secteur pSecteur) throws SecteurException;
 	
 	/**
 	 * Modifie le {@link Secteur} donné en paramètre

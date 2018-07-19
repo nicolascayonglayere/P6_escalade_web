@@ -82,7 +82,7 @@ public class SiteManagerImpl extends AbstractDAOManager implements SiteManager{
 	 * @throws SiteException 
 	 */
 	@Override
-	public void creerSite(Site pSite) throws SiteException {
+	public Site creerSite(Site pSite) throws SiteException {
 		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
 		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		vDefinition.setTimeout(30); // 30 secondes
@@ -91,7 +91,7 @@ public class SiteManagerImpl extends AbstractDAOManager implements SiteManager{
 		System.out.println("CTRL "+pSite.getNomSite());
 
 		try {
-			siteDAO.create(pSite);
+			site = siteDAO.create(pSite);
 		    TransactionStatus vTScommit = vTransactionStatus;
 		    vTransactionStatus = null;
 		    platformTransactionManager.commit(vTScommit);
@@ -100,7 +100,8 @@ public class SiteManagerImpl extends AbstractDAOManager implements SiteManager{
 				platformTransactionManager.rollback(vTransactionStatus);
 				throw new SiteException("Le site existe deja. "+pSite.getNomSite());
 			} 			
-	   	}		
+	   	}
+		return (Site) site;
 	}
 
 	/**

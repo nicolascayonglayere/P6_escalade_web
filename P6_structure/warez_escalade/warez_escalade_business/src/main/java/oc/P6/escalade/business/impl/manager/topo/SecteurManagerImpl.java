@@ -121,7 +121,7 @@ public class SecteurManagerImpl extends AbstractDAOManager implements SecteurMan
 	 * @throws SecteurException 
 	 */
 	@Override
-	public void creerSecteur(Secteur pSecteur) throws SecteurException {
+	public Secteur creerSecteur(Secteur pSecteur) throws SecteurException {
 		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
 		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		vDefinition.setTimeout(30); // 30 secondes
@@ -130,7 +130,7 @@ public class SecteurManagerImpl extends AbstractDAOManager implements SecteurMan
 		System.out.println("CTRL "+pSecteur.getNomSecteur()+" - "+pSecteur.getSite().getId());
 
 		try {
-			secteurDAO.create(pSecteur);
+			secteur = secteurDAO.create(pSecteur);
 		    TransactionStatus vTScommit = vTransactionStatus;
 		    vTransactionStatus = null;
 		    platformTransactionManager.commit(vTScommit);
@@ -140,7 +140,7 @@ public class SecteurManagerImpl extends AbstractDAOManager implements SecteurMan
 				throw new SecteurException("Le secteur existe deja. "+pSecteur.getNomSecteur());
 			} 			
 		}
-
+		return (Secteur) secteur;
 		
 	}
 

@@ -68,18 +68,18 @@ public class CreerVoie extends ActionSupport implements SessionAware {
 		try {
 			System.out.println("trace creation voie");
 			if ((Topo)session.get("topo") != null) {
-				nomTopo = ((Topo)session.get("topo")).getNomTopo();
-				topo = managerFactory.getTopoManager().getTopo(nomTopo);
+				topo = (Topo)session.get("topo");
+				//topo = managerFactory.getTopoManager().getTopo(nomTopo);
 			}
 			if((Secteur)session.get("secteur") != null) {
-				nomSecteur = ((Secteur)session.get("secteur")).getNomSecteur();
+				secteur = (Secteur)session.get("secteur");
 				Site vSite = ((Secteur)session.get("secteur")).getSite();
-				secteur = managerFactory.getSecteurManager().getSecteur(nomSecteur, vSite);
+				//secteur = managerFactory.getSecteurManager().getSecteur(nomSecteur, vSite);
 			}
 			System.out.println(secteur.getNomSecteur()+" - "+topo.getNomTopo());
 			voie.setSecteur(secteur);
 			System.out.println(voie.getNomVoie()+" - "+voie.getCotation());
-			managerFactory.getVoieManager().creerVoie(voie);
+			voie = managerFactory.getVoieManager().creerVoie(voie);
 			listSite = managerFactory.getSiteManager().getSite(topo);
 			for(Site s : listSite)
 				listSecteur = managerFactory.getSecteurManager().getListSecteur(s);
@@ -92,10 +92,6 @@ public class CreerVoie extends ActionSupport implements SessionAware {
 		} catch (SiteException e3) {
 			addActionMessage(e3.getMessage());
 			e3.printStackTrace();
-			return ActionSupport.INPUT;
-		} catch (SecteurException e4) {
-			addActionMessage(e4.getMessage());
-			e4.printStackTrace();
 			return ActionSupport.INPUT;
 		} catch (VoieException e5) {
 			addActionMessage (e5.getMessage());

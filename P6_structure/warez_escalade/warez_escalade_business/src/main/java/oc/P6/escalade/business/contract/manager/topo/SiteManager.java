@@ -49,7 +49,7 @@ public interface SiteManager {
 	 * @param pSite
 	 * @throws SiteException 
 	 */
-	void creerSite(Site pSite) throws SiteException;
+	Site creerSite(Site pSite) throws SiteException;
 	
 	/**
 	 * Modifie le {@link Site} donné en paramètre

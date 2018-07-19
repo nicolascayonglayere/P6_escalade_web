@@ -19,7 +19,7 @@ public interface VoieManagerDao {
 	 * @return
 	 * @throws VoieException 
 	 */
-	boolean create(Voie pVoie) throws VoieException;
+	Voie create(Voie pVoie) throws VoieException;
 
 	/**
 	 * Méthode pour supprimer la {@link Voie} donnée en paramètre dans la base de donnée

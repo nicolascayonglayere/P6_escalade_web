@@ -16,6 +16,9 @@ import oc.P6.escalade.model.bean.utilisateur.Role;
 @Named
 public class RoleDaoImpl extends AbstractDAO implements RoleDao {
 
+	/**
+	 * Méthode pour obtenir la liste des {@link Role}
+	 */
 	@Override
 	public ArrayList<Role> getListRole() {
 		ArrayList<Role> vListRole = new ArrayList<Role>();

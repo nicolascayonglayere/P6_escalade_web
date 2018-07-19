@@ -105,20 +105,21 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 			if(utilisateur.getId() != 0) {
 				coordonneeUtilisateur = pUtilisateur.getCoordonnee();
 				coordonneeUtilisateur.setUtilisateur((Utilisateur) utilisateur);
-				utilisateur.setCoordonnee(coordonneeDAO.create((CoordonneeUtilisateur) coordonneeUtilisateur));
-
+				if ((utilisateur.setCoordonnee(coordonneeDAO.create((CoordonneeUtilisateur) coordonneeUtilisateur)))) != null) {
+				    TransactionStatus vTScommit = vTransactionStatus;
+				    vTransactionStatus = null;
+				    platformTransactionManager.commit(vTScommit);				
+				}
+				else {	
+					throw new CoordonneeUtilisateurException("L'email existe deja "+pUtilisateur.getCoordonnee().getEmail()+".");
+				}
 			}
-			
-		    TransactionStatus vTScommit = vTransactionStatus;
-		    vTransactionStatus = null;
-		    platformTransactionManager.commit(vTScommit);
+			else
+				throw new UtilisateurException("L'utilisateur existe deja "+pUtilisateur.getPseudo()+".");
 		} finally {
 			if (vTransactionStatus != null) {
 				platformTransactionManager.rollback(vTransactionStatus);
-				if (utilisateur.getId() == 0)
-					throw new UtilisateurException("L'utilisateur existe deja "+pUtilisateur.getPseudo()+".");
-				else
-					throw new CoordonneeUtilisateurException("L'email existe deja "+pUtilisateur.getCoordonnee().getEmail()+".");
+				
 		    }
 		}
 		return (Utilisateur) utilisateur;			

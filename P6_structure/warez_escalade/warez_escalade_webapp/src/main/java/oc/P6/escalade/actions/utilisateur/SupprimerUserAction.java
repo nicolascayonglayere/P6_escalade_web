@@ -36,15 +36,9 @@ public class SupprimerUserAction extends ActionSupport implements SessionAware, 
 		//String pseudo = ((Utilisateur) session.get("utilisateur")).getPseudo();
 		System.out.println("pseudo : "+utilisateur.getPseudo());
 		//utilisateur = managerFactory.getUtilisateurManager().getUtilisateur(pseudo);
-		try {
-			coordonneeUtilisateur = managerFactory.getCoordonneeUtilisateurManager().getCoordonnee(utilisateur.getId());
-		} catch (CoordonneeUtilisateurException | UtilisateurException e1) {
-			addActionMessage(e1.getMessage());
-			e1.printStackTrace();
-			return ActionSupport.INPUT;
-		}
 
 		try {
+			coordonneeUtilisateur = managerFactory.getCoordonneeUtilisateurManager().getCoordonnee(utilisateur.getId());
 			managerFactory.getCoordonneeUtilisateurManager().supprimerCoordonnee(coordonneeUtilisateur);
 			managerFactory.getUtilisateurManager().deleteUtilisateur(utilisateur);
 			session.remove("utilisateur");

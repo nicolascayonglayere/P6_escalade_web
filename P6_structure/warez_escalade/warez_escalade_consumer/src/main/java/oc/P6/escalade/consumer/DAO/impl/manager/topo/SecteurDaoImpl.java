@@ -9,6 +9,8 @@ import javax.inject.Named;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 
 import oc.P6.escalade.consumer.DAO.contract.manager.topo.SecteurManagerDao;
 import oc.P6.escalade.consumer.DAO.impl.manager.AbstractDAO;
@@ -33,9 +35,9 @@ public class SecteurDaoImpl extends AbstractDAO implements SecteurManagerDao{
 	 * @throws SecteurException 
 	 */
 	@Override
-	public boolean create(Secteur pSecteur) throws SecteurException {
+	public Secteur create(Secteur pSecteur) throws SecteurException {
 		String vSQL = "INSERT INTO secteur (nom, description, id_site, image) VALUES (:nom, :description, :id_site, :image)";
-
+		KeyHolder keyHolder = new GeneratedKeyHolder();
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
 		vParams.addValue("nom", pSecteur.getNomSecteur(), Types.VARCHAR);
@@ -45,7 +47,8 @@ public class SecteurDaoImpl extends AbstractDAO implements SecteurManagerDao{
 
 	    
 	    try {
-	        vJdbcTemplate.update(vSQL, vParams);
+	        vJdbcTemplate.update(vSQL, vParams, keyHolder, new String[] { "id_secteur" });
+	        pSecteur.setId(keyHolder.getKey().intValue());
 	    } catch (DuplicateKeyException vEx) {
 	        System.out.println("Le secteur existe déjà ! secteur=" + pSecteur.getNomSecteur()+" dans le site "+pSecteur.getSite().getNomSite());
 	        vEx.printStackTrace();
@@ -54,7 +57,7 @@ public class SecteurDaoImpl extends AbstractDAO implements SecteurManagerDao{
 	    }
 	    
 	    
-		return true;
+		return pSecteur;
 	}
 
 	/**

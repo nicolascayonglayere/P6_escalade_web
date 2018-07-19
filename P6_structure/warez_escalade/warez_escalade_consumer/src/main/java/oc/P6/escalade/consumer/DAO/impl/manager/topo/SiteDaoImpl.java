@@ -9,6 +9,8 @@ import javax.inject.Named;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 
 import oc.P6.escalade.consumer.DAO.contract.manager.topo.SiteManagerDAO;
 import oc.P6.escalade.consumer.DAO.contract.manager.topo.TopoManagerDao;
@@ -26,20 +28,21 @@ public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 	SiteRowMapper siteRowMapper;
 
 	@Override
-	public boolean create(Site pSite) throws SiteException {
+	public Site create(Site pSite) throws SiteException {
 		String vSQL = "INSERT INTO site (nom, description, id_topo) VALUES (:nom, :description, :id_topo)";
-		Topo topo = topoDAO.find(pSite.getTopo().getNomTopo());
-	
+		//Topo topo = topoDAO.find(pSite.getTopo().getNomTopo());
+		KeyHolder keyHolder = new GeneratedKeyHolder();
 
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
 		vParams.addValue("nom", pSite.getNomSite(), Types.VARCHAR);
 		vParams.addValue("description", pSite.getDescription(), Types.LONGVARCHAR);
-		vParams.addValue("id_topo", topo.getId(), Types.INTEGER);
+		vParams.addValue("id_topo", pSite.getTopo().getId(), Types.INTEGER);
 
 	    
 	    try {
-	        vJdbcTemplate.update(vSQL, vParams);
+	        vJdbcTemplate.update(vSQL, vParams, keyHolder, new String[] { "id_site" });
+	        pSite.setId(keyHolder.getKey().intValue());
 	    } catch (DuplicateKeyException vEx) {
 	        System.out.println("Le site existe déjà ! site=" + pSite.getNomSite()+" dans le topo "+pSite.getTopo().getNomTopo());
 	        throw new SiteException("Le site existe déjà ! site=" + pSite.getNomSite()+" dans le topo "+pSite.getTopo().getNomTopo());
@@ -47,7 +50,7 @@ public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 	    }
 	    
 	    
-		return true;
+		return pSite;
 	}
 
 	@Override

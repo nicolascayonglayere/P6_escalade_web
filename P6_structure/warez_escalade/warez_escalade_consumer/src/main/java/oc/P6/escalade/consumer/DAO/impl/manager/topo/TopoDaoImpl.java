@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 
 import oc.P6.escalade.consumer.DAO.DAOFactory;
 import oc.P6.escalade.consumer.DAO.contract.manager.topo.TopoManagerDao;
@@ -30,14 +32,14 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 	TopoRowMapper topoRowMapper;
 	
 	@Override
-	public boolean create(Topo pTopo) throws TopoException {
+	public Topo create(Topo pTopo) throws TopoException {
 		String vSQL = "INSERT INTO topo (nom, id_utilisateur, nombre_exemplaires, description, longitude, latitude, image, construction) VALUES (:nom, :id, :nbreEx, :description, :longitude, :latitude, :image, :construction)";
-		Utilisateur auteur = daoFacto.getUtilisateurManagerDAO().find(pTopo.getAuteur().getPseudo());
-		
+		//Utilisateur auteur = daoFacto.getUtilisateurManagerDAO().find(pTopo.getAuteur().getPseudo());
+		KeyHolder keyHolder = new GeneratedKeyHolder();
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
 		vParams.addValue("nom", pTopo.getNomTopo(), Types.VARCHAR);
-		vParams.addValue("id", auteur.getId(), Types.INTEGER);
+		vParams.addValue("id", pTopo.getAuteur().getId(), Types.INTEGER);
 		vParams.addValue("nbreEx", pTopo.getNbreEx(), Types.INTEGER);
 		vParams.addValue("description", pTopo.getDescription(), Types.LONGVARCHAR);
 		vParams.addValue("longitude", pTopo.getLongitude(), Types.DECIMAL);
@@ -47,7 +49,8 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 
 	    
 	    try {
-	        vJdbcTemplate.update(vSQL, vParams);
+	        vJdbcTemplate.update(vSQL, vParams, keyHolder, new String[] { "id_topo" });
+	        pTopo.setId(keyHolder.getKey().intValue());
 	    } catch (DuplicateKeyException vEx) {
 	        System.out.println("Le topo existe déjà ! topo=" + pTopo.getNomTopo());
 	        throw new TopoException("Le topo existe déjà ! topo=" + pTopo.getNomTopo());
@@ -55,7 +58,7 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 	    }
 	    
 	    
-		return true;
+		return pTopo;
 	}
 
 	@Override

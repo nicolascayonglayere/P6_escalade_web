@@ -70,7 +70,7 @@ public class VoieManagerImpl extends AbstractDAOManager implements VoieManager{
 	 * @throws VoieException 
 	 */
 	@Override
-	public void creerVoie(Voie pVoie) throws VoieException {
+	public Voie creerVoie(Voie pVoie) throws VoieException {
 		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
 		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		vDefinition.setTimeout(30); // 30 secondes
@@ -78,7 +78,7 @@ public class VoieManagerImpl extends AbstractDAOManager implements VoieManager{
 		voieDao = daoFactory.getVoieManagerDao();
 		System.out.println("CTRL "+pVoie.getNomVoie());
 		try {
-			voieDao.create(pVoie);
+			voie = voieDao.create(pVoie);
 			
 		    TransactionStatus vTScommit = vTransactionStatus;
 		    vTransactionStatus = null;
@@ -88,7 +88,8 @@ public class VoieManagerImpl extends AbstractDAOManager implements VoieManager{
 				platformTransactionManager.rollback(vTransactionStatus);
 				throw new VoieException("La voie existe deja. "+pVoie.getNomVoie());
 			} 			
-	   	}		
+	   	}
+		return (Voie) voie;
 	}
 
 	/**

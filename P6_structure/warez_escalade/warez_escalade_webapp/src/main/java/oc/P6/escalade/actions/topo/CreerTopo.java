@@ -49,7 +49,7 @@ public class CreerTopo extends ActionSupport implements SessionAware{
 
 		try {
 			topo.setAuteur(utilisateur);
-			managerFactory.getTopoManager().creerTopo(topo);
+			topo = managerFactory.getTopoManager().creerTopo(topo);
 			addActionMessage("Le topo "+topo.getNomTopo()+" a bien été crée.");
 			session.put("topo", topo);
 			return ActionSupport.SUCCESS;

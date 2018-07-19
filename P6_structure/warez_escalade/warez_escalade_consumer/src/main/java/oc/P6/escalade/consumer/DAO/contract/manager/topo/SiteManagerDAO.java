@@ -19,7 +19,7 @@ public interface SiteManagerDAO {
 	 * @return
 	 * @throws SiteException 
 	 */
-	boolean create(Site pSite) throws SiteException;
+	Site create(Site pSite) throws SiteException;
 
 	/**
 	 * Méthode pour supprimer un {@link Site} donné en paramètre dans la base de donnée

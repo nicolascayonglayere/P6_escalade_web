@@ -60,16 +60,16 @@ public class CreerSecteur extends ActionSupport implements SessionAware {
 	public String execute() {
 		try {
 			if (((Topo)(session.get("topo"))).getNomTopo().length() > 0) {
-				nomTopo = ((Topo)(session.get("topo"))).getNomTopo();
-				topo = managerFactory.getTopoManager().getTopo(nomTopo);
+				topo = (Topo)session.get("topo");
+				//topo = managerFactory.getTopoManager().getTopo(nomTopo);
 			}
 			if((Site)session.get("site") != null) {
-				nomSite= ((Site)session.get("site")).getNomSite();
-				site = managerFactory.getSiteManager().getSite(nomSite, topo);
+				site= (Site)session.get("site");
+				//site = managerFactory.getSiteManager().getSite(nomSite, topo);
 			}
 			System.out.println(site.getId());
 			secteur.setSite(site);
-			managerFactory.getSecteurManager().creerSecteur(secteur);
+			secteur = managerFactory.getSecteurManager().creerSecteur(secteur);
 			listSite = managerFactory.getSiteManager().getSite(topo);
 			for(Site s : listSite)
 				setListSecteur(managerFactory.getSecteurManager().getListSecteur(s));

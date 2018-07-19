@@ -9,6 +9,8 @@ import javax.inject.Named;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 
 import oc.P6.escalade.consumer.DAO.contract.manager.topo.VoieManagerDao;
 import oc.P6.escalade.consumer.DAO.impl.manager.AbstractDAO;
@@ -25,11 +27,11 @@ public class VoieDaoImpl extends AbstractDAO implements VoieManagerDao{
 	VoieRowMapper voieRowMapper;
 
 	@Override
-	public boolean create(Voie pVoie) throws VoieException {
+	public Voie create(Voie pVoie) throws VoieException {
 		System.out.println(pVoie.getNomVoie()+" - "+pVoie.getCotation());
 		String vSQL = "INSERT INTO voie ( nom, cotation, hauteur, nombre_longueur, nombre_point, id_secteur, description)"
 				+ " VALUES ( :nom, :cotation, :hauteur, :nbLongueur, :nbPoint, :id_secteur, :description)";
-
+		KeyHolder keyHolder = new GeneratedKeyHolder();
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
 		//vParams.addValue("id_voie", voieDAO.lastId()+1, Types.INTEGER);
@@ -42,7 +44,8 @@ public class VoieDaoImpl extends AbstractDAO implements VoieManagerDao{
 		vParams.addValue("description", pVoie.getDescription(), Types.LONGVARCHAR);
 
 	    try {
-	        vJdbcTemplate.update(vSQL, vParams);
+	        vJdbcTemplate.update(vSQL, vParams, keyHolder, new String[] { "id_voie" });
+	        pVoie.setId(keyHolder.getKey().intValue());
 	    } catch (DuplicateKeyException vEx) {
 	        System.out.println("La voie existe déjà ! voie = " + pVoie.getNomVoie()+" dans le secteur d'Id "+pVoie.getSecteur().getId());
 	        vEx.printStackTrace();
@@ -51,7 +54,7 @@ public class VoieDaoImpl extends AbstractDAO implements VoieManagerDao{
 	    }
 	    
 	    
-		return true;
+		return pVoie;
 	}
 
 	@Override

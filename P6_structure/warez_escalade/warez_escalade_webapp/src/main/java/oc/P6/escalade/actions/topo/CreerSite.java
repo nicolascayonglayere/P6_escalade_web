@@ -44,21 +44,17 @@ public class CreerSite extends ActionSupport implements SessionAware {
 	public String execute() {
 		try {
 			if (((Topo)(session.get("topo"))).getNomTopo().length() > 0) {
-				nomTopo = ((Topo)(session.get("topo"))).getNomTopo();
-				topo = managerFactory.getTopoManager().getTopo(nomTopo);
+				topo = (Topo)session.get("topo");
+				//topo = managerFactory.getTopoManager().getTopo(nomTopo);
 			}
 			System.out.println("id_topo : "+topo.getId());
 			site.setTopo(topo);
-			managerFactory.getSiteManager().creerSite(site);
-			site = managerFactory.getSiteManager().getSite(site.getNomSite(), topo);
+			site = managerFactory.getSiteManager().creerSite(site);
+			//site = managerFactory.getSiteManager().getSite(site.getNomSite(), topo);
 			addActionMessage("Le site "+site.getNomSite()+" a bien été crée.");
 			session.put("site", site);
 			return ActionSupport.SUCCESS;			
-		}catch (TopoException e2) {
-			addActionMessage(e2.getMessage());
-			e2.printStackTrace();
-			return ActionSupport.INPUT;
-		} catch (SiteException e3) {
+		}catch (SiteException e3) {
 			addActionMessage(e3.getMessage());
 			e3.printStackTrace();
 			return ActionSupport.INPUT;

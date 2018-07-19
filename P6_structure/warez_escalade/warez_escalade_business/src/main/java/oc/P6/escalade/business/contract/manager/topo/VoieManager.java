@@ -41,7 +41,7 @@ public interface VoieManager {
 	 * @param pVoie
 	 * @throws VoieException 
 	 */
-	void creerVoie(Voie pVoie) throws VoieException;
+	Voie creerVoie(Voie pVoie) throws VoieException;
 	
 	/**
 	 * Modifie la {@link Voie} donnée en paramètre

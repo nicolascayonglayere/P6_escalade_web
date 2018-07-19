@@ -130,7 +130,7 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 	 * @throws TopoException 
 	 */
 	@Override
-	public void creerTopo(Topo pTopo) throws TopoException {
+	public Topo creerTopo(Topo pTopo) throws TopoException {
 		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
 		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		vDefinition.setTimeout(30); // 30 secondes
@@ -148,7 +148,7 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 				e.printStackTrace();
 			}
 			pTopo.setConstruction(true);
-			topoDAO.create(pTopo);
+			topo = topoDAO.create(pTopo);
 			
 		    TransactionStatus vTScommit = vTransactionStatus;
 		    vTransactionStatus = null;
@@ -158,7 +158,8 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 				platformTransactionManager.rollback(vTransactionStatus);
 				throw new TopoException("Le topo existe deja.");
 			} 			
-		}		
+		}
+		return (Topo) topo;
 	}
 
 	/**

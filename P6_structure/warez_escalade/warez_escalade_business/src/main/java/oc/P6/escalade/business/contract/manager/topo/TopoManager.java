@@ -43,7 +43,7 @@ public interface TopoManager {
 	 * @param pTopo
 	 * @throws TopoException 
 	 */
-	void creerTopo(Topo pTopo) throws TopoException;
+	Topo creerTopo(Topo pTopo) throws TopoException;
 	
 	/**
 	 * Modifie le {@link Topo} donné en paramètre

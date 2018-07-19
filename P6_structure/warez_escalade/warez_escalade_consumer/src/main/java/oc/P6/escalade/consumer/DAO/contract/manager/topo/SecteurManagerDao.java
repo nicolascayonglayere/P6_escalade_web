@@ -19,7 +19,7 @@ public interface SecteurManagerDao {
 	 * @return
 	 * @throws SecteurException 
 	 */
-	boolean create(Secteur pSecteur) throws SecteurException;
+	Secteur create(Secteur pSecteur) throws SecteurException;
 	
 	/**
 	 * Méthode pour supprimer un {@link Secteur} donné en paramètre dans la base de donnée
