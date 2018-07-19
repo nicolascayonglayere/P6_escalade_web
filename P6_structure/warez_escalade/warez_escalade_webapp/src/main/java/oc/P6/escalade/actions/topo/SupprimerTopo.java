@@ -1,9 +1,12 @@
 package oc.P6.escalade.actions.topo;
 
+import java.nio.file.Paths;
+
 import javax.inject.Inject;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+import oc.P6.escalade.WebappHelper.GestionFichierProperties;
 import oc.P6.escalade.business.contract.ManagerFactory;
 import oc.P6.escalade.model.bean.exception.SecteurException;
 import oc.P6.escalade.model.bean.exception.SiteException;
@@ -22,10 +25,12 @@ public class SupprimerTopo extends ActionSupport {
 	private String nomTopo;
 	
 	public String execute() {
+		GestionFichierProperties gfp = new GestionFichierProperties();
 		try {
 			System.out.println(nomTopo);
 			Topo topo = managerFactory.getTopoManager().getTopo(nomTopo);
 			managerFactory.getTopoManager().supprimerTopo(topo);
+			gfp.supprimerImg(Paths.get("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\", topo.getImage()));
 			addActionMessage("Vous avez supprimé le topo "+topo.getNomTopo());
 			return ActionSupport.SUCCESS;
 		}catch (TopoException e2) {

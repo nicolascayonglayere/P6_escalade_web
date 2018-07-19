@@ -7,6 +7,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Properties;
 
 
@@ -22,7 +25,7 @@ public class GestionFichierProperties {
 	//static Logger logger = Logger.getLogger("ihm");
 	
 	private File configFile;
-	private File defautConfigFile;
+	//private File defautConfigFile;
 	private Properties prop;
 
 	private ObjectInputStream ois;
@@ -52,20 +55,33 @@ public class GestionFichierProperties {
 				}
 			}
 			//--Sinon, on recupere les prop par defaut
-			else {
-				ois = new ObjectInputStream(
-						new BufferedInputStream(
-								new FileInputStream(defautConfigFile)));
-				this.prop.load(ois);
-				System.out.println("list proprietes recup sur le fichier lors de lecture : \n"+this.prop.toString());//Controle
-				//logger.info("list proprietes recup sur le fichier lors de lecture : \n"+this.prop.toString());
-				ois.close();
-			}
+		//else {
+		//	ois = new ObjectInputStream(
+		//			new BufferedInputStream(
+		//					new FileInputStream(defautConfigFile)));
+		//	this.prop.load(ois);
+		//	System.out.println("list proprietes recup sur le fichier lors de lecture : \n"+this.prop.toString());//Controle
+		//	//logger.info("list proprietes recup sur le fichier lors de lecture : \n"+this.prop.toString());
+		//	ois.close();
+		//}
 		}catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}catch (IOException e) {
 			e.printStackTrace();
 		}
 		return this.prop;
+	}
+	
+	public void supprimerImg(Path pPath) {
+	       try (DirectoryStream<Path> stream = Files.newDirectoryStream(pPath)) {
+	           for (Path entry : stream) {
+	               System.out.println(entry);
+	               Files.deleteIfExists(entry);
+	           }
+	           Files.delete(pPath);
+	       } catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

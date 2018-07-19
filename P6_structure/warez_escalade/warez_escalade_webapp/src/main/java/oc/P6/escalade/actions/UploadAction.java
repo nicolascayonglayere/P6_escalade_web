@@ -20,23 +20,30 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.ActionSupport;
 
 import oc.P6.escalade.model.bean.topo.Topo;
 
-public class UploadAction extends ActionSupport implements SessionAware{
+public class UploadAction extends ActionSupport implements SessionAware, ServletRequestAware{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	
 	private ArrayList<File> upload = new ArrayList<File>();
 	private ArrayList<String> uploadFileName = new ArrayList<String>();
 	private ArrayList<String> uploadContentType = new ArrayList<String>();
-
+	private String nomTopo;
 	private Map<String, Object> session;
+
+
+	private HttpServletRequest request;
 
 	public ArrayList<File> getUpload() {
 		return this.upload;
@@ -60,7 +67,12 @@ public class UploadAction extends ActionSupport implements SessionAware{
 	public String execute() throws Exception {
 		byte[] bytesRead;
 		String nomImg="";
-		String nomTopo = ((Topo)session.get("topo")).getNomTopo().replaceAll("\\p{Space}", "");
+		String nomDuTopo = "";
+		if(((Topo)session.get("topo")) != null)
+			nomDuTopo = ((Topo)session.get("topo")).getNomTopo().replaceAll("\\p{Space}", "");
+		else
+			nomDuTopo = ((String)session.get("topoModif"));
+		System.out.println(nomDuTopo);
 		Path cheminUpload = Paths.get("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images");
 
 		System.out.println("\n\n upload1");
@@ -70,11 +82,11 @@ public class UploadAction extends ActionSupport implements SessionAware{
 				System.out.println("*** " + u + "\t" + u.length());
 				nomImg = uploadFileName.get(upload.indexOf(u));
 				Path stockImg = Paths.get("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\"
-						+nomTopo, nomImg);
+						+nomDuTopo, nomImg);
 				System.out.println(nomImg+" - "+stockImg.toString());
 				Path uPath = Paths.get(u.getAbsolutePath());
 				System.out.println(uPath.toString());
-				Files.copy(uPath, stockImg, StandardCopyOption.COPY_ATTRIBUTES);
+				Files.copy(uPath, stockImg, StandardCopyOption.REPLACE_EXISTING);
 			}catch(FileNotFoundException e) {
 				e.printStackTrace();
 			}catch (IOException e) {
@@ -95,9 +107,27 @@ public class UploadAction extends ActionSupport implements SessionAware{
  	   return ActionSupport.SUCCESS;
 	}
 	
+	public String input() {
+		System.out.println(nomTopo);
+		if(((Topo)session.get("topo")) == null)
+			this.session.put("topoModif", nomTopo.replaceAll("\\p{Space}", ""));
+		return ActionSupport.SUCCESS;
+	}
+	
 	@Override
 	public void setSession(Map<String, Object> session) {
 		this.session = session;
+	}
+	@Override
+	public void setServletRequest(HttpServletRequest request) {
+		this.request = request;
+		
+	}
+	public String getNomTopo() {
+		return nomTopo;
+	}
+	public void setNomTopo(String nomTopo) {
+		this.nomTopo = nomTopo;
 	}
 
 }

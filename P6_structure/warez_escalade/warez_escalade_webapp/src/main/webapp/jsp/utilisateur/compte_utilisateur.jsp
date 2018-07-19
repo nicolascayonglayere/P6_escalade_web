@@ -85,11 +85,11 @@
 							    			<s:text name="compteUser.modifTopo"/>
 							    		</s:a>							
 									</li>
-									<li class="nav-item active">
+									<!--  <li class="nav-item active">
 							    		<s:a action="go_chercherTopo" namespace="/jsp/utilisateur"  cssClass="nav-link">
 							    			<s:text name="compteUser.supprTopo"/>
 							    		</s:a>							
-									</li>							
+									</li>-->							
 			    				</ul>			
 							</div>
 							</div>

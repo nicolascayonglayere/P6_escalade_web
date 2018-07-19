@@ -20,8 +20,8 @@
 		<div id="blocPge">
 			<div class="container text-center">
 				<h1 id="titre"><s:text name="image.titre"/></h1>
-				<h3 id="titre"><s:text name="creerTopo.topo"/> <s:property value="#session.topo.nomTopo"/></h3>		
-					<s:form action="upload_image" method="POST" enctype="multipart/form-data" cssClass="form-vertical">
+				<h3 id="titre"><s:text name="creerTopo.topo"/> <s:property value="nomTopo"/></h3>		
+					<s:form action="upload_image" method="POST" enctype="multipart/form-data" cssClass="form-vertical" namespace="/jsp/utilisateur">
 	  					<s:file label="%{getText('form.imgCouv')}" name="upload" />
 	  					<s:file label="%{getText('form.img')}" name="upload" />
 	  					<s:file label="%{getText('form.img')}" name="upload" />

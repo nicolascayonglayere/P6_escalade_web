@@ -32,20 +32,25 @@
 				  		<s:param name="nomTopo">${topo.nomTopo}</s:param>
 				 	 </s:submit>
 				</s:form>
-		
+					
+				<li>
+					<s:checkbox name="checkMe" fieldValue="%{#topo.nomTopo}" label="%{#topo.nomTopo+' '+#topo.auteur.pseudo}"/>
+				</li>
+				
+				<div class="row">
 				<s:if test="listTopo">
-				<div class="navbar navbar-light col-lg-4">
-					<div class="collapse navbar-collapse">
-						<ul class="navbar-nav mr-auto">
+				<div class="navbar navbar-expand-md navbar-light ">
+					<div class="container collapse navbar-collapse">
+						<ul class="navbar-nav mr-auto flex-column col-lg-4">
 							<li class="nav-item active">
-								<s:a action="ajouter_site" namespace="/jsp/utilisateur">
+								<s:a action="ajouter_site" namespace="/jsp/utilisateur" cssClass="nav-link">
 									<s:param name="topo.nomTopo" value="topo.nomTopo"/>
 									<s:submit class="btn btn-default" value="%{getText('bouton.ajouterSite')}"/>
 								</s:a>						
 							</li>
 							<div class="dropdown-divider"></div>
 							<li class="nav-item active">
-								<s:form action="ajouter_secteur" namespace="/jsp/utilisateur">
+								<s:form action="ajouter_secteur" namespace="/jsp/utilisateur" cssClass="nav-link">
 									<s:select name="selectedSite" label="%{getText('creerTopo.ajouterSecteur')}" list="listSite" size="1" listKey="id" listvalue="nomSite"/>							
 									<s:submit class="btn btn-default" value="%{getText('bouton.ajouterSecteur')}">
 										<s:param name="topo.nomTopo" value="topo.nomTopo"/>
@@ -55,7 +60,7 @@
 							</li>
 							<div class="dropdown-divider"></div>
 							<li class="nav-item active">					
-								<s:form action="ajouter_voie" namespace="/jsp/utilisateur">
+								<s:form action="ajouter_voie" namespace="/jsp/utilisateur" cssClass="nav-link">
 									<s:select name="selectedSecteur" label="%{getText('creerTopo.ajouterVoie')}" list="listSecteur" size="1" listKey="id" listvalue="%{listSecteur['secteur.nomSecteur']}"/>
 									<s:submit class="btn btn-default" value="%{getText('bouton.ajouterVoie')}">
 										<s:param name="topo.nomTopo" value="topo.nomTopo"/>
@@ -65,8 +70,8 @@
 							</li>
 							<div class="dropdown-divider"></div>
 							<li class="nav-item active">
-								<s:a action="ajouter_image" namespace="/jsp/utilisateur">
-									<s:param name="topo.nomTopo" value="topo.nomTopo"/>
+								<s:a action="ajouter_image" namespace="/jsp/utilisateur" cssClass="nav-link">
+									<s:param name="nomTopo" value="topo.nomTopo"/>
 									<s:submit class="btn btn-default" value="%{getText('bouton.ajouterImage')}"/>
 								</s:a>						
 							</li>
@@ -74,9 +79,10 @@
 					</div>
 				</div>
 				</s:if>
-				<div class="col-lg-8">
+				<div >
 					<s:iterator value="listTopo" var="topo">
-						<ul>
+
+						<ul >
 							<s:a action="go_modifTopo" namespace="/jsp/utilisateur">
 								<s:text name="modifierTopo.topo"/> <s:property value="#topo.nomTopo"/>
 			                    <s:param name="nomTopo" value="nomTopo" />
@@ -140,6 +146,7 @@
 							</ul>
 						</ul>	
 					</s:iterator>
+				</div>
 				</div>
 			</div>		
 		</div>

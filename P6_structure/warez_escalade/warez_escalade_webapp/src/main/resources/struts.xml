@@ -247,13 +247,21 @@
 		</action>
 		
 		<!-- Actions pour upload les images -->
-		<action name="ajouter_image">
-			<result>/jsp/admin/upload_image.jsp</result>
+		<action name="ajouter_image" class="oc.P6.escalade.actions.UploadAction" method="input">
+			<result name="success">/jsp/admin/upload_image.jsp</result>
 		</action>
 		
 		<action name="upload_image" class="oc.P6.escalade.actions.UploadAction" method="execute">
-    		<result name="success">/jsp/admin/creer_voie.jsp</result>
-			<result name="input">/jsp/admin/upload_image.jsp</result>
+    		<interceptor-ref name="store">
+				<param name="operationMode">STORE</param>
+		    </interceptor-ref>
+		    <interceptor-ref name="defaultStack" />
+    		<result name="input">/jsp/admin/upload_image.jsp</result>
+    		<result name="success" type="redirectAction">
+    			<param name="actionName">ajouter_voie</param>
+    			<param name="namespace">/jsp/utilisateur</param>
+    		<!--  /jsp/admin/creer_voie.jsp--></result>
+			
 		</action>
 		
 		<!--Toutes les actions de creation de topo -->
@@ -327,11 +335,7 @@
 			<result>/jsp/admin/recherche_topo.jsp</result>
 		</action>		
 				  
-		<action name="finaliser_topo" class="oc.P6.escalade.actions.topo.FinaliserTopo" method="execute">
-       		<interceptor-ref name="store">
-				<param name="operationMode">STORE</param>
-		    </interceptor-ref>
-		    <interceptor-ref name="defaultStack" />			
+		<action name="finaliser_topo" class="oc.P6.escalade.actions.topo.FinaliserTopo" method="execute">			
 			<result name="success">/jsp/topo.jsp</result>
 			<result name="input">/jsp/admin/creer_topo.jsp</result>
 		</action>		    
