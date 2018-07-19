@@ -22,14 +22,14 @@
 			<div class="container" >
 				
 				<div class="row">
-					<div class="col-lg">
+					<div class="col-lg-9" id="titreCompteUser">
 						<h1 id="titre"><s:text name="compteUser.titre"/><s:property value="#session.utilisateur.pseudo"/></h1>
 						<h3 id="titre"><s:text name="compteUser.bonjour"/><s:property value="utilisateur.nom"/> <s:property value="utilisateur.prenom"/></h3>
 						<h4 id="titre"><s:text name="compteUser.role"/><s:property value="utilisateur.role"/></h4>
 						<s:actionmessage/>
 					</div>	
 					
-					<div>		
+					<div >		
 					<!-- pour les modérateurs, une liste des commentaires à valider -->
 					<s:if test="%{utilisateur.role == 'moderateur'}">
 						<s:iterator value="listCommentaire" var="commentaireTopo">
@@ -57,18 +57,18 @@
 					</div>
 					<!-- pour les admin, des liens vers les actions réservées -->
 					<s:elseif test="%{utilisateur.role =='administrateur'}">
-						<div class="navbar navbar-expand-md navbar-light fixed-right" id="menuTopUser">
-							<div class="container align-items-center">
+						<div class="navbar navbar-expand-md navbar-light " id="menuTopUser">
+							<div class="container  ">
 							<div class="collapse navbar-collapse"  >
-								<ul class="navbar-nav mr-auto">
+								<ul class="navbar-nav mr-auto flex-column ">
 									<h4 id="titre" class="dropdown-header"><s:text name="%{getText('compteUser.utilisateur')}"/></h4>
 									<li class="nav-item active">
-										<s:a action="go_modifUser" namespace="/jsp/utilisateur">
+										<s:a action="go_modifUser" namespace="/jsp/utilisateur"  cssClass="nav-link">
 											<s:text name="compteUser.modifUser"/>
 							    		</s:a>							
 									</li>							
 									<li class="nav-item active">
-										<s:a action="go_ban" namespace="/jsp/utilisateur">
+										<s:a action="go_ban" namespace="/jsp/utilisateur"  cssClass="nav-link">
 											<s:text name="compteUser.ban"/>
 							    		</s:a>							
 									</li>
@@ -76,17 +76,17 @@
 									<div class="dropdown-divider"></div>
 									<h4 id="titre" class="dropdown-header"><s:text name="%{getText('compteUser.topo')}"/></h4>
 									<li class="nav-item active">
-							    		<s:a action="go_creerTopo" namespace="/jsp/utilisateur">
+							    		<s:a action="go_creerTopo" namespace="/jsp/utilisateur"  cssClass="nav-link">
 							    			<s:text name="compteUser.creerTopo"/>
 							    		</s:a>							
 									</li>
 									<li class="nav-item active">
-							    		<s:a action="go_chercherTopo" namespace="/jsp/utilisateur">
+							    		<s:a action="go_chercherTopo" namespace="/jsp/utilisateur"  cssClass="nav-link">
 							    			<s:text name="compteUser.modifTopo"/>
 							    		</s:a>							
 									</li>
 									<li class="nav-item active">
-							    		<s:a action="go_chercherTopo" namespace="/jsp/utilisateur">
+							    		<s:a action="go_chercherTopo" namespace="/jsp/utilisateur"  cssClass="nav-link">
 							    			<s:text name="compteUser.supprTopo"/>
 							    		</s:a>							
 									</li>							
