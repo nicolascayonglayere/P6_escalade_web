@@ -73,45 +73,28 @@ public class CoordonneeUtilisateurDaoImpl extends AbstractDAO implements Coordon
 	}
 
 	@Override
-	public CoordonneeUtilisateur updateAdresse(CoordonneeUtilisateur pCoordonneeUtilisateur) {
-		String vSQL = "UPDATE coordonnee_utilisateur SET adresse_postale = :adresse WHERE id_coordonnee = :id_coordonnee";
+	public CoordonneeUtilisateur update(CoordonneeUtilisateur pCoordonneeUtilisateur) throws CoordonneeUtilisateurException {
+		String vSQL = "UPDATE coordonnee_utilisateur SET email = :email, adresse_postale = :adresse WHERE id_coordonnee = :id_coordonnee";
 		System.out.println("CTRL DAO : "+pCoordonneeUtilisateur.getId());
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
 		vParams.addValue("id_coordonnee", pCoordonneeUtilisateur.getId(), Types.INTEGER);
+		vParams.addValue("email", pCoordonneeUtilisateur.getEmail(), Types.VARCHAR);
 		vParams.addValue("adresse", pCoordonneeUtilisateur.getAdresse(), Types.VARCHAR);
 	    
 	    try {
 	        vJdbcTemplate.update(vSQL, vParams);
-	    } catch (Exception vEx) {
-	        System.out.println("ERREUR pseudo=" + pCoordonneeUtilisateur.getUtilisateur().getPseudo());
+	    } catch (DuplicateKeyException vEx) {
+	        System.out.println("l'email existe deja" + pCoordonneeUtilisateur.getEmail());
 	        vEx.printStackTrace();
-	        return pCoordonneeUtilisateur;
+	        throw new CoordonneeUtilisateurException("l'email existe deja : " + pCoordonneeUtilisateur.getEmail());
 	    }
     
 		return pCoordonneeUtilisateur;
 	}
-
-	@Override
-	public CoordonneeUtilisateur updateEmail(CoordonneeUtilisateur pCoordonneeUtilisateur) {
-		String vSQL = "UPDATE coordonnee_utilisateur SET email = :email WHERE id_coordonnee = :id_coordonnee";
-		System.out.println("CTRL DAO : "+pCoordonneeUtilisateur.getId());
-		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
-		MapSqlParameterSource vParams = new MapSqlParameterSource();
-		vParams.addValue("id_coordonnee", pCoordonneeUtilisateur.getId(), Types.INTEGER);
-		vParams.addValue("email", pCoordonneeUtilisateur.getAdresse(), Types.VARCHAR);
-	    
-	    try {
-	        vJdbcTemplate.update(vSQL, vParams);
-	    } catch (Exception vEx) {
-	        System.out.println("ERREUR pseudo=" + pCoordonneeUtilisateur.getUtilisateur().getPseudo());
-	        vEx.printStackTrace();
-	        return pCoordonneeUtilisateur;
-	    }
-    
-		return pCoordonneeUtilisateur;
-	}
-	
+	/**
+	 * Méthode pour obtenir les {@link CoordonneeUtilisateur} de l {@link Utilisateur} donné en paramètre dans la base de donnée
+	 */
 	@Override
 	public CoordonneeUtilisateur find(Utilisateur pAuteur) {
 		String vSQL = "SELECT * FROM coordonnee_utilisateur WHERE id_utilisateur = :id_utilisateur ";

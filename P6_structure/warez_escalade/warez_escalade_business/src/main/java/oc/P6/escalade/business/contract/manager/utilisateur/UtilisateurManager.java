@@ -72,18 +72,11 @@ import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 	    ArrayList<Utilisateur> getListModo() throws UtilisateurException;
 	    
 	    /**
-	     * Modifie l'{@link Utilisateur} donné en paramètre
-	     * @param pUtilisateur
-	     * @return {@link} modifié
-	     */
-	    Utilisateur modifierPseudoUtilisateur(Utilisateur pUtilisateur);
-	    
-	    /**
-	     * Modifie le mot de passe de l'{@link Utilisateur} donné en paramètre (cryptage en bdd)
+	     * Modifie le {@link Utilisateur} donné en paramètre 
 	     * @param pUtilisateur
 	     * @return {@link Utilisateur}
 	     */
-	    Utilisateur modifierPassUtilisateur(Utilisateur pUtilisateur);
+	    Utilisateur modifierUtilisateur(Utilisateur pUtilisateur) throws UtilisateurException;
 	    
 	    /**
 	     * Banni l'{@link Utilisateur} donné en paramètre (modifie son role)
@@ -95,6 +88,7 @@ import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 	    /**
 	     * Modifie le role de {@link Utilisateur} donné en paramètre
 	     * @param pUtilisateur
+	     * @throws UtilisateurException 
 	     */
-	    void modifierRoleUtilisateur(Utilisateur pUtilisateur);
+	    void modifierRoleUtilisateur(Utilisateur pUtilisateur) throws UtilisateurException;
 }

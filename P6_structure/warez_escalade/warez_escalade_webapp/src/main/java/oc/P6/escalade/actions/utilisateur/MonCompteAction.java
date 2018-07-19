@@ -28,7 +28,7 @@ public class MonCompteAction extends ActionSupport implements SessionAware{
 	private ManagerFactory managerFactory;
 	private Utilisateur utilisateur;
 	private String pseudo;
-	private String role;
+	//private String role;
 	private ArrayList<TopoEmprunt> listTopoEmprunt;
 	private CoordonneeUtilisateur coordonneeUtilisateur;
 	private ArrayList<Topo> listTopoConstr;
@@ -68,15 +68,16 @@ public class MonCompteAction extends ActionSupport implements SessionAware{
 		this.coordonneeUtilisateur = coordonneeUtilisateur;
 	}
 
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
-	}
+	//public String getRole() {
+	//	return role;
+	//}
+    //
+	//public void setRole(String role) {
+	//	this.role = role;
+	//}
 
 	public String execute() {
+		int idRole = 0;
 		String username1 = ((Utilisateur) session.get("utilisateur")).getPseudo();
 		System.out.println("Compte de "+username1);
 		utilisateur = (Utilisateur) session.get("utilisateur");
@@ -94,8 +95,8 @@ public class MonCompteAction extends ActionSupport implements SessionAware{
 			e.printStackTrace();
 			return ActionSupport.INPUT;
 		}
-		role = utilisateur.getRole();
-		if(role.equals("administrateur"))
+		idRole = utilisateur.getId_Role();
+		if(idRole == 1) {
 			try {
 				listTopoConstr = managerFactory.getTopoManager().getListTopoConstr(utilisateur.getPseudo());
 			} catch (UtilisateurException e) {
@@ -103,7 +104,8 @@ public class MonCompteAction extends ActionSupport implements SessionAware{
 				e.printStackTrace();
 				return ActionSupport.INPUT;
 			}
-		if(role.equals("moderateur"))
+		}
+		if(idRole == 2)
 			listCommentaire = managerFactory.getCommentaireTopoManager().getListCommentaireTopo();
 		System.out.println("Compte : "+username1+" - "+utilisateur.getRole()+" - "+utilisateur.getNom()+" - "+listTopoEmprunt.size()+" - "+coordonneeUtilisateur.getEmail());
 		return SUCCESS;

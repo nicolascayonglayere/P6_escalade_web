@@ -64,62 +64,28 @@ public class ModifierUserAction extends ActionSupport implements SessionAware {
 		utilisateur.setCoordonnee(coordonneeUtilisateur);
 		coordonneeUtilisateur.setIdUtilisateur(vUser.getId());
 		coordonneeUtilisateur.setId(vUser.getCoordonnee().getId());
-		
-		if (!(utilisateur.getPseudo().equals(vUser.getPseudo()))) {
-			utilisateur = managerFactory.getUtilisateurManager().modifierPseudoUtilisateur(utilisateur);
-			if(!(utilisateur.getPseudo().equals(vUser.getPseudo()))) {
-				addActionMessage("Votre pseudo a été modifié.");
-				vResult = ActionSupport.SUCCESS;
-			}
-			else {
-				addFieldError("utilisateur.pseudo", "Veuillez choisir un autre pseudo.");
-				vResult = ActionSupport.INPUT;
-			}
-			
-		}
-		
-		if(!(utilisateur.getPassword().equals(vUser.getPassword()))) {
-			utilisateur = managerFactory.getUtilisateurManager().modifierPassUtilisateur(utilisateur);
-			if(!(utilisateur.getPassword().equals(vUser.getPassword()))) {
-				addActionMessage("Votre mot de passe a été modifié.");
-				vResult = ActionSupport.SUCCESS;
-			}
-			else {
-				addFieldError("utilisateur.password", "Veuillez choisir un autre mot de passe.");
-				vResult = ActionSupport.INPUT;
-			}
-		}
-		
-		if(!(utilisateur.getCoordonnee().getEmail().equals(vUser.getCoordonnee().getEmail()))) {
-			coordonneeUtilisateur = managerFactory.getCoordonneeUtilisateurManager().modifierEmail(coordonneeUtilisateur);
-			if(!(coordonneeUtilisateur.getEmail().equals(vUser.getCoordonnee().getEmail()))) {
-				utilisateur.setCoordonnee(coordonneeUtilisateur);
-				addActionMessage("Votre email a bien été modifié.");
-				vResult = ActionSupport.SUCCESS;
-			}
-			else {
-				addFieldError("coordonneeUtilisateur.email", "Cet email existe déja.");
-				vResult = ActionSupport.INPUT;
-			}
-			
-		}
-		
-		if(!(utilisateur.getCoordonnee().getAdresse().equals(vUser.getCoordonnee().getAdresse()))) {
-			coordonneeUtilisateur = managerFactory.getCoordonneeUtilisateurManager().modifierAdresse(coordonneeUtilisateur);
-			utilisateur.setCoordonnee(coordonneeUtilisateur);
-			addActionMessage("Votre adresse a bien été modifiée.");
-			vResult = ActionSupport.SUCCESS;
-		}
-		
-		if(vResult.equals("INPUT"))
-			addActionMessage("Aucunes modifications enregistrées");
-		else {
+
+		try {
+			utilisateur = managerFactory.getUtilisateurManager().modifierUtilisateur(utilisateur);
+			coordonneeUtilisateur = managerFactory.getCoordonneeUtilisateurManager().modifier(coordonneeUtilisateur);
 			utilisateur.setNom(vUser.getNom());
 			utilisateur.setPrenom(vUser.getPrenom());
 			utilisateur.setRole(vUser.getRole());
 			utilisateur.setId_Role(vUser.getId_Role());
 			session.remove("utilisateur");
 			session.put("utilisateur", utilisateur);
+			addActionMessage("Vos modifications ont bien été enregistrées");
+			vResult = ActionSupport.SUCCESS;
+		} catch (UtilisateurException e) {
+			addActionMessage(e.getMessage());
+			addFieldError("utilisateur.pseudo", e.getMessage());
+			e.printStackTrace();
+			vResult = ActionSupport.INPUT;
+		} catch (CoordonneeUtilisateurException ex) {
+			addActionMessage(ex.getMessage());
+			addFieldError("coordonneeUtilisateur.email", ex.getMessage());
+			ex.printStackTrace();
+			vResult = ActionSupport.INPUT;
 		}
 		
 		System.out.println(vResult);

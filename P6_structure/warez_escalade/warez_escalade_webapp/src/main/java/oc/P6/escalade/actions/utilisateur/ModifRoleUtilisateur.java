@@ -40,16 +40,15 @@ public class ModifRoleUtilisateur extends ActionSupport {
 		System.out.println(checkMe+" - "+selectedRole);
 		try {
 			utilisateur = managerFactory.getUtilisateurManager().getUtilisateur(checkMe);
+			utilisateur.setId_Role(selectedRole);
+			managerFactory.getUtilisateurManager().modifierRoleUtilisateur(utilisateur);
+			addActionMessage("Vous avez modifier le role de l'utilisateur "+utilisateur.getPseudo());
+			return ActionSupport.SUCCESS;
 		} catch (UtilisateurException e) {
 			addActionMessage(e.getMessage());
 			e.printStackTrace();
 			return ActionSupport.INPUT;
 		}
-		utilisateur.setId_Role(selectedRole);
-		
-		managerFactory.getUtilisateurManager().modifierRoleUtilisateur(utilisateur);
-		addActionMessage("Vous avez modifier le role de l'utilisateur "+utilisateur.getPseudo());
-		return ActionSupport.SUCCESS;
 	}
 
 	public ManagerFactory getManagerFactory() {

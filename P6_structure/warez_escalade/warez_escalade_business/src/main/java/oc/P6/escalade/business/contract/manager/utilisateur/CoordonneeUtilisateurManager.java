@@ -32,14 +32,7 @@ public interface CoordonneeUtilisateurManager {
 	 * @param pCoordinneeUtilisateur
 	 * @return les {@link CoordonneeUtilisateur} modifiée
 	 */
-	CoordonneeUtilisateur modifierAdresse(CoordonneeUtilisateur pCoordonneeUtilisateur);
-	
-	/**
-	 * Modifie l'email des {@link CoordonneeUtilisateur} donnée en paramètre
-	 * @param pCoordonneeUtilisateur
-	 * @return les {@link CoordonneeUtilisateur} modifiée
-	 */
-	CoordonneeUtilisateur modifierEmail(CoordonneeUtilisateur pCoordonneeUtilisateur);
+	CoordonneeUtilisateur modifier(CoordonneeUtilisateur pCoordonneeUtilisateur) throws CoordonneeUtilisateurException;
 	
 	/**
 	 * Supprimme les {@link CoordonneeUtilisateur} donnee en parametre

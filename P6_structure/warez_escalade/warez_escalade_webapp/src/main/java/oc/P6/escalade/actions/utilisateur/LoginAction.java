@@ -60,6 +60,7 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
 		Utilisateur vUser;
 		try {
 			vUser = managerFactory.getUtilisateurManager().getUtilisateur(utilisateur.getPseudo());
+			System.out.println("mdp : "+vUser.getPassword());
 			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 			if(!(vUser.getRole().equals("banni"))) {

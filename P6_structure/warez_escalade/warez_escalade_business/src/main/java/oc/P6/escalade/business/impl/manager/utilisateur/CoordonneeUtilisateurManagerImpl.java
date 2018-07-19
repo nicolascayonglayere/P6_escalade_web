@@ -104,9 +104,10 @@ public class CoordonneeUtilisateurManagerImpl extends AbstractDAOManager impleme
 	
 	/**
 	 * Méthode pour modifier {@link CoordonneeUtilisateur} donnée en paramètre
+	 * @throws CoordonneeUtilisateurException 
 	 */
 	@Override
-	public CoordonneeUtilisateur modifierAdresse (CoordonneeUtilisateur pCoordonneeUtilisateur) {
+	public CoordonneeUtilisateur modifier (CoordonneeUtilisateur pCoordonneeUtilisateur) throws CoordonneeUtilisateurException {
 		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
 		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		vDefinition.setTimeout(30); // 30 secondes
@@ -115,52 +116,16 @@ public class CoordonneeUtilisateurManagerImpl extends AbstractDAOManager impleme
         coordonneeDao = (CoordonneeUtilisateurDaoImpl) daoFactory.getCoordonneeUtilisateurDao();
         System.out.println("CTRL coord "+pCoordonneeUtilisateur.getEmail()+" - "+pCoordonneeUtilisateur.getId());
 		try {
-
-			coordonnee = coordonneeDao.updateAdresse(pCoordonneeUtilisateur);
-			
-		    TransactionStatus vTScommit = vTransactionStatus;
-		    vTransactionStatus = null;
-		    platformTransactionManager.commit(vTScommit);
+			coordonnee = coordonneeDao.update(pCoordonneeUtilisateur);
+			TransactionStatus vTScommit = vTransactionStatus;
+			vTransactionStatus = null;
+			platformTransactionManager.commit(vTScommit);
+		}catch (CoordonneeUtilisateurException e) {
+			e.printStackTrace();
+			throw new CoordonneeUtilisateurException(e.getMessage());
 		}finally {
 			if (vTransactionStatus != null) { 
 				platformTransactionManager.rollback(vTransactionStatus);
-				try {
-					throw new Exception("Coordonnee non trouvé : id=" + pCoordonneeUtilisateur.getId());
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
-		
-		return (CoordonneeUtilisateur) coordonnee;
-	}
-
-	@Override
-	public CoordonneeUtilisateur modifierEmail(CoordonneeUtilisateur pCoordonneeUtilisateur) {
-		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
-		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
-		vDefinition.setTimeout(30); // 30 secondes
-        TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
-   
-        coordonneeDao = (CoordonneeUtilisateurDaoImpl) daoFactory.getCoordonneeUtilisateurDao();
-        System.out.println("CTRL coord "+pCoordonneeUtilisateur.getEmail()+" - "+pCoordonneeUtilisateur.getId());
-		try {
-
-			coordonnee = coordonneeDao.updateEmail(pCoordonneeUtilisateur);
-			
-		    TransactionStatus vTScommit = vTransactionStatus;
-		    vTransactionStatus = null;
-		    platformTransactionManager.commit(vTScommit);
-		}finally {
-			if (vTransactionStatus != null) { 
-				platformTransactionManager.rollback(vTransactionStatus);
-				try {
-					throw new Exception("Coordonnee non trouvé : id=" + pCoordonneeUtilisateur.getId());
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 			}
 		}
 		

@@ -77,30 +77,31 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 	}
 
 	@Override
-	public Utilisateur updatePass(Utilisateur pUtilisateur) {
-		String vSQL = "UPDATE utilisateur SET password_utilisateur = :password WHERE id_utilisateur = :id_utilisateur";
+	public Utilisateur update(Utilisateur pUtilisateur) throws UtilisateurException {
+		String vSQL = "UPDATE utilisateur SET pseudo = :pseudo, password_utilisateur = :password, id_role = :id_role WHERE id_utilisateur = :id_utilisateur";
 		
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
+		vParams.addValue("pseudo", pUtilisateur.getPseudo(), Types.VARCHAR);
 		vParams.addValue("password", pUtilisateur.getPassword(), Types.VARCHAR);
 		vParams.addValue("id_utilisateur", pUtilisateur.getId(), Types.INTEGER);
+		vParams.addValue("id_role", pUtilisateur.getId_Role(), Types.INTEGER);
 	    
 	    try {
 	        vJdbcTemplate.update(vSQL, vParams);
 	    } catch (DuplicateKeyException vEx) {
-	        System.out.println("Le mot de passe existe déjà ! pseudo=" + pUtilisateur.getPseudo());
-	        
-	        return pUtilisateur;
+	        System.out.println("Le pseudo existe déjà ! pseudo=" + pUtilisateur.getPseudo());
+	        vEx.printStackTrace();
+	        throw new UtilisateurException("Le pseudo existe deja ! pseudo=" + pUtilisateur.getPseudo());
 	    }    
 	    
 		return pUtilisateur;
 	}
 
 	@Override
-	public Utilisateur find(String pPseudo) {
+	public Utilisateur find(String pPseudo) {//--id_role ?
 		String vSQL = "SELECT * FROM utilisateur INNER JOIN role_utilisateur ON utilisateur.id_role = role_utilisateur.id_role WHERE pseudo = :pseudo ";
-		
-		//JdbcTemplate vJdbcTemplate = new JdbcTemplate(getDataSource());
+
         NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
         vParams.addValue("pseudo", pPseudo, Types.VARCHAR);
@@ -196,46 +197,5 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 		
 		return user;
 	}
-	/**
-	 *Méthode pour modifier le role de {@link Utilisateur} donné en paramètre dans la base de donnée 
-	 */
-	@Override
-	public boolean updateRole(Utilisateur pUtilisateur) {
-		String vSQL = "UPDATE utilisateur SET id_role = :id_role WHERE id_utilisateur = :id_utilisateur";
-		
-		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
-		MapSqlParameterSource vParams = new MapSqlParameterSource();
-		vParams.addValue("id_utilisateur", pUtilisateur.getId(), Types.INTEGER);
-		vParams.addValue("id_role",pUtilisateur.getId_Role(), Types.INTEGER);
-	    
-	    try {
-	        vJdbcTemplate.update(vSQL, vParams);
-	    } catch (Exception vEx) {
-	        System.out.println("Erreur de mise a jour du role ! pseudo=" + pUtilisateur.getPseudo());
-	        vEx.printStackTrace();
-	        return false;
-	    }    
-	    
-		return true;
-	}
 
-	@Override
-	public Utilisateur updatePseudo(Utilisateur pUtilisateur) {
-		String vSQL = "UPDATE utilisateur SET pseudo = :pseudo WHERE id_utilisateur = :id_utilisateur";
-		
-		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
-		MapSqlParameterSource vParams = new MapSqlParameterSource();
-		vParams.addValue("pseudo", pUtilisateur.getPseudo(), Types.VARCHAR);
-		vParams.addValue("id_utilisateur", pUtilisateur.getId(), Types.INTEGER);
-	    
-	    try {
-	        vJdbcTemplate.update(vSQL, vParams);
-	    } catch (DuplicateKeyException vEx) {
-	        System.out.println("Le pseudo existe déjà ! pseudo=" + pUtilisateur.getPseudo());
-	        return pUtilisateur;
-	    }    
-	    
-		return pUtilisateur;
-	}
-	
 }

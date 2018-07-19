@@ -29,25 +29,12 @@ public interface UtilisateurManagerDAO {
 	boolean delete (Utilisateur pUtilisateur) throws UtilisateurException;
 	
 	/**
-	 * Méthode pour modifier le mot de passe de {@link Utilisateur} donné en paramètre dans la base de donnée
+	 * Méthode pour modifier {@link Utilisateur} donné en paramètre dans la base de donnée
 	 * @param pUtilisateur
 	 * @return {@link} modifié
+	 * @throws UtilisateurException 
 	 */
-	Utilisateur updatePass (Utilisateur pUtilisateur);
-	
-	/**
-	 * Méthode pour modifier le pseudo du {@link Utilisateur} donné en paramètre dans la base de donnée
-	 * @param pUtilisateur
-	 * @return
-	 */
-	Utilisateur updatePseudo (Utilisateur pUtilisateur);
-	
-	/**
-	 * Méthode pour modifier le role de {@link Utilisateur} donné en paramètre dans la base de donnée
-	 * @param pUtilisateur
-	 * @return
-	 */
-	boolean updateRole(Utilisateur pUtilisateur);
+	Utilisateur update (Utilisateur pUtilisateur) throws UtilisateurException;
 	
 	/**
 	 * Méthode pour obtenir un {@link Utilisateur} avec son pseudo donné en paramètre dans la base de donnée

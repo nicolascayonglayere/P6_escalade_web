@@ -31,15 +31,9 @@ public interface CoordonneeUtilisateurDao {
 	 * Méthode pour modifier l'adresse des {@link Coordonneeutilisateur} données en paramètre dans la base de donnée
 	 * @param pCoordonneeUtilisateur
 	 * @return les {@link CoordonneeUtilisateur} modifiées dans la base de donnée
+	 * @throws CoordonneeUtilisateurException 
 	 */
-	CoordonneeUtilisateur updateAdresse (CoordonneeUtilisateur pCoordonneeUtilisateur);
-	
-	/**
-	 * Méthode pour modifier l'email des {@link Coordonneeutilisateur} données en paramètre dans la base de donnée
-	 * @param pCoordonneeUtilisateur
-	 * @return les {@link CoordonneeUtilisateur} modifiées dans la base de donnée
-	 */
-	CoordonneeUtilisateur updateEmail (CoordonneeUtilisateur pCoordonneeUtilisateur);
+	CoordonneeUtilisateur update (CoordonneeUtilisateur pCoordonneeUtilisateur) throws CoordonneeUtilisateurException;
 	
 	/**
 	 * Méthode pour obtenir les {@link Coordonneeutilisateur} de {@link Utilisateur} donné en paramètre dans la base de donnée
