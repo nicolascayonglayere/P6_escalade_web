@@ -2,6 +2,7 @@ package oc.P6.escalade.actions.topo;
 
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.inject.Inject;
 
@@ -32,6 +33,8 @@ public class SupprimerTopo extends ActionSupport {
 	private ArrayList<Site> listSite;
 	private ArrayList<Secteur> listSecteur;
 	private ArrayList<Voie> listVoie;
+	private HashMap<Integer,String> listSiteSelect = new HashMap<Integer, String>();
+	private HashMap<Integer,String> listSecteurSelect = new HashMap<Integer, String>();
 	
 	public String execute() {
 		GestionFichierProperties gfp = new GestionFichierProperties();
@@ -66,12 +69,18 @@ public class SupprimerTopo extends ActionSupport {
 		System.out.println(checkMe);
 		try {
 			topo = managerFactory.getTopoManager().getTopo(checkMe);
+	
 			listSite = managerFactory.getSiteManager().getSite(topo);
 			for(Site si : listSite) {
+				listSiteSelect.put(si.getId(), si.getNomSite());
 				listSecteur = managerFactory.getSecteurManager().getListSecteur(si);
-				for (Secteur se : listSecteur)
+				for (Secteur se : listSecteur) {
 					listVoie = managerFactory.getVoieManager().getListVoie(se);
+					se.setListVoie(listVoie);
+					listSecteurSelect.put(se.getId(), se.getNomSecteur());
+				}
 			}
+			
 			addActionMessage("Vous avez sélectionner le topo :  "+topo.getNomTopo()+".");
 			return ActionSupport.SUCCESS;
 		} catch (TopoException e1) {
@@ -148,5 +157,22 @@ public class SupprimerTopo extends ActionSupport {
 	public void setListVoie(ArrayList<Voie> listVoie) {
 		this.listVoie = listVoie;
 	}
+
+	public HashMap<Integer,String> getListSiteSelect() {
+		return listSiteSelect;
+	}
+
+	public void setListSiteSelect(HashMap<Integer,String> listSiteSelect) {
+		this.listSiteSelect = listSiteSelect;
+	}
+
+	public HashMap<Integer,String> getListSecteurSelect() {
+		return listSecteurSelect;
+	}
+
+	public void setListSecteurSelect(HashMap<Integer,String> listSecteurSelect) {
+		this.listSecteurSelect = listSecteurSelect;
+	}
+
 
 }

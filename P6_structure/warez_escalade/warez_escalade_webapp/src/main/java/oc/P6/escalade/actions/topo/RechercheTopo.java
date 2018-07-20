@@ -42,11 +42,13 @@ public class RechercheTopo extends ActionSupport implements ServletRequestAware{
 				System.out.println("recherche "+topo.getNomTopo());
 				listTopo = managerFactory.getTopoManager().rechercheTopo(topo.getNomTopo());
 				for (Topo t : listTopo)
-				listSite.addAll(managerFactory.getSiteManager().getSite(t));
+					listSite.addAll(managerFactory.getSiteManager().getSite(t));
 				for(Site si : listSite)
 					listSecteur.addAll(managerFactory.getSecteurManager().getListSecteur(si));
-				for(Secteur se : listSecteur)
-					listVoie.addAll(managerFactory.getVoieManager().getListVoie(se));
+				for(Secteur se : listSecteur) {
+					listVoie = managerFactory.getVoieManager().getListVoie(se);
+					se.setListVoie(listVoie);
+				}
 				System.out.println(listTopo.size());
 				return ActionSupport.SUCCESS;
 			} catch (SiteException e3) {

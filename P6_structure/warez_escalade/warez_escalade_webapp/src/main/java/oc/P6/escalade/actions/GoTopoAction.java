@@ -39,7 +39,7 @@ public class GoTopoAction extends ActionSupport implements ServletResponseAware{
 	private String imageId;
 	private String repoId;
 	private ArrayList<Site> listSite;
-	private ArrayList<Secteur> listSecteur;
+	private ArrayList<Secteur> listSecteur = new ArrayList<Secteur>();
 	private ArrayList<Voie> listVoie;
 	private ArrayList<String>listImage;
 	private ArrayList<CommentaireTopo> listCommentaire;
@@ -145,9 +145,11 @@ public class GoTopoAction extends ActionSupport implements ServletResponseAware{
     		//System.out.println(imageId);        	
         	listSite = (ArrayList<Site>) managerFactory.getSiteManager().getSite(topo);
         	for (Site s : listSite) {
-        		listSecteur = (ArrayList<Secteur>) managerFactory.getSecteurManager().getListSecteur(s);
-        		for (Secteur sect : listSecteur) 
+        		listSecteur.addAll((ArrayList<Secteur>) managerFactory.getSecteurManager().getListSecteur(s));
+        		for (Secteur sect : listSecteur) { 
         			listVoie = (ArrayList<Voie>) managerFactory.getVoieManager().getListVoie(sect);
+        			sect.setListVoie(listVoie);
+        		}
         	}
         	listCommentaire = managerFactory.getCommentaireTopoManager().getListValid(topo.getId());
 

@@ -1,6 +1,7 @@
 package oc.P6.escalade.actions.topo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -34,9 +35,9 @@ public class CreerVoie extends ActionSupport implements SessionAware {
 	private Site site;
 	private int id;
 	private int selectedSecteur;
-	private ArrayList<Secteur> listSecteur;
+	private HashMap<Integer, String> listSecteur = new HashMap<Integer, String>();
 	private Map<String, Object> session;
-	private ArrayList<Site> listSite;
+	private HashMap<Integer, String> listSite = new HashMap<Integer, String>();
 	
 	public Voie getVoie() {
 		return voie;
@@ -80,9 +81,18 @@ public class CreerVoie extends ActionSupport implements SessionAware {
 			voie.setSecteur(secteur);
 			System.out.println(voie.getNomVoie()+" - "+voie.getCotation());
 			voie = managerFactory.getVoieManager().creerVoie(voie);
-			listSite = managerFactory.getSiteManager().getSite(topo);
-			for(Site s : listSite)
-				listSecteur = managerFactory.getSecteurManager().getListSecteur(s);
+			
+			for (Site s : managerFactory.getSiteManager().getSite(topo)) {
+				listSite.put(s.getId(), s.getNomSite());
+				for (Secteur se : managerFactory.getSecteurManager().getListSecteur(s)) {
+					listSecteur.put(se.getId(), se.getNomSecteur());
+				}
+			}
+			
+			
+			//listSite = managerFactory.getSiteManager().getSite(topo);
+			//for(Site s : listSite)
+			//	setListSecteur(managerFactory.getSecteurManager().getListSecteur(s));
 			addActionMessage("La voie "+voie.getNomVoie()+" a bien été créee.");
 			return ActionSupport.SUCCESS;			
 		}catch (SiteException e3) {
@@ -111,9 +121,15 @@ public class CreerVoie extends ActionSupport implements SessionAware {
 			this.session.put("topo", topo);
 			secteur = managerFactory.getSecteurManager().getSecteur(selectedSecteur);
 			this.session.put("secteur", secteur);
-			listSite = managerFactory.getSiteManager().getSite(topo);
-			for(Site s : listSite)
-				listSecteur = managerFactory.getSecteurManager().getListSecteur(s);
+			for (Site s : managerFactory.getSiteManager().getSite(topo)) {
+				listSite.put(s.getId(), s.getNomSite());
+				for (Secteur se : managerFactory.getSecteurManager().getListSecteur(s)) {
+					listSecteur.put(se.getId(), se.getNomSecteur());
+				}
+			}
+			//listSite = managerFactory.getSiteManager().getSite(topo);
+			//for(Site s : listSite)
+			//	setListSecteur(managerFactory.getSecteurManager().getListSecteur(s));
 			return ActionSupport.SUCCESS;			
 		}catch (TopoException e2) {
 			addActionMessage(e2.getMessage());
@@ -178,24 +194,26 @@ public class CreerVoie extends ActionSupport implements SessionAware {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public ArrayList<Secteur> getListSecteur() {
-		return listSecteur;
-	}
-	public void setListSecteur(ArrayList<Secteur> listSecteur) {
-		this.listSecteur = listSecteur;
-	}
+
 	public int getSelectedSecteur() {
 		return selectedSecteur;
 	}
 	public void setSelectedSecteur(int selectedSecteur) {
 		this.selectedSecteur = selectedSecteur;
 	}
-	public ArrayList<Site> getListSite() {
+	public HashMap<Integer, String> getListSecteur() {
+		return listSecteur;
+	}
+	public void setListSecteur(HashMap<Integer, String> listSecteur) {
+		this.listSecteur = listSecteur;
+	}
+	public HashMap<Integer, String> getListSite() {
 		return listSite;
 	}
-	public void setListSite(ArrayList<Site> listSite) {
+	public void setListSite(HashMap<Integer, String> listSite) {
 		this.listSite = listSite;
 	}
+
 	
 
 }

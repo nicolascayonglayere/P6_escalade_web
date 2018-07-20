@@ -1,5 +1,7 @@
 package oc.P6.escalade.model.bean.topo;
 
+import java.util.ArrayList;
+
 import javax.inject.Named;
 
 import oc.P6.escalade.model.contract.topo.IntSecteur;
@@ -16,6 +18,7 @@ public class Secteur implements IntSecteur {
 		private Site site;
 		private String description;
 		private String image;
+		private ArrayList<Voie> listVoie;
 		
 		/**
 		 * Constructeurs
@@ -72,6 +75,14 @@ public class Secteur implements IntSecteur {
 		public void setNomSecteur(String pNom) {
 			this.nomSecteur = pNom;
 			
+		}
+
+		public ArrayList<Voie> getListVoie() {
+			return listVoie;
+		}
+
+		public void setListVoie(ArrayList<Voie> listVoie) {
+			this.listVoie = listVoie;
 		}
 		
 		

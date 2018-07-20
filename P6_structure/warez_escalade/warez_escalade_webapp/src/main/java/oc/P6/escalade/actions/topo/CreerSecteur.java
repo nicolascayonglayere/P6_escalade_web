@@ -1,6 +1,7 @@
 package oc.P6.escalade.actions.topo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -33,8 +34,8 @@ public class CreerSecteur extends ActionSupport implements SessionAware {
 	private String nomTopo, nomSite;
 	private int selectedSite;
 	private int id;
-	private ArrayList<Site> listSite;
-	private ArrayList<Secteur> listSecteur;
+	private HashMap<Integer, String> listSite = new HashMap<Integer, String>();
+	private HashMap<Integer, String> listSecteur = new HashMap<Integer, String>();
 	private Map<String, Object> session;
 	
 	public Secteur getSecteur() {
@@ -70,9 +71,13 @@ public class CreerSecteur extends ActionSupport implements SessionAware {
 			System.out.println(site.getId());
 			secteur.setSite(site);
 			secteur = managerFactory.getSecteurManager().creerSecteur(secteur);
-			listSite = managerFactory.getSiteManager().getSite(topo);
-			for(Site s : listSite)
-				setListSecteur(managerFactory.getSecteurManager().getListSecteur(s));
+			//listSite = managerFactory.getSiteManager().getSite(topo);
+			for(Site s : managerFactory.getSiteManager().getSite(topo)) {
+				listSite.put(s.getId(), s.getNomSite());
+				for (Secteur se : managerFactory.getSecteurManager().getListSecteur(s))
+					listSecteur.put(se.getId(), se.getNomSecteur());
+			}			
+				
 			//secteur = managerFactory.getSecteurManager().getSecteur(secteur.getNomSecteur(), site);
 			addActionMessage("Le secteur "+secteur.getNomSecteur()+" a bien été crée.");
 			session.put("secteur", secteur);
@@ -137,23 +142,19 @@ public class CreerSecteur extends ActionSupport implements SessionAware {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public ArrayList<Site> getListSite() {
-		return listSite;
-	}
-	public void setListSite(ArrayList<Site> listSite) {
-		this.listSite = listSite;
-	}
+
 	public int getSelectedSite() {
 		return selectedSite;
 	}
 	public void setSelectedSite(int selectedSite) {
 		this.selectedSite = selectedSite;
 	}
-	public ArrayList<Secteur> getListSecteur() {
+	public HashMap<Integer, String> getListSecteur() {
 		return listSecteur;
 	}
-	public void setListSecteur(ArrayList<Secteur> listSecteur) {
+	public void setListSecteur(HashMap<Integer, String> listSecteur) {
 		this.listSecteur = listSecteur;
 	}
+
 	
 }
