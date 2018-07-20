@@ -77,11 +77,7 @@ public class CreerSecteur extends ActionSupport implements SessionAware {
 			addActionMessage("Le secteur "+secteur.getNomSecteur()+" a bien été crée.");
 			session.put("secteur", secteur);
 			return ActionSupport.SUCCESS;			
-		}catch (TopoException e2) {
-			addActionMessage(e2.getMessage());
-			e2.printStackTrace();
-			return ActionSupport.INPUT;
-		} catch (SiteException e3) {
+		}catch (SiteException e3) {
 			addActionMessage(e3.getMessage());
 			e3.printStackTrace();
 			return ActionSupport.INPUT;

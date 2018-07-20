@@ -85,17 +85,17 @@ public class CreerVoie extends ActionSupport implements SessionAware {
 				listSecteur = managerFactory.getSecteurManager().getListSecteur(s);
 			addActionMessage("La voie "+voie.getNomVoie()+" a bien été créee.");
 			return ActionSupport.SUCCESS;			
-		}catch (TopoException e2) {
-			addActionMessage(e2.getMessage());
-			e2.printStackTrace();
-			return ActionSupport.INPUT;
-		} catch (SiteException e3) {
+		}catch (SiteException e3) {
 			addActionMessage(e3.getMessage());
 			e3.printStackTrace();
 			return ActionSupport.INPUT;
 		} catch (VoieException e5) {
 			addActionMessage (e5.getMessage());
 			e5.printStackTrace();
+			return ActionSupport.INPUT;
+		} catch (SecteurException e7) {
+			addActionMessage (e7.getMessage());
+			e7.printStackTrace();
 			return ActionSupport.INPUT;
 		} 
 

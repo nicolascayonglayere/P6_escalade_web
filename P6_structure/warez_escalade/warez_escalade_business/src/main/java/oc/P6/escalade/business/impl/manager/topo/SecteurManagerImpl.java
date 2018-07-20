@@ -46,7 +46,7 @@ public class SecteurManagerImpl extends AbstractDAOManager implements SecteurMan
 	 * @throws SiteException 
 	 */
 	@Override
-	public ArrayList<Secteur> getListSecteur(Site pSite) throws SiteException {
+	public ArrayList<Secteur> getListSecteur(Site pSite) throws SecteurException {
 		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
 		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		vDefinition.setTimeout(30); // 30 secondes
@@ -58,10 +58,12 @@ public class SecteurManagerImpl extends AbstractDAOManager implements SecteurMan
 		    TransactionStatus vTScommit = vTransactionStatus;
 		    vTransactionStatus = null;
 		    platformTransactionManager.commit(vTScommit);
+		    if (!(listSecteur.size()>0))
+		    	throw new SecteurException("Aucun secteur pour le site : "+pSite.getNomSite());
 		}finally {
 			if (vTransactionStatus != null) {
 				platformTransactionManager.rollback(vTransactionStatus);
-				throw new SiteException("Le site n'existe pas. "+pSite.getNomSite());
+				
 			} 			
 		}
 		return listSecteur;

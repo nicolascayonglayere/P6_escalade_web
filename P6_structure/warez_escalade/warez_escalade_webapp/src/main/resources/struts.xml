@@ -424,6 +424,10 @@
 		</action>
 		
 		<!--Toutes les actions de suppression de topo/site/secteur/voie -->
+		<action name="modif_suppression_topo" class="oc.P6.escalade.actions.topo.SupprimerTopo" method="input">
+			<result>/jsp/admin/modif_suppression_topo.jsp</result>
+		</action>
+		
 		<action name="supprimerTopo" class="oc.P6.escalade.actions.topo.SupprimerTopo" method="execute">
 			<result name="success" type="redirectAction">
 				<param name="actionName">accueil</param>

@@ -18,8 +18,9 @@ public interface SecteurManager {
 	 * @param pSite
 	 * @return la liste des {@link Secteur}
 	 * @throws SiteException 
+	 * @throws SecteurException 
 	 */
-	ArrayList<Secteur> getListSecteur(Site pSite) throws SiteException;
+	ArrayList<Secteur> getListSecteur(Site pSite) throws SecteurException;
 	
 	/**
 	 * Retourne le {@link Secteur} nommé pNom du {@link Site} donné en paramètre

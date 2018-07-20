@@ -19,8 +19,9 @@ public interface VoieManager {
 	 * @param pSecteur
 	 * @return la liste des {@link Voie} du {@link Secteur} pSecteur
 	 * @throws SecteurException 
+	 * @throws VoieException 
 	 */
-	ArrayList<Voie> getListVoie(Secteur pSecteur) throws SecteurException;
+	ArrayList<Voie> getListVoie(Secteur pSecteur) throws VoieException;
 	
 	/**
 	 * Renvoie la {@link Voie} du {@link Secteur} donné en paramètre

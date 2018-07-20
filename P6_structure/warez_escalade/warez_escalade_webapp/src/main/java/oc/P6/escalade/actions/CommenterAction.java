@@ -23,6 +23,7 @@ import oc.P6.escalade.model.bean.exception.CommentaireTopoException;
 import oc.P6.escalade.model.bean.exception.SecteurException;
 import oc.P6.escalade.model.bean.exception.SiteException;
 import oc.P6.escalade.model.bean.exception.TopoException;
+import oc.P6.escalade.model.bean.exception.VoieException;
 import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
@@ -112,10 +113,6 @@ public class CommenterAction extends ActionSupport implements SessionAware{
 	    		for (Secteur sect : listSecteur) 
 	    			setListVoie((ArrayList<Voie>) managerFactory.getVoieManager().getListVoie(sect));
 	    	}
-		} catch (TopoException e2) {
-			addActionMessage(e2.getMessage());
-			e2.printStackTrace();
-			return ActionSupport.INPUT;
 		} catch (SiteException e3) {
 			addActionMessage(e3.getMessage());
 			e3.printStackTrace();
@@ -123,6 +120,10 @@ public class CommenterAction extends ActionSupport implements SessionAware{
 		} catch (SecteurException e4) {
 			addActionMessage(e4.getMessage());
 			e4.printStackTrace();
+			return ActionSupport.INPUT;
+		} catch (VoieException e5) {
+			addActionMessage(e5.getMessage());
+			e5.printStackTrace();
 			return ActionSupport.INPUT;
 		}
 

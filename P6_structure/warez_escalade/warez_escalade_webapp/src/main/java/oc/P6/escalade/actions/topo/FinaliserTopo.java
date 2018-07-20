@@ -14,6 +14,7 @@ import oc.P6.escalade.model.bean.commentaire.CommentaireTopo;
 import oc.P6.escalade.model.bean.exception.SecteurException;
 import oc.P6.escalade.model.bean.exception.SiteException;
 import oc.P6.escalade.model.bean.exception.TopoException;
+import oc.P6.escalade.model.bean.exception.VoieException;
 import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
@@ -78,6 +79,10 @@ public class FinaliserTopo extends ActionSupport implements SessionAware {
 		} catch (SecteurException e3) {
 			addActionMessage(e3.getMessage());
 			e3.printStackTrace();
+			return ActionSupport.INPUT;
+		} catch (VoieException e4) {
+			addActionMessage(e4.getMessage());
+			e4.printStackTrace();
 			return ActionSupport.INPUT;
 		}
 

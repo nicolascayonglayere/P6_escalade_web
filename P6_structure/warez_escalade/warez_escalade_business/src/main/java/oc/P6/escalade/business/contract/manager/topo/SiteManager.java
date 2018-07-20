@@ -33,8 +33,9 @@ public interface SiteManager {
 	 * @param pTopo
 	 * @return la liste des {@link Site}
 	 * @throws TopoException 
+	 * @throws SiteException 
 	 */
-	ArrayList<Site> getSite (Topo pTopo) throws TopoException;
+	ArrayList<Site> getSite (Topo pTopo) throws SiteException;
 	
 	/**
 	 * Retourne le {@link Site} à partir de son id donné en paramètre

@@ -67,6 +67,7 @@ public class SiteManagerImpl extends AbstractDAOManager implements SiteManager{
 		    TransactionStatus vTScommit = vTransactionStatus;
 		    vTransactionStatus = null;
 		    platformTransactionManager.commit(vTScommit);
+		    
 		}finally {
 			if (vTransactionStatus != null) { 
 				platformTransactionManager.rollback(vTransactionStatus);
@@ -109,7 +110,7 @@ public class SiteManagerImpl extends AbstractDAOManager implements SiteManager{
 	 * @throws TopoException 
 	 */
 	@Override
-	public ArrayList<Site> getSite(Topo pTopo) throws TopoException {
+	public ArrayList<Site> getSite(Topo pTopo) throws SiteException {
 		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
 		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		vDefinition.setTimeout(30); // 30 secondes
@@ -122,10 +123,12 @@ public class SiteManagerImpl extends AbstractDAOManager implements SiteManager{
 		    TransactionStatus vTScommit = vTransactionStatus;
 		    vTransactionStatus = null;
 		    platformTransactionManager.commit(vTScommit);
+		    if (!(vSite.size()>0))
+		    	throw new SiteException ("Aucun site pour le topo : "+pTopo.getNomTopo());
 		}finally {
 			if (vTransactionStatus != null) { 
 				platformTransactionManager.rollback(vTransactionStatus);
-				throw new TopoException ("Le topo n'a aucun site. "+pTopo.getNomTopo());
+				
 			} 			
 		}
 

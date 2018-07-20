@@ -32,122 +32,22 @@
 				  		<s:param name="nomTopo">${topo.nomTopo}</s:param>
 				 	 </s:submit>
 				</s:form>
-					
-				<li>
-					<s:checkbox name="checkMe" fieldValue="%{#topo.nomTopo}" label="%{#topo.nomTopo+' '+#topo.auteur.pseudo}"/>
-				</li>
 				
-				<div class="row">
 				<s:if test="listTopo">
-				<div class="navbar navbar-expand-md navbar-light ">
-					<div class="container collapse navbar-collapse">
-						<ul class="navbar-nav mr-auto flex-column col-lg-4">
-							<li class="nav-item active">
-								<s:a action="ajouter_site" namespace="/jsp/utilisateur" cssClass="nav-link">
-									<s:param name="topo.nomTopo" value="topo.nomTopo"/>
-									<s:submit class="btn btn-default" value="%{getText('bouton.ajouterSite')}"/>
-								</s:a>						
-							</li>
-							<div class="dropdown-divider"></div>
-							<li class="nav-item active">
-								<s:form action="ajouter_secteur" namespace="/jsp/utilisateur" cssClass="nav-link">
-									<s:select name="selectedSite" label="%{getText('creerTopo.ajouterSecteur')}" list="listSite" size="1" listKey="id" listvalue="nomSite"/>							
-									<s:submit class="btn btn-default" value="%{getText('bouton.ajouterSecteur')}">
-										<s:param name="topo.nomTopo" value="topo.nomTopo"/>
-										<s:param name="id" value="%{#selectedSite}"/>								
-									</s:submit>
-								</s:form>						
-							</li>
-							<div class="dropdown-divider"></div>
-							<li class="nav-item active">					
-								<s:form action="ajouter_voie" namespace="/jsp/utilisateur" cssClass="nav-link">
-									<s:select name="selectedSecteur" label="%{getText('creerTopo.ajouterVoie')}" list="listSecteur" size="1" listKey="id" listvalue="%{listSecteur['secteur.nomSecteur']}"/>
-									<s:submit class="btn btn-default" value="%{getText('bouton.ajouterVoie')}">
-										<s:param name="topo.nomTopo" value="topo.nomTopo"/>
-										<s:param name="id" value="%{#selectedSecteur}"/>								
-									</s:submit>
-								</s:form>					
-							</li>
-							<div class="dropdown-divider"></div>
-							<li class="nav-item active">
-								<s:a action="ajouter_image" namespace="/jsp/utilisateur" cssClass="nav-link">
-									<s:param name="nomTopo" value="topo.nomTopo"/>
-									<s:submit class="btn btn-default" value="%{getText('bouton.ajouterImage')}"/>
-								</s:a>						
-							</li>
-						</ul>
-					</div>
-				</div>
+					<s:form action="modif_suppression_topo" namespace="/jsp/utilisateur">	
+						<s:iterator value="listTopo" var="topo">				
+							<p>
+								<s:checkbox name="checkMe" fieldValue="%{#topo.nomTopo}" label="%{#topo.nomTopo+' '+#topo.auteur.pseudo}"/>
+							</p>
+						</s:iterator>
+						<p>
+						<s:param name="nomTopo" value="topo.nomTopo"/>
+						<s:submit class="btn btn-default" value="%{getText('bouton.selectionner')}">
+							<s:param name="nomTopo" value="topo.nomTopo"/>
+						</s:submit>					
+						</p>
+					</s:form>
 				</s:if>
-				<div >
-					<s:iterator value="listTopo" var="topo">
-
-						<ul >
-							<s:a action="go_modifTopo" namespace="/jsp/utilisateur">
-								<s:text name="modifierTopo.topo"/> <s:property value="#topo.nomTopo"/>
-			                    <s:param name="nomTopo" value="nomTopo" />
-							</s:a>
-							<s:a action="supprimerTopo" namespace="/jsp/utilisateur">
-							  		<s:param name="nomTopo" value="topo.nomTopo"/>
-									<s:submit class="btn btn-default" value="%{getText('bouton.supprimer')}"/>
-							</s:a>
-							<ul>	
-							<s:text name="modifierTopo.titreSite"/>					
-							<s:iterator value="listSite" var="site">
-								<s:a action="go_modifSite" namespace="/jsp/utilisateur">
-										<s:text name="modifierTopo.site"/><s:property value="#site.nomSite"/>
-					                    <s:param name="nomSite" value="#site.nomSite" />
-					                    <s:param name="nomTopo" value="topo.nomTopo" />							
-								</s:a>
-								<s:a action="supprimerSite" namespace="/jsp/utilisateur">
-					                    <s:param name="nomSite" value="#site.nomSite" />
-					                    <s:param name="nomTopo" value="topo.nomTopo" />
-										<s:submit class="btn btn-default" value="%{getText('bouton.supprimer')}"/>
-								</s:a>														
-								<ul>
-									<s:text name="modifierTopo.titreSecteur"/>
-									<s:iterator value="listSecteur" var="secteur">
-										<s:a action="go_modifSecteur" namespace="/jsp/utilisateur">
-												<s:text name="modifierTopo.secteur"/><s:property value="#secteur.nomSecteur"/>
-							                    <s:param name="nomSecteur" value="#secteur.nomSecteur" />
-							                    <s:param name="nomSite" value="site.nomSite"/>
-							                    <s:param name="nomTopo" value="topo.nomTopo" />							
-										</s:a>
-										<s:a action="supprimerSecteur" namespace="/jsp/utilisateur">
-												<s:param name="nomSecteur" value="#secteur.nomSecteur" />
-							                    <s:param name="nomSite" value="site.nomSite" />
-							                    <s:param name="nomTopo" value="topo.nomTopo" />
-												<s:submit class="btn btn-default" value="%{getText('bouton.supprimer')}"/>
-										</s:a>									
-										<ul>
-											<s:text name="modifierTopo.titreVoie"/>
-											<s:iterator value="listVoie" var="voie">
-												<ul>
-												<s:a action="go_modifVoie" namespace="/jsp/utilisateur">
-														<s:text name="modifierTopo.voie"/> <s:property value="#voie.nomVoie"/>
-														<s:param name="nomVoie" value="#voie.nomVoie"/>
-									                    <s:param name="nomSecteur" value="secteur.nomSecteur" />
-									                    <s:param name="nomSite" value="site.nomSite"/>
-									                    <s:param name="nomTopo" value="topo.nomTopo" />							
-												</s:a>
-												<s:a action="supprimerVoie" namespace="/jsp/utilisateur">
-														<s:param name="nomVoie" value="#voie.nomVoie"/>
-														<s:param name="nomSecteur" value="secteur.nomSecteur" />
-									                    <s:param name="nomSite" value="site.nomSite" />
-									                    <s:param name="nomTopo" value="topo.nomTopo" />
-														<s:submit class="btn btn-default" value="%{getText('bouton.supprimer')}"/>
-												</s:a>											
-												</ul>										
-											</s:iterator>
-										</ul>
-									</s:iterator>
-								</ul>
-							</s:iterator>
-							</ul>
-						</ul>	
-					</s:iterator>
-				</div>
-				</div>
 			</div>		
 		</div>
 		

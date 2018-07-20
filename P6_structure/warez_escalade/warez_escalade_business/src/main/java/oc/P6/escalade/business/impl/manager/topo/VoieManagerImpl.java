@@ -41,9 +41,10 @@ public class VoieManagerImpl extends AbstractDAOManager implements VoieManager{
 	/**
 	 * Méthode pour obtenir la liste des {@link Voie} du {@link Secteur} donné en paramètre
 	 * @throws SecteurException 
+	 * @throws VoieException 
 	 */
 	@Override
-	public ArrayList<Voie> getListVoie(Secteur pSecteur) throws SecteurException {
+	public ArrayList<Voie> getListVoie(Secteur pSecteur) throws VoieException {
 		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
 		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		vDefinition.setTimeout(30); // 30 secondes
@@ -55,10 +56,11 @@ public class VoieManagerImpl extends AbstractDAOManager implements VoieManager{
 		    TransactionStatus vTScommit = vTransactionStatus;
 		    vTransactionStatus = null;
 		    platformTransactionManager.commit(vTScommit);
+			if (!(listVoie.size()>0))
+				throw new VoieException("Aucune voie pour le secteur : "+pSecteur.getNomSecteur());
 		}finally {
 			if (vTransactionStatus != null) { 
 				platformTransactionManager.rollback(vTransactionStatus);
-				throw new SecteurException("Le secteur n'existe pas. "+pSecteur.getNomSecteur());
 			} 			
 		}
 
