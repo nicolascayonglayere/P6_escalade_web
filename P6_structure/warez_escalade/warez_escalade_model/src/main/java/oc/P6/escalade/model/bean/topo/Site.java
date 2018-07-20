@@ -1,5 +1,7 @@
 package oc.P6.escalade.model.bean.topo;
 
+import java.util.ArrayList;
+
 import javax.inject.Named;
 
 import oc.P6.escalade.model.contract.topo.IntSite;
@@ -16,6 +18,7 @@ public class Site implements IntSite{
 	private String nomSite;
 	private Topo topo;
 	private String description;
+	private ArrayList<Secteur> listSecteur;
 	
 	/**
 	 * Constructeurs
@@ -68,6 +71,14 @@ public class Site implements IntSite{
 	@Override
 	public void setNomSite(String pNom) {
 		this.nomSite = pNom;		
+	}
+
+	public ArrayList<Secteur> getListSecteur() {
+		return listSecteur;
+	}
+
+	public void setListSecteur(ArrayList<Secteur> listSecteur) {
+		this.listSecteur = listSecteur;
 	}
 	
 	
