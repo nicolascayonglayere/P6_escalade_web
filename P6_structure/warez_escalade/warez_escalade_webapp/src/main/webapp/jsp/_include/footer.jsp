@@ -25,11 +25,11 @@
 					<s:text name="footer.inconnu"/>
 				</div>
 				<div class="col-lg-2">					
-					<!-- un bouton pour ouvrir la fenetre modale -->
-					<button id="btCo" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" data-backdrop="true">
-						<s:text name="footer.connexion" />
-					</button>
-					<%@include file="login.jsp" %>
+					<!-- un bouton pour ouvrir l'authentification -->
+					<s:a action="go_login" namespace="/">
+						<s:submit class="btn btn-default" value="%{getText('footer.connexion')}"/>
+					</s:a>
+					
 				</div>
 			</s:else>
 				<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 mt-2 mt-sm-5">
@@ -55,8 +55,3 @@
 
 </footer>
 
-	<!--<script type="text/javascript">
-    $('#btCo').click(function(){
-    	$('#myModal').modal('show');
-    });
-	</script>-->

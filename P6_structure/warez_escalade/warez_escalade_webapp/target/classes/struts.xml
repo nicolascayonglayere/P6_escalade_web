@@ -59,7 +59,11 @@
 			<result name="success">/jsp/index.jsp</result>
 		</action> 
 	
-		<!--   login action  -->		
+		<!--   login action  -->
+		<action name="go_login">
+			<result>/jsp/login.jsp</result>
+		</action>
+				
 		<action name="loginUser" class="oc.P6.escalade.actions.utilisateur.LoginAction" method="loginRegisterUser">
        	 	<interceptor-ref name="store">
 				<param name="operationMode">STORE</param>
