@@ -92,7 +92,7 @@
 								</s:a>														
 								<ul>
 									<s:text name="modifierTopo.titreSecteur"/>
-									<s:iterator value="listSecteur" var="secteur">
+									<s:iterator value="#site.listSecteur" var="secteur">
 										<s:a action="go_modifSecteur" namespace="/jsp/utilisateur">
 												<s:text name="modifierTopo.secteur"/><s:property value="#secteur.nomSecteur"/>
 							                    <s:param name="nomSecteur" value="#secteur.nomSecteur" />

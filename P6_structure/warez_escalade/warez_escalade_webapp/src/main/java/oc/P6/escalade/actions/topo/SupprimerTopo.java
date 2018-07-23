@@ -74,6 +74,7 @@ public class SupprimerTopo extends ActionSupport {
 			for(Site si : listSite) {
 				listSiteSelect.put(si.getId(), si.getNomSite());
 				listSecteur = managerFactory.getSecteurManager().getListSecteur(si);
+				si.setListSecteur(listSecteur);
 				for (Secteur se : listSecteur) {
 					listVoie = managerFactory.getVoieManager().getListVoie(se);
 					se.setListVoie(listVoie);
