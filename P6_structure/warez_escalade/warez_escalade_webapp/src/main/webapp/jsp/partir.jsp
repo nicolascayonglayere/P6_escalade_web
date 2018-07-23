@@ -56,7 +56,7 @@
 						<p>
 						<s:param name="nomTopo" value="topo.nomTopo"/>
 						<s:if test="#session.utilisateur">
-							<s:submit class="btn btn-default" value="%{getText('bouton.selectionner')}">
+							<s:submit class="btn btn-default" value="%{getText('bouton.emprunt')}">
 								<s:param name="nomTopo" value="topo.nomTopo"/>
 							</s:submit>					
 						</s:if>

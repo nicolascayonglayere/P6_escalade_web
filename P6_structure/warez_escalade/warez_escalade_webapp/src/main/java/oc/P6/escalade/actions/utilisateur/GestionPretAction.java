@@ -28,6 +28,7 @@ public class GestionPretAction extends ActionSupport implements SessionAware {
 	private Utilisateur utilisateur;
 	private TopoEmprunt topoEmprunt;
 	private Map<String, Object> session;
+	private String checkMe;
 	
 	public String retourner() {
 		utilisateur = (Utilisateur) session.get("utilisateur");
@@ -50,6 +51,8 @@ public class GestionPretAction extends ActionSupport implements SessionAware {
 		System.out.println("emprunt : "+nom);
 		utilisateur = (Utilisateur) session.get("utilisateur");
 		Topo vTopo;
+		if (checkMe != null)
+			nom = checkMe;
 		try {
 			vTopo = managerFactory.getTopoManager().getTopo(nom);
 			topoEmprunt = managerFactory.getTopoEmpruntManager().creerTopoEmprunt(vTopo, utilisateur);
@@ -110,6 +113,14 @@ public class GestionPretAction extends ActionSupport implements SessionAware {
 
 	public void setManagerFactory(ManagerFactory managerFactory) {
 		this.managerFactory = managerFactory;
+	}
+
+	public String getCheckMe() {
+		return checkMe;
+	}
+
+	public void setCheckMe(String checkMe) {
+		this.checkMe = checkMe;
 	}
 	
 	
