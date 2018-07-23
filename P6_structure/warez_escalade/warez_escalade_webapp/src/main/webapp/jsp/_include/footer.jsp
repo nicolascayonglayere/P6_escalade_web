@@ -3,7 +3,7 @@
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
 
 <footer class="footer container" >
-	<!--  <div class="container" >-->
+	<div class="container" >
 		<div class="fixed-bottom align-items-center" id="footer" >
 			<div class="row">
 			<s:if test="#session.utilisateur">
@@ -48,7 +48,7 @@
 				</hr>
 		
 		</div>
-	<!--  </div>-->
+	 </div>
     
 
 	  

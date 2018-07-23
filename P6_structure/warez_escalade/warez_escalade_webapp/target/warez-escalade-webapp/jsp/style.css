@@ -16,7 +16,7 @@ body
 	font-family: open_sansregular, Arial, Verdana, sans-serif;
 	margin: 0;
 	padding-top: 60px;
-	padding-bottom : 5000px;
+	padding-bottom : 50px;
 	/*background: url("../assets/images/imgFd.jpg") fixed;*/
 	background-color : #ffe28a; /*rgba (255,214,90,1);*/
 
@@ -26,7 +26,7 @@ body
 {
 	background-color : #ffe28a;
 	padding-top : 10px;
-	padding-bottom : 5000px;
+	padding-bottom : 90px;
 	
 }
 
@@ -41,7 +41,20 @@ body
 #menuTopUser
 {
 	background-color : rgba(243, 183,134,1);
-	top : 60px;
+	text-align : center;
+	/*display : flex;
+	flex-direction : column;
+	justify-content: center;*/
+	
+}
+
+#titreCompteUser
+{
+	margin :0;
+	padding : auto;
+	display : flex;
+	flex-direction : column;
+	justify-content: center;
 }
 
 #map, img {
@@ -58,6 +71,7 @@ body
 	background-color : rgba(243, 183,134,1);
 	padding-top : 5px;
 	padding-bottom : 5px;
+	padding-left : 25px;
 }
 
 #carouselMap

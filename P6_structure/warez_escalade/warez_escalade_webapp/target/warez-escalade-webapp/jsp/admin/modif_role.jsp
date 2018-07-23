@@ -43,10 +43,10 @@
 						</s:iterator>
 					</ul>
 					<!-- une selectBox pour definir le nouveau role -->
-					<s:select name="selectedRole" label="%{getText('modifRole.selectRole')}" list="listRole" size="1" listKey="id_role" listvalue="role"/>
+					<s:select name="selectedRole" label="%{getText('modifRole.selectRole')}" list="listRole" size="1" />
 					
 					<s:submit class="btn btn-default" value="%{getText('bouton.modifier')}">
-						<s:param name="id_role" value="%{#selectedRole}"/>				
+						<s:param name="id" value="%{#selectedRole}"/>				
 					</s:submit>	
 					<s:token/>			
 				</s:form>

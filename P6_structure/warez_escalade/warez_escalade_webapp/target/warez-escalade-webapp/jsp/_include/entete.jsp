@@ -16,7 +16,7 @@
 	      				<!--  </div>-->
 	      			
 			      		<div class="collapse navbar-collapse"  >
-				      		<ul class="navbar-nav mr-auto">
+				      		<ul class="navbar-nav mr-auto nav-fill">
 					     	   <li class="hidden"><a href="#page-top"></a></li>
 					     	   <li class="nav-item active">
 					     	   		<s:a action="lister_topo" namespace="/" cssClass="nav-link"><s:text name="entete.topo"/></s:a>

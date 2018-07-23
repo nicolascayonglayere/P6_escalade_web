@@ -19,19 +19,20 @@
 		<div id="blocPge">
 			<s:actionmessage/>
 			<div class="container">
-				<div class="navbar navbar-light col-lg-3">
+				<div class="navbar navbar-expand-md navbar-light ">
+					<div class="container ">
 					<div class="collapse navbar-collapse">
-						<ul class="navbar-nav mr-auto">
+						<ul class="navbar-nav mr-auto flex-column col-lg-4">
 							<li class="nav-item active">
-								<s:a action="ajouter_site" namespace="/jsp/utilisateur">
+								<s:a action="ajouter_site" namespace="/jsp/utilisateur"  cssClass="nav-link">
 									<s:param name="topo.nomTopo" value="topo.nomTopo"/>
 									<s:submit class="btn btn-default" value="%{getText('bouton.ajouterSite')}"/>
 								</s:a>						
 							</li>
 							<div class="dropdown-divider"></div>
 							<li class="nav-item active">
-								<s:form action="ajouter_secteur" namespace="/jsp/utilisateur">
-									<s:select name="selectedSite" label="%{getText('creerTopo.ajouterSecteur')}" list="listSite" size="1" listKey="id" listvalue="nomSite"/>							
+								<s:form action="ajouter_secteur" namespace="/jsp/utilisateur"  cssClass="nav-link">
+									<s:select name="selectedSite" label="%{getText('creerTopo.ajouterSecteur')}" list="listSite" size="1" />							
 									<s:submit class="btn btn-default" value="%{getText('bouton.ajouterSecteur')}">
 										<s:param name="topo.nomTopo" value="topo.nomTopo"/>
 										<s:param name="id" value="%{#selectedSite}"/>								
@@ -40,8 +41,8 @@
 							</li>
 							<div class="dropdown-divider"></div>
 							<li class="nav-item active">					
-								<s:form action="ajouter_voie" namespace="/jsp/utilisateur">
-									<s:select name="selectedSecteur" label="%{getText('creerTopo.ajouterVoie')}" list="listSecteur" size="1" listKey="id" listvalue="%{listSecteur['secteur.nomSecteur']}"/>
+								<s:form action="ajouter_voie" namespace="/jsp/utilisateur"  cssClass="nav-link">
+									<s:select name="selectedSecteur" label="%{getText('creerTopo.ajouterVoie')}" list="listSecteur" size="1" />
 									<s:submit class="btn btn-default" value="%{getText('bouton.ajouterVoie')}">
 										<s:param name="topo.nomTopo" value="topo.nomTopo"/>
 										<s:param name="id" value="%{#selectedSecteur}"/>								
@@ -50,15 +51,15 @@
 							</li>
 							<div class="dropdown-divider"></div>
 							<li class="nav-item active">
-								<s:a action="ajouter_image" namespace="/jsp/utilisateur">
-									<s:param name="topo.nomTopo" value="topo.nomTopo"/>
+								<s:a action="ajouter_image" namespace="/jsp/utilisateur"  cssClass="nav-link">
+									<s:param name="nomTopo" value="topo.nomTopo"/>
 									<s:submit class="btn btn-default" value="%{getText('bouton.ajouterImage')}"/>
 								</s:a>						
 							</li>
 							<s:if test="topo.construction">
 								<div class="dropdown-divider"></div>
 								<li class="nav-item active">
-									<s:a action="finaliser_topo" namespace="/jsp/utilisateur">
+									<s:a action="finaliser_topo" namespace="/jsp/utilisateur"  cssClass="nav-link">
 										<s:param name="nomTopo" value="topo.nomTopo"/>
 										<s:submit class="btn btn-default" value="%{getText('bouton.finaliser')}"/>
 									</s:a>						
@@ -66,9 +67,10 @@
 							</s:if>
 						</ul>
 					</div>
+					</div>
 				</div>
 				
-				<div class="col-lg-9 text-center">
+				<div class="col-lg-8 text-center">
 					<h1 id="titre"><s:text name="creerTopo.topo"/> <s:property value="topo.nomTopo"/></h1>
 					<h4 id="titre"><s:text name="creerTopo.site"/> <s:property value="site.nomSite"/></h4>
 					<h4 id="titre"><s:text name="creerTopo.secteur"/> <s:property value="secteur.nomSecteur"/></h4>

@@ -42,7 +42,7 @@
         <default-action-ref name="index" />
 
 		<global-results>
-			<result name="login">/jsp/_include/login.jsp</result>
+			<result name="login">/jsp/login.jsp</result>
 		</global-results>
 
 
@@ -75,8 +75,8 @@
 				<param name="actionName">accueil</param>
 				<param name="namespace">/</param>
 			</result>
-			<result name="login">/jsp/_include/login.jsp</result>
-			<result name="input">/jsp/_include/login.jsp</result>			
+			<result name="login">/jsp/login.jsp</result>
+			<result name="input">/jsp/login.jsp</result>			
 		</action>
 
 		<!-- home link action -->
@@ -156,6 +156,15 @@
         <!-- Action pour obtenir une image -->
    		<action name="ImageAction" class="oc.P6.escalade.actions.images.ImageAction">
 			<result name="success" type="imageResult"/>
+		</action>
+		
+		<!-- Actions pour recherche multi-criteres -->
+		<action name="partir_grimper" class="oc.P6.escalade.actions.PartirGrimper" method="input">
+			<result>/jsp/partir.jsp</result>
+		</action>
+		
+		<action name="rechMulti" class="oc.P6.escalade.actions.PartirGrimper" method="execute">
+			<result>/jsp/partir.jsp</result>
 		</action>
  	</package>
         

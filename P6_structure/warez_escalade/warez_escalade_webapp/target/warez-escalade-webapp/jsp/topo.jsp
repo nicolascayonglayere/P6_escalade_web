@@ -113,7 +113,7 @@
 												<th><s:text name="topo.description"/></th>
 											</tr>
 										</thead>
-											<s:iterator value="listVoie" var="voie">
+											<s:iterator value="#secteur.listVoie" var="voie">
 												<tr>
 											    	<td style="text-align:left;"><s:property value="#voie.nomVoie"/></td>
 											    	<td style="text-align:right;"><s:property value="#voie.cotation" /></td>
