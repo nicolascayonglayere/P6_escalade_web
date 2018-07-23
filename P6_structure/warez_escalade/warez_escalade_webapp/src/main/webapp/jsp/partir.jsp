@@ -28,7 +28,7 @@
 						<s:checkbox name="checkMeSecteur" label="%{getText('creerTopo.secteur')}"/>
 						<s:checkbox name="checkMeVoie" label="%{getText('modifierTopo.voie')}"/>
 					</div>
-					<s:textfield name="topo.nomTopo" placeholder="%{nomDuTopo}" label="%{getText('form.nomTopo')}" requiredLabel="true"/>
+					<s:textfield name="nom" placeholder="nom" label="%{getText('form.nomTopo')}" requiredLabel="true"/>
 					<s:text name="partir.difficulte"/>
 					<s:select name="selectedMin" label="%{getText('partir.minDiff')}" list="listDiff" size="1" />
 					<s:select name="selectedMax" label="%{getText('partir.maxDiff')}" list="listDiff" size="1" />
@@ -38,10 +38,19 @@
 				</s:form>
 				
 				<s:if test="listResultat">
-					<s:form action="modif_suppression_topo" namespace="/jsp/utilisateur">	
+					<s:form action="emprunt_topo" namespace="/jsp/utilisateur">	
 						<s:iterator value="listTopo" var="topo">				
 							<p>
 								<s:checkbox name="checkMe" fieldValue="%{#topo.nomTopo}" label="%{#topo.nomTopo+' '+#topo.auteur.pseudo}"/>
+								<s:iterator value="listSite" var="site">
+									<li><s:property value="#site.nomSite"/></li>
+									<s:iterator value="listSecteur" var="secteur">
+										<li><s:property value="#secteur.nomSecteur"/></li>
+										<s:iterator value="listVoie" var="voie">
+											<li><s:property value="#voie.nomVoie"/> <s:property value="#voie.cotation"/> <s:property value="#voie.description"/></li>											
+										</s:iterator>
+									</s:iterator>
+								</s:iterator>
 							</p>
 						</s:iterator>
 						<p>
@@ -51,6 +60,9 @@
 								<s:param name="nomTopo" value="topo.nomTopo"/>
 							</s:submit>					
 						</s:if>
+						<s:else>
+							<s:text name="emprunt.titre"></s:text>
+						</s:else>
 						</p>
 					</s:form>
 				</s:if>

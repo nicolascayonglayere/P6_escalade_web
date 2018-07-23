@@ -69,4 +69,13 @@ public interface TopoManagerDao {
 	 * @return la liste des {@link Topo}
 	 */
 	ArrayList<Topo> rechercherTopo(String pNom);
+	
+	/**
+	 * Méthode pour obtenir la liste des {@link Topo} de la base de donnée à partir d'un nom et d'un intervalle de difficulé donnés en paramètre
+	 * @param pNom
+	 * @param pDiffMin
+	 * @param pDiffMax
+	 * @return la liste des {@link Topo}
+	 */
+	ArrayList<Topo> rechercherMultiTopo(String pNom, String pDiffMin, String pDiffMax);
 }

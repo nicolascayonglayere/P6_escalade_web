@@ -2,7 +2,15 @@ package oc.P6.escalade.actions;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 import com.opensymphony.xwork2.ActionSupport;
+
+import oc.P6.escalade.business.contract.ManagerFactory;
+import oc.P6.escalade.model.bean.topo.Secteur;
+import oc.P6.escalade.model.bean.topo.Site;
+import oc.P6.escalade.model.bean.topo.Topo;
+import oc.P6.escalade.model.bean.topo.Voie;
 
 public class PartirGrimper extends ActionSupport {
 
@@ -10,8 +18,17 @@ public class PartirGrimper extends ActionSupport {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private ArrayList<String> listDiff= new ArrayList<String>() ;
-	
+	private ArrayList<String> listDiff= new ArrayList<String>();
+	private boolean checkMeTopo, checkMeSite, checkMeSecteur, checkMeVoie;
+	private ArrayList<Topo> listTopo;
+	private ArrayList<Site> listSite;
+	private ArrayList<Secteur> listSecteur;
+	private ArrayList<Voie> listVoie;
+	private ArrayList<Object> listResultat = new ArrayList<Object>();
+	private String nom;
+	private String selectedMin, selectedMax;
+	@Inject
+	private ManagerFactory managerFactory;
 	
 	
 	public String input() {
@@ -22,6 +39,14 @@ public class PartirGrimper extends ActionSupport {
 	}
 	
 	public String execute() {
+		System.out.println("rech multi : "+nom+" - "+selectedMin+" - "+checkMeTopo);
+		String vResult = "";
+		if (checkMeTopo) {
+			listTopo = new ArrayList<Topo>();
+			listTopo = managerFactory.getTopoManager().rechercheMultiTopo(nom, selectedMin, selectedMax);
+			listResultat.addAll(listTopo);
+		}
+		
 		return ActionSupport.SUCCESS;
 	}
 
@@ -31,6 +56,110 @@ public class PartirGrimper extends ActionSupport {
 
 	public void setListDiff(ArrayList<String> listDiff) {
 		this.listDiff = listDiff;
+	}
+
+	public boolean isCheckMeTopo() {
+		return checkMeTopo;
+	}
+
+	public void setCheckMeTopo(boolean checkMeTopo) {
+		this.checkMeTopo = checkMeTopo;
+	}
+
+	public boolean isCheckMeSite() {
+		return checkMeSite;
+	}
+
+	public void setCheckMeSite(boolean checkMeSite) {
+		this.checkMeSite = checkMeSite;
+	}
+
+	public boolean isCheckMeSecteur() {
+		return checkMeSecteur;
+	}
+
+	public void setCheckMeSecteur(boolean checkMeSecteur) {
+		this.checkMeSecteur = checkMeSecteur;
+	}
+
+	public boolean isCheckMeVoie() {
+		return checkMeVoie;
+	}
+
+	public void setCheckMeVoie(boolean checkMeVoie) {
+		this.checkMeVoie = checkMeVoie;
+	}
+
+	public ArrayList<Topo> getListTopo() {
+		return listTopo;
+	}
+
+	public void setListTopo(ArrayList<Topo> listTopo) {
+		this.listTopo = listTopo;
+	}
+
+	public ArrayList<Site> getListSite() {
+		return listSite;
+	}
+
+	public void setListSite(ArrayList<Site> listSite) {
+		this.listSite = listSite;
+	}
+
+	public ArrayList<Secteur> getListSecteur() {
+		return listSecteur;
+	}
+
+	public void setListSecteur(ArrayList<Secteur> listSecteur) {
+		this.listSecteur = listSecteur;
+	}
+
+	public ArrayList<Voie> getListVoie() {
+		return listVoie;
+	}
+
+	public void setListVoie(ArrayList<Voie> listVoie) {
+		this.listVoie = listVoie;
+	}
+
+	public ManagerFactory getManagerFactory() {
+		return managerFactory;
+	}
+
+	public void setManagerFactory(ManagerFactory managerFactory) {
+		this.managerFactory = managerFactory;
+	}
+
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public String getSelectedMin() {
+		return selectedMin;
+	}
+
+	public void setSelectedMin(String selectedMin) {
+		this.selectedMin = selectedMin;
+	}
+
+	public String getSelectedMax() {
+		return selectedMax;
+	}
+
+	public void setSelectedMax(String selectedMax) {
+		this.selectedMax = selectedMax;
+	}
+
+	public ArrayList<Object> getListResultat() {
+		return listResultat;
+	}
+
+	public void setListResultat(ArrayList<Object> listResultat) {
+		this.listResultat = listResultat;
 	}
 
 

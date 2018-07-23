@@ -1,5 +1,7 @@
 package oc.P6.escalade.model.bean.topo;
 
+import java.util.ArrayList;
+
 import javax.inject.Named;
 
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
@@ -22,6 +24,7 @@ public class Topo implements IntTopo{
 	private String description;
 	private int nbreEx;
 	private boolean construction;
+	private ArrayList<Site> listSite;
 	private int nombreSite, nombreSecteur, nombreVoie;
 	
 	
@@ -139,6 +142,14 @@ public class Topo implements IntTopo{
 	@Override
 	public void setConstruction(boolean pConstruction) {
 		this.construction = pConstruction;
+	}
+
+	public ArrayList<Site> getListSite() {
+		return listSite;
+	}
+
+	public void setListSite(ArrayList<Site> listSite) {
+		this.listSite = listSite;
 	}
 	
 	

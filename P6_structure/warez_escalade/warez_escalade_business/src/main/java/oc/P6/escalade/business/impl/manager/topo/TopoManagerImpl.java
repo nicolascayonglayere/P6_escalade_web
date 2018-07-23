@@ -17,7 +17,10 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 import oc.P6.escalade.business.contract.manager.AbstractDAOManager;
 import oc.P6.escalade.business.contract.manager.topo.TopoManager;
 import oc.P6.escalade.consumer.DAO.DAOFactory;
+import oc.P6.escalade.consumer.DAO.contract.manager.topo.SecteurManagerDao;
+import oc.P6.escalade.consumer.DAO.contract.manager.topo.SiteManagerDAO;
 import oc.P6.escalade.consumer.DAO.contract.manager.topo.TopoManagerDao;
+import oc.P6.escalade.consumer.DAO.contract.manager.topo.VoieManagerDao;
 import oc.P6.escalade.model.bean.exception.SecteurException;
 import oc.P6.escalade.model.bean.exception.SiteException;
 import oc.P6.escalade.model.bean.exception.TopoException;
@@ -43,7 +46,10 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 	@Inject
 	private DAOFactory daoFactory;
 	
-	private TopoManagerDao topoDAO;// = (TopoDaoImpl) getDAOFactory().getTopoManagerDao();
+	private TopoManagerDao topoDAO;
+	private SiteManagerDAO siteDAO;
+	private SecteurManagerDao secteurDAO;
+	private VoieManagerDao voieDAO;
 	
 	@Inject
 	@Named("platformTransactionManager")
@@ -214,6 +220,43 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 		return listTopo;
 	}
 
+	@Override
+	public ArrayList<Topo> rechercheMultiTopo(String pNom, String pDiffMin, String pDiffMax) {
+		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
+		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+		vDefinition.setTimeout(30); // 30 secondes
+        TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
+        topoDAO = daoFactory.getTopoManagerDao();
+        siteDAO = daoFactory.getSiteManagerDao();
+        secteurDAO = daoFactory.getSecteurManagerDao();
+        voieDAO = daoFactory.getVoieManagerDao();
+		ArrayList<Topo>listTopo = new ArrayList<Topo>(); 
+		
+		try {
+			listTopo = topoDAO.rechercherTopo(pNom) ;
+			System.out.println("business recherche "+pNom+" - "+listTopo.size());
+			if(listTopo.size() > 0) {
+				ArrayList<Voie> listVoie = new ArrayList<Voie>();
+				for (Topo t : listTopo) {
+					t.setListSite(siteDAO.find(t.getNomTopo()));
+					for (Site si : t.getListSite()) {
+						si.setListSecteur(secteurDAO.getListeSecteur(si));
+						for (Secteur se : si.getListSecteur()) {
+							se.setListVoie(voieDAO.getlistVoie(se));
+							listVoie.addAll(voieDAO.rechercheDiffVoie(se.getId(), pDiffMin, pDiffMax));
+						}
+					}
+				}
+			}
+		    TransactionStatus vTScommit = vTransactionStatus;
+		    vTransactionStatus = null;
+		    platformTransactionManager.commit(vTScommit);
+		}finally {
+			if (vTransactionStatus != null) 
+				platformTransactionManager.rollback(vTransactionStatus); 			
+		}
+		return listTopo;
+	}
 
 	@Override
 	public void supprimerTopo(Topo pTopo) throws TopoException {
@@ -282,6 +325,32 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 	public void setTopo(IntTopo topo) {
 		this.topo = topo;
 	}
+
+	public SiteManagerDAO getSiteDAO() {
+		return siteDAO;
+	}
+
+	public void setSiteDAO(SiteManagerDAO siteDAO) {
+		this.siteDAO = siteDAO;
+	}
+
+	public SecteurManagerDao getSecteurDAO() {
+		return secteurDAO;
+	}
+
+	public void setSecteurDAO(SecteurManagerDao secteurDAO) {
+		this.secteurDAO = secteurDAO;
+	}
+
+	public VoieManagerDao getVoieDAO() {
+		return voieDAO;
+	}
+
+	public void setVoieDAO(VoieManagerDao voieDAO) {
+		this.voieDAO = voieDAO;
+	}
+
+
 
 
 }

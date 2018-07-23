@@ -184,6 +184,19 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 		return listeTopo;
 	}
 
+	@Override
+	public ArrayList<Topo> rechercherMultiTopo(String pNom, String pDiffMin, String pDiffMax) {
+		System.out.println("ctrl DAO "+pNom+" - "+pDiffMin);
+		ArrayList<Topo> vListTopo = new ArrayList<Topo>();
+		String vSQL = "SELECT * FROM topo WHERE topo.nom LIKE :nom";
+        NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
+		MapSqlParameterSource vParams = new MapSqlParameterSource();
+        vParams.addValue("nom", pNom+"%", Types.VARCHAR);	
+
+		vListTopo = (ArrayList<Topo>) vJdbcTemplate.query(vSQL, vParams, topoRowMapper);
+		return vListTopo;
+	}
+
 
 	
 }

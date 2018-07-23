@@ -55,9 +55,18 @@ public interface TopoManager {
 	/**
 	 * Retourne la liste des {@link Topo} à partir d'un nom donné  en paramètre
 	 * @param pNom
-	 * @return
+	 * @return liste des {@link Topo}
 	 */
 	ArrayList<Topo> rechercheTopo(String pNom);
+	
+	/**
+	 * Retourne la liste des {@link Topo} à partir d'un nom et d'un intervalle de difficulté donnés en paramètre
+	 * @param pNom
+	 * @param pDiffMin
+	 * @param pDiffMax
+	 * @returnla liste des {@link Topo}
+	 */
+	ArrayList<Topo> rechercheMultiTopo(String pNom, String pDiffMin, String pDiffMax);
 	
 	/**
 	 * Supprime le {@link Topo} donné en paramètre

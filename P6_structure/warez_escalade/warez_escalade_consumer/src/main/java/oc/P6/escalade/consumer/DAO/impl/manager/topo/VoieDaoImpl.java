@@ -154,4 +154,19 @@ public class VoieDaoImpl extends AbstractDAO implements VoieManagerDao{
 	
 	}
 
+	@Override
+	public ArrayList<Voie> rechercheDiffVoie(int pId, String pDiffMin, String pDiffMax) {
+		ArrayList<Voie> listVoie = new ArrayList<Voie>();
+		String vSQL = "SELECT * FROM voie WHERE id_secteur = :id_secteur AND cotation < :cotationMax AND cotation > :cotationMin";
+		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
+		MapSqlParameterSource vParams = new MapSqlParameterSource();
+		System.out.println(pId+" - "+pDiffMin);
+        vParams.addValue("id_secteur", pId, Types.INTEGER);
+        vParams.addValue("cotationMin", pDiffMin, Types.VARCHAR);
+        vParams.addValue("cotationMax", pDiffMax, Types.VARCHAR);
+        listVoie = (ArrayList<Voie>) vJdbcTemplate.query(vSQL, vParams, voieRowMapper);
+		return listVoie;
+
+	}
+
 }

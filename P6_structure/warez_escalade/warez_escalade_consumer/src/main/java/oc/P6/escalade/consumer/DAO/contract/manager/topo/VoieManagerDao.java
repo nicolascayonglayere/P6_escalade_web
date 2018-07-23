@@ -57,4 +57,12 @@ public interface VoieManagerDao {
 	 * @return la liste des {@link Voie}
 	 */
 	ArrayList<Voie> getlistVoie(Secteur pSecteur);
+	
+	/**
+	 * Méthode pour obtenir la liste des {@link Voie} du {@link Secteur} d'id pId dont la difficulté est donnée en paramètre dans la base de donné
+	 * @param pDiffMin
+	 * @param pDiffMax
+	 * @return la liste des {@link Voie}
+	 */
+	ArrayList<Voie> rechercheDiffVoie(int pId, String pDiffMin, String pDiffMax);
 }
