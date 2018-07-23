@@ -18,7 +18,7 @@ public class ModifRoleUtilisateur extends ActionSupport {
 	private ManagerFactory managerFactory;
 	private String checkMe;
 	private Utilisateur utilisateur;
-	private int id_role;
+	private int id;
 	private int selectedRole;
 	
 	public String getCheckMe() {
@@ -37,7 +37,7 @@ public class ModifRoleUtilisateur extends ActionSupport {
 	}
 	
 	public String execute() {
-		System.out.println(checkMe+" - "+selectedRole);
+		System.out.println(checkMe+" - "+selectedRole+" - "+id);
 		try {
 			utilisateur = managerFactory.getUtilisateurManager().getUtilisateur(checkMe);
 			utilisateur.setId_Role(selectedRole);
@@ -57,17 +57,17 @@ public class ModifRoleUtilisateur extends ActionSupport {
 	public void setManagerFactory(ManagerFactory managerFactory) {
 		this.managerFactory = managerFactory;
 	}
-	public int getId_role() {
-		return id_role;
-	}
-	public void setId_role(int id_role) {
-		this.id_role = id_role;
-	}
 	public int getSelectedRole() {
 		return selectedRole;
 	}
 	public void setSelectedRole(int selectedRole) {
 		this.selectedRole = selectedRole;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }

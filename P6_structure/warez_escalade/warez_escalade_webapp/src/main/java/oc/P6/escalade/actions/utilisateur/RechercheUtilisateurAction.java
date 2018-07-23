@@ -1,6 +1,8 @@
 package oc.P6.escalade.actions.utilisateur;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -23,7 +25,7 @@ public class RechercheUtilisateurAction extends ActionSupport {
 	private ArrayList<Utilisateur> listUtilisateur;
 	private Utilisateur utilisateur;
 	private ArrayList<TopoEmprunt> listTopoEmprunt;
-	private ArrayList<Role> listRole = new ArrayList<Role>();
+	private Map<Integer, String> listRole = new HashMap<Integer, String>();
 	
 	public ArrayList<Utilisateur> getListUtilisateur() {
 		return listUtilisateur;
@@ -58,7 +60,9 @@ public class RechercheUtilisateurAction extends ActionSupport {
 			e.printStackTrace();
 			return ActionSupport.INPUT;
 		}
-		listRole = managerFactory.getRoleManager().getListRole();
+		for(Role r : managerFactory.getRoleManager().getListRole()) {
+			listRole.put(r.getId_role(), r.getRole());
+		}
 		return ActionSupport.SUCCESS;
 	}
 
@@ -70,13 +74,15 @@ public class RechercheUtilisateurAction extends ActionSupport {
 		this.managerFactory = managerFactory;
 	}
 
-	public ArrayList<Role> getListRole() {
+	public Map<Integer, String> getListRole() {
 		return listRole;
 	}
 
-	public void setListRole(ArrayList<Role> listRole) {
+	public void setListRole(Map<Integer, String> listRole) {
 		this.listRole = listRole;
 	}
+
+
 
 
 }

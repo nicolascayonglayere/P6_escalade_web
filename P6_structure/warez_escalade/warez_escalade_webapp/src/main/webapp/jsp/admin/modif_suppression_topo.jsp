@@ -35,7 +35,7 @@
 								<li class="nav-item active">
 									<s:form action="ajouter_secteur" namespace="/jsp/utilisateur" cssClass="nav-link">
 										<s:if test="listSite">
-											<s:select name="selectedSite" label="%{getText('creerTopo.ajouterSecteur')}" list="listSiteSelect" size="1" listKey="id" listvalue="nomSite"/>							
+											<s:select name="selectedSite" label="%{getText('creerTopo.ajouterSecteur')}" list="listSiteSelect" size="1" />							
 										</s:if>
 										<s:submit class="btn btn-default" value="%{getText('bouton.ajouterSecteur')}">
 											<s:param name="topo.nomTopo" value="topo.nomTopo"/>
@@ -47,7 +47,7 @@
 								<li class="nav-item active">					
 									<s:form action="ajouter_voie" namespace="/jsp/utilisateur" cssClass="nav-link">
 										<s:if test="listSecteur">
-											<s:select name="selectedSecteur" label="%{getText('creerTopo.ajouterVoie')}" list="listSecteurSelect" size="1" listKey="id" listvalue="%{listSecteur['secteur.nomSecteur']}"/>
+											<s:select name="selectedSecteur" label="%{getText('creerTopo.ajouterVoie')}" list="listSecteurSelect" size="1" />
 										</s:if>
 										<s:submit class="btn btn-default" value="%{getText('bouton.ajouterVoie')}">
 											<s:param name="topo.nomTopo" value="topo.nomTopo"/>

@@ -32,7 +32,7 @@
 							<div class="dropdown-divider"></div>
 							<li class="nav-item active">
 								<s:form action="ajouter_secteur" namespace="/jsp/utilisateur"  cssClass="nav-link">
-									<s:select name="selectedSite" label="%{getText('creerTopo.ajouterSecteur')}" list="listSite" size="1" listKey="id" listvalue="nomSite"/>							
+									<s:select name="selectedSite" label="%{getText('creerTopo.ajouterSecteur')}" list="listSite" size="1" />							
 									<s:submit class="btn btn-default" value="%{getText('bouton.ajouterSecteur')}">
 										<s:param name="topo.nomTopo" value="topo.nomTopo"/>
 										<s:param name="id" value="%{#selectedSite}"/>								
@@ -42,7 +42,7 @@
 							<div class="dropdown-divider"></div>
 							<li class="nav-item active">					
 								<s:form action="ajouter_voie" namespace="/jsp/utilisateur"  cssClass="nav-link">
-									<s:select name="selectedSecteur" label="%{getText('creerTopo.ajouterVoie')}" list="listSecteur" size="1" listKey="id" listvalue="%{listSecteur['secteur.nomSecteur']}"/>
+									<s:select name="selectedSecteur" label="%{getText('creerTopo.ajouterVoie')}" list="listSecteur" size="1" />
 									<s:submit class="btn btn-default" value="%{getText('bouton.ajouterVoie')}">
 										<s:param name="topo.nomTopo" value="topo.nomTopo"/>
 										<s:param name="id" value="%{#selectedSecteur}"/>								
