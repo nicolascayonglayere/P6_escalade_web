@@ -1,11 +1,11 @@
 package oc.P6.escalade.model.bean.exception;
 
-import javax.inject.Named;
-
-import oc.P6.escalade.model.contract.exception.IntVoieException;
-
-//@Named
-public class VoieException extends Exception implements IntVoieException {
+/**
+ * Classe VoieException qui transporte les message d'exceptions concernant les {@link Voie}
+ * @author nicolas
+ *
+ */
+public class VoieException extends Exception {
 
 	/**
 	 * 

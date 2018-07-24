@@ -45,9 +45,8 @@ public class TopoEmpruntDaoImpl extends AbstractDAO implements TopoEmpruntDao{
 	        vJdbcTemplate.update(vSQL, vParams, keyHolder, new String[] { "id_topo_emprunt" });
 	        pTopoEmprunt.setId(keyHolder.getKey().intValue());
 	    } catch (DuplicateKeyException vEx) {
-	        System.out.println("Le topo ne peut etre emprunter 2 fois ! topo=" + pTopoEmprunt.getTopo().getNomTopo());
-	        //throw new TopoEmpruntException("Le topo ne peut etre emprunter 2 fois ! topo=" + pTopoEmprunt.getTopo().getNomTopo());
-	        return pTopoEmprunt;
+	        vEx.printStackTrace();
+	        throw new RuntimeException("Le topo ne peut etre emprunter 2 fois ! topo=" + pTopoEmprunt.getTopo().getNomTopo());	        
 	    }
 	    
 	    

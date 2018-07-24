@@ -74,6 +74,10 @@ public class GestionPretAction extends ActionSupport implements SessionAware {
 			addActionMessage(e.getMessage());
 			e.printStackTrace();
 			return ActionSupport.INPUT;
+		} catch (RuntimeException e1) {
+			addActionMessage(e1.getMessage());
+			e1.printStackTrace();
+			return ActionSupport.INPUT;
 		}
 
 	}

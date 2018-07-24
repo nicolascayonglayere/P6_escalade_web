@@ -25,7 +25,7 @@
     <column id="COL5" populated="true" UUID="e65b3ed8-2acb-4558-ac69-d5280aac0555" autoIncrement="false" autoIncrementSequenceName="utilisateur_pseudo_seq" defaultValue="" name="pseudo" nullable="0" physicalName="pseudo" precision="30" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
-    <column id="COL6" populated="true" UUID="d5a8eced-b9da-4b4b-a5e1-e0003f8cf448" autoIncrement="false" autoIncrementSequenceName="utilisateur_password_seq" defaultValue="" name="password" nullable="0" physicalName="password" precision="60" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL6" populated="true" UUID="d5a8eced-b9da-4b4b-a5e1-e0003f8cf448" autoIncrement="false" autoIncrementSequenceName="utilisateur_password_seq" defaultValue="" name="password_utilisateur" nullable="0" physicalName="password_utilisateur" precision="60" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
     <column id="COL7" populated="true" UUID="03499ab9-4a46-4a54-8cd3-4c34fba68dd2" autoIncrement="false" autoIncrementSequenceName="role_utilisateur_id_role_seq" defaultValue="" name="id_role" nullable="0" physicalName="id_role" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
@@ -48,7 +48,7 @@
     <column id="COL11" populated="true" UUID="11e98601-1d8f-4ac5-80c3-517dc7538655" autoIncrement="true" autoIncrementSequenceName="role_utilisateur_id_role_seq_1" defaultValue="" name="id_role" nullable="0" physicalName="id_role" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
      <remarks></remarks>
     </column>
-    <column id="COL12" populated="true" UUID="5b901e2f-9f81-44c1-b523-55ad52ff9782" autoIncrement="false" autoIncrementSequenceName="role_utilisateur_role_seq" defaultValue="" name="role" nullable="0" physicalName="role" precision="30" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL12" populated="true" UUID="5b901e2f-9f81-44c1-b523-55ad52ff9782" autoIncrement="false" autoIncrementSequenceName="role_utilisateur_role_seq" defaultValue="" name="role_utilisateur" nullable="0" physicalName="role_utilisateur" precision="30" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
     </folder>
@@ -313,7 +313,7 @@
    </relationship>
   </relationships>
  </target-database>
- <ddl-generator type="ca.sqlpower.architect.ddl.PostgresDDLGenerator" allow-connection="true" target-schema="public"> </ddl-generator>
+ <ddl-generator type="ca.sqlpower.architect.ddl.PostgresDDLGenerator" allow-connection="false" target-schema="public"> </ddl-generator>
  <liquibase-settings useSeparateChangeSets="false" generateId="false" idStart="1"/>
  <create-kettle-job-settings filePath="" jobName="" schemaName="" kettleJoinType="0" savingToFile="true" />
  <play-pen zoom="1.0" viewportX="0" viewportY="0" relationship-style="rectilinear" names-displayLogicalNames="true" showPrimaryTag="true" showForeignTag="true" showAlternateTag="true" columnVisibility="ALL" relationshipLabelVisibility="true">

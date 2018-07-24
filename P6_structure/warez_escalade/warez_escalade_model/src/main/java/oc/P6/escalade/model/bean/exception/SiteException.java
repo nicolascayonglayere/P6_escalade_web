@@ -1,11 +1,10 @@
 package oc.P6.escalade.model.bean.exception;
-
-import javax.inject.Named;
-
-import oc.P6.escalade.model.contract.exception.IntSiteException;
-
-//@Named
-public class SiteException extends Exception implements IntSiteException {
+/**
+ * Classe SiteException qui transporte les message d'exceptions concernant les {@link Site}
+ * @author nicolas
+ *
+ */
+public class SiteException extends Exception {
 
 	/**
 	 * 

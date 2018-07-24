@@ -109,7 +109,7 @@ CREATE TABLE public.topo_emprunt (
                 date_retrait DATE NOT NULL,
                 id_utilisateur INTEGER NOT NULL,
                 id_topo INTEGER NOT NULL,
-                CONSTRAINT topo_emprunt_pk PRIMARY KEY (id_topo_emprunt)
+                CONSTRAINT topo_emprunt_pk PRIMARY KEY (id_topo_emprunt, id_utilisateur, id_topo)
 );
 
 

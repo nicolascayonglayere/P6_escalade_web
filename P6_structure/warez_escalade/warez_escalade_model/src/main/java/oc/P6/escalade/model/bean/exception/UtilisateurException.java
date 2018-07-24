@@ -1,11 +1,11 @@
 package oc.P6.escalade.model.bean.exception;
 
-import javax.inject.Named;
-
-import oc.P6.escalade.model.contract.exception.IntUtilisateurException;
-
-//@Named
-public class UtilisateurException  extends Exception implements IntUtilisateurException {
+/**
+ * Classe UtilisateurException qui transporte les message d'exceptions concernant les {@link Utilisateur}
+ * @author nicolas
+ *
+ */
+public class UtilisateurException  extends Exception {
 
 	/**
 	 * 

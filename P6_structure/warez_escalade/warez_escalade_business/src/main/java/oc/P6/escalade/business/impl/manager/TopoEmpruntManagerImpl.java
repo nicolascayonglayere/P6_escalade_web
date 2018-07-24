@@ -128,35 +128,23 @@ public class TopoEmpruntManagerImpl extends AbstractDAOManager implements TopoEm
 			topoEmprunt.setDateRetour(cal.getTime());
 			topoEmprunt.setNom(topo.getNomTopo());
 			try {
-				
-				//ApplicationContext context = new ClassPathXmlApplicationContext("bootstrapContext.xml");
-				//topoEmprunt = (IntTopoEmprunt) context.getBean("topoEmprunt");
-
 				topoEmprunt = topoEmpruntDao.create((TopoEmprunt) topoEmprunt);
     			TransactionStatus vTScommit = vTransactionStatus;
     			vTransactionStatus = null;
     			platformTransactionManager.commit(vTScommit);
-    			//((AbstractApplicationContext)context).close();
+			}catch (RuntimeException e){
+				throw new RuntimeException("L'emprunt existe deja.");
+
     		}finally {
     			if (vTransactionStatus != null) { 
     				platformTransactionManager.rollback(vTransactionStatus);
-    				try {
-    					throw new Exception("L'emprunt existe deja.");
-    				} catch (Exception e) {
-    					// TODO Auto-generated catch block
-    					e.printStackTrace();
-    				}
+
     			} 			
     		}
 		}
 		else {
 			topoEmprunt = null;
-			try {
-				throw new Exception("Il n'y a plus d'exemplaire disponible");
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			throw new RuntimeException("Il n'y a plus d'exemplaire disponible");
 		}
 		return (TopoEmprunt) topoEmprunt;
 	}

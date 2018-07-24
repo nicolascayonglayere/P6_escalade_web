@@ -1,11 +1,11 @@
 package oc.P6.escalade.model.bean.exception;
 
-import javax.inject.Named;
-
-import oc.P6.escalade.model.contract.exception.IntCoordonneeUtilisateurException;
-
-//@Named
-public class CoordonneeUtilisateurException extends Exception implements IntCoordonneeUtilisateurException {
+/**
+ * Classe CoordonneUtilisateurException qui transporte les message d'exceptions concernant les {@link CoordonneeUtilisateur}
+ * @author nicolas
+ *
+ */
+public class CoordonneeUtilisateurException extends Exception{
 
 	/**
 	 * 

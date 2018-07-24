@@ -1,11 +1,11 @@
 package oc.P6.escalade.model.bean.exception;
 
-import javax.inject.Named;
-
-import oc.P6.escalade.model.contract.exception.IntCommentaireTopoException;
-
-//@Named
-public class CommentaireTopoException extends Exception implements IntCommentaireTopoException {
+/**
+ * Classe CommentaireTopoException qui transporte les message d'exceptions concernant les {@link CommentaireTopo}
+ * @author nicolas
+ *
+ */
+public class CommentaireTopoException extends Exception{
 
 	/**
 	 * 

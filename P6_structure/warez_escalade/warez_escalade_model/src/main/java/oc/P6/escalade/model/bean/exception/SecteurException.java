@@ -1,11 +1,11 @@
 package oc.P6.escalade.model.bean.exception;
 
-import javax.inject.Named;
-
-import oc.P6.escalade.model.contract.exception.IntSecteurException;
-
-//@Named
-public class SecteurException extends Exception implements IntSecteurException {
+/**
+ * Classe SecteurException qui transporte les message d'exceptions concernant les {@link Secteur}
+ * @author nicolas
+ *
+ */
+public class SecteurException extends Exception{
 
 	/**
 	 * 
