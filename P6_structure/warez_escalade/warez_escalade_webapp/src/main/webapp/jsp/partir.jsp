@@ -42,15 +42,9 @@
 						<s:iterator value="listTopo" var="topo">				
 							<p>
 								<s:checkbox name="checkMe" fieldValue="%{#topo.nomTopo}" label="%{#topo.nomTopo+' '+#topo.auteur.pseudo}"/>
-								<s:iterator value="#topo.listSite" var="site">
-									<li><s:property value="#site.nomSite"/></li>
-									<s:iterator value="#site.listSecteur" var="secteur">
-										<li><s:property value="#secteur.nomSecteur"/></li>
-										<s:iterator value="#secteur.listVoie" var="voie">
-											<li><s:property value="#voie.nomVoie"/> <s:property value="#voie.cotation"/> <s:property value="#voie.description"/></li>											
-										</s:iterator>
+									<s:iterator value="#topo.listVoie" var="voie">
+										<li><s:property value="#voie.nomVoie"/> <s:property value="#voie.cotation"/> <s:property value="#voie.description"/></li>											
 									</s:iterator>
-								</s:iterator>
 							</p>
 						</s:iterator>
 						<p>

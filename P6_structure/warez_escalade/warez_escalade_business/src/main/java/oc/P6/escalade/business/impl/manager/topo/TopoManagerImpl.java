@@ -241,97 +241,107 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 		
 		try {
 			listTopo = topoDAO.rechercheMultiTopo(pNom, pDiffMin, pDiffMax);
+			System.out.println("ctrl business multi 1 "+listTopo.size());
 			for (Topo t : listTopo) {
-				if (t.getListVoie().)
-			}
-			
-			
-			ArrayList<Voie> listVoie = new ArrayList<Voie>();
-			ArrayList<Secteur> listSecteur = new ArrayList<Secteur>();
-			ArrayList<Site> listSite = new ArrayList<Site>();
-			listVoie = voieDAO.rechercheDiffVoie(pDiffMin, pDiffMax);
-			if (listVoie.size() > 0) {
-				for (Voie v : listVoie) {
-					if(!(listSecteur.contains(secteurDAO.find(v.getSecteur().getId())))) {
-						listSecteur.add(secteurDAO.find(v.getSecteur().getId()));
-					}
-					//listSecteur = (ArrayList<Secteur>) listSecteur.stream().distinct().collect(Collectors.toList());
-				//Iterator<Secteur> iteratorSecteur = listSecteur.iterator();
-				//while (iteratorSecteur.hasNext()) {
-				//	Secteur se = iteratorSecteur.next();
-				//	if(se.getNomSecteur().equals(iteratorSecteur.next().getNomSecteur()))
-				//		iteratorSecteur.remove();
-				//}
-					for (Secteur se : listSecteur) {
-						if(!(listSite.contains(siteDAO.get(se.getSite().getId())))) {
-							listSite.add(siteDAO.get(se.getSite().getId()));
-						}
-						//listSite = (ArrayList<Site>) listSite.stream().distinct().collect(Collectors.toList());
-					//Iterator<Site> iteratorSite = listSite.iterator();
-					//while (iteratorSite.hasNext()) {
-					//	Site si = iteratorSite.next();
-					//	if(si.getNomSite().equals(iteratorSite.next().getNomSite()))
-					//		iteratorSite.remove();
-					//}
-						for (Site si : listSite) {
-							if(!(vlistTopoInt.contains(topoDAO.find(si.getTopo().getId())))) {
-								vlistTopoInt.add(topoDAO.find(si.getTopo().getId()));
-							}
-							//vlistTopoInt = (ArrayList<Topo>) vlistTopoInt.stream().distinct().collect(Collectors.toList());
-						//Iterator<Topo> iteratorTopo = vlistTopoInt.iterator();
-						//while (iteratorTopo.hasNext()) {
-						//	Topo t = iteratorTopo.next();
-						//	if(t.getNomTopo().equals(iteratorTopo.next().getNomTopo()))
-						//		iteratorTopo.remove();
-						//}
-						}
-					}
-					
+				System.out.println("ctrl business multi "+t.getId()+" - "+t.getListVoie().size());
+				if (t.getListVoie().size() == 0) {
+					throw new TopoException("Auncun résultat pour la recherche.");
 				}
-			
-				for (Topo t : vlistTopoInt) {
-					System.out.println("ctrl business multi "+t.getId());
-					for (Topo tDao : topoDAO.rechercherTopo(pNom)) {
-						if(tDao.getId() == (t.getId())) {
-							if(topoEmpruntManagerImpl.getNbExemplaire(t) > 0) {
-								ArrayList <Site> vlistSiteInt = new ArrayList<Site>();
-								for (Site s : listSite) {
-									if(s.getTopo().getId() == t.getId()) {							
-										vlistSiteInt.add(s);
-										t.setListSite(vlistSiteInt);
-										ArrayList<Secteur> vlistSecteurInt = new ArrayList<Secteur>();
-										for (Secteur se : listSecteur) {
-											if(se.getSite().getId() == s.getId()) {
-												vlistSecteurInt.add(se);
-												s.setListSecteur(vlistSecteurInt);
-												ArrayList<Voie> vlistVoieInt = new ArrayList<Voie>();
-												for (Voie v : listVoie) {
-													if(v.getSecteur().getId() == se.getId()) {
-														vlistVoieInt.add(v);
-														se.setListVoie(vlistVoieInt);
-													}
-												}
-											}
-										}
-									}							
-								}
-								listTopo.add(t);						
-							}
-							else
-								throw new TopoException("Il n'y a plus d'exemplaire disponible.");
-						}
-						else
-							throw new TopoException("Auncun résultat pour la recherche de topo.");
+				else {
+					if(topoEmpruntManagerImpl.getNbExemplaire(t) == 0) {
+						throw new TopoException("Il n'y a plus d'exemplaire disponible.");
 					}
-				}
-			}
 
-			else {
-				throw new TopoException("Auncun résultat pour la recherche.");
+				}
 			}
 		    TransactionStatus vTScommit = vTransactionStatus;
 		    vTransactionStatus = null;
 		    platformTransactionManager.commit(vTScommit);
+			
+	//ArrayList<Voie> listVoie = new ArrayList<Voie>();
+	//ArrayList<Secteur> listSecteur = new ArrayList<Secteur>();
+	//ArrayList<Site> listSite = new ArrayList<Site>();
+	//listVoie = voieDAO.rechercheDiffVoie(pDiffMin, pDiffMax);
+	//if (listVoie.size() > 0) {
+	//	for (Voie v : listVoie) {
+	//		if(!(listSecteur.contains(secteurDAO.find(v.getSecteur().getId())))) {
+	//			listSecteur.add(secteurDAO.find(v.getSecteur().getId()));
+	//		}
+	//		//listSecteur = (ArrayList<Secteur>) listSecteur.stream().distinct().collect(Collectors.toList());
+	//	//Iterator<Secteur> iteratorSecteur = listSecteur.iterator();
+	//	//while (iteratorSecteur.hasNext()) {
+	//	//	Secteur se = iteratorSecteur.next();
+	//	//	if(se.getNomSecteur().equals(iteratorSecteur.next().getNomSecteur()))
+	//	//		iteratorSecteur.remove();
+	//	//}
+	//		for (Secteur se : listSecteur) {
+	//			if(!(listSite.contains(siteDAO.get(se.getSite().getId())))) {
+	//				listSite.add(siteDAO.get(se.getSite().getId()));
+	//			}
+	//			//listSite = (ArrayList<Site>) listSite.stream().distinct().collect(Collectors.toList());
+	//		//Iterator<Site> iteratorSite = listSite.iterator();
+	//		//while (iteratorSite.hasNext()) {
+	//		//	Site si = iteratorSite.next();
+	//		//	if(si.getNomSite().equals(iteratorSite.next().getNomSite()))
+	//		//		iteratorSite.remove();
+	//		//}
+	//			for (Site si : listSite) {
+	//				if(!(vlistTopoInt.contains(topoDAO.find(si.getTopo().getId())))) {
+	//					vlistTopoInt.add(topoDAO.find(si.getTopo().getId()));
+	//				}
+	//				//vlistTopoInt = (ArrayList<Topo>) vlistTopoInt.stream().distinct().collect(Collectors.toList());
+	//			//Iterator<Topo> iteratorTopo = vlistTopoInt.iterator();
+	//			//while (iteratorTopo.hasNext()) {
+	//			//	Topo t = iteratorTopo.next();
+	//			//	if(t.getNomTopo().equals(iteratorTopo.next().getNomTopo()))
+	//			//		iteratorTopo.remove();
+	//			//}
+	//			}
+	//		}
+	//		
+	//	}
+	//
+	//	for (Topo t : vlistTopoInt) {
+	//		System.out.println("ctrl business multi "+t.getId());
+	//		for (Topo tDao : topoDAO.rechercherTopo(pNom)) {
+	//			if(tDao.getId() == (t.getId())) {
+	//				if(topoEmpruntManagerImpl.getNbExemplaire(t) > 0) {
+	//					ArrayList <Site> vlistSiteInt = new ArrayList<Site>();
+	//					for (Site s : listSite) {
+	//						if(s.getTopo().getId() == t.getId()) {							
+	//							vlistSiteInt.add(s);
+	//							t.setListSite(vlistSiteInt);
+	//							ArrayList<Secteur> vlistSecteurInt = new ArrayList<Secteur>();
+	//							for (Secteur se : listSecteur) {
+	//								if(se.getSite().getId() == s.getId()) {
+	//									vlistSecteurInt.add(se);
+	//									s.setListSecteur(vlistSecteurInt);
+	//									ArrayList<Voie> vlistVoieInt = new ArrayList<Voie>();
+	//									for (Voie v : listVoie) {
+	//										if(v.getSecteur().getId() == se.getId()) {
+	//											vlistVoieInt.add(v);
+	//											se.setListVoie(vlistVoieInt);
+	//										}
+	//									}
+	//								}
+	//							}
+	//						}							
+	//					}
+	//					listTopo.add(t);						
+	//				}
+	//				else
+	//					throw new TopoException("Il n'y a plus d'exemplaire disponible.");
+	//			}
+	//			else
+	//				throw new TopoException("Auncun résultat pour la recherche de topo.");
+	//		}
+	//	}
+	//}
+    //
+	//else {
+	//	throw new TopoException("Auncun résultat pour la recherche.");
+	//}
+
 		}finally {
 			if (vTransactionStatus != null) 
 				platformTransactionManager.rollback(vTransactionStatus); 			

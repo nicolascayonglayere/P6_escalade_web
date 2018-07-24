@@ -52,16 +52,9 @@ public class PartirGrimper extends ActionSupport {
 					listTopo = managerFactory.getTopoManager().rechercheMultiTopo(nom, selectedMin, selectedMax);
 					System.out.println(listTopo.size());
 					for (Topo t : listTopo) {//--un if test sur t.getListSite
-						if(t.getListSite().size() > 0) {
-							listSite.addAll(t.getListSite());
-							for(Site si : listSite) {
-								if(si.getListSecteur().size() > 0) {
-									listSecteur.addAll(si.getListSecteur());
-									for (Secteur se : listSecteur) {
-										if(se.getListVoie().size() > 0)
-											listVoie.addAll(se.getListVoie());
-									}
-								}
+						if(t.getListVoie().size() > 0) {
+							for(Voie v : t.getListVoie()) {
+								listVoie.addAll(t.getListVoie());
 							}
 						}
 					}

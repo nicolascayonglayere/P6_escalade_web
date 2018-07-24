@@ -23,6 +23,7 @@ import oc.P6.escalade.consumer.DAO.impl.rowmapper.TopoRowMapper;
 import oc.P6.escalade.model.bean.exception.TopoException;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
+import oc.P6.escalade.model.bean.topo.Voie;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
 @Named("topoDao")
@@ -194,14 +195,14 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 		String vSQL = "SELECT * FROM topo INNER JOIN site ON topo.id_topo = site.id_topo " + 
 				      "                   INNER JOIN secteur ON site.id_site = secteur.id_site " + 
 				      "                   INNER JOIN voie ON secteur.id_secteur = voie.id_secteur " + 
-				      "                   WHERE topo.nom LIKE :nom AND cotation < :cotationMin AND cotation > :cotationMax";
+				      "                   WHERE topo.nom LIKE :nom AND cotation < :cotationMax AND cotation > :cotationMin";
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
 		vParams.addValue("nom", pNom+"%", Types.VARCHAR);
 		vParams.addValue("cotationMin", pDiffMin, Types.VARCHAR);
 		vParams.addValue("cotationMax", pDiffMax, Types.VARCHAR);
 		
-		RowMapper<Topo> vRowMapper = new RowMapper<Topo>() {
+		RowMapper<Topo> vRowMapperTopo = new RowMapper<Topo>() {
 
 			@Override
 			public Topo mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -214,14 +215,20 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 				vTopo.setDescription(rs.getString("description"));
 				vTopo.setNbreEx(rs.getInt("nombre_exemplaires"));
 				vTopo.setConstruction(rs.getBoolean("construction"));
-				vTopo.setListVoie(rs.getArray("id_voie"));
+				ArrayList<Voie>listVoie = new ArrayList<Voie>();
+				while (rs.next()) {
+					listVoie.add(daoFacto.getVoieManagerDao().find(rs.getInt("id_voie")));
+				}
+				vTopo.setListVoie(listVoie);
+				//listVoie.add()
 				return vTopo;
 
 			}
 			
 		};
-        
-		listeTopo = (ArrayList<Topo>) vJdbcTemplate.query(vSQL, vParams, vRowMapper);
+       
+		listeTopo = (ArrayList<Topo>) vJdbcTemplate.query(vSQL, vParams, vRowMapperTopo);
+		System.out.println("ctrl rech multi dao : "+listeTopo.size());
 		return listeTopo;
 	}
 
