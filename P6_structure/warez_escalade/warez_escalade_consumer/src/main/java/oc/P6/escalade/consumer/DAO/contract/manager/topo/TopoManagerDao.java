@@ -71,7 +71,7 @@ public interface TopoManagerDao {
 	ArrayList<Topo> rechercherTopo(String pNom);
 	
 	/**
-	 * Méthode pour obtenir la liste des {@link Topo} de la base de donnée à partir d'un nom et contenant des voies d'une difficulté définie dans un intervalle donné en paramètre
+	 * Méthode pour obtenir la liste des {@link Topo} de la base de donnée à partir d'un nom et contenant des {@link Voie} d'une difficulté définie dans un intervalle donné en paramètre
 	 * @param pNom
 	 * @param pDiffMin
 	 * @param pDiffMax

@@ -19,6 +19,7 @@ public class Site implements IntSite{
 	private Topo topo;
 	private String description;
 	private ArrayList<Secteur> listSecteur;
+	private ArrayList<Voie> listVoie;
 	
 	/**
 	 * Constructeurs
@@ -79,6 +80,14 @@ public class Site implements IntSite{
 
 	public void setListSecteur(ArrayList<Secteur> listSecteur) {
 		this.listSecteur = listSecteur;
+	}
+
+	public ArrayList<Voie> getListVoie() {
+		return listVoie;
+	}
+
+	public void setListVoie(ArrayList<Voie> listVoie) {
+		this.listVoie = listVoie;
 	}
 	
 	

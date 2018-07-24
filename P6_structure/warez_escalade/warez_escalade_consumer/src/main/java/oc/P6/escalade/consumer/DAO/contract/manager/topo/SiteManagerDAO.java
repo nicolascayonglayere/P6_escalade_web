@@ -59,6 +59,15 @@ public interface SiteManagerDAO {
 	ArrayList<Site> rechercheSite(String pNom);
 	
 	/**
+	 * Méthode pour obtenir la liste des {@link Site} de la base de donnée à partir d'un nom et contenant des {@link Voie} d'une difficulté définie dans un intervalle donné en paramètre
+	 * @param pNom
+	 * @param pDiffMin
+	 * @param pDiffMax
+	 * @return
+	 */
+	ArrayList<Site> rechercheMultiSite(String pNom, String pDiffMin, String pDiffMax);
+	
+	/**
 	 * Méthode pour trouver le {@link Site}	 de nom pNom du {@link Topo} pTopo dans la base de donnée
 	 * @param pNom
 	 * @param pIdTopo

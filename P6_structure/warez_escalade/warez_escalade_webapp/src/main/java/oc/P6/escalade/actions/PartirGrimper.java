@@ -41,42 +41,54 @@ public class PartirGrimper extends ActionSupport {
 	}
 	
 	public String execute() {
-		System.out.println("rech multi : "+nom+" - "+selectedMin+" - "+checkMeTopo);
+		System.out.println("rech multi : "+nom+" - "+selectedMin+" - "+checkMeTopo+" - "+checkMeSite);
 		listTopo = new ArrayList<Topo>();
 		listSite = new ArrayList<Site>();
 		listSecteur = new ArrayList<Secteur>();
 		listVoie = new ArrayList<Voie>();
-
-			try {
+		String vResult ="";
+		
 				if (checkMeTopo) {
-					listTopo = managerFactory.getTopoManager().rechercheMultiTopo(nom, selectedMin, selectedMax);
-					System.out.println(listTopo.size());
-					for (Topo t : listTopo) {//--un if test sur t.getListSite
-						if(t.getListVoie().size() > 0) {
-							for(Voie v : t.getListVoie()) {
-								listVoie.addAll(t.getListVoie());
+					try {
+						listTopo = managerFactory.getTopoManager().rechercheMultiTopo(nom, selectedMin, selectedMax);
+						System.out.println(listTopo.size());
+						for (Topo t : listTopo) {//--un if test sur t.getListSite
+							if(t.getListVoie().size() > 0) {
+								//for(Voie v : t.getListVoie()) {
+									listVoie.addAll(t.getListVoie());
+								//}
 							}
 						}
+						listResultat.addAll(listTopo);
+						vResult = ActionSupport.SUCCESS;
+					} catch (TopoException e1) {
+						addActionMessage(e1.getMessage());
+						e1.printStackTrace();
+						vResult = ActionSupport.INPUT;
 					}
-					listResultat.addAll(listTopo);
+
 				}
 				if(checkMeSite) {
-					listSite = new ArrayList<Site>();
-					listSite = managerFactory.getSiteManager().rechercheMultiSite(nom, selectedMin, selectedMax);
-					for(Site si : listSite) {
-						listSecteur.addAll(si.getListSecteur());
-						for (Secteur se : listSecteur) {
-							listVoie.addAll(se.getListVoie());
+					try {
+						listSite = managerFactory.getSiteManager().rechercheMultiSite(nom, selectedMin, selectedMax);
+						System.out.println(listSite.size());
+						for(Site si : listSite) {
+							if(si.getListVoie().size() > 0) {
+								listVoie.addAll(si.getListVoie());
+							}
+							listTopo.add(si.getTopo());
 						}
+						listResultat.addAll(listSite);
+						vResult = ActionSupport.SUCCESS;
+					} catch (SiteException e2) {
+						addActionMessage(e2.getMessage());
+						e2.printStackTrace();
+						vResult = ActionSupport.INPUT;
 					}
-					listResultat.addAll(listSite);
+
 				}
-				return ActionSupport.SUCCESS;
-			} catch (TopoException | SiteException e) {
-				addActionMessage(e.getMessage());
-				e.printStackTrace();
-				return ActionSupport.INPUT;
-			}		
+				return vResult;
+		
 	}
 
 	public ArrayList<String> getListDiff() {

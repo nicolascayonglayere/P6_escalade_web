@@ -160,25 +160,19 @@ public class SiteManagerImpl extends AbstractDAOManager implements SiteManager{
 		ArrayList<Site>listSite = new ArrayList<Site>(); 
 		
 		try {
-			ArrayList<Voie> listVoie = new ArrayList<Voie>();
-			listVoie = voieDAO.rechercheDiffVoie(pDiffMin, pDiffMax);
-			listSite = siteDAO.rechercheSite(pNom) ;
-			System.out.println("business recherche "+pNom+" - "+listSite.size());
-			if(listSite.size() > 0) {
-				
-				for (Site si : listSite) {
-					if(topoEmpruntManagerImpl.getNbExemplaire(si.getTopo()) > 0) {
-						si.setListSecteur(secteurDAO.getListeSecteur(si));
-						for (Secteur se : si.getListSecteur()) {
-							se.setListVoie(voieDAO.getlistVoie(se));
-							//listVoie.addAll(voieDAO.rechercheDiffVoie(se.getId(), pDiffMin, pDiffMax));
-						}
-					}
-				}
-			}
+			listSite = siteDAO.rechercheMultiSite(pNom, pDiffMin, pDiffMax);
+			System.out.println("ctrl business multi 1 "+listSite.size());
+			if(listSite.size() == 0)
+				throw new SiteException("Aucun résultat pour le site de nom commençant par "+pNom);
 			else {
-				throw new SiteException("Auncun résultat pour la recherche de site.");
+				for (Site si : listSite) {
+					System.out.println("ctrl business multi "+si.getId()+" - "+si.getListVoie().size());
+					if(topoEmpruntManagerImpl.getNbExemplaire(si.getTopo()) == 0) {
+						throw new SiteException("Il n'y a plus d'exemplaire disponible pour le topo : "+si.getTopo().getNomTopo());
+					}
+				}				
 			}
+
 		    TransactionStatus vTScommit = vTransactionStatus;
 		    vTransactionStatus = null;
 		    platformTransactionManager.commit(vTScommit);

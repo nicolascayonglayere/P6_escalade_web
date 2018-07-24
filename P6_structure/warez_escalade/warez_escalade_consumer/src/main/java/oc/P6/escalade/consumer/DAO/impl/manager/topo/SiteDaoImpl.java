@@ -1,5 +1,7 @@
 package oc.P6.escalade.consumer.DAO.impl.manager.topo;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 
@@ -7,6 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -14,16 +17,20 @@ import org.springframework.jdbc.support.KeyHolder;
 
 import oc.P6.escalade.consumer.DAO.contract.manager.topo.SiteManagerDAO;
 import oc.P6.escalade.consumer.DAO.contract.manager.topo.TopoManagerDao;
+import oc.P6.escalade.consumer.DAO.contract.manager.topo.VoieManagerDao;
 import oc.P6.escalade.consumer.DAO.impl.manager.AbstractDAO;
 import oc.P6.escalade.consumer.DAO.impl.rowmapper.SiteRowMapper;
 import oc.P6.escalade.model.bean.exception.SiteException;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
+import oc.P6.escalade.model.bean.topo.Voie;
 
 @Named
 public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 	@Inject
 	TopoManagerDao topoDAO;
+	@Inject
+	VoieManagerDao voieDAO;
 	@Inject
 	SiteRowMapper siteRowMapper;
 
@@ -170,6 +177,45 @@ public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 		vListSite = (ArrayList<Site>) vJdbcTemplate.query(vSQL, vParams, siteRowMapper);
 		return vListSite;
 
+	}
+
+	@Override
+	public ArrayList<Site> rechercheMultiSite(String pNom, String pDiffMin, String pDiffMax) {
+		ArrayList<Site> listeSite = new ArrayList<Site>();
+		String vSQL = "SELECT * FROM site INNER JOIN secteur ON site.id_site = secteur.id_site " + 
+				      "                   INNER JOIN voie ON secteur.id_secteur = voie.id_secteur " + 
+				      "                   WHERE site.nom LIKE :nom AND cotation < :cotationMax AND cotation > :cotationMin";
+		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
+		MapSqlParameterSource vParams = new MapSqlParameterSource();
+		vParams.addValue("nom", pNom+"%", Types.VARCHAR);
+		vParams.addValue("cotationMin", pDiffMin, Types.VARCHAR);
+		vParams.addValue("cotationMax", pDiffMax, Types.VARCHAR);
+		
+		RowMapper<Site> vRowMapperSite = new RowMapper<Site>() {
+
+			@Override
+			public Site mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Topo vTopo = topoDAO.find(rs.getInt("id_topo"));
+				Site vSite = new Site(rs.getString("nom"));
+				vSite.setId(rs.getInt("id_site"));
+				
+				vSite.setDescription(rs.getString("description"));
+				ArrayList<Voie>listVoie = new ArrayList<Voie>();
+				while (rs.next()) {
+					listVoie.add(voieDAO.find(rs.getInt("id_voie")));
+				}
+				vTopo.setListVoie(listVoie);
+				vSite.setTopo(vTopo);
+				vSite.setListVoie(listVoie);
+				return vSite;
+
+			}
+			
+		};
+       
+		listeSite = (ArrayList<Site>) vJdbcTemplate.query(vSQL, vParams, vRowMapperSite);
+		System.out.println("ctrl rech multi dao : "+listeSite.size());
+		return listeSite;
 	}
 
 }
