@@ -7,6 +7,8 @@ import javax.inject.Inject;
 import com.opensymphony.xwork2.ActionSupport;
 
 import oc.P6.escalade.business.contract.ManagerFactory;
+import oc.P6.escalade.model.bean.exception.SiteException;
+import oc.P6.escalade.model.bean.exception.TopoException;
 import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
@@ -40,14 +42,48 @@ public class PartirGrimper extends ActionSupport {
 	
 	public String execute() {
 		System.out.println("rech multi : "+nom+" - "+selectedMin+" - "+checkMeTopo);
-		String vResult = "";
-		if (checkMeTopo) {
-			listTopo = new ArrayList<Topo>();
-			listTopo = managerFactory.getTopoManager().rechercheMultiTopo(nom, selectedMin, selectedMax);
-			listResultat.addAll(listTopo);
-		}
-		
-		return ActionSupport.SUCCESS;
+		listTopo = new ArrayList<Topo>();
+		listSite = new ArrayList<Site>();
+		listSecteur = new ArrayList<Secteur>();
+		listVoie = new ArrayList<Voie>();
+
+			try {
+				if (checkMeTopo) {
+					listTopo = managerFactory.getTopoManager().rechercheMultiTopo(nom, selectedMin, selectedMax);
+					System.out.println(listTopo.size());
+					for (Topo t : listTopo) {//--un if test sur t.getListSite
+						if(t.getListSite().size() > 0) {
+							listSite.addAll(t.getListSite());
+							for(Site si : listSite) {
+								if(si.getListSecteur().size() > 0) {
+									listSecteur.addAll(si.getListSecteur());
+									for (Secteur se : listSecteur) {
+										if(se.getListVoie().size() > 0)
+											listVoie.addAll(se.getListVoie());
+									}
+								}
+							}
+						}
+					}
+					listResultat.addAll(listTopo);
+				}
+				if(checkMeSite) {
+					listSite = new ArrayList<Site>();
+					listSite = managerFactory.getSiteManager().rechercheMultiSite(nom, selectedMin, selectedMax);
+					for(Site si : listSite) {
+						listSecteur.addAll(si.getListSecteur());
+						for (Secteur se : listSecteur) {
+							listVoie.addAll(se.getListVoie());
+						}
+					}
+					listResultat.addAll(listSite);
+				}
+				return ActionSupport.SUCCESS;
+			} catch (TopoException | SiteException e) {
+				addActionMessage(e.getMessage());
+				e.printStackTrace();
+				return ActionSupport.INPUT;
+			}		
 	}
 
 	public ArrayList<String> getListDiff() {

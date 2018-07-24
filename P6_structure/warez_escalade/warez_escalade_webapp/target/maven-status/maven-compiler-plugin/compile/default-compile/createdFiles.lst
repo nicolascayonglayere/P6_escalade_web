@@ -12,6 +12,7 @@ oc\P6\escalade\actions\UploadAction.class
 oc\P6\escalade\actions\topo\CreerSite.class
 oc\P6\escalade\actions\ContactAction.class
 oc\P6\escalade\actions\topo\SupprimerSite.class
+oc\P6\escalade\actions\PartirGrimper.class
 oc\P6\escalade\actions\GoCreerTopo.class
 oc\P6\escalade\actions\utilisateur\RechercheUtilisateurAction.class
 oc\P6\escalade\actions\CommenterAction.class

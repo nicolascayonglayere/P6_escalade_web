@@ -52,6 +52,13 @@ public interface SiteManagerDAO {
 	ArrayList<Site> find(int pId);
 	
 	/**
+	 * Méthode pour obtenir la {@link Site} à partir d'une partie du nom donné en paramètre
+	 * @param pNom
+	 * @return la liste des {@link Site}
+	 */
+	ArrayList<Site> rechercheSite(String pNom);
+	
+	/**
 	 * Méthode pour trouver le {@link Site}	 de nom pNom du {@link Topo} pTopo dans la base de donnée
 	 * @param pNom
 	 * @param pIdTopo

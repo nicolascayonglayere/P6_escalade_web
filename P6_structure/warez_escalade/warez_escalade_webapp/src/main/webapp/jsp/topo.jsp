@@ -179,10 +179,11 @@
 		<!-- les scripts google Map API -->
 		<script>
 	      function initMap() {
-	    	var lat = Number(document.getElementById('vLatitude'));
-	    	var longi = Number(document.getElementById('#vLongitude'));
-	        var monTopo = new google.maps.LatLng(lat, longi);
-	
+	    	var lat = (document.getElementById('vLatitude').innerHTML);
+	    	var longi = (document.getElementById('vLongitude').innerHTML);
+	        var monTopo = new google.maps.LatLng(45.311, 5.624);
+			console.log(lat);
+			console.log(longi);
 	        var map = new google.maps.Map(document.getElementById('map'), {
 	          center: monTopo,
 	          zoom: 10

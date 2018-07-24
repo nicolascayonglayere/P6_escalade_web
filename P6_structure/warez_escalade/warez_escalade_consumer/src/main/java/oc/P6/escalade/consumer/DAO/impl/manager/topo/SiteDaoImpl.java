@@ -157,4 +157,19 @@ public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 		return site;
 	}
 
+	@Override
+	public ArrayList<Site> rechercheSite(String pNom) {
+
+		System.out.println("ctrl DAO "+pNom);
+		ArrayList<Site> vListSite = new ArrayList<Site>();
+		String vSQL = "SELECT * FROM site WHERE site.nom LIKE :nom";
+		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
+		MapSqlParameterSource vParams = new MapSqlParameterSource();
+		vParams.addValue("nom", pNom+"%", Types.VARCHAR);	
+	
+		vListSite = (ArrayList<Site>) vJdbcTemplate.query(vSQL, vParams, siteRowMapper);
+		return vListSite;
+
+	}
+
 }

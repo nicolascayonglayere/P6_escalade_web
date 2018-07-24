@@ -156,7 +156,7 @@
 			
 					
 				<!-- un formulaire pour modifier ses param pseudo et mdp et coordonnee -->
-				<div class="col-lg-12" style="border-color: gray; border-style: solid; border-width: medium">
+				<div class="col-lg-12" id="modifUser">
 					<h4 id="titre"><s:text name="compteUser.modifier"/></h4>
 					<s:form action="modifier_user" cssClass="form-vertical" namespace="/jsp/utilisateur">
 						<s:textfield name="utilisateur.pseudo" placeholder="pseudo" label="%{getText('form.pseudo')}" requiredLabel="true"/>
@@ -174,7 +174,7 @@
 				
 				</br>
 			
-				<div class="col-lg-12" style="border-color: gray; border-style: solid; border-width: medium">
+				<div class="col-lg-12" id="modifUser">
 					<h5 id="titre"><s:text name="compteUser.supprimer"/></h5>
 					<p><s:text name="compteUser.supprMessage"/> 
 						<s:a action = "supprimer_compte" namespace="/jsp/utilisateur">

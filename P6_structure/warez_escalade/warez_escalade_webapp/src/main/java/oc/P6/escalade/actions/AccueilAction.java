@@ -39,10 +39,12 @@ public class AccueilAction extends ActionSupport{
       	      while(iterator.hasNext()) {
       	        Path p = iterator.next();
       	        System.out.println(p.getFileName().toString());
-      	        if(p.getFileName().toString().equals("imageCouv.JPG"))
+      	        if(p.getFileName().toString().equals("imageCouv.JPG")) {
       	        	//imageId = t.getImage()+"\\"+p.getFileName().toString();
       	        	img = t.getImage()+"\\"+p.getFileName().toString();
+      	        	System.out.println("accueil "+img);
       	        	t.setImage(img);
+      	        }
       	      }
       	    } catch (IOException e) {
 				// TODO Auto-generated catch block

@@ -50,28 +50,25 @@ public class ModifierUserAction extends ActionSupport implements SessionAware {
 	public String execute() {
 		String vResult = ActionSupport.INPUT;
 		Utilisateur vUser = (Utilisateur)session.get("utilisateur"); 
+		System.out.println(vUser.getId()+" - "+vUser.getId_Role());
 		try {
 			vUser.setCoordonnee(managerFactory.getCoordonneeUtilisateurManager().getCoordonnee(vUser.getId()));
-		} catch (CoordonneeUtilisateurException | UtilisateurException e) {
-			addActionMessage(e.getMessage());
-			e.printStackTrace();
-		}
-		System.out.println("pseudo : "+utilisateur.getPseudo()+" - adresse "+coordonneeUtilisateur.getAdresse()+" - email "+coordonneeUtilisateur.getEmail());
-		System.out.println("email "+vUser.getCoordonnee().getEmail());
-		System.out.println("adresse "+vUser.getCoordonnee().getAdresse());
-		
-		utilisateur.setId(vUser.getId());
-		utilisateur.setCoordonnee(coordonneeUtilisateur);
-		coordonneeUtilisateur.setIdUtilisateur(vUser.getId());
-		coordonneeUtilisateur.setId(vUser.getCoordonnee().getId());
 
-		try {
+			System.out.println("pseudo : "+utilisateur.getPseudo()+" - adresse "+coordonneeUtilisateur.getAdresse()+" - email "+coordonneeUtilisateur.getEmail());
+			System.out.println("email "+vUser.getCoordonnee().getEmail());
+			System.out.println("adresse "+vUser.getCoordonnee().getAdresse());
+			
+			utilisateur.setId(vUser.getId());
+			utilisateur.setCoordonnee(coordonneeUtilisateur);
+			utilisateur.setId_Role(vUser.getId_Role());
+			coordonneeUtilisateur.setIdUtilisateur(vUser.getId());
+			coordonneeUtilisateur.setId(vUser.getCoordonnee().getId());
+
 			utilisateur = managerFactory.getUtilisateurManager().modifierUtilisateur(utilisateur);
 			coordonneeUtilisateur = managerFactory.getCoordonneeUtilisateurManager().modifier(coordonneeUtilisateur);
 			utilisateur.setNom(vUser.getNom());
 			utilisateur.setPrenom(vUser.getPrenom());
 			utilisateur.setRole(vUser.getRole());
-			utilisateur.setId_Role(vUser.getId_Role());
 			session.remove("utilisateur");
 			session.put("utilisateur", utilisateur);
 			addActionMessage("Vos modifications ont bien été enregistrées");

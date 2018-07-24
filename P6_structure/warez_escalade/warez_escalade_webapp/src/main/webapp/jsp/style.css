@@ -57,6 +57,15 @@ body
 	justify-content: center;
 }
 
+#modifUser
+{
+	text-align : center;
+	border-color: #fd7e14; 
+	border-style: solid; 
+	border-width: medium;
+	padding : 5px;
+}
+
 #map, img {
 	height: auto;
 }

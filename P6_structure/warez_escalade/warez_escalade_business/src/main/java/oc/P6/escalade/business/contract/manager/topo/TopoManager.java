@@ -64,9 +64,10 @@ public interface TopoManager {
 	 * @param pNom
 	 * @param pDiffMin
 	 * @param pDiffMax
+	 * @throws TopoException 
 	 * @returnla liste des {@link Topo}
 	 */
-	ArrayList<Topo> rechercheMultiTopo(String pNom, String pDiffMin, String pDiffMax);
+	ArrayList<Topo> rechercheMultiTopo(String pNom, String pDiffMin, String pDiffMax) throws TopoException;
 	
 	/**
 	 * Supprime le {@link Topo} donné en paramètre

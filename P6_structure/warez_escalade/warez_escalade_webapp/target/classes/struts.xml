@@ -164,7 +164,8 @@
 		</action>
 		
 		<action name="rechMulti" class="oc.P6.escalade.actions.PartirGrimper" method="execute">
-			<result>/jsp/partir.jsp</result>
+			<result name="input">/jsp/partir.jsp</result>
+			<result name="success">/jsp/partir.jsp</result>
 		</action>
  	</package>
         

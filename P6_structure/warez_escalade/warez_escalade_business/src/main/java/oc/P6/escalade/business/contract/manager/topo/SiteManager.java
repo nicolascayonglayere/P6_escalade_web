@@ -65,4 +65,14 @@ public interface SiteManager {
 	 * @throws SiteException 
 	 */
 	void supprimmerSite(Site pSite) throws SiteException;
+	
+	/**
+	 * Méthode pour obtenir une liste de {@link Site} de nom pNom contenant des {@link Voie} d'un intervalle de difficulté donné en paramètre
+	 * @param pNom
+	 * @param pDiffMin
+	 * @param pDiffMax
+	 * @return la liste des {@link Site}
+	 * @throws SiteException 
+	 */
+	ArrayList<Site> rechercheMultiSite(String pNom, String pDiffMin, String pDiffMax) throws SiteException;
 }

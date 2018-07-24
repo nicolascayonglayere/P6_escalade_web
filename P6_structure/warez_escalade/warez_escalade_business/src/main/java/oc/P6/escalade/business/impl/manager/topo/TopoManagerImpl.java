@@ -5,6 +5,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -15,6 +17,7 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import oc.P6.escalade.business.contract.manager.AbstractDAOManager;
+import oc.P6.escalade.business.contract.manager.TopoEmpruntManager;
 import oc.P6.escalade.business.contract.manager.topo.TopoManager;
 import oc.P6.escalade.consumer.DAO.DAOFactory;
 import oc.P6.escalade.consumer.DAO.contract.manager.topo.SecteurManagerDao;
@@ -42,6 +45,9 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 
 	@Inject
 	private IntTopo topo;
+	
+	@Inject
+	private TopoEmpruntManager topoEmpruntManagerImpl;
 	
 	@Inject
 	private DAOFactory daoFactory;
@@ -221,7 +227,7 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 	}
 
 	@Override
-	public ArrayList<Topo> rechercheMultiTopo(String pNom, String pDiffMin, String pDiffMax) {
+	public ArrayList<Topo> rechercheMultiTopo(String pNom, String pDiffMin, String pDiffMax) throws TopoException {
 		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
 		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		vDefinition.setTimeout(30); // 30 secondes
@@ -231,22 +237,97 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
         secteurDAO = daoFactory.getSecteurManagerDao();
         voieDAO = daoFactory.getVoieManagerDao();
 		ArrayList<Topo>listTopo = new ArrayList<Topo>(); 
+		ArrayList<Topo>vlistTopoInt = new ArrayList<Topo>();
 		
 		try {
-			listTopo = topoDAO.rechercherTopo(pNom) ;
-			System.out.println("business recherche "+pNom+" - "+listTopo.size());
-			if(listTopo.size() > 0) {
-				ArrayList<Voie> listVoie = new ArrayList<Voie>();
-				for (Topo t : listTopo) {
-					t.setListSite(siteDAO.find(t.getNomTopo()));
-					for (Site si : t.getListSite()) {
-						si.setListSecteur(secteurDAO.getListeSecteur(si));
-						for (Secteur se : si.getListSecteur()) {
-							se.setListVoie(voieDAO.getlistVoie(se));
-							listVoie.addAll(voieDAO.rechercheDiffVoie(se.getId(), pDiffMin, pDiffMax));
+			listTopo = topoDAO.rechercheMultiTopo(pNom, pDiffMin, pDiffMax);
+			for (Topo t : listTopo) {
+				if (t.getListVoie().)
+			}
+			
+			
+			ArrayList<Voie> listVoie = new ArrayList<Voie>();
+			ArrayList<Secteur> listSecteur = new ArrayList<Secteur>();
+			ArrayList<Site> listSite = new ArrayList<Site>();
+			listVoie = voieDAO.rechercheDiffVoie(pDiffMin, pDiffMax);
+			if (listVoie.size() > 0) {
+				for (Voie v : listVoie) {
+					if(!(listSecteur.contains(secteurDAO.find(v.getSecteur().getId())))) {
+						listSecteur.add(secteurDAO.find(v.getSecteur().getId()));
+					}
+					//listSecteur = (ArrayList<Secteur>) listSecteur.stream().distinct().collect(Collectors.toList());
+				//Iterator<Secteur> iteratorSecteur = listSecteur.iterator();
+				//while (iteratorSecteur.hasNext()) {
+				//	Secteur se = iteratorSecteur.next();
+				//	if(se.getNomSecteur().equals(iteratorSecteur.next().getNomSecteur()))
+				//		iteratorSecteur.remove();
+				//}
+					for (Secteur se : listSecteur) {
+						if(!(listSite.contains(siteDAO.get(se.getSite().getId())))) {
+							listSite.add(siteDAO.get(se.getSite().getId()));
+						}
+						//listSite = (ArrayList<Site>) listSite.stream().distinct().collect(Collectors.toList());
+					//Iterator<Site> iteratorSite = listSite.iterator();
+					//while (iteratorSite.hasNext()) {
+					//	Site si = iteratorSite.next();
+					//	if(si.getNomSite().equals(iteratorSite.next().getNomSite()))
+					//		iteratorSite.remove();
+					//}
+						for (Site si : listSite) {
+							if(!(vlistTopoInt.contains(topoDAO.find(si.getTopo().getId())))) {
+								vlistTopoInt.add(topoDAO.find(si.getTopo().getId()));
+							}
+							//vlistTopoInt = (ArrayList<Topo>) vlistTopoInt.stream().distinct().collect(Collectors.toList());
+						//Iterator<Topo> iteratorTopo = vlistTopoInt.iterator();
+						//while (iteratorTopo.hasNext()) {
+						//	Topo t = iteratorTopo.next();
+						//	if(t.getNomTopo().equals(iteratorTopo.next().getNomTopo()))
+						//		iteratorTopo.remove();
+						//}
 						}
 					}
+					
 				}
+			
+				for (Topo t : vlistTopoInt) {
+					System.out.println("ctrl business multi "+t.getId());
+					for (Topo tDao : topoDAO.rechercherTopo(pNom)) {
+						if(tDao.getId() == (t.getId())) {
+							if(topoEmpruntManagerImpl.getNbExemplaire(t) > 0) {
+								ArrayList <Site> vlistSiteInt = new ArrayList<Site>();
+								for (Site s : listSite) {
+									if(s.getTopo().getId() == t.getId()) {							
+										vlistSiteInt.add(s);
+										t.setListSite(vlistSiteInt);
+										ArrayList<Secteur> vlistSecteurInt = new ArrayList<Secteur>();
+										for (Secteur se : listSecteur) {
+											if(se.getSite().getId() == s.getId()) {
+												vlistSecteurInt.add(se);
+												s.setListSecteur(vlistSecteurInt);
+												ArrayList<Voie> vlistVoieInt = new ArrayList<Voie>();
+												for (Voie v : listVoie) {
+													if(v.getSecteur().getId() == se.getId()) {
+														vlistVoieInt.add(v);
+														se.setListVoie(vlistVoieInt);
+													}
+												}
+											}
+										}
+									}							
+								}
+								listTopo.add(t);						
+							}
+							else
+								throw new TopoException("Il n'y a plus d'exemplaire disponible.");
+						}
+						else
+							throw new TopoException("Auncun résultat pour la recherche de topo.");
+					}
+				}
+			}
+
+			else {
+				throw new TopoException("Auncun résultat pour la recherche.");
 			}
 		    TransactionStatus vTScommit = vTransactionStatus;
 		    vTransactionStatus = null;

@@ -30,6 +30,9 @@
 					     	   <li class="nav-item active">
 					     	   		<s:a action="inscription" namespace="/" cssClass="nav-link"><s:text name="entete.inscription"/></s:a>
 					     	   </li>
+					     	   <li class="nav-item active">
+					     	   		<s:a action="partir_grimper" namespace="/" cssClass="nav-link"><s:text name="entete.rechMulti"/></s:a>
+					     	   </li>					     	   
 				      		</ul>
 			      		</div>
 			      	
