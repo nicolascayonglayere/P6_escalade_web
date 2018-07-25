@@ -1,12 +1,12 @@
 package oc.P6.escalade.actions.utilisateur;
 
-
-
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.apache.struts2.interceptor.SessionAware;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -17,6 +17,13 @@ import oc.P6.escalade.model.bean.exception.UtilisateurException;
 import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateur;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
+/**
+ * Classe action qui permet l'inscription d'un {@link Utilisateur}
+ * @author nicolas
+ *
+ */
+@Named
+@Scope("Prototype")
 public class InscriptionAction extends ActionSupport implements SessionAware {
 
 	/**
@@ -29,29 +36,10 @@ public class InscriptionAction extends ActionSupport implements SessionAware {
 	private Utilisateur utilisateur;
 	private CoordonneeUtilisateur coordonnee;
 
-	public Utilisateur getUtilisateur() {
-		return utilisateur;
-	}
-
-	public void setUtilisateur(Utilisateur utilisateur) {
-		this.utilisateur = utilisateur;
-	}
-	
-	public CoordonneeUtilisateur getCoordonnee() {
-		return coordonnee;
-	}
-
-	public void setCoordonnee(CoordonneeUtilisateur coordonnee) {
-		this.coordonnee = coordonnee;
-	}
-
-	public void setSession(Map<String, Object> map) {
-		this.session = map;
-	}
-	public String execute() throws Exception {
-        return SUCCESS;
-    }
-	
+	/**
+	 * Méthode qui inscrit un {@link Utilisateur}
+	 * @return
+	 */
 	public String creerUser() {
 		System.out.println("pseudo : "+utilisateur.getPseudo());
 		
@@ -87,4 +75,26 @@ public class InscriptionAction extends ActionSupport implements SessionAware {
 	public void setManagerFactory(ManagerFactory managerFactory) {
 		this.managerFactory = managerFactory;
 	}
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
+	}
+
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
+	}
+	
+	public CoordonneeUtilisateur getCoordonnee() {
+		return coordonnee;
+	}
+
+	public void setCoordonnee(CoordonneeUtilisateur coordonnee) {
+		this.coordonnee = coordonnee;
+	}
+
+	public void setSession(Map<String, Object> map) {
+		this.session = map;
+	}
+	public String execute() throws Exception {
+        return SUCCESS;
+    }
 }

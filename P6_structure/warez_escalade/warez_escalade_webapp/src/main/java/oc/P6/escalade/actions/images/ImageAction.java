@@ -14,6 +14,11 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import oc.P6.escalade.WebappHelper.GestionFichierProperties;
 
+/**
+ * Méthode qui permet l'affichage dynamique d'image
+ * @author nicolas
+ *
+ */
 @Named
 public class ImageAction extends ActionSupport {
 

@@ -8,6 +8,12 @@ import com.opensymphony.xwork2.ActionSupport;
 import oc.P6.escalade.business.contract.ManagerFactory;
 import oc.P6.escalade.model.bean.commentaire.CommentaireTopo;
 import oc.P6.escalade.model.bean.exception.CommentaireTopoException;
+
+/**
+ * Classe action permettant la validation par le modérateur des {@link CommentaireTopo} envoyés.
+ * @author nicolas
+ *
+ */
 @Named
 public class ValidationCommentaireAction extends ActionSupport {
 
@@ -23,6 +29,10 @@ public class ValidationCommentaireAction extends ActionSupport {
 	private String message;
 	private CommentaireTopo commentaireTopo;
 	
+	/**
+	 * Méthode pour valider le {@link CommentaireTopo}
+	 * @return 
+	 */
 	public String valider() {
 		//System.out.println(commentaireTopo.getAuteur().getPseudo()+" - "+commentaireTopo.getTopo().getNomTopo());
 		System.out.println(pseudo+" - "+nomTopo+" - "+message);
@@ -39,6 +49,10 @@ public class ValidationCommentaireAction extends ActionSupport {
 
 	}
 	
+	/**
+	 * Méthode pour rejeter le commentaire
+	 * @return
+	 */
 	public String rejeter() {
 		System.out.println(pseudo+" - "+nomTopo+" - "+message);
 		try {
@@ -54,6 +68,7 @@ public class ValidationCommentaireAction extends ActionSupport {
 
 	}
 
+	//--Getter et Setter--//
 	public ManagerFactory getManagerFactory() {
 		return managerFactory;
 	}

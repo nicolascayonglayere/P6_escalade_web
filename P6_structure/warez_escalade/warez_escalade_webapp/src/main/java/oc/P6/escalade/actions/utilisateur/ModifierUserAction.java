@@ -15,6 +15,12 @@ import oc.P6.escalade.model.bean.exception.CoordonneeUtilisateurException;
 import oc.P6.escalade.model.bean.exception.UtilisateurException;
 import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateur;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
+
+/**
+ * Classe action qui modifie le {@link Utilisateur}
+ * @author nicolas
+ *
+ */
 @Named
 @Scope("Protoype")
 public class ModifierUserAction extends ActionSupport implements SessionAware {
@@ -29,27 +35,10 @@ public class ModifierUserAction extends ActionSupport implements SessionAware {
 	private Utilisateur utilisateur;
 	private CoordonneeUtilisateur coordonneeUtilisateur;
 	
-	@Override
-	public void setSession(Map<String, Object> pSession) {
-		this.session = pSession;		
-	}
 
-	public Utilisateur getUtilisateur() {
-		return utilisateur;
-	}
-
-	public void setUtilisateur(Utilisateur utilisateur) {
-		this.utilisateur = utilisateur;
-	}
-
-	public CoordonneeUtilisateur getCoordonneeUtilisateur() {
-		return coordonneeUtilisateur;
-	}
-
-	public void setCoordonneeUtilisateur(CoordonneeUtilisateur coordonneeUtilisateur) {
-		this.coordonneeUtilisateur = coordonneeUtilisateur;
-	}
-	
+	/**
+	 * Méthode qui modifie le {@link Utilisateur}
+	 */
 	public String execute() {
 		String vResult = ActionSupport.INPUT;
 		Utilisateur vUser = (Utilisateur)session.get("utilisateur"); 
@@ -98,5 +87,25 @@ public class ModifierUserAction extends ActionSupport implements SessionAware {
 
 	public void setManagerFactory(ManagerFactory managerFactory) {
 		this.managerFactory = managerFactory;
+	}
+	@Override
+	public void setSession(Map<String, Object> pSession) {
+		this.session = pSession;		
+	}
+
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
+	}
+
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
+	}
+
+	public CoordonneeUtilisateur getCoordonneeUtilisateur() {
+		return coordonneeUtilisateur;
+	}
+
+	public void setCoordonneeUtilisateur(CoordonneeUtilisateur coordonneeUtilisateur) {
+		this.coordonneeUtilisateur = coordonneeUtilisateur;
 	}
 }

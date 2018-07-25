@@ -15,6 +15,12 @@ import oc.P6.escalade.model.bean.exception.TopoException;
 import oc.P6.escalade.model.bean.exception.UtilisateurException;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
+
+/**
+ * Classe action qui gère les {@link TopoEmprunt}
+ * @author nicolas
+ *
+ */
 @Named
 public class GestionPretAction extends ActionSupport implements SessionAware {
 
@@ -31,6 +37,10 @@ public class GestionPretAction extends ActionSupport implements SessionAware {
 	private Map<String, Object> session;
 	private String checkMe;
 	
+	/**
+	 * Méthode pour rendre un {@link TopoEmprunt}
+	 * @return
+	 */
 	public String retourner() {
 		utilisateur = (Utilisateur) session.get("utilisateur");
 		System.out.println("nom topo retourner "+nom+" nom emprunteur "+pseudo);
@@ -48,6 +58,10 @@ public class GestionPretAction extends ActionSupport implements SessionAware {
 		}
 	}
 	
+	/**
+	 * Méthode pour créer un {@link TopoEmprunt}
+	 * @return
+	 */
 	public String emprunter() {
 		System.out.println("emprunt : "+nom);
 		utilisateur = (Utilisateur) session.get("utilisateur");
@@ -82,7 +96,8 @@ public class GestionPretAction extends ActionSupport implements SessionAware {
 		}
 
 	}
-
+	
+	//--Getter et Setter--//
 	public String getNom() {
 		return nom;
 	}

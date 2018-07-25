@@ -8,6 +8,11 @@ import org.apache.struts2.ServletActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.Result;
 
+/**
+ * Classe resultat qui définit le résultat de l'action {@link ImageAction}
+ * @author nicolas
+ *
+ */
 @Named
 public class CustomImageBytesResult implements Result {
 

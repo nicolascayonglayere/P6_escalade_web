@@ -17,6 +17,12 @@ import oc.P6.escalade.model.bean.exception.CoordonneeUtilisateurException;
 import oc.P6.escalade.model.bean.exception.UtilisateurException;
 import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateur;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
+
+/**
+ * Classe action qui permet la suppression du compte d'un {@link Utilisateur}
+ * @author nicolas
+ *
+ */
 @Named
 @Scope("Protoype")
 public class SupprimerUserAction extends ActionSupport implements SessionAware, ServletRequestAware {
@@ -33,12 +39,12 @@ public class SupprimerUserAction extends ActionSupport implements SessionAware, 
 	private HttpServletRequest request;
 
 	
-	
+	/**
+	 * Méthode supprimant le compte de l'{@link Utilisateur}
+	 */
 	public String execute() {
 		utilisateur = (Utilisateur) session.get("utilisateur");
-		//String pseudo = ((Utilisateur) session.get("utilisateur")).getPseudo();
 		System.out.println("pseudo : "+utilisateur.getPseudo());
-		//utilisateur = managerFactory.getUtilisateurManager().getUtilisateur(pseudo);
 
 		try {
 			coordonneeUtilisateur = managerFactory.getCoordonneeUtilisateurManager().getCoordonnee(utilisateur.getId());
@@ -60,7 +66,7 @@ public class SupprimerUserAction extends ActionSupport implements SessionAware, 
 
 	}
 	
-	
+	//--Getter et Setter--//
 	public Utilisateur getUtilisateur() {
 		return utilisateur;
 	}

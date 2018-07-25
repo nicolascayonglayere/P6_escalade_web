@@ -12,6 +12,11 @@ import oc.P6.escalade.business.contract.ManagerFactory;
 import oc.P6.escalade.model.bean.exception.UtilisateurException;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
+/**
+ * Classe action pour bannir un {@link Utilisateur}
+ * @author nicolas
+ *
+ */
 @Named
 @Scope("Protoype")
 public class BanUtilisateurAction extends ActionSupport {
@@ -25,21 +30,9 @@ public class BanUtilisateurAction extends ActionSupport {
 	private String checkMe;
 	private Utilisateur utilisateur;
 	
-	public String getCheckMe() {
-		return checkMe;
-	}
-	public void setCheckMe(String checkMe) {
-		this.checkMe = checkMe;
-	}
-	
-
-	public Utilisateur getUtilisateur() {
-		return utilisateur;
-	}
-	public void setUtilisateur(Utilisateur utilisateur) {
-		this.utilisateur = utilisateur;
-	}
-	
+	/**
+	 * Méthode pour bannir un {@link Utilisateur}
+	 */
 	public String execute() {
 		System.out.println(checkMe);
 		try {
@@ -54,11 +47,25 @@ public class BanUtilisateurAction extends ActionSupport {
 		}
 	}
 
+	//--Getter et Setter--//
 	public ManagerFactory getManagerFactory() {
 		return managerFactory;
 	}
 	public void setManagerFactory(ManagerFactory managerFactory) {
 		this.managerFactory = managerFactory;
 	}
+	public String getCheckMe() {
+		return checkMe;
+	}
+	public void setCheckMe(String checkMe) {
+		this.checkMe = checkMe;
+	}
+	
 
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
+	}
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
+	}
 }

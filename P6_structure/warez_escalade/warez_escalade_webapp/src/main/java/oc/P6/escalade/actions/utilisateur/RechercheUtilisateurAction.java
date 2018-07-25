@@ -16,6 +16,12 @@ import oc.P6.escalade.model.bean.emprunt.TopoEmprunt;
 import oc.P6.escalade.model.bean.exception.UtilisateurException;
 import oc.P6.escalade.model.bean.utilisateur.Role;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
+
+/**
+ * Classe action envoyant le résultat d'une recherche d'un {@link Utilisateur}
+ * @author nicolas
+ *
+ */
 @Named
 @Scope("Protoype")
 public class RechercheUtilisateurAction extends ActionSupport {
@@ -31,6 +37,40 @@ public class RechercheUtilisateurAction extends ActionSupport {
 	private ArrayList<TopoEmprunt> listTopoEmprunt;
 	private Map<Integer, String> listRole = new HashMap<Integer, String>();
 	
+	/**
+	 * Méthode qui retourne le résultat de la recherche d'un {@link Utilisateur}
+	 */
+	public String execute() {
+		System.out.println(utilisateur.getPseudo());
+		try {
+			listUtilisateur = managerFactory.getUtilisateurManager().getListUtilisateur(utilisateur.getPseudo());
+		} catch (UtilisateurException e) {
+			addActionMessage(e.getMessage());
+			e.printStackTrace();
+			return ActionSupport.INPUT;
+		}
+		for(Role r : managerFactory.getRoleManager().getListRole()) {
+			listRole.put(r.getId_role(), r.getRole());
+		}
+		return ActionSupport.SUCCESS;
+	}
+
+	//--Getter et Setter--//
+	public ManagerFactory getManagerFactory() {
+		return managerFactory;
+	}
+
+	public void setManagerFactory(ManagerFactory managerFactory) {
+		this.managerFactory = managerFactory;
+	}
+
+	public Map<Integer, String> getListRole() {
+		return listRole;
+	}
+
+	public void setListRole(Map<Integer, String> listRole) {
+		this.listRole = listRole;
+	}
 	public ArrayList<Utilisateur> getListUtilisateur() {
 		return listUtilisateur;
 	}
@@ -54,38 +94,6 @@ public class RechercheUtilisateurAction extends ActionSupport {
 	public void setListTopoEmprunt(ArrayList<TopoEmprunt> listTopoEmprunt) {
 		this.listTopoEmprunt = listTopoEmprunt;
 	}
-
-	public String execute() {
-		System.out.println(utilisateur.getPseudo());
-		try {
-			listUtilisateur = managerFactory.getUtilisateurManager().getListUtilisateur(utilisateur.getPseudo());
-		} catch (UtilisateurException e) {
-			addActionMessage(e.getMessage());
-			e.printStackTrace();
-			return ActionSupport.INPUT;
-		}
-		for(Role r : managerFactory.getRoleManager().getListRole()) {
-			listRole.put(r.getId_role(), r.getRole());
-		}
-		return ActionSupport.SUCCESS;
-	}
-
-	public ManagerFactory getManagerFactory() {
-		return managerFactory;
-	}
-
-	public void setManagerFactory(ManagerFactory managerFactory) {
-		this.managerFactory = managerFactory;
-	}
-
-	public Map<Integer, String> getListRole() {
-		return listRole;
-	}
-
-	public void setListRole(Map<Integer, String> listRole) {
-		this.listRole = listRole;
-	}
-
 
 
 

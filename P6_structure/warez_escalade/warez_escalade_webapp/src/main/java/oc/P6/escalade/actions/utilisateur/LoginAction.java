@@ -16,6 +16,12 @@ import com.opensymphony.xwork2.ActionSupport;
 import oc.P6.escalade.business.contract.ManagerFactory;
 import oc.P6.escalade.model.bean.exception.UtilisateurException;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
+
+/**
+ * Classe action qui assure la connexion et la deconnexion d'un {@link Utilisateur}
+ * @author nicolas
+ *
+ */
 @Named
 @Scope("Protoype")
 public class LoginAction extends ActionSupport implements SessionAware, ServletRequestAware {
@@ -31,14 +37,18 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
 	private HttpServletRequest servletRequest;
 
 	
-
+	/**
+	 * Méthode qui assure un retour à la page d'accueil
+	 * @return
+	 */
 	public String home() {
 		return SUCCESS;
 	}
 
-	// ---------------------------- Log Out register user
-
-	
+	/**
+	 * Méthode pour déconnecter un {@link Utilisateur}
+	 * @return
+	 */
 	public String logOut() {
 		String username1 = ((Utilisateur) this.session.get("utilisateur")).getPseudo();
 		System.out.println("deco - "+username1);
@@ -55,8 +65,10 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
 		return ActionSupport.SUCCESS;
 	}
 
-	// ---------------------------- Login register user
-
+	/**
+	 * Méthode pour connecter un {@link Utilisateur}
+	 * @return
+	 */
 	public String loginRegisterUser() {
 		String vResult="";
 		System.out.println(utilisateur.getPseudo()+" - "+utilisateur.getPassword());
@@ -67,7 +79,7 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
 			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 			if(!(vUser.getRole().equals("banni"))) {
-				if ((utilisateur.getPseudo().equals(vUser.getPseudo()))&&(passwordEncoder.matches(utilisateur.getPassword(), vUser.getPassword()))) {//(hashedPassword.equals(vUser.getPassword()))) {
+				if ((utilisateur.getPseudo().equals(vUser.getPseudo()))&&(passwordEncoder.matches(utilisateur.getPassword(), vUser.getPassword()))) {
 					session.put("utilisateur", vUser);
 					vResult = ActionSupport.SUCCESS;
 				}
@@ -93,6 +105,7 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
 		return ActionSupport.INPUT;
 	}
 	
+	//--Getter et Setter--//
 	public Utilisateur getUtilisateur() {
 		return utilisateur;
 	}
