@@ -59,8 +59,8 @@ public class VoieManagerImpl extends AbstractDAOManager implements VoieManager{
 		    TransactionStatus vTScommit = vTransactionStatus;
 		    vTransactionStatus = null;
 		    platformTransactionManager.commit(vTScommit);
-			if (!(listVoie.size()>0))
-				throw new VoieException("Aucune voie pour le secteur : "+pSecteur.getNomSecteur());
+		}catch(VoieException e){
+			throw new VoieException("Aucune voie pour le secteur : "+pSecteur.getNomSecteur());
 		}finally {
 			if (vTransactionStatus != null) { 
 				platformTransactionManager.rollback(vTransactionStatus);

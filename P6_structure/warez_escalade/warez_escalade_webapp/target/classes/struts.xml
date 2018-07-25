@@ -317,7 +317,10 @@
 		    <interceptor-ref name="defaultStack" >
 		   		<param name="params.excludeParams">dojo..*,^struts..*,^session..*,^request..*,^application..*,^servlet(Request|Response)..*,parameters...*,submit,token,struts.token.name</param>
 		   	</interceptor-ref>		
-			<result name="success">/jsp/admin/creer_voie.jsp</result>
+			<result name="success" type="redirectAction">
+				<param name="actionName">ajouter_voie</param>
+				<param name="namespace">/jsp/utilisateur</param>
+			</result>
 			<result name="input">/jsp/admin/creer_secteur.jsp</result>			
 		</action>
 

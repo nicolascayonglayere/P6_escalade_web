@@ -27,6 +27,7 @@ import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+import oc.P6.escalade.WebappHelper.GestionFichierProperties;
 import oc.P6.escalade.model.bean.topo.Topo;
 
 public class UploadAction extends ActionSupport implements SessionAware, ServletRequestAware{
@@ -41,7 +42,7 @@ public class UploadAction extends ActionSupport implements SessionAware, Servlet
 	private ArrayList<String> uploadContentType = new ArrayList<String>();
 	private String nomTopo;
 	private Map<String, Object> session;
-
+	private GestionFichierProperties gfp = new GestionFichierProperties();
 
 	private HttpServletRequest request;
 
@@ -68,32 +69,39 @@ public class UploadAction extends ActionSupport implements SessionAware, Servlet
 		byte[] bytesRead;
 		String nomImg="";
 		String nomDuTopo = "";
+		String chemin = gfp.lireProp().getProperty("chemin.upload");
 		if(((Topo)session.get("topo")) != null)
 			nomDuTopo = ((Topo)session.get("topo")).getNomTopo().replaceAll("\\p{Space}", "");
 		else
 			nomDuTopo = ((String)session.get("topoModif"));
 		System.out.println(nomDuTopo);
-		Path cheminUpload = Paths.get("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images");
+		Path cheminUpload = Paths.get(chemin);
+				//"D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images");
 
 		System.out.println("\n\n upload1");
 		System.out.println("files:");
+		//--Renommer la premiere image : imageCouv.JPG
+		String nomImg1 = "imageCouv.JPG";
+		uploadFileName.get(0).replace(uploadFileName.get(0), nomImg1);
+		
 		for (File u : upload) {
-			try {
-				System.out.println("*** " + u + "\t" + u.length());
-				nomImg = uploadFileName.get(upload.indexOf(u));
-				Path stockImg = Paths.get("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\"
-						+nomDuTopo, nomImg);
-				System.out.println(nomImg+" - "+stockImg.toString());
-				Path uPath = Paths.get(u.getAbsolutePath());
-				System.out.println(uPath.toString());
-				Files.copy(uPath, stockImg, StandardCopyOption.REPLACE_EXISTING);
-			}catch(FileNotFoundException e) {
-				e.printStackTrace();
-			}catch (IOException e) {
-				e.printStackTrace();
-				addActionMessage("Erreur lors de l'upload. Veuillez recommencer.");
-				return ActionSupport.INPUT;
-			}
+			nomImg = uploadFileName.get(upload.indexOf(u));
+			gfp.uploadImg(Paths.get(u.getAbsolutePath()), Paths.get(chemin+"\\"+nomDuTopo, nomImg));
+		//try {
+		//	System.out.println("*** " + u + "\t" + u.length());
+		//	
+		//	Path stockImg = Paths.get(chemin+nomDuTopo, nomImg);
+		//	System.out.println(nomImg+" - "+stockImg.toString());
+		//	Path uPath = Paths.get(u.getAbsolutePath());
+		//	System.out.println(uPath.toString());
+		//	Files.copy(uPath, stockImg, StandardCopyOption.REPLACE_EXISTING);
+		//}catch(FileNotFoundException e) {
+		//	e.printStackTrace();
+		//}catch (IOException e) {
+		//	e.printStackTrace();
+		//	addActionMessage("Erreur lors de l'upload. Veuillez recommencer.");
+		//	return ActionSupport.INPUT;
+		//}
 		}
 		System.out.println("filenames:");
 		for (String n : uploadFileName) {

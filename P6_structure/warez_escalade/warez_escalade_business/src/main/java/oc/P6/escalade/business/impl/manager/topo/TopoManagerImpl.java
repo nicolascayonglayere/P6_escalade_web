@@ -152,23 +152,25 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 
 		try {
 			pTopo.setImage(pTopo.getNomTopo().replaceAll("\\p{Space}", ""));
-			Path chemin = Paths.get("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\"+pTopo.getImage());
-			try {
-				Files.createDirectories(chemin);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		//Path chemin = Paths.get("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\"+pTopo.getImage());
+		//try {
+		//	Files.createDirectories(chemin);
+		//} catch (IOException e) {
+		//	// TODO Auto-generated catch block
+		//	e.printStackTrace();
+		//}
 			pTopo.setConstruction(true);
 			topo = topoDAO.create(pTopo);
 			
 		    TransactionStatus vTScommit = vTransactionStatus;
 		    vTransactionStatus = null;
 		    platformTransactionManager.commit(vTScommit);
+		}catch (TopoException e) {
+			throw new TopoException("Le topo existe deja "+pTopo.getNomTopo());
 		}finally {
 			if (vTransactionStatus != null) { 
 				platformTransactionManager.rollback(vTransactionStatus);
-				throw new TopoException("Le topo existe deja.");
+				
 			} 			
 		}
 		return (Topo) topo;
@@ -271,15 +273,15 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 		try {
 			pTopo.setId(topoDAO.find(pTopo.getNomTopo()).getId());
 			try {
-			for(Site si : daoFactory.getSiteManagerDao().find(pTopo.getId())) {
-				for (Secteur se : daoFactory.getSecteurManagerDao().getListeSecteur(si)) {
-					for (Voie v : daoFactory.getVoieManagerDao().getlistVoie(se)) {
-						daoFactory.getVoieManagerDao().delete(v);
+				for(Site si : daoFactory.getSiteManagerDao().find(pTopo.getId())) {
+					for (Secteur se : daoFactory.getSecteurManagerDao().getListeSecteur(si)) {
+						for (Voie v : daoFactory.getVoieManagerDao().getlistVoie(se)) {
+							daoFactory.getVoieManagerDao().delete(v);
+						}
+						daoFactory.getSecteurManagerDao().delete(se);
 					}
-					daoFactory.getSecteurManagerDao().delete(se);
-				}
-				daoFactory.getSiteManagerDao().delete(si);
-			}			
+					daoFactory.getSiteManagerDao().delete(si);
+				}			
 			}catch (VoieException e1){
 				e1.printStackTrace();
 			} catch (SecteurException e2) {
@@ -291,13 +293,13 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 			}
 			topoDAO.delete(pTopo);
 			
-			Path chemin = Paths.get("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\"+pTopo.getImage());
-			try {
-				Files.delete(chemin);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		//Path chemin = Paths.get("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\"+pTopo.getImage());
+		//try {
+		//	Files.delete(chemin);
+		//} catch (IOException e) {
+		//	// TODO Auto-generated catch block
+		//	e.printStackTrace();
+		//}
 			
 		    TransactionStatus vTScommit = vTransactionStatus;
 		    vTransactionStatus = null;

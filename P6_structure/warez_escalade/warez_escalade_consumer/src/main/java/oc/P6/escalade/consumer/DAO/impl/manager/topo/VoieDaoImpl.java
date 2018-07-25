@@ -77,15 +77,15 @@ public class VoieDaoImpl extends AbstractDAO implements VoieManagerDao{
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
 		vParams.addValue("id_voie", pVoie.getId(), Types.INTEGER);
-	    
-	    try {
-	        vJdbcTemplate.update(vSQL, vParams);
-	    } catch (Exception vEx) {
-	        System.out.println("La voie n'existe pas ! secteur=" + pVoie.getNomVoie());
-	        vEx.printStackTrace();
-	        throw new VoieException("La voie n'existe pas ! secteur=" + pVoie.getNomVoie());
-	        //return false;
-	    }
+	 //  
+	 //  try {
+	       vJdbcTemplate.update(vSQL, vParams);
+	 //  } catch (Exception vEx) {
+	 //      System.out.println("La voie n'existe pas ! secteur=" + pVoie.getNomVoie());
+	 //      vEx.printStackTrace();
+	 //      throw new VoieException("La voie n'existe pas ! secteur=" + pVoie.getNomVoie());
+	 //      //return false;
+	 //  }
 	    
 	    
 		return true;
@@ -155,7 +155,7 @@ public class VoieDaoImpl extends AbstractDAO implements VoieManagerDao{
 	}
 
 	@Override
-	public ArrayList<Voie> getlistVoie(Secteur pSecteur) {
+	public ArrayList<Voie> getlistVoie(Secteur pSecteur) throws VoieException {
 		ArrayList<Voie> listVoie = new ArrayList<Voie>();
 		String vSQL = "SELECT * FROM voie WHERE id_secteur = :id_secteur";
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
@@ -163,6 +163,8 @@ public class VoieDaoImpl extends AbstractDAO implements VoieManagerDao{
 		System.out.println(pSecteur.getNomSecteur()+" - "+pSecteur.getId());
         vParams.addValue("id_secteur", pSecteur.getId(), Types.INTEGER);
         listVoie = (ArrayList<Voie>) vJdbcTemplate.query(vSQL, vParams, voieRowMapper);
+      //if (!(listVoie.size() > 0))
+      //		throw new VoieException ("Aucune voie pour le secteur "+pSecteur.getNomSecteur());
 		return listVoie;
 
 	

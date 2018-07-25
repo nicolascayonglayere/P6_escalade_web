@@ -61,12 +61,10 @@ public class SecteurManagerImpl extends AbstractDAOManager implements SecteurMan
 		    TransactionStatus vTScommit = vTransactionStatus;
 		    vTransactionStatus = null;
 		    platformTransactionManager.commit(vTScommit);
-		    if (!(listSecteur.size()>0))
-		    	throw new SecteurException("Aucun secteur pour le site : "+pSite.getNomSite());
 		}finally {
 			if (vTransactionStatus != null) {
 				platformTransactionManager.rollback(vTransactionStatus);
-				
+				throw new SecteurException("Aucun secteur pour le site : "+pSite.getNomSite());
 			} 			
 		}
 		return listSecteur;
@@ -187,20 +185,20 @@ public class SecteurManagerImpl extends AbstractDAOManager implements SecteurMan
 		try {
 			pSecteur.setId(secteurDAO.find(pSecteur.getNomSecteur(), pSecteur.getSite().getId()).getId());
 			for (Voie v : daoFactory.getVoieManagerDao().getlistVoie(pSecteur)) {
-				try {
 					daoFactory.getVoieManagerDao().delete(v);
-				} catch (VoieException e) {
-					e.printStackTrace();
-				}
 			}
 			secteurDAO.delete(pSecteur);
 		    TransactionStatus vTScommit = vTransactionStatus;
 		    vTransactionStatus = null;
 		    platformTransactionManager.commit(vTScommit);
+		} catch (VoieException e) {
+			e.printStackTrace();
+			throw new SecteurException ("Erreur lors de la suppression du secteur "+pSecteur.getNomSecteur());
+
 		}finally {
 			if (vTransactionStatus != null) { 
 				platformTransactionManager.rollback(vTransactionStatus);
-				throw new SecteurException("Le secteur n'existe pas.");
+				throw new SecteurException("Le secteur n'existe pas. "+pSecteur.getNomSecteur());
 			} 			
 		}		
 	}

@@ -96,11 +96,16 @@ public class CreerSecteur extends ActionSupport implements SessionAware {
 	
 	public String input() {
 		try {
-			System.out.println("selection : "+selectedSite);
-			topo = managerFactory.getTopoManager().getTopo(topo.getNomTopo());
-			this.session.put("topo", topo);
-			site = managerFactory.getSiteManager().getSite(selectedSite);
-			this.session.put("site", site);
+			if ((Topo)session.get("topo") == null) {
+				System.out.println("selection : "+selectedSite);
+				topo = managerFactory.getTopoManager().getTopo(topo.getNomTopo());
+				this.session.put("topo", topo);
+				site = managerFactory.getSiteManager().getSite(selectedSite);
+				this.session.put("site", site);
+			}
+			else {
+				
+			}
 			System.out.println("input "+site.getId());
 			return ActionSupport.SUCCESS;			
 		}catch (TopoException e2) {

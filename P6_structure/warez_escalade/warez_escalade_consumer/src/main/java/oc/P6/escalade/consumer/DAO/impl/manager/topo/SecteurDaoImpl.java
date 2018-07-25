@@ -86,14 +86,14 @@ public class SecteurDaoImpl extends AbstractDAO implements SecteurManagerDao{
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
 		vParams.addValue("id_secteur", pSecteur.getId(), Types.INTEGER);
 	    
-	    try {
-	        vJdbcTemplate.update(vSQL, vParams);
-	    } catch (Exception vEx) {
-	        System.out.println("Le secteur n'existe pas ! secteur=" + pSecteur.getNomSecteur());
-	        vEx.printStackTrace();
-	        throw new SecteurException("Le secteur n'existe pas ! secteur=" + pSecteur.getNomSecteur());
-	        //return false;
-	    }
+	  // try {
+	       vJdbcTemplate.update(vSQL, vParams);
+	  // } catch (Exception vEx) {
+	  //     System.out.println("Le secteur n'existe pas ! secteur=" + pSecteur.getNomSecteur());
+	  //     vEx.printStackTrace();
+	  //     throw new SecteurException("Le secteur n'existe pas ! secteur=" + pSecteur.getNomSecteur());
+	  //     //return false;
+	  // }
 	    
 	    
 		return true;

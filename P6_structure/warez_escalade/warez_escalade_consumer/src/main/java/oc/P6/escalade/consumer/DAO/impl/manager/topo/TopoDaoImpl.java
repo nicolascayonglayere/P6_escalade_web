@@ -73,14 +73,14 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
 		vParams.addValue("id_topo", pTopo.getId(), Types.INTEGER);
 	    
-	    try {
+	    //try {
 	        vJdbcTemplate.update(vSQL, vParams);
-	    } catch (Exception vEx) {
-	        System.out.println("Le topo n'existe pas ! topo=" + pTopo.getNomTopo());
-	        vEx.printStackTrace();
-	        throw new TopoException("Le topo n'existe pas ! topo=" + pTopo.getNomTopo());
+	    //} catch (Exception vEx) {
+	       // System.out.println("Le topo n'existe pas ! topo=" + pTopo.getNomTopo());
+	        //vEx.printStackTrace();
+	        //throw new TopoException("Le topo n'existe pas ! topo=" + pTopo.getNomTopo());
 	        //return false;
-	    }
+	   // }
 	    
 	    
 		return true;		

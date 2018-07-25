@@ -10,7 +10,11 @@ import java.io.ObjectInputStream;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Properties;
+
+import com.opensymphony.xwork2.ActionSupport;
 
 
 
@@ -29,11 +33,13 @@ public class GestionFichierProperties {
 	private Properties prop;
 
 	private ObjectInputStream ois;
-	
+	//private GestionFichierProperties gfp = new GestionFichierProperties();
 	/**
 	 * Constructeur sans parametre
 	 */
 	public GestionFichierProperties(){
+		//String cheminConfigFile = gfp.lireProp().getProperty("chemin.configFile");
+		//System.out.println(cheminConfigFile);
 		this.configFile = new File(
 				"D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_technical\\src\\data\\conf\\configMail.properties");
 		//this.defautConfigFile = new File("Ressources/Fichiers/defaut_config.properties");
@@ -80,6 +86,26 @@ public class GestionFichierProperties {
 	           }
 	           Files.delete(pPath);
 	       } catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void uploadImg(Path pPathOrigin, Path pPathCible) {
+		try {
+			Files.copy(pPathOrigin, pPathCible, StandardCopyOption.COPY_ATTRIBUTES);
+		}catch(FileNotFoundException e) {
+			e.printStackTrace();
+		}catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void creerDossierImg(Path pPath) {
+		try {
+			Files.createDirectories(pPath);
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

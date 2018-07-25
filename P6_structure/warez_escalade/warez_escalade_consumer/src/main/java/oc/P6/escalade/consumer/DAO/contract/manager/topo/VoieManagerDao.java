@@ -55,8 +55,9 @@ public interface VoieManagerDao {
 	 * Méthode pour obtenir la liste des {@link Voie} du {@link Secteur} donnée en paramètre dans la base de donné
 	 * @param pSecteur
 	 * @return la liste des {@link Voie}
+	 * @throws VoieException 
 	 */
-	ArrayList<Voie> getlistVoie(Secteur pSecteur);
+	ArrayList<Voie> getlistVoie(Secteur pSecteur) throws VoieException;
 	
 	/**
 	 * Méthode pour obtenir la liste des {@link Voie} dont la difficulté est donnée en paramètre dans la base de donné

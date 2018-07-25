@@ -1,6 +1,12 @@
 package oc.P6.escalade.actions.topo;
 
+import java.io.IOException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -31,10 +37,12 @@ public class FinaliserTopo extends ActionSupport implements SessionAware {
 	private Map<String, Object> session;
 	private Topo topo;
 	private String nomTopo; 
+	private String imageId;
 	private ArrayList<Site> listSite;
-	private ArrayList<Secteur> listSecteur;
+	private ArrayList<Secteur> listSecteur = new ArrayList<Secteur>();
 	private ArrayList<Voie> listVoie;
 	private ArrayList<CommentaireTopo> listCommentaire;
+	private ArrayList<String>listImage;
 	
 	public ManagerFactory getManagerFactory() {
 		return managerFactory;
@@ -56,16 +64,35 @@ public class FinaliserTopo extends ActionSupport implements SessionAware {
 			managerFactory.getTopoManager().modifTopo(topo);
 
 			nomTopo = topo.getNomTopo();
-			listSite = managerFactory.getSiteManager().getSite(topo);
-			for (Site s : listSite)
-				listSecteur = managerFactory.getSecteurManager().getListSecteur(s);
-			for (Secteur se : listSecteur)
-				listVoie = managerFactory.getVoieManager().getListVoie(se);
-			listCommentaire = managerFactory.getCommentaireTopoManager().getListValid(topo.getId());
+			listSite = (ArrayList<Site>) managerFactory.getSiteManager().getSite(topo);
+        	for (Site s : listSite) {
+        		listSecteur.addAll((ArrayList<Secteur>) managerFactory.getSecteurManager().getListSecteur(s));
+        		for (Secteur sect : listSecteur) { 
+        			listVoie = (ArrayList<Voie>) managerFactory.getVoieManager().getListVoie(sect);
+        			sect.setListVoie(listVoie);
+        		}
+        	}
+        	listCommentaire = managerFactory.getCommentaireTopoManager().getListValid(topo.getId());
 			
 			this.session.remove("topo");
 			this.session.remove("secteur");
 			this.session.remove("site");
+			
+    		Path chemin = Paths.get("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\", topo.getImage());
+    		//File repertoire = new File("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\"+topo.getImage());//
+    		//System.out.println(repertoire.getPath()+" - "+repertoire.isDirectory());//+" - "+repertoire.listFiles().length);
+    		listImage = new ArrayList<String>();
+    	    try (DirectoryStream<Path> stream = Files.newDirectoryStream(chemin)){ 
+    	      Iterator<Path> iterator = stream.iterator();
+    	      while(iterator.hasNext()) {
+    	        Path p = iterator.next();
+    	        System.out.println(p);
+    	        listImage.add(topo.getImage()+"\\"+p.getFileName().toString());
+    	        setImageId(listImage.get(0));
+    	     }
+    	    } catch (IOException e) {
+				e.printStackTrace();
+			}
 			addActionMessage("La construction du topo"+topo.getNomTopo()+" est terminée.");
 			return ActionSupport.SUCCESS;
 		} catch (TopoException e1) {
@@ -128,6 +155,18 @@ public class FinaliserTopo extends ActionSupport implements SessionAware {
 	}
 	public void setListCommentaire(ArrayList<CommentaireTopo> listCommentaire) {
 		this.listCommentaire = listCommentaire;
+	}
+	public ArrayList<String> getListImage() {
+		return listImage;
+	}
+	public void setListImage(ArrayList<String> listImage) {
+		this.listImage = listImage;
+	}
+	public String getImageId() {
+		return imageId;
+	}
+	public void setImageId(String imageId) {
+		this.imageId = imageId;
 	}
 
 	

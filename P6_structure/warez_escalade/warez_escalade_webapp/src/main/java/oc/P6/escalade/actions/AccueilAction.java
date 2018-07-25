@@ -12,6 +12,7 @@ import javax.inject.Inject;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+import oc.P6.escalade.WebappHelper.GestionFichierProperties;
 import oc.P6.escalade.business.contract.ManagerFactory;
 import oc.P6.escalade.model.bean.topo.Topo;
 
@@ -27,12 +28,14 @@ public class AccueilAction extends ActionSupport{
 	private String imageId;
 	
 	public String execute() {
+		GestionFichierProperties gfp = new GestionFichierProperties();
 		listTopo = managerFactory.getTopoManager().getListTopo();
 		//Path chemin;
 		String img;
 		for (Topo t : listTopo) {
 			System.out.println("image : "+t.getImage());
-			Path chemin = Paths.get("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\", t.getImage());
+			Path chemin = Paths.get(gfp.lireProp().getProperty("chemin.upload"), t.getImage());
+					//"D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\", t.getImage());
 			img = "";
 			try (DirectoryStream<Path> stream = Files.newDirectoryStream(chemin)){ 
       	      Iterator<Path> iterator = stream.iterator();

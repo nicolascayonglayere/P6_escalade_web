@@ -16,6 +16,8 @@ import org.apache.struts2.interceptor.ServletRequestAware;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+import oc.P6.escalade.WebappHelper.GestionFichierProperties;
+
 public class ImageAction extends ActionSupport implements ServletRequestAware {
 
 	/**
@@ -67,7 +69,9 @@ public class ImageAction extends ActionSupport implements ServletRequestAware {
 
 	private File getImageFile(String imageId) {
 		//String filePath = servletRequest.getSession().getServletContext().getRealPath("/");
-		String filePath = "D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images";
+		GestionFichierProperties gfp = new GestionFichierProperties();
+		String filePath = gfp.lireProp().getProperty("chemin.upload"); 
+				//"D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images";
 		//System.out.println(filePath);
 		File file = new File(filePath, imageId);
 		//System.out.println(file.toString());

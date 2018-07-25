@@ -113,14 +113,19 @@ public class CreerVoie extends ActionSupport implements SessionAware {
 	
 	public String input() {
 		try {
-			System.out.println("selection : "+selectedSecteur);
-			if (nomTopo != null)
+			if (((Topo)session.get("topo")).getNomTopo().length() > 0) {
+				topo = (Topo)session.get("topo");
+				secteur = (Secteur)session.get("secteur");
+			}
+			else {
+				System.out.println("selection : "+selectedSecteur);
 				topo = managerFactory.getTopoManager().getTopo(nomTopo);
-			else
-				topo = managerFactory.getTopoManager().getTopo(topo.getNomTopo());
-			this.session.put("topo", topo);
-			secteur = managerFactory.getSecteurManager().getSecteur(selectedSecteur);
-			this.session.put("secteur", secteur);
+				this.session.put("topo", topo);
+				secteur = managerFactory.getSecteurManager().getSecteur(selectedSecteur);
+				this.session.put("secteur", secteur);
+				
+			}
+			
 			for (Site s : managerFactory.getSiteManager().getSite(topo)) {
 				listSite.put(s.getId(), s.getNomSite());
 				for (Secteur se : managerFactory.getSecteurManager().getListSecteur(s)) {

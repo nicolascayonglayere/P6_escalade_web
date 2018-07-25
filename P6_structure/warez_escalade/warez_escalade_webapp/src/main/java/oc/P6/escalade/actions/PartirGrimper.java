@@ -54,11 +54,9 @@ public class PartirGrimper extends ActionSupport {
 					try {
 						listTopo = managerFactory.getTopoManager().rechercheMultiTopo(nom, selectedMin, selectedMax);
 						System.out.println(listTopo.size());
-						for (Topo t : listTopo) {//--un if test sur t.getListSite
+						for (Topo t : listTopo) {
 							if(t.getListVoie().size() > 0) {
-								//for(Voie v : t.getListVoie()) {
 									listVoie.addAll(t.getListVoie());
-								//}
 							}
 						}
 						listResultat.addAll(listTopo);
@@ -124,6 +122,10 @@ public class PartirGrimper extends ActionSupport {
 						e4.printStackTrace();
 						vResult = ActionSupport.INPUT;					
 					}
+				}
+				if(!checkMeTopo && !checkMeSite && !checkMeSecteur && !checkMeVoie) {
+					vResult = ActionSupport.INPUT;
+					addActionMessage("Séléctionnez un lieu pour la recherche.");
 				}
 				return vResult;
 		

@@ -67,14 +67,14 @@ public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
 		vParams.addValue("id_site", pSite.getId(), Types.INTEGER);
 	    
-	    try {
-	        vJdbcTemplate.update(vSQL, vParams);
-	    } catch (Exception vEx) {
-	        System.out.println("Le site n'existe pas ! site=" + pSite.getNomSite());
-	        vEx.printStackTrace();
-	        throw new SiteException("Le site n'existe pas ! site=" + pSite.getNomSite());
-	        //return false;
-	    }
+	   //try {
+	       vJdbcTemplate.update(vSQL, vParams);
+	   //} catch (Exception vEx) {
+	   //    System.out.println("Le site n'existe pas ! site=" + pSite.getNomSite());
+	   //    vEx.printStackTrace();
+	   //    throw new SiteException("Le site n'existe pas ! site=" + pSite.getNomSite());
+	   //    //return false;
+	   //}
 	    
 	    
 		return true;
