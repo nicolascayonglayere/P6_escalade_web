@@ -522,6 +522,18 @@
 			</result>
 		</action>		
 	</package>
+	
+
+    <!-- ===== Package pour les actions AJAX ===== -->
+    <package name="ajax" extends="default, json-default" namespace="/">
+
+        <!-- Action renvoyant le resultat de la recherche multi critere -->
+        <action name="ajax_getResultatRech" class="oc.P6.escalade.actions.PartirGrimper" method="execute">
+            <result name="success" type="json">
+                <param name="root">listTopo</param>
+            </result>
+        </action>
+    </package>	
 </struts>
 
 

@@ -9,7 +9,7 @@
 		
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">		
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-		<link rel="stylesheet" type="text/css" href="jsp/style.css" />
+		<link rel="stylesheet" type="text/css" href="/warez-escalade-webapp/jsp/style.css" />
 		<title>TOPO</title>
 		<!--<sb:head includeScripts="false" includeStyles="true"/>-->
 	</head>
@@ -32,7 +32,7 @@
 					<s:text name="partir.difficulte"/>
 					<s:select name="selectedMin" label="%{getText('partir.minDiff')}" list="listDiff" size="1" />
 					<s:select name="selectedMax" label="%{getText('partir.maxDiff')}" list="listDiff" size="1" />
-					<s:submit class="btn btn-default" value="%{getText('bouton.valider')}">
+					<s:submit class="btn btn-default" value="%{getText('bouton.valider')}" onclick="resultatRecherche()">
 						<s:param name="nomTopo" value="topo.nomTopo"/>
 					</s:submit>					
 				</s:form>
@@ -40,17 +40,11 @@
 				<s:if test="listResultat">
 					<s:form action="emprunt_topo" namespace="/jsp/utilisateur">	
 						<s:iterator value="listTopo" var="topo">				
-							<p>
+							<p id="listTopo">
 								<s:checkbox name="checkMe" fieldValue="%{#topo.nomTopo}" label="%{#topo.nomTopo+' '+#topo.auteur.pseudo}"/>
-								<s:iterator value="listSite" var="site">
-									<li><s:property value="#site.nomSite"/></li>
-									<s:iterator value="listSecteur" var="secteur">
-										<li><s:property value="#secteur.nomSecteur"/></li>
-										<s:iterator value="listVoie" var="voie">
-											<li><s:property value="#voie.nomVoie"/> <s:property value="#voie.cotation"/> <s:property value="#voie.description"/></li>											
-										</s:iterator>
+									<s:iterator value="#topo.listVoie" var="voie">
+										<li><s:property value="#voie.nomVoie"/> <s:property value="#voie.cotation"/> <s:property value="#voie.description"/></li>											
 									</s:iterator>
-								</s:iterator>
 							</p>
 						</s:iterator>
 						<p>
@@ -72,6 +66,28 @@
 	  	<%@include file="_include/footer.jsp" %>		
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
-	  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>		
+	  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+   		<script>
+	        function resultatRecherche() {
+            // URL de l'action AJAX
+            var url = "<s:url action="ajax_getResultatRecherche"/>";
+            // Action AJAX en POST
+            jQuery.post(
+                url,
+                function (data) {
+                    var $listTopo = jQuery("#listTopo");
+                    $listTopo.empty();
+                    jQuery.each(data, function (key, val) {
+                        $listTopo.append(
+                            jQuery("<li>")
+                                .append(val.nom)
+                        );
+                    });
+                })
+                .fail(function () {
+                    alert("Une erreur s'est produite.");
+                });
+	        }
+    	</script>	  			
 	</body>
 </html>

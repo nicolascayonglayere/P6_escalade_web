@@ -18,7 +18,12 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+
+import static java.nio.file.Files.walk;
+import static java.nio.file.Paths.get;
+import static java.util.stream.Collectors.toList;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -103,6 +108,10 @@ public class UploadAction extends ActionSupport implements SessionAware, Servlet
 		//	return ActionSupport.INPUT;
 		//}
 		}
+		List<Path> paths = walk(get(chemin+"\\"+nomDuTopo)).collect(toList());
+		Path cheminRenomme = Paths.get(chemin+"\\"+nomDuTopo, "imageCouv.JPG");
+		Files.move(paths.get(0), cheminRenomme, StandardCopyOption.REPLACE_EXISTING);
+		
 		System.out.println("filenames:");
 		for (String n : uploadFileName) {
 			System.out.println("*** " + n);

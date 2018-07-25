@@ -152,11 +152,7 @@ public class GoTopoAction extends ActionSupport implements ServletResponseAware{
         		}
         	}
         	listCommentaire = managerFactory.getCommentaireTopoManager().getListValid(topo.getId());
-
-        	Cookie cookie = new Cookie("topo", "topo");
-        	cookie.setMaxAge(1296000);
-        	response.addCookie(cookie);
-        	
+       	
         	return SUCCESS;
         }
         else {

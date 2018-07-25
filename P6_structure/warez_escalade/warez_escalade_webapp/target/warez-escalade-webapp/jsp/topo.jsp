@@ -9,7 +9,7 @@
 		
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">		
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-		<link rel="stylesheet" type="text/css" href="jsp/style.css" />
+		<link rel="stylesheet" type="text/css" href="/warez-escalade-webapp/jsp/style.css" />
 		<title>TOPO</title>
 		<!--<sb:head includeScripts="false" includeStyles="true"/>-->
 	</head>
@@ -179,10 +179,11 @@
 		<!-- les scripts google Map API -->
 		<script>
 	      function initMap() {
-	    	var lat = Number(document.getElementById('vLatitude'));
-	    	var longi = Number(document.getElementById('#vLongitude'));
-	        var monTopo = new google.maps.LatLng(lat, longi);
-	
+	    	var lat = (document.getElementById('vLatitude').innerHTML);
+	    	var longi = (document.getElementById('vLongitude').innerHTML);
+	        var monTopo = new google.maps.LatLng(45.311, 5.624);
+			console.log(lat);
+			console.log(longi);
 	        var map = new google.maps.Map(document.getElementById('map'), {
 	          center: monTopo,
 	          zoom: 10
