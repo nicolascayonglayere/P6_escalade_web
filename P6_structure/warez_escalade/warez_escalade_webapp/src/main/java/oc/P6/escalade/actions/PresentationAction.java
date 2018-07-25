@@ -3,6 +3,7 @@ package oc.P6.escalade.actions;
 import java.util.ArrayList;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -11,14 +12,12 @@ import oc.P6.escalade.business.contract.ManagerFactory;
 import oc.P6.escalade.model.bean.exception.UtilisateurException;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
-//@Named("presentation")
+@Named("presentation")
 public class PresentationAction extends ActionSupport{
 
 	/**
 	 * 
 	 */
-	//@Inject
-	//private WebappHelper webappHelper;
 	private static final long serialVersionUID = 1L;
 	
 	@Inject

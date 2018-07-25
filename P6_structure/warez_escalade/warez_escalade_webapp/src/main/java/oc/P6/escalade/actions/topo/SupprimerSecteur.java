@@ -1,6 +1,7 @@
 package oc.P6.escalade.actions.topo;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -11,7 +12,7 @@ import oc.P6.escalade.model.bean.exception.TopoException;
 import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
-
+@Named
 public class SupprimerSecteur extends ActionSupport {
 
 	/**

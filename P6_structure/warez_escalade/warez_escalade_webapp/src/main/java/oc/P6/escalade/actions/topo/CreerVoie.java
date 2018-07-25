@@ -1,12 +1,13 @@
 package oc.P6.escalade.actions.topo;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.apache.struts2.interceptor.SessionAware;
+import org.springframework.context.annotation.Scope;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -20,6 +21,8 @@ import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.topo.Voie;
 
+@Named
+@Scope("Protoype")
 public class CreerVoie extends ActionSupport implements SessionAware {
 
 	/**
@@ -70,12 +73,9 @@ public class CreerVoie extends ActionSupport implements SessionAware {
 			System.out.println("trace creation voie");
 			if ((Topo)session.get("topo") != null) {
 				topo = (Topo)session.get("topo");
-				//topo = managerFactory.getTopoManager().getTopo(nomTopo);
 			}
 			if((Secteur)session.get("secteur") != null) {
 				secteur = (Secteur)session.get("secteur");
-				Site vSite = ((Secteur)session.get("secteur")).getSite();
-				//secteur = managerFactory.getSecteurManager().getSecteur(nomSecteur, vSite);
 			}
 			System.out.println(secteur.getNomSecteur()+" - "+topo.getNomTopo());
 			voie.setSecteur(secteur);
@@ -89,10 +89,6 @@ public class CreerVoie extends ActionSupport implements SessionAware {
 				}
 			}
 			
-			
-			//listSite = managerFactory.getSiteManager().getSite(topo);
-			//for(Site s : listSite)
-			//	setListSecteur(managerFactory.getSecteurManager().getListSecteur(s));
 			addActionMessage("La voie "+voie.getNomVoie()+" a bien été créee.");
 			return ActionSupport.SUCCESS;			
 		}catch (SiteException e3) {
@@ -132,9 +128,7 @@ public class CreerVoie extends ActionSupport implements SessionAware {
 					listSecteur.put(se.getId(), se.getNomSecteur());
 				}
 			}
-			//listSite = managerFactory.getSiteManager().getSite(topo);
-			//for(Site s : listSite)
-			//	setListSecteur(managerFactory.getSecteurManager().getListSecteur(s));
+
 			return ActionSupport.SUCCESS;			
 		}catch (TopoException e2) {
 			addActionMessage(e2.getMessage());

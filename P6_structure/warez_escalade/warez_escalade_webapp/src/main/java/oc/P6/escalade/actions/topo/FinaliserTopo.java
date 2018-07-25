@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.apache.struts2.interceptor.SessionAware;
 
@@ -25,7 +26,7 @@ import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.topo.Voie;
-
+@Named
 public class FinaliserTopo extends ActionSupport implements SessionAware {
 
 	/**

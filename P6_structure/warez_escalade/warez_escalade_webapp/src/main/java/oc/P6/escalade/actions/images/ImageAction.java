@@ -1,8 +1,6 @@
 package oc.P6.escalade.actions.images;
 
-import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,15 +8,14 @@ import java.io.File;
 import java.io.FileInputStream;
 
 import javax.imageio.ImageIO;
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.struts2.interceptor.ServletRequestAware;
+import javax.inject.Named;
 
 import com.opensymphony.xwork2.ActionSupport;
 
 import oc.P6.escalade.WebappHelper.GestionFichierProperties;
 
-public class ImageAction extends ActionSupport implements ServletRequestAware {
+@Named
+public class ImageAction extends ActionSupport {
 
 	/**
 	 * 
@@ -26,8 +23,6 @@ public class ImageAction extends ActionSupport implements ServletRequestAware {
 	private static final long serialVersionUID = 1L;
 	byte[] imageInByte = null;
 	String imageId;
-	
-	private HttpServletRequest servletRequest;
 
 	public String getImageId() {
 		return imageId;
@@ -84,12 +79,6 @@ public class ImageAction extends ActionSupport implements ServletRequestAware {
 
 	public String getCustomContentDisposition() {
 		return "anyname.JPG";
-	}
-
-	@Override
-	public void setServletRequest(HttpServletRequest request) {
-		this.servletRequest = request;
-		
 	}
 
 }

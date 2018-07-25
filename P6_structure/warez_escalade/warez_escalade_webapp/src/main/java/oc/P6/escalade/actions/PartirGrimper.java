@@ -3,6 +3,9 @@ package oc.P6.escalade.actions;
 import java.util.ArrayList;
 
 import javax.inject.Inject;
+import javax.inject.Named;
+
+import org.springframework.context.annotation.Scope;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -16,6 +19,8 @@ import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.topo.Voie;
 
+@Named
+@Scope("Protoype")
 public class PartirGrimper extends ActionSupport {
 
 	/**

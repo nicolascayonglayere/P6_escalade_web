@@ -9,13 +9,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import com.opensymphony.xwork2.ActionSupport;
 
 import oc.P6.escalade.WebappHelper.GestionFichierProperties;
 import oc.P6.escalade.business.contract.ManagerFactory;
 import oc.P6.escalade.model.bean.topo.Topo;
-
+@Named
 public class AccueilAction extends ActionSupport{
 
 	/**

@@ -1,13 +1,14 @@
 package oc.P6.escalade.actions.utilisateur;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import com.opensymphony.xwork2.ActionSupport;
 
 import oc.P6.escalade.business.contract.ManagerFactory;
 import oc.P6.escalade.model.bean.commentaire.CommentaireTopo;
 import oc.P6.escalade.model.bean.exception.CommentaireTopoException;
-
+@Named
 public class ValidationCommentaireAction extends ActionSupport {
 
 	/**

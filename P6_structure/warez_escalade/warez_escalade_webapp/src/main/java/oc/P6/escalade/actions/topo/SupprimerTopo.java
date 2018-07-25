@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -18,7 +19,7 @@ import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.topo.Voie;
-
+@Named
 public class SupprimerTopo extends ActionSupport {
 
 	/**

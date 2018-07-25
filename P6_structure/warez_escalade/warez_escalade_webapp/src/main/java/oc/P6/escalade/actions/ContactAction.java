@@ -4,12 +4,15 @@ import java.util.Calendar;
 import java.util.Properties;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.mail.Message;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
+import org.springframework.context.annotation.Scope;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -19,6 +22,8 @@ import oc.P6.escalade.model.bean.exception.CoordonneeUtilisateurException;
 import oc.P6.escalade.model.bean.exception.UtilisateurException;
 import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateur;
 
+@Named
+@Scope("Protoype")
 public class ContactAction extends ActionSupport {
 
 	/**

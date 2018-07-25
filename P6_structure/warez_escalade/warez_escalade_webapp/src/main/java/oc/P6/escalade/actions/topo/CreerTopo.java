@@ -6,8 +6,10 @@ import java.nio.file.Paths;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.apache.struts2.interceptor.SessionAware;
+import org.springframework.context.annotation.Scope;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -17,6 +19,8 @@ import oc.P6.escalade.model.bean.exception.TopoException;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
+@Named
+@Scope("Protoype")
 public class CreerTopo extends ActionSupport implements SessionAware{
 
 	/**

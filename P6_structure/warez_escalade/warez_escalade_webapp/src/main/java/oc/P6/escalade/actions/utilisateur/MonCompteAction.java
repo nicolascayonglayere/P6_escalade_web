@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.apache.struts2.interceptor.SessionAware;
 
@@ -17,7 +18,7 @@ import oc.P6.escalade.model.bean.exception.UtilisateurException;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateur;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
-
+@Named
 public class MonCompteAction extends ActionSupport implements SessionAware{
 
 	/**

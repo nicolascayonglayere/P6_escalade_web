@@ -22,6 +22,7 @@
 				<h1 id="titre"><s:text name="partir.titre"/></h1>
 				<h3><s:text name="partir.explication"></s:text></h3>
 				<!--<s:form action="rechMulti" cssClass="form-vertical" namespace="/">-->
+				<s:form>
 					<div class="row">
 						<s:checkbox name="checkMeTopo" label="%{getText('compteUser.topo')}"/>
 						<s:checkbox name="checkMeSite" label="%{getText('creerTopo.site')}"/>
@@ -33,9 +34,10 @@
 					<s:select name="selectedMin" label="%{getText('partir.minDiff')}" list="listDiff" size="1" />
 					<s:select name="selectedMax" label="%{getText('partir.maxDiff')}" list="listDiff" size="1" />
 					<s:submit class="btn btn-default" value="%{getText('bouton.valider')}" onclick="resultatRecherche()">
-						<s:param name="nomTopo" value="topo.nomTopo"/>
+						<s:param name="nom" value="nom"/>
 					</s:submit>					
-				<!--</s:form>-->
+				</s:form>
+				<!-- </s:form> -->
 				
 				<s:if test="listResultat">
 					<s:form action="emprunt_topo" namespace="/jsp/utilisateur">	
@@ -78,8 +80,8 @@
                     jQuery.each(data, function (key, val) {
                     	$('listTopo').append(
                                 jQuery("<li>")
-                                .append(val.nom)
-                                .append(val.auteur.pseudo)
+                                .append(val.topo.nom)
+                                .append(val.topo.auteur.pseudo)
                                 .append("</li>")
                     	);
                     });

@@ -3,9 +3,9 @@ package oc.P6.escalade.actions.topo;
 import java.util.ArrayList;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
+import javax.inject.Named;
 
-import org.apache.struts2.interceptor.ServletRequestAware;
+import org.springframework.context.annotation.Scope;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -19,7 +19,9 @@ import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.topo.Voie;
 
-public class RechercheTopo extends ActionSupport implements ServletRequestAware{
+@Named
+@Scope("Protoype")
+public class RechercheTopo extends ActionSupport {
 
 	/**
 	 * 
@@ -33,8 +35,6 @@ public class RechercheTopo extends ActionSupport implements ServletRequestAware{
 	private ArrayList<Secteur> listSecteur = new ArrayList<Secteur>();
 	private ArrayList<Voie>listVoie = new ArrayList<Voie>();
 	private String nomTopo, nomSite, nomSecteur;
-	private HttpServletRequest request;
-	
 	
 	public String execute() {
 
@@ -152,12 +152,5 @@ public class RechercheTopo extends ActionSupport implements ServletRequestAware{
 	public void setNomSecteur(String nomSecteur) {
 		this.nomSecteur = nomSecteur;
 	}
-
-	@Override
-	public void setServletRequest(HttpServletRequest request) {
-		this.request = request;
-	}
-	
-	
 
 }

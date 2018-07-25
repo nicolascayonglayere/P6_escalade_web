@@ -1,5 +1,6 @@
 package oc.P6.escalade.actions.images;
 
+import javax.inject.Named;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
@@ -7,6 +8,7 @@ import org.apache.struts2.ServletActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.Result;
 
+@Named
 public class CustomImageBytesResult implements Result {
 
 	/**

@@ -3,8 +3,10 @@ package oc.P6.escalade.actions.topo;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.apache.struts2.interceptor.SessionAware;
+import org.springframework.context.annotation.Scope;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -16,6 +18,8 @@ import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
 
+@Named
+@Scope("Protoype")
 public class ModifierSecteur extends ActionSupport implements SessionAware{
 
 	/**

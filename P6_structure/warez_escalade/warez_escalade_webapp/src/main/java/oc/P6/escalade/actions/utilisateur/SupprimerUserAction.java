@@ -3,10 +3,12 @@ package oc.P6.escalade.actions.utilisateur;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.SessionAware;
+import org.springframework.context.annotation.Scope;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -15,7 +17,8 @@ import oc.P6.escalade.model.bean.exception.CoordonneeUtilisateurException;
 import oc.P6.escalade.model.bean.exception.UtilisateurException;
 import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateur;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
-
+@Named
+@Scope("Protoype")
 public class SupprimerUserAction extends ActionSupport implements SessionAware, ServletRequestAware {
 
 	/**

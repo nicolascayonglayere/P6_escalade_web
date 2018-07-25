@@ -525,7 +525,7 @@
 	
 
     <!-- ===== Package pour les actions AJAX ===== -->
-    <package name="ajax" extends="default, json-default" namespace="/">
+    <package name="ajax" extends="default, json-default" >
 
         <!-- Action renvoyant le resultat de la recherche multi critere -->
         <action name="ajax_getResultatRech" class="oc.P6.escalade.actions.PartirGrimper" method="execute">

@@ -1,6 +1,5 @@
 package oc.P6.escalade.actions;
 
-import java.io.File;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -9,10 +8,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.inject.Inject;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.struts2.interceptor.ServletResponseAware;
+import javax.inject.Named;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -22,8 +18,8 @@ import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.topo.Voie;
-
-public class GoTopoAction extends ActionSupport implements ServletResponseAware{
+@Named
+public class GoTopoAction extends ActionSupport {
 
 	/**
 	 * 
@@ -44,8 +40,7 @@ public class GoTopoAction extends ActionSupport implements ServletResponseAware{
 	private ArrayList<String>listImage;
 	private ArrayList<CommentaireTopo> listCommentaire;
 	private String[] listLieux = {"topo", "site", "secteur"};
-	private HttpServletResponse response;
-	
+		
 	public Topo getTopo() {
 		return topo;
 	}
@@ -176,10 +171,6 @@ public class GoTopoAction extends ActionSupport implements ServletResponseAware{
 	}
 	public void setListCommentaire(ArrayList<CommentaireTopo> listCommentaire) {
 		this.listCommentaire = listCommentaire;
-	}
-	@Override
-	public void setServletResponse(HttpServletResponse response) {
-		this.response = response;		
 	}
 
 }
