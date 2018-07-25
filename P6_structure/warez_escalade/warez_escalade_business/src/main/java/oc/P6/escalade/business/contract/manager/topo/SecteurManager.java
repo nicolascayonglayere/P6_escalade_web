@@ -59,4 +59,14 @@ public interface SecteurManager {
 	 * @throws SecteurException 
 	 */
 	void supprimerSecteur(Secteur pSecteur) throws SecteurException;
+	
+	/**
+	 * Méthode pour obtenir une liste de {@link Secteur} de nom pNom contenant des {@link Voie} d'un intervalle de difficulté donné en paramètre
+	 * @param pNom
+	 * @param pDiffMin
+	 * @param pDiffMax
+	 * @return la liste des {@link Secteur}
+	 * @throws SecteurException 
+	 */
+	ArrayList<Secteur> rechercheMultiSecteur(String pNom, String pDiffMin, String pDiffMax) throws SecteurException;
 }

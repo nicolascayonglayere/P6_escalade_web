@@ -3,6 +3,7 @@ package oc.P6.escalade.business.contract.manager.topo;
 import java.util.ArrayList;
 
 import oc.P6.escalade.model.bean.exception.SecteurException;
+import oc.P6.escalade.model.bean.exception.SiteException;
 import oc.P6.escalade.model.bean.exception.VoieException;
 import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Voie;
@@ -57,4 +58,14 @@ public interface VoieManager {
 	 * @throws VoieException 
 	 */
 	void supprimerVoie(Voie pVoie) throws VoieException;
+	
+	/**
+	 * Méthode pour obtenir une liste de {@link Voie} de nom pNom et d'un intervalle de difficulté donné en paramètre
+	 * @param pNom
+	 * @param pDiffMin
+	 * @param pDiffMax
+	 * @return la liste des {@link Voie}
+	 * @throws VoieException 
+	 */
+	ArrayList<Voie> rechercheMultiVoie(String pNom, String pDiffMin, String pDiffMax) throws VoieException;
 }

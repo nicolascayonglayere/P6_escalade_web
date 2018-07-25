@@ -65,4 +65,13 @@ public interface VoieManagerDao {
 	 * @return la liste des {@link Voie}
 	 */
 	ArrayList<Voie> rechercheDiffVoie(String pDiffMin, String pDiffMax);
+	
+	/**
+	 * Méthode pour obtenir la liste des {@link Voie} de la base de donnée à partir d'un nom et d'une difficulté définie dans un intervalle donné en paramètre
+	 * @param pNom
+	 * @param pDiffMin
+	 * @param pDiffMax
+	 * @return liste de {@link Voie}
+	 */
+	ArrayList<Voie> rechercheMultiVoie(String pNom, String pDiffMin, String pDiffMax);
 }

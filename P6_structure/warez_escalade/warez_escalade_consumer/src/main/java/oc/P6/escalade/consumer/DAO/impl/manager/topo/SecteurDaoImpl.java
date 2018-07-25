@@ -1,5 +1,7 @@
 package oc.P6.escalade.consumer.DAO.impl.manager.topo;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
 
@@ -7,17 +9,23 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
 import oc.P6.escalade.consumer.DAO.contract.manager.topo.SecteurManagerDao;
+import oc.P6.escalade.consumer.DAO.contract.manager.topo.SiteManagerDAO;
+import oc.P6.escalade.consumer.DAO.contract.manager.topo.TopoManagerDao;
+import oc.P6.escalade.consumer.DAO.contract.manager.topo.VoieManagerDao;
 import oc.P6.escalade.consumer.DAO.impl.manager.AbstractDAO;
 import oc.P6.escalade.consumer.DAO.impl.rowmapper.SecteurRowMapper;
 import oc.P6.escalade.model.bean.exception.SecteurException;
 import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Site;
+import oc.P6.escalade.model.bean.topo.Topo;
+import oc.P6.escalade.model.bean.topo.Voie;
 
 
 /**
@@ -27,6 +35,13 @@ import oc.P6.escalade.model.bean.topo.Site;
  */
 @Named
 public class SecteurDaoImpl extends AbstractDAO implements SecteurManagerDao{
+	@Inject
+	TopoManagerDao topoDAO;
+	@Inject
+	SiteManagerDAO siteDAO;
+	@Inject
+	VoieManagerDao voieDAO;
+	
 	@Inject
 	SecteurRowMapper secteurRowMapper;
 
@@ -171,6 +186,46 @@ public class SecteurDaoImpl extends AbstractDAO implements SecteurManagerDao{
 		
 		return secteur;        
 
+	}
+
+	@Override
+	public ArrayList<Secteur> rechercheMultiSecteur(String pNom, String pDiffMin, String pDiffMax) {
+		ArrayList<Secteur> listeSecteur = new ArrayList<Secteur>();
+		String vSQL = "SELECT * FROM secteur INNER JOIN voie ON secteur.id_secteur = voie.id_secteur " + 
+				      "                   WHERE secteur.nom LIKE :nom AND cotation < :cotationMax AND cotation > :cotationMin";
+		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
+		MapSqlParameterSource vParams = new MapSqlParameterSource();
+		vParams.addValue("nom", pNom+"%", Types.VARCHAR);
+		vParams.addValue("cotationMin", pDiffMin, Types.VARCHAR);
+		vParams.addValue("cotationMax", pDiffMax, Types.VARCHAR);
+		
+		RowMapper<Secteur> vRowMapperSecteur = new RowMapper<Secteur>() {
+
+			@Override
+			public Secteur mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Secteur vSecteur = new Secteur(rs.getString("nom"));
+				vSecteur.setId(rs.getInt("id_secteur"));
+				Site vSite = siteDAO.get(rs.getInt("id_site"));
+				vSecteur.setDescription(rs.getString("description"));
+				vSecteur.setImage(rs.getString("image"));
+				Topo vTopo = topoDAO.find(vSite.getTopo().getId());
+				ArrayList<Voie>listVoie = new ArrayList<Voie>();
+				while (rs.next()) {
+					listVoie.add(voieDAO.find(rs.getInt("id_voie")));
+				}
+				vSecteur.setListVoie(listVoie);
+				vTopo.setListVoie(listVoie);
+				vSite.setTopo(vTopo);
+				vSecteur.setSite(vSite);
+
+				return vSecteur;		
+			}
+			
+		};
+       
+		listeSecteur = (ArrayList<Secteur>) vJdbcTemplate.query(vSQL, vParams, vRowMapperSecteur);
+		System.out.println("ctrl rech multi dao : "+listeSecteur.size());
+		return listeSecteur;
 	}
 
 }

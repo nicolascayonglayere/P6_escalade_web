@@ -12,6 +12,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import oc.P6.escalade.business.contract.manager.AbstractDAOManager;
 import oc.P6.escalade.business.contract.manager.topo.SecteurManager;
+import oc.P6.escalade.business.impl.manager.TopoEmpruntManagerImpl;
 import oc.P6.escalade.consumer.DAO.DAOFactory;
 import oc.P6.escalade.consumer.DAO.contract.manager.topo.SecteurManagerDao;
 import oc.P6.escalade.model.bean.exception.SecteurException;
@@ -40,6 +41,8 @@ public class SecteurManagerImpl extends AbstractDAOManager implements SecteurMan
 	@Inject
 	@Named("platformTransactionManager")
 	private PlatformTransactionManager platformTransactionManager;
+	@Inject
+	private TopoEmpruntManagerImpl topoEmpruntManagerImpl;
 	
 	/**
 	 * Méthode pour obtenir la liste des {@link Secteur} du {@link Site } donné en paramètre
@@ -202,6 +205,41 @@ public class SecteurManagerImpl extends AbstractDAOManager implements SecteurMan
 		}		
 	}
 
+	@Override
+	public ArrayList<Secteur> rechercheMultiSecteur(String pNom, String pDiffMin, String pDiffMax) throws SecteurException {
+		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
+		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+		vDefinition.setTimeout(30); // 30 secondes
+        TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
+        //siteDAO = daoFactory.getSiteManagerDao();
+        secteurDAO = daoFactory.getSecteurManagerDao();
+        //voieDAO = daoFactory.getVoieManagerDao();
+		ArrayList<Secteur>listSecteur = new ArrayList<Secteur>(); 
+		
+		try {
+			listSecteur = secteurDAO.rechercheMultiSecteur(pNom, pDiffMin, pDiffMax);
+			System.out.println("ctrl business multi 1 "+listSecteur.size());
+			if(listSecteur.size() == 0)
+				throw new SecteurException("Aucun résultat pour le secteur de nom commençant par "+pNom);
+			else {
+				for (Secteur se : listSecteur) {
+					System.out.println("ctrl business multi "+se.getId()+" - "+se.getListVoie().size());
+					if(topoEmpruntManagerImpl.getNbExemplaire(se.getSite().getTopo()) == 0) {
+						throw new SecteurException("Il n'y a plus d'exemplaire disponible pour le topo : "+se.getSite().getTopo().getNomTopo());
+					}
+				}				
+			}
+
+		    TransactionStatus vTScommit = vTransactionStatus;
+		    vTransactionStatus = null;
+		    platformTransactionManager.commit(vTScommit);
+		}finally {
+			if (vTransactionStatus != null) 
+				platformTransactionManager.rollback(vTransactionStatus); 			
+		}
+		return listSecteur;
+	}
+	
 	public DAOFactory getDaoFactory() {
 		return daoFactory;
 	}
@@ -225,6 +263,8 @@ public class SecteurManagerImpl extends AbstractDAOManager implements SecteurMan
 	public void setPlatformTransactionManager(PlatformTransactionManager platformTransactionManager) {
 		this.platformTransactionManager = platformTransactionManager;
 	}
+
+
 
 
 

@@ -512,8 +512,7 @@
 		    </interceptor-ref>
 			 <interceptor-ref name="defaultStack">
 			 	<param name="params.excludeParams">dojo..*,^struts..*,^session..*,^request..*,^application..*,^servlet(Request|Response)..*,parameters...*,submit,token,struts.token.name</param>
-			</interceptor-ref>		    
-		    <interceptor-ref name="defaultStack" />		
+			</interceptor-ref>		    	
 			<result name="success" type="redirectAction">
 				<param name="actionName">go_monCompte</param>
 				<param name="namespace">/jsp/utilisateur</param>

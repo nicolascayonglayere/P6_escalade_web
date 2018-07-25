@@ -12,6 +12,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import oc.P6.escalade.business.contract.manager.AbstractDAOManager;
 import oc.P6.escalade.business.contract.manager.topo.VoieManager;
+import oc.P6.escalade.business.impl.manager.TopoEmpruntManagerImpl;
 import oc.P6.escalade.consumer.DAO.DAOFactory;
 import oc.P6.escalade.consumer.DAO.contract.manager.topo.VoieManagerDao;
 import oc.P6.escalade.model.bean.exception.SecteurException;
@@ -37,6 +38,8 @@ public class VoieManagerImpl extends AbstractDAOManager implements VoieManager{
 	@Inject
 	@Named("platformTransactionManager")
 	private PlatformTransactionManager platformTransactionManager;
+	@Inject
+	private TopoEmpruntManagerImpl topoEmpruntManagerImpl;
 	
 	/**
 	 * Méthode pour obtenir la liste des {@link Voie} du {@link Secteur} donné en paramètre
@@ -186,6 +189,43 @@ public class VoieManagerImpl extends AbstractDAOManager implements VoieManager{
 	   	}
 	}
 
+	@Override
+	public ArrayList<Voie> rechercheMultiVoie(String pNom, String pDiffMin, String pDiffMax) throws VoieException {
+		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
+		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+		vDefinition.setTimeout(30); // 30 secondes
+        TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
+        //siteDAO = daoFactory.getSiteManagerDao();
+        //secteurDAO = daoFactory.getSecteurManagerDao();
+        voieDao = daoFactory.getVoieManagerDao();
+		ArrayList<Voie>listVoie = new ArrayList<Voie>(); 
+		ArrayList<Voie> listVoieTopo = new ArrayList<Voie>();
+		try {
+			listVoie = voieDao.rechercheMultiVoie(pNom, pDiffMin, pDiffMax);
+			System.out.println("ctrl business multi 1 "+listVoie.size());
+			if(listVoie.size() == 0)
+				throw new VoieException("Aucun résultat pour la voie de nom commençant par "+pNom);
+			else {
+				for (Voie v : listVoie) {
+					System.out.println("ctrl business multi "+v.getId());
+					if(topoEmpruntManagerImpl.getNbExemplaire(v.getSecteur().getSite().getTopo()) == 0) {
+						throw new VoieException("Il n'y a plus d'exemplaire disponible pour le topo : "+v.getSecteur().getSite().getTopo().getNomTopo());
+					}
+					listVoieTopo.add(v);
+					v.getSecteur().getSite().getTopo().setListVoie(listVoieTopo);
+				}				
+			}
+
+		    TransactionStatus vTScommit = vTransactionStatus;
+		    vTransactionStatus = null;
+		    platformTransactionManager.commit(vTScommit);
+		}finally {
+			if (vTransactionStatus != null) 
+				platformTransactionManager.rollback(vTransactionStatus); 			
+		}
+		return listVoie;
+	}
+	
 	public DAOFactory getDaoFactory() {
 		return daoFactory;
 	}
@@ -193,6 +233,8 @@ public class VoieManagerImpl extends AbstractDAOManager implements VoieManager{
 	public void setDaoFactory(DAOFactory daoFactory) {
 		this.daoFactory = daoFactory;
 	}
+
+
 
 
 }

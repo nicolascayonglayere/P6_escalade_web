@@ -28,7 +28,6 @@ public class VoieRowMapper implements RowMapper<Voie> {
 		vVoie.setHauteur(rs.getInt("hauteur"));
 		vVoie.setNbLgueur(rs.getInt("nombre_longueur"));
 		vVoie.setNbPoint(rs.getInt("nombre_point"));
-		vVoie.setSecteur(vSecteur);
 		vVoie.setDescription(rs.getString("description"));
 		return vVoie;
 	}

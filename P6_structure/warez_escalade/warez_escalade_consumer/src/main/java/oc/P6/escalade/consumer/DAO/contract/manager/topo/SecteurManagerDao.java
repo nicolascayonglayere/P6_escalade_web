@@ -57,4 +57,13 @@ public interface SecteurManagerDao {
 	 * @return liste de {@link Secteur}
 	 */
 	ArrayList<Secteur> getListeSecteur(Site pSite);
+	
+	/**
+	 * Méthode pour obtenir la liste des {@link Secteur} de la base de donnée à partir d'un nom et contenant des {@link Voie} d'une difficulté définie dans un intervalle donné en paramètre
+	 * @param pNom
+	 * @param pDiffMin
+	 * @param pDiffMax
+	 * @return liste de {@link Secteur}
+	 */
+	ArrayList<Secteur> rechercheMultiSecteur(String pNom, String pDiffMin, String pDiffMax);
 }
