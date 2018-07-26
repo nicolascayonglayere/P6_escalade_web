@@ -12,6 +12,12 @@ import com.opensymphony.xwork2.ActionSupport;
 import oc.P6.escalade.business.contract.ManagerFactory;
 import oc.P6.escalade.model.bean.exception.UtilisateurException;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
+
+/**
+ * Classe action qui permet de peupler la jsp creer_topo.jsp .Vraiment Utile ?
+ * @author nicolas
+ *
+ */
 @Named
 public class GoCreerTopo extends ActionSupport implements SessionAware{
 
@@ -24,20 +30,9 @@ public class GoCreerTopo extends ActionSupport implements SessionAware{
 	private Utilisateur utilisateur;
 	private Map<String, Object>session;
 	
-	@Override
-	public void setSession(Map<String, Object> session) {
-		this.session = session;
-		
-	}
-
-	public Utilisateur getUtilisateur() {
-		return utilisateur;
-	}
-
-	public void setUtilisateur(Utilisateur utilisateur) {
-		this.utilisateur = utilisateur;
-	}
-
+	/**
+	 * Méthode qui retourne l'utilisateur qui est deja en session Totalement useless
+	 */
 	public String execute() {
 		System.out.println(((Utilisateur)session.get("utilisateur")).getPseudo());
 		try {
@@ -50,11 +45,25 @@ public class GoCreerTopo extends ActionSupport implements SessionAware{
 		}
 	}
 
+	//--Getter et Setter--//
 	public ManagerFactory getManagerFactory() {
 		return managerFactory;
 	}
 
 	public void setManagerFactory(ManagerFactory managerFactory) {
 		this.managerFactory = managerFactory;
+	}
+	@Override
+	public void setSession(Map<String, Object> session) {
+		this.session = session;
+		
+	}
+
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
+	}
+
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
 	}
 }

@@ -19,6 +19,7 @@ import org.springframework.context.annotation.Scope;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+import oc.P6.escalade.WebappHelper.GestionFichierProperties;
 import oc.P6.escalade.business.contract.ManagerFactory;
 import oc.P6.escalade.model.bean.commentaire.CommentaireTopo;
 import oc.P6.escalade.model.bean.exception.CommentaireTopoException;
@@ -32,6 +33,11 @@ import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.topo.Voie;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
+/**
+ * Classe action qui permet de commenter un {@link Topo}
+ * @author nicolas
+ *
+ */
 @Named
 @Scope("Protoype")
 public class CommenterAction extends ActionSupport implements SessionAware{
@@ -57,26 +63,9 @@ public class CommenterAction extends ActionSupport implements SessionAware{
 	private ArrayList<CommentaireTopo> listCommentaire;
 	private Map<String, Object> session; 
 	
-	public Utilisateur getUtilisateur() {
-		return utilisateur;
-	}
-	public void setUtilisateur(Utilisateur utilisateur) {
-		this.utilisateur = utilisateur;
-	}
-	public Topo getTopo() {
-		return topo;
-	}
-	public void setTopo(Topo topo) {
-		this.topo = topo;
-	}
-	public CommentaireTopo getCommentaireTopo() {
-		return commentaireTopo;
-	}
-	public void setCommentaireTopo(CommentaireTopo commentaireTopo) {
-		this.commentaireTopo = commentaireTopo;
-	}
-	
-	
+	/**
+	 * Méthode qui récupère le commentaire et qui envoie les données nécessaires à la jsp topo.jsp
+	 */
 	public String execute() {
 		System.out.println(((Utilisateur) session.get("utilisateur")).getPseudo());
 		utilisateur = (Utilisateur) (session.get("utilisateur"));
@@ -93,7 +82,9 @@ public class CommenterAction extends ActionSupport implements SessionAware{
 		repoId = topo.getImage();
 		//System.out.println(topo.getImage());
  		//File repertoire = new File("webapp\\assets\\images\\"+topo.getImage());
-		Path chemin = Paths.get("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\", topo.getImage());
+		GestionFichierProperties gfp = new GestionFichierProperties();
+		Path chemin = Paths.get(gfp.lireProp().getProperty("chemin"), topo.getImage());
+				//"D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\", topo.getImage());
 		//File repertoire = new File("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\"+topo.getImage());//
 		//System.out.println(repertoire.getPath()+" - "+repertoire.isDirectory());//+" - "+repertoire.listFiles().length);
 		listImage = new ArrayList<String>();
@@ -165,6 +156,7 @@ public class CommenterAction extends ActionSupport implements SessionAware{
 		return ActionSupport.INPUT;
 	}
 
+	//--Getter et Setter--//
 	@Override
 	public void setSession(Map<String, Object> session) {
 		this.session = session;
@@ -230,5 +222,22 @@ public class CommenterAction extends ActionSupport implements SessionAware{
 	public void setListImage(ArrayList<String> listImage) {
 		this.listImage = listImage;
 	}
-
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
+	}
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
+	}
+	public Topo getTopo() {
+		return topo;
+	}
+	public void setTopo(Topo topo) {
+		this.topo = topo;
+	}
+	public CommentaireTopo getCommentaireTopo() {
+		return commentaireTopo;
+	}
+	public void setCommentaireTopo(CommentaireTopo commentaireTopo) {
+		this.commentaireTopo = commentaireTopo;
+	}
 }

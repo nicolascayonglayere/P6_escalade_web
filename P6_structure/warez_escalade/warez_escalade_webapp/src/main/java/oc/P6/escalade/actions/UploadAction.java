@@ -7,12 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
-
-import static java.nio.file.Files.walk;
-import static java.nio.file.Paths.get;
-import static java.util.stream.Collectors.toList;
 
 import javax.inject.Named;
 
@@ -24,6 +19,11 @@ import com.opensymphony.xwork2.ActionSupport;
 import oc.P6.escalade.WebappHelper.GestionFichierProperties;
 import oc.P6.escalade.model.bean.topo.Topo;
 
+/**
+ * Classe action qui permet de copier des images du poste client vers le serveur
+ * @author nicolas
+ *
+ */
 @Named
 @Scope("Protoype")
 public class UploadAction extends ActionSupport implements SessionAware {
@@ -40,24 +40,9 @@ public class UploadAction extends ActionSupport implements SessionAware {
 	private Map<String, Object> session;
 	private GestionFichierProperties gfp = new GestionFichierProperties();
 
-	public ArrayList<File> getUpload() {
-		return this.upload;
-	}
-	public void setUpload(ArrayList<File> upload) {
-		this.upload = upload;
-	}
-	public ArrayList<String> getUploadFileName() {
-		return this.uploadFileName;
-	}
-	public void setUploadFileName(ArrayList<String> uploadFileName) {
-		this.uploadFileName = uploadFileName;
-	}
-	public ArrayList<String> getUploadContentType() {
-		return this.uploadContentType;
-	}
-	public void setUploadContentType(ArrayList<String> contentType) {
-		this.uploadContentType = contentType;
-	}
+	/**
+	 * Méthode qui permet l'upload d'image sur le serveur
+	 */
 	@Override
 	public String execute() throws Exception {
 		String nomImg="";
@@ -77,7 +62,6 @@ public class UploadAction extends ActionSupport implements SessionAware {
 
 		}
 		//--Renommer la premiere image : imageCouv.JPG
-
 		 Path homePath = Paths.get(chemin+"\\"+nomDuTopo);
 		 ArrayList<Path> paths = new ArrayList<Path>();
 		 try (DirectoryStream<Path> stream = Files.newDirectoryStream(homePath)) {
@@ -85,9 +69,7 @@ public class UploadAction extends ActionSupport implements SessionAware {
 		  	   paths.add(entry);
 		     }
 		 }    
-		// = walk(get(chemin+"\\"+nomDuTopo)).collect(toList());
-		
-		
+	
 		Path cheminRenomme = Paths.get(chemin+"\\"+nomDuTopo, "imageCouv.JPG");
 		Files.move(paths.get(0), cheminRenomme, StandardCopyOption.REPLACE_EXISTING);
 
@@ -104,6 +86,9 @@ public class UploadAction extends ActionSupport implements SessionAware {
  	   return ActionSupport.SUCCESS;
 	}
 	
+	/**
+	 * Méthode qui récupère le nom du {@link Topo} pour le traiter
+	 */
 	public String input() {
 		System.out.println(nomTopo);
 		if(((Topo)session.get("topo")) == null)
@@ -111,6 +96,7 @@ public class UploadAction extends ActionSupport implements SessionAware {
 		return ActionSupport.SUCCESS;
 	}
 	
+	//--Getter et Setter--//
 	@Override
 	public void setSession(Map<String, Object> session) {
 		this.session = session;
@@ -122,5 +108,22 @@ public class UploadAction extends ActionSupport implements SessionAware {
 	public void setNomTopo(String nomTopo) {
 		this.nomTopo = nomTopo;
 	}
-
+	public ArrayList<File> getUpload() {
+		return this.upload;
+	}
+	public void setUpload(ArrayList<File> upload) {
+		this.upload = upload;
+	}
+	public ArrayList<String> getUploadFileName() {
+		return this.uploadFileName;
+	}
+	public void setUploadFileName(ArrayList<String> uploadFileName) {
+		this.uploadFileName = uploadFileName;
+	}
+	public ArrayList<String> getUploadContentType() {
+		return this.uploadContentType;
+	}
+	public void setUploadContentType(ArrayList<String> contentType) {
+		this.uploadContentType = contentType;
+	}
 }

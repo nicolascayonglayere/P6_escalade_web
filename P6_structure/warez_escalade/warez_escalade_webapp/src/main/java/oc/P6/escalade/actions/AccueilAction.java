@@ -16,6 +16,12 @@ import com.opensymphony.xwork2.ActionSupport;
 import oc.P6.escalade.WebappHelper.GestionFichierProperties;
 import oc.P6.escalade.business.contract.ManagerFactory;
 import oc.P6.escalade.model.bean.topo.Topo;
+
+/**
+ * Classe action qui permet le bon affichage de la jsp index.jsp
+ * @author nicolas
+ *
+ */
 @Named
 public class AccueilAction extends ActionSupport{
 
@@ -28,6 +34,9 @@ public class AccueilAction extends ActionSupport{
 	private ArrayList<Topo> listTopo;
 	private String imageId;
 	
+	/**
+	 * Méthode qui construit et envoie les données nécessaires à la jsp
+	 */
 	public String execute() {
 		GestionFichierProperties gfp = new GestionFichierProperties();
 		listTopo = managerFactory.getTopoManager().getListTopo();
@@ -58,6 +67,7 @@ public class AccueilAction extends ActionSupport{
 		return ActionSupport.SUCCESS;
 	}
 	
+	//--Getter et Setter--//
 	public ManagerFactory getManagerFactory() {
 		return managerFactory;
 	}

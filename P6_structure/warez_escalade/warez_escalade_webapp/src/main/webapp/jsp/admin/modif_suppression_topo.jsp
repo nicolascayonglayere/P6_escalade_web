@@ -20,6 +20,7 @@
 			<s:actionmessage/>
 			<div class="container">	
 				<h1 id="titre"><s:text name="supprTopo.titre"> <s:property value="#request.topo.nomTopo"/></s:text></h1>	
+				<div class="row">
 				<div class="col-lg-4">
 
 					<div class="navbar navbar-expand-md navbar-light ">
@@ -67,31 +68,41 @@
 					</div>
 				</div>	
 				
-				<div class="col_lg_8">
+				<div class="col-lg-8">
 						<ul >
-							<s:a action="go_modifTopo" namespace="/jsp/utilisateur">
-								<s:text name="modifierTopo.topo"/> <s:property value="#request.topo.nomTopo"/>
-			                    <s:param name="nomTopo" value="topo.nomTopo" />
-							</s:a>
-							<s:a action="supprimerTopo" namespace="/jsp/utilisateur">
-							  		<s:param name="nomTopo" value="topo.nomTopo"/>
-									<s:submit class="btn btn-default" value="%{getText('bouton.supprimer')}"/>
-							</s:a>
+								
+
+									<s:a action="go_modifTopo" namespace="/jsp/utilisateur">
+										<s:text name="modifierTopo.topo"/> <s:property value="#request.topo.nomTopo"/>
+				                    	<s:param name="nomTopo" value="topo.nomTopo" />
+									</s:a>
+								
+ 								<div id="btonSuppr">	
+									<s:a action="supprimerTopo" namespace="/jsp/utilisateur">
+									  		<s:param name="nomTopo" value="topo.nomTopo"/>
+											<s:submit class="btn btn-default" value="%{getText('bouton.supprimer')}" id="btonSuppr"/>
+									</s:a>
+								</div>
+				
 							<ul>	
-							<s:text name="modifierTopo.titreSite"/>					
+							<s:text name="modifierTopo.titreSite"/>	
+							</br>				
 							<s:iterator value="listSite" var="site">
 								<s:a action="go_modifSite" namespace="/jsp/utilisateur">
 										<s:text name="modifierTopo.site"/><s:property value="#site.nomSite"/>
 					                    <s:param name="nomSite" value="#site.nomSite" />
 					                    <s:param name="nomTopo" value="topo.nomTopo" />							
 								</s:a>
+								<div id="btonSuppr">
 								<s:a action="supprimerSite" namespace="/jsp/utilisateur">
 					                    <s:param name="nomSite" value="#site.nomSite" />
 					                    <s:param name="nomTopo" value="topo.nomTopo" />
-										<s:submit class="btn btn-default" value="%{getText('bouton.supprimer')}"/>
-								</s:a>														
+										<s:submit class="btn btn-default" value="%{getText('bouton.supprimer')}" id="btonSuppr"/>
+								</s:a>				
+								</div>										
 								<ul>
 									<s:text name="modifierTopo.titreSecteur"/>
+									</br>
 									<s:iterator value="#site.listSecteur" var="secteur">
 										<s:a action="go_modifSecteur" namespace="/jsp/utilisateur">
 												<s:text name="modifierTopo.secteur"/><s:property value="#secteur.nomSecteur"/>
@@ -99,14 +110,17 @@
 							                    <s:param name="nomSite" value="site.nomSite"/>
 							                    <s:param name="nomTopo" value="topo.nomTopo" />							
 										</s:a>
+										<div id="btonSuppr">
 										<s:a action="supprimerSecteur" namespace="/jsp/utilisateur">
 												<s:param name="nomSecteur" value="#secteur.nomSecteur" />
 							                    <s:param name="nomSite" value="site.nomSite" />
 							                    <s:param name="nomTopo" value="topo.nomTopo" />
-												<s:submit class="btn btn-default" value="%{getText('bouton.supprimer')}"/>
-										</s:a>									
+												<s:submit class="btn btn-default" value="%{getText('bouton.supprimer')}" id="btonSuppr"/>
+										</s:a>				
+										</div>					
 										<ul>
 											<s:text name="modifierTopo.titreVoie"/>
+											</br>
 											<s:iterator value="#secteur.listVoie" var="voie">
 												<ul>
 												<s:a action="go_modifVoie" namespace="/jsp/utilisateur">
@@ -116,13 +130,15 @@
 									                    <s:param name="nomSite" value="site.nomSite"/>
 									                    <s:param name="nomTopo" value="topo.nomTopo" />							
 												</s:a>
+												<div id="btonSuppr">
 												<s:a action="supprimerVoie" namespace="/jsp/utilisateur">
 														<s:param name="nomVoie" value="#voie.nomVoie"/>
 														<s:param name="nomSecteur" value="secteur.nomSecteur" />
 									                    <s:param name="nomSite" value="site.nomSite" />
 									                    <s:param name="nomTopo" value="topo.nomTopo" />
-														<s:submit class="btn btn-default" value="%{getText('bouton.supprimer')}"/>
-												</s:a>											
+														<s:submit class="btn btn-default" value="%{getText('bouton.supprimer')}" id="btonSuppr"/>
+												</s:a>	
+												<div id="btonSuppr">										
 												</ul>										
 											</s:iterator>
 										</ul>
@@ -131,9 +147,9 @@
 							</s:iterator>
 							</ul>
 						</ul>	
-				</div>
-				</div>			
-			
+					</div>
+					</div>			
+			</div>
 		</div>	
 	  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>

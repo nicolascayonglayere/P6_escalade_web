@@ -12,6 +12,11 @@ import oc.P6.escalade.business.contract.ManagerFactory;
 import oc.P6.escalade.model.bean.exception.UtilisateurException;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
+/**
+ * Classe action qui permet de peupler la jsp présentation
+ * @author nicolas
+ *
+ */
 @Named("presentation")
 public class PresentationAction extends ActionSupport{
 
@@ -25,6 +30,24 @@ public class PresentationAction extends ActionSupport{
 	private ArrayList<Utilisateur> listAdmin;
 	private ArrayList<Utilisateur> listModo;
 	
+	/**
+	 * Méthode qui récupère les données nécessaire pour la jsp
+	 */
+	public String execute() {
+	
+		try {
+			listModo = managerFactory.getUtilisateurManager().getListModo();
+			listAdmin = managerFactory.getUtilisateurManager().getListAdmin();
+		} catch (UtilisateurException e2) {
+			addActionMessage(e2.getMessage());
+			e2.printStackTrace();
+			return ActionSupport.INPUT;
+		}
+
+		return ActionSupport.SUCCESS;
+	}
+	
+	//--Getter et Setter--//
 	public ManagerFactory getManagerFactory() {
 		System.out.println("trace getmanagerFacto");
 		return managerFactory;
@@ -45,25 +68,4 @@ public class PresentationAction extends ActionSupport{
 	public void setListModo(ArrayList<Utilisateur> listModo) {
 		this.listModo = listModo;
 	}
-
-	public String execute() {
-	
-		try {
-			listModo = managerFactory.getUtilisateurManager().getListModo();
-		} catch (UtilisateurException e1) {
-			addActionMessage(e1.getMessage());
-			e1.printStackTrace();
-			return ActionSupport.INPUT;
-		}
-		try {
-			listAdmin = managerFactory.getUtilisateurManager().getListAdmin();
-		} catch (UtilisateurException e2) {
-			addActionMessage(e2.getMessage());
-			e2.printStackTrace();
-			return ActionSupport.INPUT;
-		}
-
-		return ActionSupport.SUCCESS;
-	}
-
 }

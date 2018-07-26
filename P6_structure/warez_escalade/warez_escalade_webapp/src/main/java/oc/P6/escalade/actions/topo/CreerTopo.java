@@ -46,7 +46,7 @@ public class CreerTopo extends ActionSupport implements SessionAware{
 	public String execute() {
 		GestionFichierProperties gfp = new GestionFichierProperties();
 		System.out.println("trace");
-		utilisateur=(Utilisateur)session.get("utilisateur");
+		utilisateur = (Utilisateur)session.get("utilisateur");
 
 		System.out.println(topo.getNomTopo());
 

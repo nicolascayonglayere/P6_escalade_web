@@ -30,15 +30,15 @@
 					<p><s:text name="index.connexion"/></p>
 				</s:else>	
 					
-				<div class="row">
+				<div class="row" id="blocImgTopo">
 					<s:iterator value="listTopo" var="topo">
-				    	<div style="text-align:center;" class="col-lg-3">
+				    	<div class="col-lg-3" id="imageTopo" >
 				    		<s:a action="go_topo" namespace="/">
 				    			<!-- mettre l'image de couv -->
 								<s:url action="ImageAction" namespace="/" var="URLTag">
 									<s:param name="imageId" value="%{#topo.image}"/>
 								</s:url>
-								<img src="<s:property value="#URLTag"/>"/>			    			
+								<img src="<s:property value="#URLTag"/>" class="thumbnail, rounded" />			    			
 				            	<s:property value="#topo.nomTopo"/></br>
 				            	<s:property value="%{#topo.auteur.pseudo}"/>
 			                    <s:param name="nomTopo" value="nomTopo" />	

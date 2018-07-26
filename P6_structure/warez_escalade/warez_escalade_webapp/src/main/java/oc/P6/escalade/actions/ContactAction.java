@@ -22,6 +22,11 @@ import oc.P6.escalade.model.bean.exception.CoordonneeUtilisateurException;
 import oc.P6.escalade.model.bean.exception.UtilisateurException;
 import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateur;
 
+/**
+ * Classe action qui permet d'envoyer un message aux administrateurs du site
+ * @author nicolas
+ *
+ */
 @Named
 @Scope("Protoype")
 public class ContactAction extends ActionSupport {
@@ -35,11 +40,13 @@ public class ContactAction extends ActionSupport {
 	private CoordonneeUtilisateur coordonneeUtilisateur;
 	private String message;
 	private String to;
-
 	
 	private Properties properties = new Properties();
 	private GestionFichierProperties gfp = new GestionFichierProperties(); 
-	
+
+	/**
+	 * Méthode qui gère le message à envoyer et qui l'envoie
+	 */
 	public String execute() {
 		System.out.println("CTRL contact "+coordonneeUtilisateur.getEmail());
 	      String vReturn = SUCCESS;
@@ -86,6 +93,7 @@ public class ContactAction extends ActionSupport {
 
 	}
 
+	//--Getter et Setter--//
 	public ManagerFactory getManagerFactory() {
 		return managerFactory;
 	}

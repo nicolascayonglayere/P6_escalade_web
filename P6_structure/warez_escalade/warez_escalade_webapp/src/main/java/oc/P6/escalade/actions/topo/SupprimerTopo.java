@@ -3,9 +3,12 @@ package oc.P6.escalade.actions.topo;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -25,7 +28,7 @@ import oc.P6.escalade.model.bean.topo.Voie;
  *
  */
 @Named
-public class SupprimerTopo extends ActionSupport {
+public class SupprimerTopo extends ActionSupport implements SessionAware{
 
 	/**
 	 * 
@@ -41,6 +44,7 @@ public class SupprimerTopo extends ActionSupport {
 	private ArrayList<Voie> listVoie;
 	private HashMap<Integer,String> listSiteSelect = new HashMap<Integer, String>();
 	private HashMap<Integer,String> listSecteurSelect = new HashMap<Integer, String>();
+	private Map<String, Object> session;
 		
 	/**
 	 * Méthode qui effectue la suppression
@@ -93,7 +97,7 @@ public class SupprimerTopo extends ActionSupport {
 					listSecteurSelect.put(se.getId(), se.getNomSecteur());
 				}
 			}
-			
+			this.session.put("topo", topo);
 			addActionMessage("Vous avez sélectionner le topo :  "+topo.getNomTopo()+".");
 			return ActionSupport.SUCCESS;
 		} catch (TopoException e1) {
@@ -186,6 +190,12 @@ public class SupprimerTopo extends ActionSupport {
 
 	public void setListSecteurSelect(HashMap<Integer,String> listSecteurSelect) {
 		this.listSecteurSelect = listSecteurSelect;
+	}
+
+	@Override
+	public void setSession(Map<String, Object> session) {
+		this.session = session;
+		
 	}
 
 

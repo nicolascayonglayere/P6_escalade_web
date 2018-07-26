@@ -12,12 +12,19 @@ import javax.inject.Named;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+import oc.P6.escalade.WebappHelper.GestionFichierProperties;
 import oc.P6.escalade.business.contract.ManagerFactory;
 import oc.P6.escalade.model.bean.commentaire.CommentaireTopo;
 import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.topo.Voie;
+
+/**
+ * Classe action qui peuple la jsp topo.jsp affichant un {@link Topo}
+ * @author nicolas
+ *
+ */
 @Named
 public class GoTopoAction extends ActionSupport {
 
@@ -41,6 +48,67 @@ public class GoTopoAction extends ActionSupport {
 	private ArrayList<CommentaireTopo> listCommentaire;
 	private String[] listLieux = {"topo", "site", "secteur"};
 		
+	/**
+	 * Méthode qui envoie les données nécessaires à la jsp
+	 */
+	public String execute() throws Exception {
+		//--recupe le nom du topo dans la requete
+		System.out.println(nomTopo);
+		topo = (Topo) managerFactory.getTopoManager().getTopo(nomTopo);
+        if (topo != null) {
+    		repoId = topo.getImage();
+    		//System.out.println(topo.getImage());
+     		//File repertoire = new File("webapp\\assets\\images\\"+topo.getImage());
+    		GestionFichierProperties gfp = new GestionFichierProperties();
+    		Path chemin = Paths.get(gfp.lireProp().getProperty("chemin.upload"), topo.getImage());
+    				//"D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\", topo.getImage());
+    		//File repertoire = new File("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\"+topo.getImage());//
+    		//System.out.println(repertoire.getPath()+" - "+repertoire.isDirectory());//+" - "+repertoire.listFiles().length);
+    		listImage = new ArrayList<String>();
+    	    try (DirectoryStream<Path> stream = Files.newDirectoryStream(chemin)){ 
+    	      Iterator<Path> iterator = stream.iterator();
+    	      while(iterator.hasNext()) {
+    	        Path p = iterator.next();
+    	        System.out.println(p);
+    	        listImage.add(repoId+"\\"+p.getFileName().toString());
+    	        imageId = listImage.get(0);
+    	      }
+    	    } 
+    		//System.out.println(imageId);        	
+        	listSite = (ArrayList<Site>) managerFactory.getSiteManager().getSite(topo);
+        	for (Site s : listSite) {
+        		listSecteur.addAll((ArrayList<Secteur>) managerFactory.getSecteurManager().getListSecteur(s));
+        		for (Secteur sect : listSecteur) { 
+        			listVoie = (ArrayList<Voie>) managerFactory.getVoieManager().getListVoie(sect);
+        			sect.setListVoie(listVoie);
+        		}
+        	}
+        	listCommentaire = managerFactory.getCommentaireTopoManager().getListValid(topo.getId());
+       	
+        	return SUCCESS;
+        }
+        else {
+        	addActionMessage("Le topo n'existe pas !");
+        	return INPUT;
+        }       	
+    }
+	
+	//--Getter et Setter--//
+	public String[] getDefaultLieux(){
+		return new String [] {"topo"};
+	}
+	public ManagerFactory getManagerFactory() {
+		return managerFactory;
+	}
+	public void setManagerFactory(ManagerFactory managerFactory) {
+		this.managerFactory = managerFactory;
+	}
+	public ArrayList<CommentaireTopo> getListCommentaire() {
+		return listCommentaire;
+	}
+	public void setListCommentaire(ArrayList<CommentaireTopo> listCommentaire) {
+		this.listCommentaire = listCommentaire;
+	}
 	public Topo getTopo() {
 		return topo;
 	}
@@ -115,62 +183,4 @@ public class GoTopoAction extends ActionSupport {
 	public void setListSite(ArrayList<Site> listSite) {
 		this.listSite = listSite;
 	}
-	
-	public String execute() throws Exception {
-		//--recupe le nom du topo dans la requete
-		System.out.println(nomTopo);
-		topo = (Topo) managerFactory.getTopoManager().getTopo(nomTopo);//--utilise nomTopo
-        if (topo != null) {
-    		repoId = topo.getImage();
-    		//System.out.println(topo.getImage());
-     		//File repertoire = new File("webapp\\assets\\images\\"+topo.getImage());
-    		Path chemin = Paths.get("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\", topo.getImage());
-    		//File repertoire = new File("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\"+topo.getImage());//
-    		//System.out.println(repertoire.getPath()+" - "+repertoire.isDirectory());//+" - "+repertoire.listFiles().length);
-    		listImage = new ArrayList<String>();
-    	    try (DirectoryStream<Path> stream = Files.newDirectoryStream(chemin)){ 
-    	      Iterator<Path> iterator = stream.iterator();
-    	      while(iterator.hasNext()) {
-    	        Path p = iterator.next();
-    	        System.out.println(p);
-    	        listImage.add(repoId+"\\"+p.getFileName().toString());
-    	        imageId = listImage.get(0);
-    	      }
-    	    } 
-    		//System.out.println(imageId);        	
-        	listSite = (ArrayList<Site>) managerFactory.getSiteManager().getSite(topo);
-        	for (Site s : listSite) {
-        		listSecteur.addAll((ArrayList<Secteur>) managerFactory.getSecteurManager().getListSecteur(s));
-        		for (Secteur sect : listSecteur) { 
-        			listVoie = (ArrayList<Voie>) managerFactory.getVoieManager().getListVoie(sect);
-        			sect.setListVoie(listVoie);
-        		}
-        	}
-        	listCommentaire = managerFactory.getCommentaireTopoManager().getListValid(topo.getId());
-       	
-        	return SUCCESS;
-        }
-        else {
-        	addActionMessage("Le topo n'existe pas !");
-        	return INPUT;
-        }
-        	
-        	
-    }
-	public String[] getDefaultLieux(){
-		return new String [] {"topo"};
-	}
-	public ManagerFactory getManagerFactory() {
-		return managerFactory;
-	}
-	public void setManagerFactory(ManagerFactory managerFactory) {
-		this.managerFactory = managerFactory;
-	}
-	public ArrayList<CommentaireTopo> getListCommentaire() {
-		return listCommentaire;
-	}
-	public void setListCommentaire(ArrayList<CommentaireTopo> listCommentaire) {
-		this.listCommentaire = listCommentaire;
-	}
-
 }

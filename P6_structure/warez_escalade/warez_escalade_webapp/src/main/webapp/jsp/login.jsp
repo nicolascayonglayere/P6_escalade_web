@@ -33,7 +33,7 @@
 				</s:form>	
 				
 				<s:text name="login.inscription"/>
-				<s:url var="goInscription" action="inscription" namespace="/jsp/utilisateur"/>
+				<s:url var="goInscription" action="inscription" namespace="/"/>
 				<s:a href="%{goInscription}">
 					<s:text name="creerUser.titre"/>
 				</s:a>		

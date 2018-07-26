@@ -19,7 +19,7 @@
 							<s:text name="footer.deconnexion" />
 						</s:a>
 					</div>
-					<s:submit class="btn btn-default" value="%{getText('bouton.emprunt')}" onclick="bilanEmprunt()" id="bouton"/>
+					<s:submit class="btn btn-default" value="%{getText('bouton.mesEmprunts')}" onclick="bilanEmprunt()" id="bouton"/>
 					<div id="blocAjax">
 					
 					</div>

@@ -19,6 +19,11 @@ import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.topo.Voie;
 
+/**
+ * Classe action qui permet la recherche multi critère
+ * @author nicolas
+ *
+ */
 @Named
 @Scope("Protoype")
 public class PartirGrimper extends ActionSupport {
@@ -39,7 +44,9 @@ public class PartirGrimper extends ActionSupport {
 	@Inject
 	private ManagerFactory managerFactory;
 	
-	
+	/**
+	 * Méthode qui envoie les données nécessaires à la jsp partir.jsp
+	 */
 	public String input() {
 		String[] vDiff = {"1", "2", "3", "4a", "4b", "4c", "5a", "5b", "5c", "6a", "6b", "6c", "7a", "7b", "7c", "8a", "8b", "8c", "9a", "9b", "9c" }; 		
 		for (int i = 0; i < vDiff.length ; i++)
@@ -47,6 +54,9 @@ public class PartirGrimper extends ActionSupport {
 		return ActionSupport.SUCCESS;
 	}
 	
+	/**
+	 * Méthode qui envoie le résultat de la recherche selon les critères reçus.
+	 */
 	public String execute() {
 		System.out.println("rech multi : "+nom+" - "+selectedMin+" - "+checkMeTopo+" - "+checkMeSite);
 		listTopo = new ArrayList<Topo>();
@@ -132,10 +142,10 @@ public class PartirGrimper extends ActionSupport {
 					vResult = ActionSupport.INPUT;
 					addActionMessage("Séléctionnez un lieu pour la recherche.");
 				}
-				return vResult;
-		
+				return vResult;		
 	}
-
+	
+	//--Getter et Setter--//
 	public ArrayList<String> getListDiff() {
 		return listDiff;
 	}
