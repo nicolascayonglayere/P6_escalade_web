@@ -22,14 +22,14 @@
 				<s:form id="rechercheUtilisateur" action="recherche_utilisateurModif" cssClass="form-vertical" namespace="/jsp/utilisateur">
 					<s:textfield name="utilisateur.pseudo" placeholder="pseudo" label="%{getText('form.pseudo')}" requiredLabel="true"/>
 					<s:submit class="btn btn-default" value="%{getText('bouton.rechercher')}">
-				  		<s:param name="pseudo">${utilisateur.pseudo}</s:param>
+				  		<div id="idPseudo"><s:param name="pseudo">${utilisateur.pseudo}</s:param></div>
 				 	 </s:submit>
 				</s:form>		
 				
 				<s:if test="%{listUtilisateur}">
 				<s:form action="modif_role" cssClass="form-vertical" namespace="/jsp/utilisateur">
-					<ul>
-						<s:iterator value="listUtilisateur" var="utilisateur">
+					<ul id="formulaireRole">
+						<!--<s:iterator value="listUtilisateur" var="utilisateur">
 							<li>
 								<s:checkbox name="checkMe" fieldValue="%{#utilisateur.pseudo}" label="%{#utilisateur.pseudo+' '+#utilisateur.nom+' '+#utilisateur.prenom}"/>
 							</li>
@@ -40,7 +40,7 @@
 								</li>
 							</s:iterator>
 							</ul>
-						</s:iterator>
+						</s:iterator>-->
 					</ul>
 					<!-- une selectBox pour definir le nouveau role -->
 					<s:select name="selectedRole" label="%{getText('modifRole.selectRole')}" list="listRole" size="1" />
@@ -55,10 +55,36 @@
 		</div>
 
 		
-				
+	  	<%@include file="../_include/footer.jsp" %>					
 	  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 	  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>	
-	  	<%@include file="../_include/footer.jsp" %>		
+		<script>
+			function resultatRech(){
+				var url = "<s:url action="ajax_getResultatRech?pseudo=%{#idPseudo}"/>";
+				console.log(url);
+
+	            // Action AJAX en POST
+	            jQuery.post(url, function (data) {
+	                    var $formulaireRole = jQuery("#formulaireRole");
+	                    $formulaireRole.empty();
+	                    jQuery.each(data, function (key, val) {
+	                        $formulaireRole.append(
+	                            jQuery("<li>")
+	                            	.append("<s:checkbox name="checkMe" fieldValue="%{#utilisateur.pseudo}" label="%{#utilisateur.pseudo+' '+#utilisateur.nom+' '+#utilisateur.prenom}"/>")
+	                                .append(val.pseudo)
+	                                .append(" ")
+	                                .append(val.prenom)
+	                                .append(" ")
+	                                .append(val.nom)
+	                                .append("</li>")
+	                        );
+	                    });
+	                })
+	                .fail(function () {
+	                    alert("Une erreur s'est produite.");
+	                });				
+			}
+		</script>
 	</body>
 </html>
