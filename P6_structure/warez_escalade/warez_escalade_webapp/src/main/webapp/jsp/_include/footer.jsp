@@ -19,7 +19,7 @@
 							<s:text name="footer.deconnexion" />
 						</s:a>
 					</div>
-					<s:submit class="btn btn-default" value="%{getText('bouton.selectionner')}" onclick="bilanEmprunt()" id="bouton"/>
+					<s:submit class="btn btn-default" value="%{getText('bouton.emprunt')}" onclick="bilanEmprunt()" id="bouton"/>
 					<div id="blocAjax">
 					
 					</div>
@@ -61,9 +61,9 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script>
 			//$("bouton").click(
-				function bilanEmprunt(e){
+				function bilanEmprunt(){
 					//e.preventDefault();
-					var url = "<s:url action="ajax_listEmprunt"/>";
+					var url = "<s:url action="jsp/ajax_listEmprunt"/>";
 					
 					console.log(url);
 	
@@ -71,12 +71,14 @@
 		            jQuery.post(url, function (data) {
 		                    var $blocAjax = jQuery("#blocAjax");
 		                    $blocAjax.empty();
+		                    console.log(data);
 		                    jQuery.each(data, function (key, val) {
+		                    	console.log(val);
 		                        $blocAjax.append(
 		                            jQuery("<li>")
-		                            	.append(val.emprunteur.pseudo)
-		                                .append(" ")
 		                                .append(val.topo.nomTopo)
+		                                .append(" ")
+		                                .append(val.dateEmprunt)
 		                                .append(" ")
 		                                .append(val.dateRetour)
 		                                .append("</li>")
