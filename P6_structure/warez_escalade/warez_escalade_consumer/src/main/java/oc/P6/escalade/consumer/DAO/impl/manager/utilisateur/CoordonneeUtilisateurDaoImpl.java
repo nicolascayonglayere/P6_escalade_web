@@ -5,6 +5,7 @@ import java.sql.Types;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -20,9 +21,13 @@ import oc.P6.escalade.model.bean.exception.CoordonneeUtilisateurException;
 import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateur;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 @Named("coordonneeUtilisateurDao")
 public class CoordonneeUtilisateurDaoImpl extends AbstractDAO implements CoordonneeUtilisateurDao{
-
+	
+	static final Logger logger = LogManager.getLogger("ihm");
 	@Inject
 	private UtilisateurManagerDAO userDAO;
 	@Inject
@@ -43,7 +48,7 @@ public class CoordonneeUtilisateurDaoImpl extends AbstractDAO implements Coordon
 	        vJdbcTemplate.update(vSQLCoordonnee, vParamsCoordonnee, keyHolder, new String[] { "id_coordonnee" });
 	        pCoordonneeUtilisateur.setId(keyHolder.getKey().intValue());
 	    } catch (DuplicateKeyException vEx) {
-	        System.out.println("Coordonnee invalide email=" + pCoordonneeUtilisateur.getEmail());
+	        logger.debug("Coordonnee invalide email=" + pCoordonneeUtilisateur.getEmail());
 	        vEx.printStackTrace();
 	        throw new CoordonneeUtilisateurException("Coordonnee invalide email=" + pCoordonneeUtilisateur.getEmail());
 	        //return pCoordonneeUtilisateur;
@@ -54,15 +59,15 @@ public class CoordonneeUtilisateurDaoImpl extends AbstractDAO implements Coordon
 	@Override
 	public boolean delete(CoordonneeUtilisateur pCoordonneeUtilisateur) throws CoordonneeUtilisateurException {
 		String vSQL = "DELETE FROM coordonnee_utilisateur WHERE id_coordonnee = :id_coordonnee";
-		System.out.println("CTRL DAO : "+pCoordonneeUtilisateur.getId());
+		logger.debug("CTRL DAO : "+pCoordonneeUtilisateur.getId());
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
 		vParams.addValue("id_coordonnee", pCoordonneeUtilisateur.getId(), Types.INTEGER);
 	    
 	    try {
 	        vJdbcTemplate.update(vSQL, vParams);
-	    } catch (Exception vEx) {
-	        System.out.println("ERREUR pseudo=" + pCoordonneeUtilisateur.getUtilisateur().getPseudo());
+	    } catch (DataAccessException vEx) {
+	        logger.debug("ERREUR pseudo=" + pCoordonneeUtilisateur.getUtilisateur().getPseudo());
 	        vEx.printStackTrace();
 	        throw new CoordonneeUtilisateurException("ERREUR pseudo=" + pCoordonneeUtilisateur.getUtilisateur().getPseudo());
 	        //return false;
@@ -75,7 +80,7 @@ public class CoordonneeUtilisateurDaoImpl extends AbstractDAO implements Coordon
 	@Override
 	public CoordonneeUtilisateur update(CoordonneeUtilisateur pCoordonneeUtilisateur) throws CoordonneeUtilisateurException {
 		String vSQL = "UPDATE coordonnee_utilisateur SET email = :email, adresse_postale = :adresse WHERE id_coordonnee = :id_coordonnee";
-		System.out.println("CTRL DAO : "+pCoordonneeUtilisateur.getId());
+		logger.debug("CTRL DAO : "+pCoordonneeUtilisateur.getId());
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
 		vParams.addValue("id_coordonnee", pCoordonneeUtilisateur.getId(), Types.INTEGER);
@@ -85,7 +90,7 @@ public class CoordonneeUtilisateurDaoImpl extends AbstractDAO implements Coordon
 	    try {
 	        vJdbcTemplate.update(vSQL, vParams);
 	    } catch (DuplicateKeyException vEx) {
-	        System.out.println("l'email existe deja" + pCoordonneeUtilisateur.getEmail());
+	        logger.debug("l'email existe deja" + pCoordonneeUtilisateur.getEmail());
 	        vEx.printStackTrace();
 	        throw new CoordonneeUtilisateurException("l'email existe deja : " + pCoordonneeUtilisateur.getEmail());
 	    }
@@ -98,8 +103,7 @@ public class CoordonneeUtilisateurDaoImpl extends AbstractDAO implements Coordon
 	@Override
 	public CoordonneeUtilisateur find(Utilisateur pAuteur) {
 		String vSQL = "SELECT * FROM coordonnee_utilisateur WHERE id_utilisateur = :id_utilisateur ";
-		
-		//JdbcTemplate vJdbcTemplate = new JdbcTemplate(getDataSource());
+
         NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
         vParams.addValue("id_utilisateur", userDAO.find(pAuteur.getPseudo()).getId(), Types.INTEGER);

@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -27,6 +29,8 @@ import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 public class TopoEmpruntDaoImpl extends AbstractDAO implements TopoEmpruntDao{
 	@Inject
 	TopoEmpruntRowMapper topoEmpruntRowMapper;
+	
+	static final Logger logger = LogManager.getLogger("ihm");
 	/**
 	 * Méthode de création dans la base de donnée du {@link TopoEmprunt} donné en paramètre
 	 */
@@ -67,7 +71,8 @@ public class TopoEmpruntDaoImpl extends AbstractDAO implements TopoEmpruntDao{
 	    try {
 	        vJdbcTemplate.update(vSQL, vParams);
 	    } catch (Exception vEx) {
-	        System.out.println("Erreur ! topo=" + pTopoEmprunt.getTopo().getNomTopo());
+	        //System.out.println("Erreur ! topo=" + pTopoEmprunt.getTopo().getNomTopo());
+	        logger.debug("Erreur ! topo=" + pTopoEmprunt.getTopo().getNomTopo());
 	        return false;
 	    }
 		

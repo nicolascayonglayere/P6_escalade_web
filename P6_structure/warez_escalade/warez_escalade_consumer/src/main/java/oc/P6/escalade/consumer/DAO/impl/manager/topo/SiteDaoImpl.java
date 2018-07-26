@@ -25,6 +25,9 @@ import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.topo.Voie;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 @Named
 public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 	@Inject
@@ -33,7 +36,8 @@ public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 	VoieManagerDao voieDAO;
 	@Inject
 	SiteRowMapper siteRowMapper;
-
+	static final Logger logger = LogManager.getLogger("ihm");
+	
 	@Override
 	public Site create(Site pSite) throws SiteException {
 		String vSQL = "INSERT INTO site (nom, description, id_topo) VALUES (:nom, :description, :id_topo)";
@@ -51,7 +55,7 @@ public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 	        vJdbcTemplate.update(vSQL, vParams, keyHolder, new String[] { "id_site" });
 	        pSite.setId(keyHolder.getKey().intValue());
 	    } catch (DuplicateKeyException vEx) {
-	        System.out.println("Le site existe déjà ! site=" + pSite.getNomSite()+" dans le topo "+pSite.getTopo().getNomTopo());
+	        logger.debug("Le site existe déjà ! site=" + pSite.getNomSite()+" dans le topo "+pSite.getTopo().getNomTopo());
 	        throw new SiteException("Le site existe déjà ! site=" + pSite.getNomSite()+" dans le topo "+pSite.getTopo().getNomTopo());
 	        //return false;
 	    }
@@ -96,7 +100,7 @@ public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 	    try {
 	        vJdbcTemplate.update(vSQL, vParams);
 	    } catch (DuplicateKeyException vEx) {
-	        System.out.println("Erreur modif ! site=" + pSite.getNomSite());
+	        logger.debug("Erreur modif ! site=" + pSite.getNomSite());
 	        throw new SiteException("Erreur modif ! site=" + pSite.getNomSite());
 	        //return false;
 	    }
@@ -108,8 +112,7 @@ public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 	@Override
 	public ArrayList<Site> find(String pNom) {
 		String vSQL = "SELECT * FROM site WHERE nom = :nom ";
-		
-		//JdbcTemplate vJdbcTemplate = new JdbcTemplate(getDataSource());
+
         NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
         vParams.addValue("nom", pNom, Types.VARCHAR);
@@ -214,7 +217,7 @@ public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 		};
        
 		listeSite = (ArrayList<Site>) vJdbcTemplate.query(vSQL, vParams, vRowMapperSite);
-		System.out.println("ctrl rech multi dao : "+listeSite.size());
+		logger.debug("ctrl rech multi dao : "+listeSite.size());
 		return listeSite;
 	}
 

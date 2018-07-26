@@ -27,6 +27,8 @@ import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.topo.Voie;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Implémentation de SecteurManagerDao
@@ -44,7 +46,7 @@ public class SecteurDaoImpl extends AbstractDAO implements SecteurManagerDao{
 	
 	@Inject
 	SecteurRowMapper secteurRowMapper;
-
+	static final Logger logger = LogManager.getLogger("ihm");
 	/**
 	 * Méthode pour créer un {@link Secteur} donné en paramètre dans la base de donnée
 	 * @throws SecteurException 
@@ -65,7 +67,7 @@ public class SecteurDaoImpl extends AbstractDAO implements SecteurManagerDao{
 	        vJdbcTemplate.update(vSQL, vParams, keyHolder, new String[] { "id_secteur" });
 	        pSecteur.setId(keyHolder.getKey().intValue());
 	    } catch (DuplicateKeyException vEx) {
-	        System.out.println("Le secteur existe déjà ! secteur=" + pSecteur.getNomSecteur()+" dans le site "+pSecteur.getSite().getNomSite());
+	        logger.debug("Le secteur existe déjà ! secteur=" + pSecteur.getNomSecteur()+" dans le site "+pSecteur.getSite().getNomSite());
 	        vEx.printStackTrace();
 	        throw new SecteurException("Le secteur existe déjà ! secteur=" + pSecteur.getNomSecteur()+" dans le site "+pSecteur.getSite().getNomSite());
 	        //return false;
@@ -121,7 +123,7 @@ public class SecteurDaoImpl extends AbstractDAO implements SecteurManagerDao{
 	    try {
 	        vJdbcTemplate.update(vSQL, vParams);
 	    } catch (DuplicateKeyException vEx) {
-	        System.out.println("Erreur modif ! secteur=" + pSecteur.getNomSecteur());
+	        logger.debug("Erreur modif ! secteur=" + pSecteur.getNomSecteur());
 	        throw new SecteurException("Erreur modif ! secteur=" + pSecteur.getNomSecteur());
 	        //return false;
 	    }
@@ -168,7 +170,7 @@ public class SecteurDaoImpl extends AbstractDAO implements SecteurManagerDao{
 	}
 
 	/**
-	 * Methode pour obtenir 
+	 * Methode pour obtenir le {@link Secteur} d'id donnée en paramètre dans la base de donnée
 	 */
 	@Override
 	public Secteur find(int id) {
@@ -188,6 +190,9 @@ public class SecteurDaoImpl extends AbstractDAO implements SecteurManagerDao{
 
 	}
 
+	/**
+	 * Méthode pour obtenir la liste des {@link Secteur} dont le nom commence par pNom donné en paramètre et possèdant des {@link Voie} d'un intervalle de difficulté donné en paramètre
+	 */
 	@Override
 	public ArrayList<Secteur> rechercheMultiSecteur(String pNom, String pDiffMin, String pDiffMax) {
 		ArrayList<Secteur> listeSecteur = new ArrayList<Secteur>();
@@ -224,7 +229,7 @@ public class SecteurDaoImpl extends AbstractDAO implements SecteurManagerDao{
 		};
        
 		listeSecteur = (ArrayList<Secteur>) vJdbcTemplate.query(vSQL, vParams, vRowMapperSecteur);
-		System.out.println("ctrl rech multi dao : "+listeSecteur.size());
+		logger.debug("ctrl rech multi dao : "+listeSecteur.size());
 		return listeSecteur;
 	}
 

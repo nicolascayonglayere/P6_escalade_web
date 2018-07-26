@@ -26,6 +26,9 @@ import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.topo.Voie;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 @Named("topoDao")
 @Scope("prototype")
 public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
@@ -35,11 +38,11 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 
 	@Inject
 	TopoRowMapper topoRowMapper;
+	static final Logger logger = LogManager.getLogger("ihm");
 	
 	@Override
 	public Topo create(Topo pTopo) throws TopoException {
 		String vSQL = "INSERT INTO topo (nom, id_utilisateur, nombre_exemplaires, description, longitude, latitude, image, construction) VALUES (:nom, :id, :nbreEx, :description, :longitude, :latitude, :image, :construction)";
-		//Utilisateur auteur = daoFacto.getUtilisateurManagerDAO().find(pTopo.getAuteur().getPseudo());
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
@@ -57,7 +60,7 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 	        vJdbcTemplate.update(vSQL, vParams, keyHolder, new String[] { "id_topo" });
 	        pTopo.setId(keyHolder.getKey().intValue());
 	    } catch (DuplicateKeyException vEx) {
-	        System.out.println("Le topo existe déjà ! topo=" + pTopo.getNomTopo());
+	        logger.debug("Le topo existe déjà ! topo=" + pTopo.getNomTopo());
 	        throw new TopoException("Le topo existe déjà ! topo=" + pTopo.getNomTopo());
 	        //return false;
 	    }
@@ -108,7 +111,7 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 	    try {
 	        vJdbcTemplate.update(vSQL, vParams);
 	    } catch (DuplicateKeyException vEx) {
-	        System.out.println("Erreur modif ! topo=" + pTopo.getNomTopo());
+	        logger.debug("Erreur modif ! topo=" + pTopo.getNomTopo());
 	        throw new TopoException("Erreur modif ! topo=" + pTopo.getNomTopo());
 	        //return false;
 	    }
@@ -228,7 +231,7 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 		};
        
 		listeTopo = (ArrayList<Topo>) vJdbcTemplate.query(vSQL, vParams, vRowMapperTopo);
-		System.out.println("ctrl rech multi dao : "+listeTopo.size());
+		logger.debug("ctrl rech multi dao : "+listeTopo.size());
 		return listeTopo;
 	}
 

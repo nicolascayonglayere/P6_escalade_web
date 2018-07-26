@@ -83,7 +83,7 @@ public class CommenterAction extends ActionSupport implements SessionAware{
 		//System.out.println(topo.getImage());
  		//File repertoire = new File("webapp\\assets\\images\\"+topo.getImage());
 		GestionFichierProperties gfp = new GestionFichierProperties();
-		Path chemin = Paths.get(gfp.lireProp().getProperty("chemin"), topo.getImage());
+		Path chemin = Paths.get(gfp.lireProp().getProperty("chemin.upload"), topo.getImage());
 				//"D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\", topo.getImage());
 		//File repertoire = new File("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\"+topo.getImage());//
 		//System.out.println(repertoire.getPath()+" - "+repertoire.isDirectory());//+" - "+repertoire.listFiles().length);
