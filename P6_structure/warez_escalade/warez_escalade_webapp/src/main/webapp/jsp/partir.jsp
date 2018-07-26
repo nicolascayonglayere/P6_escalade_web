@@ -21,8 +21,7 @@
 				<s:actionmessage/>
 				<h1 id="titre"><s:text name="partir.titre"/></h1>
 				<h3><s:text name="partir.explication"></s:text></h3>
-				<!--<s:form action="rechMulti" cssClass="form-vertical" namespace="/">-->
-				<s:form>
+				<s:form action="rechMulti" cssClass="form-vertical" namespace="/">
 					<div class="row">
 						<s:checkbox name="checkMeTopo" label="%{getText('compteUser.topo')}"/>
 						<s:checkbox name="checkMeSite" label="%{getText('creerTopo.site')}"/>
@@ -34,10 +33,10 @@
 					<s:select name="selectedMin" label="%{getText('partir.minDiff')}" list="listDiff" size="1" />
 					<s:select name="selectedMax" label="%{getText('partir.maxDiff')}" list="listDiff" size="1" />
 					<s:submit class="btn btn-default" value="%{getText('bouton.valider')}" onclick="resultatRecherche()">
-						<s:param name="nom" value="nom"/>
+						<s:param name="nom" value="topo.nomTopo"/>
 					</s:submit>					
 				</s:form>
-				<!-- </s:form> -->
+
 				
 				<s:if test="listResultat">
 					<s:form action="emprunt_topo" namespace="/jsp/utilisateur">	
@@ -68,28 +67,6 @@
 	  	<%@include file="_include/footer.jsp" %>		
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
-	  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-   		<script>
-	        function resultatRecherche() {
-            // URL de l'action AJAX
-            var url = "<s:url action="ajax_getResultatRech" namespace="/" />";
-            // Action AJAX en POST
-            jQuery.post(url, function (data) {
-                    var $listTopo = jQuery("#listTopo");
-                    $listTopo.empty();
-                    jQuery.each(data, function (key, val) {
-                    	$('listTopo').append(
-                                jQuery("<li>")
-                                .append(val.topo.nom)
-                                .append(val.topo.auteur.pseudo)
-                                .append("</li>")
-                    	);
-                    });
-                })
-                .fail(function () {
-                    alert("Une erreur s'est produite.");
-                });
-	        }
-    	</script>	  			
+	  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>  			
 	</body>
 </html>

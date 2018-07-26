@@ -525,12 +525,13 @@
 	
 
     <!-- ===== Package pour les actions AJAX ===== -->
-    <package name="ajax" extends="default, json-default" >
+    <package name="ajax" extends="default, json-default" namespace="/jsp">
 
         <!-- Action renvoyant le resultat de la recherche multi critere -->
-        <action name="ajax_getResultatRech" class="oc.P6.escalade.actions.PartirGrimper" method="execute">
-            <result name="success" type="json">
-                <param name="root">listTopo</param>
+        <action name="ajax_getResultatRech" class="oc.P6.escalade.actions.ajax.RechercheUserAjax">
+            <result  type="json">
+                <param name="root">listUtilisateur</param>
+                <param name="root">listRole</param>
             </result>
         </action>
     </package>	
