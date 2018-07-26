@@ -16,6 +16,7 @@ import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+import oc.P6.escalade.WebappHelper.GestionFichierProperties;
 import oc.P6.escalade.business.contract.ManagerFactory;
 import oc.P6.escalade.model.bean.commentaire.CommentaireTopo;
 import oc.P6.escalade.model.bean.exception.SecteurException;
@@ -26,6 +27,12 @@ import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.topo.Voie;
+
+/**
+ * Classe action qui permet la finalisation d'un {@link Topo} en cours de construction
+ * @author nicolas
+ *
+ */
 @Named
 public class FinaliserTopo extends ActionSupport implements SessionAware {
 
@@ -45,23 +52,19 @@ public class FinaliserTopo extends ActionSupport implements SessionAware {
 	private ArrayList<CommentaireTopo> listCommentaire;
 	private ArrayList<String>listImage;
 	
-	public ManagerFactory getManagerFactory() {
-		return managerFactory;
-	}
-	public void setManagerFactory(ManagerFactory managerFactory) {
-		this.managerFactory = managerFactory;
-	}
 
+	/**
+	 * Méthode qui effectue la finalisation (changement de statut) du {@link Topo}
+	 */
 	public String execute() {
 
 		try {
-			//--recup le topo en construction et maj de son statut
 			if ((Topo)session.get("topo") != null) {
 				topo = ((Topo)session.get("topo"));				
-				//topo = managerFactory.getTopoManager().getTopo(nomTopo);
 			}
 			else
 				topo = managerFactory.getTopoManager().getTopo(topo.getNomTopo());
+			
 			managerFactory.getTopoManager().modifTopo(topo);
 
 			nomTopo = topo.getNomTopo();
@@ -79,18 +82,20 @@ public class FinaliserTopo extends ActionSupport implements SessionAware {
 			this.session.remove("secteur");
 			this.session.remove("site");
 			
-    		Path chemin = Paths.get("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\", topo.getImage());
-    		//File repertoire = new File("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\"+topo.getImage());//
+			GestionFichierProperties gfp = new GestionFichierProperties();
+    		Path chemin = Paths.get(gfp.lireProp().getProperty("chemin.upload"), topo.getImage());
+    				//"D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\", topo.getImage());
+    		
     		//System.out.println(repertoire.getPath()+" - "+repertoire.isDirectory());//+" - "+repertoire.listFiles().length);
     		listImage = new ArrayList<String>();
     	    try (DirectoryStream<Path> stream = Files.newDirectoryStream(chemin)){ 
-    	      Iterator<Path> iterator = stream.iterator();
-    	      while(iterator.hasNext()) {
-    	        Path p = iterator.next();
-    	        System.out.println(p);
-    	        listImage.add(topo.getImage()+"\\"+p.getFileName().toString());
-    	        setImageId(listImage.get(0));
-    	     }
+	    	      Iterator<Path> iterator = stream.iterator();
+	    	      while(iterator.hasNext()) {
+	    	        Path p = iterator.next();
+	    	        System.out.println(p);
+	    	        listImage.add(topo.getImage()+"\\"+p.getFileName().toString());
+	    	        setImageId(listImage.get(0));
+	    	     }
     	    } catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -112,14 +117,13 @@ public class FinaliserTopo extends ActionSupport implements SessionAware {
 			addActionMessage(e4.getMessage());
 			e4.printStackTrace();
 			return ActionSupport.INPUT;
-		}
-
-		
+		}		
 	}
+	
+	//--Getter et Setter--//
 	@Override
 	public void setSession(Map<String, Object> session) {
-		this.session = session;
-		
+		this.session = session;		
 	}
 	public Topo getTopo() {
 		return topo;
@@ -169,6 +173,11 @@ public class FinaliserTopo extends ActionSupport implements SessionAware {
 	public void setImageId(String imageId) {
 		this.imageId = imageId;
 	}
-
+	public ManagerFactory getManagerFactory() {
+		return managerFactory;
+	}
+	public void setManagerFactory(ManagerFactory managerFactory) {
+		this.managerFactory = managerFactory;
+	}
 	
 }

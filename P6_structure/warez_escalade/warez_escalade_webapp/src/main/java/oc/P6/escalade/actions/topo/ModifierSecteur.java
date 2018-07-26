@@ -18,6 +18,11 @@ import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
 
+/**
+ * Classe action qui modifie un {@link Secteur}
+ * @author nicolas
+ *
+ */
 @Named
 @Scope("Protoype")
 public class ModifierSecteur extends ActionSupport implements SessionAware{
@@ -35,6 +40,9 @@ public class ModifierSecteur extends ActionSupport implements SessionAware{
 	private int id;
 	private Map<String, Object> session;
 	
+	/**
+	 * Méthode qui effectue la modification
+	 */
 	public String execute() {
 		System.out.println(secteur.getNomSecteur()+" - "+topo.getNomTopo());
 		secteur.setId(((Secteur)session.get("secteurModif")).getId());
@@ -54,11 +62,12 @@ public class ModifierSecteur extends ActionSupport implements SessionAware{
 				e.printStackTrace();
 				return ActionSupport.INPUT;
 			}
-			
 		}
-	
 	}
 	
+	/**
+	 * Méthode qui construit le {@link Secteur} à modifier
+	 */
 	public String input() {
 		try {
 			topo = managerFactory.getTopoManager().getTopo(nomTopo);
@@ -79,9 +88,9 @@ public class ModifierSecteur extends ActionSupport implements SessionAware{
 			e3.printStackTrace();
 			return ActionSupport.INPUT;
 		}
-
 	}
 	
+	//--Getter et Setter--//
 	public ManagerFactory getManagerFactory() {
 		return managerFactory;
 	}

@@ -16,6 +16,11 @@ import oc.P6.escalade.model.bean.exception.TopoException;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
 
+/**
+ * Classe action qui permet la création d'un {@link Site}
+ * @author nicolas
+ *
+ */
 @Named
 @Scope("Protoype")
 public class CreerSite extends ActionSupport implements SessionAware {
@@ -32,19 +37,9 @@ public class CreerSite extends ActionSupport implements SessionAware {
 	private String nomSite;
 	private Map<String, Object>session;
 	
-	public Topo getTopo() {
-		return topo;
-	}
-	public void setTopo(Topo topo) {
-		this.topo = topo;
-	}
-	public Site getSite() {
-		return site;
-	}
-	public void setSite(Site site) {
-		this.site = site;
-	}
-	
+	/**
+	 * Méthode qui crée le {@link Site}
+	 */
 	public String execute() {
 		try {
 			if (((Topo)(session.get("topo"))).getNomTopo().length() > 0) {
@@ -63,10 +58,11 @@ public class CreerSite extends ActionSupport implements SessionAware {
 			e3.printStackTrace();
 			return ActionSupport.INPUT;
 		} 
-
-
 	}
 	
+	/**
+	 * Méthode qui récupère les données pour la création du {@link Site}
+	 */
 	public String input() {
 		System.out.println(topo.getNomTopo());
 		try {
@@ -78,6 +74,8 @@ public class CreerSite extends ActionSupport implements SessionAware {
 		}
 		return ActionSupport.SUCCESS;
 	}
+	
+	//--Getter et Setter--//
 	public ManagerFactory getManagerFactory() {
 		return managerFactory;
 	}
@@ -86,8 +84,7 @@ public class CreerSite extends ActionSupport implements SessionAware {
 	}
 	@Override
 	public void setSession(Map<String, Object> session) {
-		this.session = session;
-		
+		this.session = session;		
 	}
 	public String getNomTopo() {
 		return nomTopo;
@@ -101,5 +98,16 @@ public class CreerSite extends ActionSupport implements SessionAware {
 	public void setNomSite(String nomSite) {
 		this.nomSite = nomSite;
 	}
-
+	public Topo getTopo() {
+		return topo;
+	}
+	public void setTopo(Topo topo) {
+		this.topo = topo;
+	}
+	public Site getSite() {
+		return site;
+	}
+	public void setSite(Site site) {
+		this.site = site;
+	}
 }

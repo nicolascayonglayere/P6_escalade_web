@@ -14,6 +14,11 @@ import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.topo.Voie;
+/**
+ * Classe action pour supprimer une {@link Voie}
+ * @author nicolas
+ *
+ */
 @Named
 public class SupprimerVoie extends ActionSupport {
 
@@ -25,6 +30,9 @@ public class SupprimerVoie extends ActionSupport {
 	private ManagerFactory managerFactory;
 	private String nomSite, nomTopo, nomSecteur, nomVoie;
 	
+	/**
+	 * Méthode qui effectue la suppression
+	 */
 	public String execute() {
 		try {
 			System.out.println(nomVoie+" - "+nomSecteur+" - "+nomSite+" - "+nomTopo);
@@ -54,6 +62,7 @@ public class SupprimerVoie extends ActionSupport {
 		} 
 	}
 	
+	//--Getter et Setter--//
 	public ManagerFactory getManagerFactory() {
 		return managerFactory;
 	}

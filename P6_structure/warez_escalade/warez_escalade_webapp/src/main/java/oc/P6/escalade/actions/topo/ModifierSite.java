@@ -16,6 +16,11 @@ import oc.P6.escalade.model.bean.exception.TopoException;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
 
+/**
+ * Classe action qui modifie un {@link Site}
+ * @author nicolas
+ *
+ */
 @Named
 @Scope("Protoype")
 public class ModifierSite extends ActionSupport implements SessionAware{
@@ -31,6 +36,9 @@ public class ModifierSite extends ActionSupport implements SessionAware{
 	private Topo topo;
 	private Map<String, Object> session;
 	
+	/**
+	 * Méthode qui effectue la modification
+	 */
 	public String execute() {
 		System.out.println(site.getNomSite()+" - "+topo.getNomTopo());
 		site.setId(((Site)session.get("siteModif")).getId());
@@ -50,11 +58,12 @@ public class ModifierSite extends ActionSupport implements SessionAware{
 				e.printStackTrace();
 				return ActionSupport.INPUT;
 			}
-			
-		}
-	
+		}	
 	}
 	
+	/**
+	 * Méthode qui récupère les données pour construire le {@link Site} à modifier
+	 */
 	public String input() {
 		try {
 			topo = managerFactory.getTopoManager().getTopo(nomTopo);
@@ -70,9 +79,9 @@ public class ModifierSite extends ActionSupport implements SessionAware{
 			e2.printStackTrace();
 			return ActionSupport.INPUT;
 		}
-
 	}
-	
+
+	//--Getter et Setter--//
 	public ManagerFactory getManagerFactory() {
 		return managerFactory;
 	}

@@ -19,6 +19,11 @@ import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.topo.Voie;
+/**
+ * Classe action pour supprimer un {@link Topo}
+ * @author nicolas
+ *
+ */
 @Named
 public class SupprimerTopo extends ActionSupport {
 
@@ -37,6 +42,9 @@ public class SupprimerTopo extends ActionSupport {
 	private HashMap<Integer,String> listSiteSelect = new HashMap<Integer, String>();
 	private HashMap<Integer,String> listSecteurSelect = new HashMap<Integer, String>();
 		
+	/**
+	 * Méthode qui effectue la suppression
+	 */
 	public String execute() {
 		GestionFichierProperties gfp = new GestionFichierProperties();
 		try {
@@ -65,6 +73,9 @@ public class SupprimerTopo extends ActionSupport {
 		}
 	}
 	
+	/**
+	 * Méthode qui récupère le {@link Topo} a supprimer
+	 */
 	public String input() {
 		System.out.println("input "+checkMe);
 		System.out.println(checkMe);
@@ -105,6 +116,7 @@ public class SupprimerTopo extends ActionSupport {
 		
 	}
 	
+	//--Getter et Setter--//
 	public ManagerFactory getManagerFactory() {
 		return managerFactory;
 	}

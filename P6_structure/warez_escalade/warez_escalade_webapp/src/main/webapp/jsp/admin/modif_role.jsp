@@ -29,7 +29,7 @@
 				<s:if test="%{listUtilisateur}">
 				<s:form action="modif_role" cssClass="form-vertical" namespace="/jsp/utilisateur">
 					<ul id="formulaireRole">
-						<!--<s:iterator value="listUtilisateur" var="utilisateur">
+						<s:iterator value="listUtilisateur" var="utilisateur">
 							<li>
 								<s:checkbox name="checkMe" fieldValue="%{#utilisateur.pseudo}" label="%{#utilisateur.pseudo+' '+#utilisateur.nom+' '+#utilisateur.prenom}"/>
 							</li>
@@ -40,7 +40,7 @@
 								</li>
 							</s:iterator>
 							</ul>
-						</s:iterator>-->
+						</s:iterator>
 					</ul>
 					<!-- une selectBox pour definir le nouveau role -->
 					<s:select name="selectedRole" label="%{getText('modifRole.selectRole')}" list="listRole" size="1" />

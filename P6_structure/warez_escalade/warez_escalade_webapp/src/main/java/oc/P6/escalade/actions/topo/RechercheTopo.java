@@ -18,7 +18,11 @@ import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.topo.Voie;
-
+/**
+ * Classe action qui permet la recherche d'un {@link Topo}
+ * @author nicolas
+ *
+ */
 @Named
 @Scope("Protoype")
 public class RechercheTopo extends ActionSupport {
@@ -36,6 +40,9 @@ public class RechercheTopo extends ActionSupport {
 	private ArrayList<Voie>listVoie = new ArrayList<Voie>();
 	private String nomTopo, nomSite, nomSecteur;
 	
+	/**
+	 * Méthode qui effectue la recherche
+	 */
 	public String execute() {
 
 			try {
@@ -68,7 +75,9 @@ public class RechercheTopo extends ActionSupport {
 			}
 
 	}
-	
+	/**
+	 * Méthode qui récupère le nom du {@link Topo} recherché
+	 */
 	public String input() {
 		System.out.println(nomTopo);
 		try {
@@ -82,6 +91,7 @@ public class RechercheTopo extends ActionSupport {
 
 	}
 	
+	//--Getter et Setter--//
 	public ManagerFactory getManagerFactory() {
 		return managerFactory;
 	}

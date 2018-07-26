@@ -21,6 +21,11 @@ import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.topo.Voie;
 
+/**
+ * Classe action qui permet la création d'une {@link Voie}
+ * @author nicolas
+ *
+ */
 @Named
 @Scope("Protoype")
 public class CreerVoie extends ActionSupport implements SessionAware {
@@ -42,32 +47,10 @@ public class CreerVoie extends ActionSupport implements SessionAware {
 	private Map<String, Object> session;
 	private HashMap<Integer, String> listSite = new HashMap<Integer, String>();
 	
-	public Voie getVoie() {
-		return voie;
-	}
-	public void setVoie(Voie voie) {
-		this.voie = voie;
-	}
-	
-	public String getNomTopo() {
-		return nomTopo;
-	}
-	public void setNomTopo(String nomTopo) {
-		this.nomTopo = nomTopo;
-	}
-	public String getNomSite() {
-		return nomSite;
-	}
-	public void setNomSite(String nomSite) {
-		this.nomSite = nomSite;
-	}
-	public String getNomSecteur() {
-		return nomSecteur;
-	}
-	public void setNomSecteur(String nomSecteur) {
-		this.nomSecteur = nomSecteur;
-	}
-		
+
+	/**
+	 * Méthode qui crée la {@link Voie}	
+	 */
 	public String execute() {
 		try {
 			System.out.println("trace creation voie");
@@ -107,6 +90,9 @@ public class CreerVoie extends ActionSupport implements SessionAware {
 
 	}
 	
+	/**
+	 * Méthode qui récupère les données pour créer la {@link Voie}
+	 */
 	public String input() {
 		try {
 			if (((Topo)session.get("topo")).getNomTopo().length() > 0) {
@@ -118,8 +104,7 @@ public class CreerVoie extends ActionSupport implements SessionAware {
 				topo = managerFactory.getTopoManager().getTopo(nomTopo);
 				this.session.put("topo", topo);
 				secteur = managerFactory.getSecteurManager().getSecteur(selectedSecteur);
-				this.session.put("secteur", secteur);
-				
+				this.session.put("secteur", secteur);				
 			}
 			
 			for (Site s : managerFactory.getSiteManager().getSite(topo)) {
@@ -145,6 +130,10 @@ public class CreerVoie extends ActionSupport implements SessionAware {
 		}
 	}
 	
+	/**
+	 * Méthode qui renvoie les données pour l'affichage de la liste déroulante
+	 * @return
+	 */
 	public String select() {
 		try {
 			secteur = managerFactory.getSecteurManager().getSecteur(id);
@@ -153,10 +142,10 @@ public class CreerVoie extends ActionSupport implements SessionAware {
 			addActionMessage(e.getMessage());
 			e.printStackTrace();
 			return ActionSupport.INPUT;
-		}
-		
+		}	
 	}
 	
+	//--Getter et Setter--//
 	public ManagerFactory getManagerFactory() {
 		return managerFactory;
 	}
@@ -184,16 +173,13 @@ public class CreerVoie extends ActionSupport implements SessionAware {
 	@Override
 	public void setSession(Map<String, Object> session) {
 		this.session = session;
-		
 	}
-
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-
 	public int getSelectedSecteur() {
 		return selectedSecteur;
 	}
@@ -212,7 +198,30 @@ public class CreerVoie extends ActionSupport implements SessionAware {
 	public void setListSite(HashMap<Integer, String> listSite) {
 		this.listSite = listSite;
 	}
-
+	public Voie getVoie() {
+		return voie;
+	}
+	public void setVoie(Voie voie) {
+		this.voie = voie;
+	}
+	public String getNomTopo() {
+		return nomTopo;
+	}
+	public void setNomTopo(String nomTopo) {
+		this.nomTopo = nomTopo;
+	}
+	public String getNomSite() {
+		return nomSite;
+	}
+	public void setNomSite(String nomSite) {
+		this.nomSite = nomSite;
+	}
+	public String getNomSecteur() {
+		return nomSecteur;
+	}
+	public void setNomSecteur(String nomSecteur) {
+		this.nomSecteur = nomSecteur;
+	}
 	
 
 }

@@ -6,32 +6,36 @@
 	<div class="container" >
 		<div class="fixed-bottom align-items-center" id="footer" >
 			<div class="row">
-			<s:if test="#session.utilisateur">
-				<div class="col-lg-3">
-					<s:url var="goCompteURL" action="go_monCompte" namespace="/jsp/utilisateur"/>				
-					<s:a href="%{goCompteURL}">
-						<s:text name="footer.utilisateur"/><s:property value="#session.utilisateur.pseudo"/>
-					</s:a>
-				</div>
-				<div class="col-lg-2">
-					<s:url var="decoURL" action="logOut" namespace="/jsp/utilisateur"/>
-					<s:a href="%{decoURL}" class="btn btn-default btn-sm ">
-						<s:text name="footer.deconnexion" />
-					</s:a>
-				</div>
-			</s:if>
-			<s:else>
-				<div class="col-lg-3">
-					<s:text name="footer.inconnu"/>
-				</div>
-				<div class="col-lg-2">					
-					<!-- un bouton pour ouvrir l'authentification -->
-					<s:a action="go_login" namespace="/">
-						<s:submit class="btn btn-default" value="%{getText('footer.connexion')}"/>
-					</s:a>
+				<s:if test="#session.utilisateur">
+					<div class="col-lg-3">
+						<s:url var="goCompteURL" action="go_monCompte" namespace="/jsp/utilisateur"/>				
+						<s:a href="%{goCompteURL}">
+							<s:text name="footer.utilisateur"/><s:property value="#session.utilisateur.pseudo"/>
+						</s:a>
+					</div>
+					<div class="col-lg-2">
+						<s:url var="decoURL" action="logOut" namespace="/jsp/utilisateur"/>
+						<s:a href="%{decoURL}" class="btn btn-default btn-sm ">
+							<s:text name="footer.deconnexion" />
+						</s:a>
+					</div>
+					<s:submit class="btn btn-default" value="%{getText('bouton.selectionner')}" onclick="bilanEmprunt()" id="bouton"/>
+					<div id="blocAjax">
 					
-				</div>
-			</s:else>
+					</div>
+				</s:if>
+				<s:else>
+					<div class="col-lg-3">
+						<s:text name="footer.inconnu"/>
+					</div>
+					<div class="col-lg-2">					
+						<!-- un bouton pour ouvrir l'authentification -->
+						<s:a action="go_login" namespace="/">
+							<s:submit class="btn btn-default" value="%{getText('footer.connexion')}"/>
+						</s:a>
+						
+					</div>
+				</s:else>
 				<div class="col-xs-12 col-sm-12 col-md-7 col-lg-7 mt-2 mt-sm-5">
 					<div class="social text-center">
 						<s:a class="btn btn-default btn-sm" href="https://www.facebook.com"><i class="fab fa-facebook"></i></s:a>
@@ -54,4 +58,34 @@
 	  
 
 </footer>
-
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script>
+			//$("bouton").click(
+				function bilanEmprunt(e){
+					//e.preventDefault();
+					var url = "<s:url action="ajax_listEmprunt"/>";
+					
+					console.log(url);
+	
+		            // Action AJAX en POST
+		            jQuery.post(url, function (data) {
+		                    var $blocAjax = jQuery("#blocAjax");
+		                    $blocAjax.empty();
+		                    jQuery.each(data, function (key, val) {
+		                        $blocAjax.append(
+		                            jQuery("<li>")
+		                            	.append(val.emprunteur.pseudo)
+		                                .append(" ")
+		                                .append(val.topo.nomTopo)
+		                                .append(" ")
+		                                .append(val.dateRetour)
+		                                .append("</li>")
+		                        );
+		                    });
+		                })
+		                .fail(function () {
+		                    alert("Une erreur s'est produite.");
+		                });				
+				}
+			//);
+		</script>

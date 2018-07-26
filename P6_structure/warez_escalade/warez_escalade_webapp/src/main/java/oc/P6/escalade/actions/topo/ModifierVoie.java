@@ -19,7 +19,11 @@ import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.topo.Voie;
-
+/**
+ * Classe action pour modifier une {@link Voie}
+ * @author nicolas
+ *
+ */
 @Named
 @Scope("Protoype")
 public class ModifierVoie extends ActionSupport implements SessionAware{
@@ -37,6 +41,9 @@ public class ModifierVoie extends ActionSupport implements SessionAware{
 	private Topo topo;
 	private Map<String, Object> session;
 	
+	/**
+	 * Méthode qui effecute la modification
+	 */
 	public String execute() {
 		System.out.println(secteur.getNomSecteur()+" - "+voie.getNomVoie());
 		voie.setId(((Voie)session.get("modifVoie")).getId());
@@ -61,6 +68,9 @@ public class ModifierVoie extends ActionSupport implements SessionAware{
 	
 	}
 	
+	/**
+	 * Méthode qui récupère les donnée pour construire la {@link Voie} à modifier
+	 */
 	public String input() {
 		try {
 			topo = managerFactory.getTopoManager().getTopo(nomTopo);
@@ -89,6 +99,7 @@ public class ModifierVoie extends ActionSupport implements SessionAware{
 
 	}
 	
+	//--Getter et Setter--//
 	public ManagerFactory getManagerFactory() {
 		return managerFactory;
 	}

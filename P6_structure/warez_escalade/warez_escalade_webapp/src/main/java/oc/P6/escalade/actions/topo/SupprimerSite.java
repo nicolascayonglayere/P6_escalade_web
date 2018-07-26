@@ -10,6 +10,11 @@ import oc.P6.escalade.model.bean.exception.SiteException;
 import oc.P6.escalade.model.bean.exception.TopoException;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
+/**
+ * Classe Action pour supprimer un {@link Site}
+ * @author nicolas
+ *
+ */
 @Named
 public class SupprimerSite extends ActionSupport {
 
@@ -21,6 +26,9 @@ public class SupprimerSite extends ActionSupport {
 	private ManagerFactory managerFactory;
 	private String nomSite, nomTopo;
 	
+	/**
+	 * Méthode qui effectue la suppression
+	 */
 	public String execute() {
 		try {
 			System.out.println(nomSite+" - "+nomTopo);
@@ -40,6 +48,7 @@ public class SupprimerSite extends ActionSupport {
 		} 
 	}
 	
+	//--Getter et Setter
 	public ManagerFactory getManagerFactory() {
 		return managerFactory;
 	}

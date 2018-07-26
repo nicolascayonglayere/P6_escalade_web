@@ -19,6 +19,11 @@ import oc.P6.escalade.model.bean.exception.TopoException;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
+/**
+ * Classe action qui permet la création d'un {@link Topo}
+ * @author nicolas
+ *
+ */
 @Named
 @Scope("Protoype")
 public class CreerTopo extends ActionSupport implements SessionAware{
@@ -34,20 +39,10 @@ public class CreerTopo extends ActionSupport implements SessionAware{
 	private Map<String, Object>session;
 	private File fichierImage;
 	
-	public Topo getTopo() {
-		return topo;
-	}
-	public void setTopo(Topo topo) {
-		this.topo = topo;
-	}
 
-	public Utilisateur getUtilisateur() {
-		return utilisateur;
-	}
-	public void setUtilisateur(Utilisateur utilisateur) {
-		this.utilisateur = utilisateur;
-	}
-	
+	/**
+	 * Méthode qui crée le {@link Topo}
+	 */
 	public String execute() {
 		GestionFichierProperties gfp = new GestionFichierProperties();
 		System.out.println("trace");
@@ -68,12 +63,12 @@ public class CreerTopo extends ActionSupport implements SessionAware{
 			e.printStackTrace();
 			return ActionSupport.INPUT;
 		}
-		
 	}
+	
+	//--Getter et Setter--//
 	@Override
 	public void setSession(Map<String, Object> session) {
-		this.session = session;
-		
+		this.session = session;		
 	}
 	public ManagerFactory getManagerFactory() {
 		return managerFactory;
@@ -86,5 +81,18 @@ public class CreerTopo extends ActionSupport implements SessionAware{
 	}
 	public void setFichierImage(File fichierImage) {
 		this.fichierImage = fichierImage;
+	}
+	public Topo getTopo() {
+		return topo;
+	}
+	public void setTopo(Topo topo) {
+		this.topo = topo;
+	}
+
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
+	}
+	public void setUtilisateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
 	}
 }

@@ -20,6 +20,11 @@ import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
 
+/**
+ * Classe action qui permet la création d'un {@link Secteur}
+ * @author nicolas
+ *
+ */
 @Named
 @Scope("Protoype")
 public class CreerSecteur extends ActionSupport implements SessionAware {
@@ -41,26 +46,10 @@ public class CreerSecteur extends ActionSupport implements SessionAware {
 	private HashMap<Integer, String> listSecteur = new HashMap<Integer, String>();
 	private Map<String, Object> session;
 	
-	public Secteur getSecteur() {
-		return secteur;
-	}
-	public void setSecteur(Secteur secteur) {
-		this.secteur = secteur;
-	}
 
-	public String getNomTopo() {
-		return nomTopo;
-	}
-	public void setNomTopo(String nomTopo) {
-		this.nomTopo = nomTopo;
-	}
-	public String getNomSite() {
-		return nomSite;
-	}
-	public void setNomSite(String nomSite) {
-		this.nomSite = nomSite;
-	}
-	
+	/**
+	 * Méthode qui crée le {@link Secteur}
+	 */
 	public String execute() {
 		try {
 			if (((Topo)(session.get("topo"))).getNomTopo().length() > 0) {
@@ -94,9 +83,11 @@ public class CreerSecteur extends ActionSupport implements SessionAware {
 			e4.printStackTrace();
 			return ActionSupport.INPUT;
 		}
-
 	}
 	
+	/**
+	 * Méthode qui récupère les données pour la création du {@link Secteur}
+	 */
 	public String input() {
 		try {
 			if ((Topo)session.get("topo") == null) {
@@ -120,8 +111,9 @@ public class CreerSecteur extends ActionSupport implements SessionAware {
 			e3.printStackTrace();
 			return ActionSupport.INPUT;
 		} 
-
 	}
+
+	//--Getter et Setter--//
 	public ManagerFactory getManagerFactory() {
 		return managerFactory;
 	}
@@ -150,7 +142,6 @@ public class CreerSecteur extends ActionSupport implements SessionAware {
 	public void setId(int id) {
 		this.id = id;
 	}
-
 	public int getSelectedSite() {
 		return selectedSite;
 	}
@@ -163,6 +154,23 @@ public class CreerSecteur extends ActionSupport implements SessionAware {
 	public void setListSecteur(HashMap<Integer, String> listSecteur) {
 		this.listSecteur = listSecteur;
 	}
-
+	public Secteur getSecteur() {
+		return secteur;
+	}
+	public void setSecteur(Secteur secteur) {
+		this.secteur = secteur;
+	}
+	public String getNomTopo() {
+		return nomTopo;
+	}
+	public void setNomTopo(String nomTopo) {
+		this.nomTopo = nomTopo;
+	}
+	public String getNomSite() {
+		return nomSite;
+	}
+	public void setNomSite(String nomSite) {
+		this.nomSite = nomSite;
+	}
 	
 }

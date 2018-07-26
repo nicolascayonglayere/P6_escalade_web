@@ -133,11 +133,11 @@ public class SiteManagerImpl extends AbstractDAOManager implements SiteManager{
 		    TransactionStatus vTScommit = vTransactionStatus;
 		    vTransactionStatus = null;
 		    platformTransactionManager.commit(vTScommit);
-		    if (!(vSite.size()>0))
-		    	throw new SiteException ("Aucun site pour le topo : "+pTopo.getNomTopo());
+		    
 		}finally {
 			if (vTransactionStatus != null) { 
 				platformTransactionManager.rollback(vTransactionStatus);
+		    	throw new SiteException ("Aucun site pour le topo : "+pTopo.getNomTopo());
 				
 			} 			
 		}

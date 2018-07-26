@@ -1,6 +1,7 @@
 package oc.P6.escalade.actions;
 
 import java.io.File;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -76,9 +77,20 @@ public class UploadAction extends ActionSupport implements SessionAware {
 
 		}
 		//--Renommer la premiere image : imageCouv.JPG
-		List<Path> paths = walk(get(chemin+"\\"+nomDuTopo)).collect(toList());
+
+		 Path homePath = Paths.get(chemin+"\\"+nomDuTopo);
+		 ArrayList<Path> paths = new ArrayList<Path>();
+		 try (DirectoryStream<Path> stream = Files.newDirectoryStream(homePath)) {
+		     for (Path entry : stream) {
+		  	   paths.add(entry);
+		     }
+		 }    
+		// = walk(get(chemin+"\\"+nomDuTopo)).collect(toList());
+		
+		
 		Path cheminRenomme = Paths.get(chemin+"\\"+nomDuTopo, "imageCouv.JPG");
 		Files.move(paths.get(0), cheminRenomme, StandardCopyOption.REPLACE_EXISTING);
+
 		
 		System.out.println("filenames:");
 		for (String n : uploadFileName) {
