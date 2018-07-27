@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -80,15 +81,15 @@ public class VoieDaoImpl extends AbstractDAO implements VoieManagerDao{
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
 		vParams.addValue("id_voie", pVoie.getId(), Types.INTEGER);
-	 //  
-	 //  try {
+	   
+	   try {
 	       vJdbcTemplate.update(vSQL, vParams);
-	 //  } catch (Exception vEx) {
-	 //      System.out.println("La voie n'existe pas ! secteur=" + pVoie.getNomVoie());
-	 //      vEx.printStackTrace();
-	 //      throw new VoieException("La voie n'existe pas ! secteur=" + pVoie.getNomVoie());
-	 //      //return false;
-	 //  }
+	   } catch (DataAccessException vEx) {
+	       logger.debug("La voie n'existe pas ! secteur=" + pVoie.getNomVoie());
+	       vEx.printStackTrace();
+	       throw new VoieException("La voie n'existe pas ! secteur=" + pVoie.getNomVoie());
+	       //return false;
+	   }
 	    
 	    
 		return true;

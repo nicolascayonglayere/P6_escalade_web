@@ -67,6 +67,7 @@ public class CreerSite extends ActionSupport implements SessionAware {
 		System.out.println(topo.getNomTopo());
 		try {
 			topo = managerFactory.getTopoManager().getTopo(topo.getNomTopo());
+			this.session.put("topo", topo);
 		} catch (TopoException e) {
 			addActionMessage(e.getMessage());
 			e.printStackTrace();

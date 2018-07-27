@@ -225,7 +225,7 @@ public class SecteurManagerImpl extends AbstractDAOManager implements SecteurMan
 				throw new SecteurException("Aucun résultat pour le secteur de nom commençant par "+pNom);
 			else {
 				for (Secteur se : listSecteur) {
-					System.out.println("ctrl business multi "+se.getId()+" - "+se.getListVoie().size());
+					logger.debug("ctrl business multi "+se.getId()+" - "+se.getListVoie().size());
 					if(topoEmpruntManagerImpl.getNbExemplaire(se.getSite().getTopo()) == 0) {
 						throw new SecteurException("Il n'y a plus d'exemplaire disponible pour le topo : "+se.getSite().getTopo().getNomTopo());
 					}

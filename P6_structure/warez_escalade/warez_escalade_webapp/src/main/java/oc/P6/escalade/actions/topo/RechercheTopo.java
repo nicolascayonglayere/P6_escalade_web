@@ -48,15 +48,18 @@ public class RechercheTopo extends ActionSupport {
 			try {
 				System.out.println("recherche "+topo.getNomTopo());
 				listTopo = managerFactory.getTopoManager().rechercheTopo(topo.getNomTopo());
-				for (Topo t : listTopo)
-					listSite = managerFactory.getSiteManager().getSite(t);
+				for (Topo t : listTopo) {
+					listSite.addAll(managerFactory.getSiteManager().getSite(t));
+					t.setListSite(managerFactory.getSiteManager().getSite(t));
+				}				
+					
 				for(Site si : listSite) {
 					listSecteur.addAll(managerFactory.getSecteurManager().getListSecteur(si));
-					si.setListSecteur(listSecteur);
+					si.setListSecteur(managerFactory.getSecteurManager().getListSecteur(si));
 				}
 				for(Secteur se : listSecteur) {
-					listVoie = managerFactory.getVoieManager().getListVoie(se);
-					se.setListVoie(listVoie);
+					listVoie.addAll(managerFactory.getVoieManager().getListVoie(se));
+					se.setListVoie(managerFactory.getVoieManager().getListVoie(se));
 				}
 				System.out.println(listTopo.size());
 				return ActionSupport.SUCCESS;

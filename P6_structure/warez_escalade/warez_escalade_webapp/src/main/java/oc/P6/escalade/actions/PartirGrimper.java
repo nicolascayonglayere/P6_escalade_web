@@ -65,84 +65,87 @@ public class PartirGrimper extends ActionSupport {
 		listVoie = new ArrayList<Voie>();
 		String vResult ="";
 		
-				if (checkMeTopo) {
-					try {
-						listTopo = managerFactory.getTopoManager().rechercheMultiTopo(nom, selectedMin, selectedMax);
-						System.out.println(listTopo.size());
-						for (Topo t : listTopo) {
-							if(t.getListVoie().size() > 0) {
-									listVoie.addAll(t.getListVoie());
-							}
-						}
-						listResultat.addAll(listTopo);
-						vResult = ActionSupport.SUCCESS;
-					} catch (TopoException e1) {
-						addActionMessage(e1.getMessage());
-						e1.printStackTrace();
-						vResult = ActionSupport.INPUT;
-					}
-
-				}
-				if(checkMeSite) {
-					try {
-						listSite = managerFactory.getSiteManager().rechercheMultiSite(nom, selectedMin, selectedMax);
-						System.out.println(listSite.size());
-						for(Site si : listSite) {
-							if(si.getListVoie().size() > 0) {
-								listVoie.addAll(si.getListVoie());
-							}
-							listTopo.add(si.getTopo());
-						}
-						listResultat.addAll(listSite);
-						vResult = ActionSupport.SUCCESS;
-					} catch (SiteException e2) {
-						addActionMessage(e2.getMessage());
-						e2.printStackTrace();
-						vResult = ActionSupport.INPUT;
-					}
-
-				}
-				if(checkMeSecteur) {
-					try {
-						listSecteur = managerFactory.getSecteurManager().rechercheMultiSecteur(nom, selectedMin, selectedMax);
-						System.out.println(listSecteur.size());
-						for(Secteur se : listSecteur) {
-							if(se.getListVoie().size() > 0) {
-								listVoie.addAll(se.getListVoie());
-							}
-							listTopo.add(se.getSite().getTopo());
-						}
-						listResultat.addAll(listSecteur);
-						vResult = ActionSupport.SUCCESS;
-					}catch (SecteurException e3) {
-						addActionMessage(e3.getMessage());
-						e3.printStackTrace();
-						vResult = ActionSupport.INPUT;
+		if (checkMeTopo) {
+			try {
+				listTopo = managerFactory.getTopoManager().rechercheMultiTopo(nom, selectedMin, selectedMax);
+				System.out.println(listTopo.size());
+				for (Topo t : listTopo) {
+					if(t.getListVoie().size() > 0) {
+							listVoie.addAll(t.getListVoie());
 					}
 				}
-				if (checkMeVoie) {
-					try {
-						listVoie = managerFactory.getVoieManager().rechercheMultiVoie(nom, selectedMin, selectedMax);
-						System.out.println(listVoie.size());
-						listTopo.add(listVoie.get(0).getSecteur().getSite().getTopo());
-						for (Voie v : listVoie) {
-							Topo vTopo = v.getSecteur().getSite().getTopo();
-							if(!(vTopo.getNomTopo().equals(listTopo.get(0).getNomTopo())))
-								listTopo.add(vTopo);
-						}
-						listResultat.addAll(listVoie);
-						vResult = ActionSupport.SUCCESS;
-					}catch(VoieException e4) {
-						addActionMessage(e4.getMessage());
-						e4.printStackTrace();
-						vResult = ActionSupport.INPUT;					
+				listResultat.addAll(listTopo);
+				vResult = ActionSupport.SUCCESS;
+			} catch (TopoException e1) {
+				addActionMessage(e1.getMessage());
+				e1.printStackTrace();
+				vResult = ActionSupport.INPUT;
+			}
+	
+		}
+		if(checkMeSite) {
+			try {
+				listSite = managerFactory.getSiteManager().rechercheMultiSite(nom, selectedMin, selectedMax);
+				System.out.println(listSite.size());
+				for(Site si : listSite) {
+					if(si.getListVoie().size() > 0) {
+						listVoie.addAll(si.getListVoie());
 					}
+					listTopo.add(si.getTopo());
 				}
-				if(!checkMeTopo && !checkMeSite && !checkMeSecteur && !checkMeVoie) {
-					vResult = ActionSupport.INPUT;
-					addActionMessage("Séléctionnez un lieu pour la recherche.");
+				listResultat.addAll(listSite);
+				vResult = ActionSupport.SUCCESS;
+			} catch (SiteException e2) {
+				addActionMessage(e2.getMessage());
+				e2.printStackTrace();
+				vResult = ActionSupport.INPUT;
+			}
+	
+		}
+		if(checkMeSecteur) {
+			try {
+				listSecteur = managerFactory.getSecteurManager().rechercheMultiSecteur(nom, selectedMin, selectedMax);
+				System.out.println(listSecteur.size());
+				for(Secteur se : listSecteur) {
+					if(se.getListVoie().size() > 0) {
+						listVoie.addAll(se.getListVoie());
+					}
+					listTopo.add(se.getSite().getTopo());
 				}
-				return vResult;		
+				listResultat.addAll(listSecteur);
+				vResult = ActionSupport.SUCCESS;
+			}catch (SecteurException e3) {
+				addActionMessage(e3.getMessage());
+				e3.printStackTrace();
+				vResult = ActionSupport.INPUT;
+			}
+		}
+		if (checkMeVoie) {
+			try {
+				listVoie = managerFactory.getVoieManager().rechercheMultiVoie(nom, selectedMin, selectedMax);
+				System.out.println(listVoie.size());
+				listTopo.add(listVoie.get(0).getSecteur().getSite().getTopo());
+				for (Voie v : listVoie) {
+					Topo vTopo = v.getSecteur().getSite().getTopo();
+					if(!(vTopo.getNomTopo().equals(listTopo.get(0).getNomTopo())))
+						listTopo.add(vTopo);
+				}
+				listResultat.addAll(listVoie);
+				vResult = ActionSupport.SUCCESS;
+			}catch(VoieException e4) {
+				addActionMessage(e4.getMessage());
+				e4.printStackTrace();
+				vResult = ActionSupport.INPUT;					
+			}
+		}
+		if(!checkMeTopo && !checkMeSite && !checkMeSecteur && !checkMeVoie) {
+			vResult = ActionSupport.INPUT;
+			addActionMessage("Séléctionnez un lieu pour la recherche.");
+		}
+		String[] vDiff = {"1", "2", "3", "4a", "4b", "4c", "5a", "5b", "5c", "6a", "6b", "6c", "7a", "7b", "7c", "8a", "8b", "8c", "9a", "9b", "9c" }; 		
+		for (int i = 0; i < vDiff.length ; i++)
+			listDiff.add(vDiff[i]);
+		return vResult;		
 	}
 	
 	//--Getter et Setter--//

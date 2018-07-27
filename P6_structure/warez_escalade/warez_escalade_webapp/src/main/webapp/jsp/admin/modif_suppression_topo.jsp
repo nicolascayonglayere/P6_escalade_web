@@ -38,10 +38,9 @@
 										<s:if test="listSite">
 											<s:select name="selectedSite" label="%{getText('creerTopo.ajouterSecteur')}" list="listSiteSelect" size="1" />							
 										</s:if>
-										<s:submit class="btn btn-default" value="%{getText('bouton.ajouterSecteur')}">
-											<s:param name="topo.nomTopo" value="topo.nomTopo"/>
-											<s:param name="id" value="%{#selectedSite}"/>								
-										</s:submit>
+										<s:param name="topo.nomTopo" value="topo.nomTopo"/>
+										<s:param name="id" value="%{#selectedSite}"/>
+										<s:submit class="btn btn-default" value="%{getText('bouton.ajouterSecteur')}"/>
 									</s:form>						
 								</li>
 								<div class="dropdown-divider"></div>

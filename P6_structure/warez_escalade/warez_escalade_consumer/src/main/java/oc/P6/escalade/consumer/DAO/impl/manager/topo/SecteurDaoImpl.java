@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -88,14 +89,14 @@ public class SecteurDaoImpl extends AbstractDAO implements SecteurManagerDao{
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
 		vParams.addValue("id_secteur", pSecteur.getId(), Types.INTEGER);
 	    
-	  // try {
+	   try {
 	       vJdbcTemplate.update(vSQL, vParams);
-	  // } catch (Exception vEx) {
-	  //     System.out.println("Le secteur n'existe pas ! secteur=" + pSecteur.getNomSecteur());
-	  //     vEx.printStackTrace();
-	  //     throw new SecteurException("Le secteur n'existe pas ! secteur=" + pSecteur.getNomSecteur());
-	  //     //return false;
-	  // }
+	   } catch (DataAccessException vEx) {
+	       logger.debug("Le secteur n'existe pas ! secteur=" + pSecteur.getNomSecteur());
+	       vEx.printStackTrace();
+	       throw new SecteurException("Le secteur n'existe pas ! secteur=" + pSecteur.getNomSecteur());
+	       //return false;
+	   }
 	    
 	    
 		return true;

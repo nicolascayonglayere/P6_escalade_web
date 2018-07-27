@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -71,14 +72,14 @@ public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
 		vParams.addValue("id_site", pSite.getId(), Types.INTEGER);
 	    
-	   //try {
+	   try {
 	       vJdbcTemplate.update(vSQL, vParams);
-	   //} catch (Exception vEx) {
-	   //    System.out.println("Le site n'existe pas ! site=" + pSite.getNomSite());
-	   //    vEx.printStackTrace();
-	   //    throw new SiteException("Le site n'existe pas ! site=" + pSite.getNomSite());
-	   //    //return false;
-	   //}
+	   } catch (DataAccessException vEx) {
+	       logger.debug("Le site n'existe pas ! site=" + pSite.getNomSite());
+	       vEx.printStackTrace();
+	       throw new SiteException("Le site n'existe pas ! site=" + pSite.getNomSite());
+	       //return false;
+	   }
 	    
 	    
 		return true;

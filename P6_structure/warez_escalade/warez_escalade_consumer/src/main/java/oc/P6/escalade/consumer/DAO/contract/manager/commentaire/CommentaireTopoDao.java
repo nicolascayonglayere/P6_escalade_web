@@ -53,9 +53,16 @@ public interface CommentaireTopoDao {
 	ArrayList<CommentaireTopo> listCommentaire();
 	
 	/**
-	 * Méthode pour obtenir la liste des {@link CommentaireTopo} du {@link Topo} d'id donné en paramètre dans la base de donnée
+	 * Méthode pour obtenir la liste des {@link CommentaireTopo} valide du {@link Topo} d'id donné en paramètre dans la base de donnée
 	 * @param pIdTopo
 	 * @return la liste des {@link CommentaireTopo}
 	 */
 	ArrayList<CommentaireTopo> listCommentaireValid(int pIdTopo);
+	
+	/**
+	 * Méthode pour obtenir la liste des {@link CommentaireTopo} du {@link Topo} d'id donné en paramètre dans la base de donnée
+	 * @param pIdTopo
+	 * @return la liste des {@link CommentaireTopo}
+	 */
+	ArrayList<CommentaireTopo> listCommentaireTopo(int pIdTopo);
 }

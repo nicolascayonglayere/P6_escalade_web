@@ -18,6 +18,9 @@ import oc.P6.escalade.consumer.DAO.contract.manager.topo.SecteurManagerDao;
 import oc.P6.escalade.consumer.DAO.contract.manager.topo.SiteManagerDAO;
 import oc.P6.escalade.consumer.DAO.contract.manager.topo.TopoManagerDao;
 import oc.P6.escalade.consumer.DAO.contract.manager.topo.VoieManagerDao;
+import oc.P6.escalade.model.bean.commentaire.CommentaireTopo;
+import oc.P6.escalade.model.bean.emprunt.TopoEmprunt;
+import oc.P6.escalade.model.bean.exception.CommentaireTopoException;
 import oc.P6.escalade.model.bean.exception.SecteurException;
 import oc.P6.escalade.model.bean.exception.SiteException;
 import oc.P6.escalade.model.bean.exception.TopoException;
@@ -260,18 +263,21 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 		vDefinition.setTimeout(30); // 30 secondes
         TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
         topoDAO = daoFactory.getTopoManagerDao();
-		logger.debug("CTRL business "+pTopo.getNomTopo());
+		logger.debug("CTRL business "+pTopo.getNomTopo()+" - ID "+pTopo.getId());
 
 		try {
-			pTopo.setId(topoDAO.find(pTopo.getNomTopo()).getId());
+			//pTopo.setId(topoDAO.find(pTopo.getNomTopo()).getId());
 			try {
 				for(Site si : daoFactory.getSiteManagerDao().find(pTopo.getId())) {
 					for (Secteur se : daoFactory.getSecteurManagerDao().getListeSecteur(si)) {
 						for (Voie v : daoFactory.getVoieManagerDao().getlistVoie(se)) {
+							logger.debug(v.getId());
 							daoFactory.getVoieManagerDao().delete(v);
 						}
+						logger.debug(se.getId());
 						daoFactory.getSecteurManagerDao().delete(se);
 					}
+					logger.debug(si.getId());
 					daoFactory.getSiteManagerDao().delete(si);
 				}			
 			}catch (VoieException e1){
@@ -282,6 +288,19 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 			} catch (SiteException e3) {
 				// TODO Auto-generated catch block
 				e3.printStackTrace();
+			}
+			
+			for (TopoEmprunt te : daoFactory.getTopoEmpruntDao().getListTopoEmprunt(pTopo)) {
+				daoFactory.getTopoEmpruntDao().delete(te);
+			}
+			
+			for (CommentaireTopo ct : daoFactory.getCommentaireTopoDao().listCommentaireTopo(pTopo.getId())) {
+				try {
+					daoFactory.getCommentaireTopoDao().delete(ct);
+				} catch (CommentaireTopoException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			topoDAO.delete(pTopo);
 			

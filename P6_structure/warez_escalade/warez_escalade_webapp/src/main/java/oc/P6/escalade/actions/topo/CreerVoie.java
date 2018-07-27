@@ -95,17 +95,28 @@ public class CreerVoie extends ActionSupport implements SessionAware {
 	 */
 	public String input() {
 		try {
-			if (((Topo)session.get("topo")).getNomTopo().length() > 0) {
+			//if (((Topo)session.get("topo")).getNomTopo().length() > 0) {
 				topo = (Topo)session.get("topo");
-				secteur = (Secteur)session.get("secteur");
-			}
-			else {
 				System.out.println("selection : "+selectedSecteur);
-				topo = managerFactory.getTopoManager().getTopo(nomTopo);
-				this.session.put("topo", topo);
-				secteur = managerFactory.getSecteurManager().getSecteur(selectedSecteur);
-				this.session.put("secteur", secteur);				
-			}
+				if((Secteur)session.get("secteur") == null) {
+					secteur = managerFactory.getSecteurManager().getSecteur(selectedSecteur);
+					this.session.put("secteur", secteur);					
+				}
+				else {
+					secteur = (Secteur)session.get("secteur");
+				}
+
+			//}
+		//else if (((Topo)session.get("topoAjout")).getNomTopo().length() > 0){
+		//	System.out.println("selection : "+selectedSecteur);
+		//	
+		//	topo = (Topo)session.get("topoAjout");
+		//	//topo = managerFactory.getTopoManager().getTopo(nomTopo);
+		//	this.session.put("topo", topo);
+		//	this.session.remove("topoAjout");
+		//	secteur = managerFactory.getSecteurManager().getSecteur(selectedSecteur);
+		//	this.session.put("secteur", secteur);				
+		//}
 			
 			for (Site s : managerFactory.getSiteManager().getSite(topo)) {
 				listSite.put(s.getId(), s.getNomSite());
@@ -115,11 +126,7 @@ public class CreerVoie extends ActionSupport implements SessionAware {
 			}
 
 			return ActionSupport.SUCCESS;			
-		}catch (TopoException e2) {
-			addActionMessage(e2.getMessage());
-			e2.printStackTrace();
-			return ActionSupport.INPUT;
-		} catch (SiteException e3) {
+		}catch (SiteException e3) {
 			addActionMessage(e3.getMessage());
 			e3.printStackTrace();
 			return ActionSupport.INPUT;

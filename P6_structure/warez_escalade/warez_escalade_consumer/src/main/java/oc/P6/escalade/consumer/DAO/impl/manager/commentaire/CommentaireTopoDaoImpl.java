@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -74,14 +75,14 @@ public class CommentaireTopoDaoImpl  extends AbstractDAO implements CommentaireT
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
 		vParams.addValue("id_commentaire_topo", pCommentaireTopo.getId(), Types.INTEGER);
 	    
-	    //try {
+	    try {
 	        vJdbcTemplate.update(vSQL, vParams);
-	    //} catch (Exception vEx) {
-	        //System.out.println("Le commentaire n'existe pas ! topo=" + pCommentaireTopo.getTopo().getNomTopo());
-	        //vEx.printStackTrace();
-	        //throw new CommentaireTopoException("Le commentaire n'existe pas ! topo=" + pCommentaireTopo.getTopo().getNomTopo());
+	    } catch (DataAccessException vEx) {
+	    	logger.debug("Le commentaire n'existe pas ! topo=" + pCommentaireTopo.getTopo().getNomTopo());
+	        vEx.printStackTrace();
+	        throw new CommentaireTopoException("Le commentaire n'existe pas ! topo=" + pCommentaireTopo.getTopo().getNomTopo());
 	        //return false;
-	    //}
+	    }
 	    
 	    
 		return true;
@@ -160,6 +161,18 @@ public class CommentaireTopoDaoImpl  extends AbstractDAO implements CommentaireT
 	@Override
 	public ArrayList<CommentaireTopo> listCommentaireValid(int pIdTopo) {
 		String vSQL ="SELECT * FROM commentaire_topo WHERE validation=true AND id_topo = :id_topo";
+		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
+		MapSqlParameterSource vParams = new MapSqlParameterSource();
+		vParams.addValue("id_topo", pIdTopo, Types.INTEGER);
+		ArrayList<CommentaireTopo> listComm = new ArrayList<CommentaireTopo>();
+		listComm = (ArrayList<CommentaireTopo>) vJdbcTemplate.query(vSQL, vParams, commentaireTopoRowMapper);
+	
+		return listComm;
+	}
+
+	@Override
+	public ArrayList<CommentaireTopo> listCommentaireTopo(int pIdTopo) {
+		String vSQL ="SELECT * FROM commentaire_topo WHERE id_topo = :id_topo";
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
 		vParams.addValue("id_topo", pIdTopo, Types.INTEGER);

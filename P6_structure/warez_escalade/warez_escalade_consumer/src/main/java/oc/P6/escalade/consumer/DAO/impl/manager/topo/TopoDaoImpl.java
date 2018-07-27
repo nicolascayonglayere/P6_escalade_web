@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.springframework.context.annotation.Scope;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -76,14 +77,14 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
 		vParams.addValue("id_topo", pTopo.getId(), Types.INTEGER);
 	    
-	    //try {
+	    try {
 	        vJdbcTemplate.update(vSQL, vParams);
-	    //} catch (Exception vEx) {
-	       // System.out.println("Le topo n'existe pas ! topo=" + pTopo.getNomTopo());
-	        //vEx.printStackTrace();
-	        //throw new TopoException("Le topo n'existe pas ! topo=" + pTopo.getNomTopo());
-	        //return false;
-	   // }
+	    } catch (DataAccessException vEx) {
+	    	logger.debug("Le topo n'existe pas ! topo=" + pTopo.getNomTopo());
+	        vEx.printStackTrace();
+	        throw new TopoException("Le topo n'existe pas ! topo=" + pTopo.getNomTopo());
+	        
+	    }
 	    
 	    
 		return true;		
