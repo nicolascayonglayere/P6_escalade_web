@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="sb" uri="/struts-bootstrap-tags" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
@@ -27,7 +28,7 @@
 				</s:form>		
 				
 				<s:form action="bannir" cssClass="form-vertical" namespace="/jsp/utilisateur">
-					<ul>
+					<ul id="formulaireBan">
 						<s:iterator value="listUtilisateur" var="utilisateur">
 							<li>
 								<s:checkbox name="checkMe" fieldValue="%{#utilisateur.pseudo}" label="%{#utilisateur.pseudo+' '+#utilisateur.nom+' '+#utilisateur.prenom}"/>
@@ -48,10 +49,10 @@
 		</div>
 
 		
-				
+	  	<%@include file="../_include/footer.jsp" %>				
 	  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 	  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>	
-	  	<%@include file="../_include/footer.jsp" %>		
+		
 	</body>
 </html>

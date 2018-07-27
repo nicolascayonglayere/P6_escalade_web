@@ -196,10 +196,12 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 		    TransactionStatus vTScommit = vTransactionStatus;
 		    vTransactionStatus = null;
 		    platformTransactionManager.commit(vTScommit);
+		}catch (TopoException e){
+			throw new TopoException("Le nom ne peut pas être modifié de la sorte. Choisissez un autre nom de topo. "+pTopo.getNomTopo());
 		}finally {
 			if (vTransactionStatus != null) {
 				platformTransactionManager.rollback(vTransactionStatus);
-				throw new TopoException("Le topo n'existe pas.");
+				//throw new TopoException("Le topo n'existe pas.");
 			} 			
 		}		
 	}

@@ -116,35 +116,36 @@ public class TopoEmpruntManagerImpl extends AbstractDAOManager implements TopoEm
 		userDAO = daoFactory.getUtilisateurManagerDAO();
 		System.out.println(topo.getNomTopo()+" - "+pEmprunteur.getPseudo());
 		
-
-		//if (topoDAO.find(topo.getNomTopo()) != null && userDAO.find(pEmprunteur.getPseudo())!= null) {
-		if(this.getNbExemplaire(topo) > 0) {
-			Calendar cal = Calendar.getInstance();
-			System.out.println(cal.getTime());
-			topoEmprunt.setDateEmprunt(cal.getTime());
-			cal.add(Calendar.DATE, 20);
-			topoEmprunt.setEmprunteur(pEmprunteur);
-			topoEmprunt.setTopo(topo);
-			topoEmprunt.setDateRetour(cal.getTime());
-			topoEmprunt.setNom(topo.getNomTopo());
-			try {
-				topoEmprunt = topoEmpruntDao.create((TopoEmprunt) topoEmprunt);
-    			TransactionStatus vTScommit = vTransactionStatus;
-    			vTransactionStatus = null;
-    			platformTransactionManager.commit(vTScommit);
-			}catch (RuntimeException e){
-				throw new RuntimeException("L'emprunt existe deja.");
-
-    		}finally {
-    			if (vTransactionStatus != null) { 
-    				platformTransactionManager.rollback(vTransactionStatus);
-
-    			} 			
-    		}
+		if(topoEmpruntDao.find(topo.getId(), pEmprunteur.getId()).getId() > 0) {
+			throw new RuntimeException("Vous avez deja emprunter ce topo.");
 		}
 		else {
-			topoEmprunt = null;
-			throw new RuntimeException("Il n'y a plus d'exemplaire disponible");
+			if(this.getNbExemplaire(topo) > 0) {
+				Calendar cal = Calendar.getInstance();
+				System.out.println(cal.getTime());
+				topoEmprunt.setDateEmprunt(cal.getTime());
+				cal.add(Calendar.DATE, 20);
+				topoEmprunt.setEmprunteur(pEmprunteur);
+				topoEmprunt.setTopo(topo);
+				topoEmprunt.setDateRetour(cal.getTime());
+				topoEmprunt.setNom(topo.getNomTopo());
+				try {
+					topoEmprunt = topoEmpruntDao.create((TopoEmprunt) topoEmprunt);
+	    			TransactionStatus vTScommit = vTransactionStatus;
+	    			vTransactionStatus = null;
+	    			platformTransactionManager.commit(vTScommit);
+	
+				}finally {
+	    			if (vTransactionStatus != null) { 
+	    				platformTransactionManager.rollback(vTransactionStatus);
+	
+	    			} 			
+	    		}
+			}
+			else {
+				topoEmprunt = null;
+				throw new RuntimeException("Il n'y a plus d'exemplaire disponible");
+			}
 		}
 		return (TopoEmprunt) topoEmprunt;
 	}

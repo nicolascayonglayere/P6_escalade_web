@@ -92,19 +92,16 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 
 	@Override
 	public boolean update(Topo pTopo) throws TopoException {
-		String vSQL = "UPDATE topo SET nom = :nom, id_utilisateur = :id, nombre_exemplaires = :nbreEx, description = :description, longitude = :longitude, latitude = :latitude, image = :image, construction = :construction "
+		String vSQL = "UPDATE topo SET nom = :nom, nombre_exemplaires = :nbreEx, description = :description, longitude = :longitude, latitude = :latitude, construction = :construction "
 					+ " WHERE id_topo = :id_topo";
-		Utilisateur auteur = daoFacto.getUtilisateurManagerDAO().find(pTopo.getAuteur().getPseudo());
 		
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
 		vParams.addValue("nom", pTopo.getNomTopo(), Types.VARCHAR);
-		vParams.addValue("id", auteur.getId(), Types.INTEGER);
 		vParams.addValue("nbreEx", pTopo.getNbreEx(), Types.INTEGER);
 		vParams.addValue("description", pTopo.getDescription(), Types.LONGVARCHAR);
 		vParams.addValue("longitude", pTopo.getLongitude(), Types.DECIMAL);
 		vParams.addValue("latitude", pTopo.getLatitude(), Types.DECIMAL);
-		vParams.addValue("image", pTopo.getImage(), Types.VARCHAR);
 		vParams.addValue("id_topo", pTopo.getId(), Types.INTEGER);
 		vParams.addValue("construction", pTopo.getConstruction(), Types.BOOLEAN);
 	    

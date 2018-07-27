@@ -3,13 +3,13 @@ oc\P6\escalade\interceptor\CommentaireInterceptor.class
 oc\P6\escalade\actions\utilisateur\InscriptionAction.class
 oc\P6\escalade\actions\AccueilAction.class
 oc\P6\escalade\actions\utilisateur\ModifierUserAction.class
-oc\P6\escalade\WebappHelper\EmailUtil.class
 oc\P6\escalade\actions\topo\CreerSecteur.class
 oc\P6\escalade\actions\utilisateur\BanUtilisateurAction.class
 oc\P6\escalade\actions\topo\SupprimerTopo.class
 oc\P6\escalade\actions\topo\FinaliserTopo.class
 oc\P6\escalade\actions\UploadAction.class
 oc\P6\escalade\actions\topo\CreerSite.class
+oc\P6\escalade\actions\ajax\RechercheUserAjax.class
 oc\P6\escalade\actions\ContactAction.class
 oc\P6\escalade\actions\topo\SupprimerSite.class
 oc\P6\escalade\actions\PartirGrimper.class
@@ -32,9 +32,9 @@ oc\P6\escalade\actions\topo\ModifierSite.class
 oc\P6\escalade\actions\PresentationAction.class
 oc\P6\escalade\actions\utilisateur\ModifRoleUtilisateur.class
 oc\P6\escalade\actions\utilisateur\MonCompteAction.class
-oc\P6\escalade\WebappHelper\PasswordEncoder.class
 oc\P6\escalade\actions\topo\SupprimerVoie.class
 oc\P6\escalade\actions\images\CustomImageBytesResult.class
+oc\P6\escalade\actions\ajax\BilanEmpruntAjax.class
 oc\P6\escalade\actions\utilisateur\ValidationCommentaireAction.class
 oc\P6\escalade\actions\GoTopoAction.class
 oc\P6\escalade\WebappHelper\WebappHelper.class
