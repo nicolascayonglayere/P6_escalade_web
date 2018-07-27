@@ -23,6 +23,9 @@ import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Voie;
 import oc.P6.escalade.model.contract.topo.IntSecteur;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Implémentation de {@link SecteurManager}
  * @author nicolas
@@ -31,6 +34,7 @@ import oc.P6.escalade.model.contract.topo.IntSecteur;
 @Named
 public class SecteurManagerImpl extends AbstractDAOManager implements SecteurManager{
 
+	static final Logger logger = LogManager.getLogger("ihm");
 	@Inject
 	private IntSecteur secteur;
 	
@@ -130,7 +134,7 @@ public class SecteurManagerImpl extends AbstractDAOManager implements SecteurMan
 		vDefinition.setTimeout(30); // 30 secondes
         TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
 		secteurDAO = daoFactory.getSecteurManagerDao();
-		System.out.println("CTRL "+pSecteur.getNomSecteur()+" - "+pSecteur.getSite().getId());
+		logger.debug("CTRL "+pSecteur.getNomSecteur()+" - "+pSecteur.getSite().getId());
 
 		try {
 			secteur = secteurDAO.create(pSecteur);
@@ -154,7 +158,7 @@ public class SecteurManagerImpl extends AbstractDAOManager implements SecteurMan
 		vDefinition.setTimeout(30); // 30 secondes
         TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
 		secteurDAO = daoFactory.getSecteurManagerDao();
-		System.out.println("CTRL "+pSecteur.getNomSecteur());
+		logger.debug("CTRL "+pSecteur.getNomSecteur());
 
 		try {
 			secteurDAO.update(pSecteur);
@@ -180,7 +184,7 @@ public class SecteurManagerImpl extends AbstractDAOManager implements SecteurMan
 		vDefinition.setTimeout(30); // 30 secondes
         TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
 		secteurDAO = daoFactory.getSecteurManagerDao();
-		System.out.println("CTRL "+pSecteur.getNomSecteur());
+		logger.debug("CTRL "+pSecteur.getNomSecteur());
 
 		try {
 			pSecteur.setId(secteurDAO.find(pSecteur.getNomSecteur(), pSecteur.getSite().getId()).getId());
@@ -216,7 +220,7 @@ public class SecteurManagerImpl extends AbstractDAOManager implements SecteurMan
 		
 		try {
 			listSecteur = secteurDAO.rechercheMultiSecteur(pNom, pDiffMin, pDiffMax);
-			System.out.println("ctrl business multi 1 "+listSecteur.size());
+			logger.debug("ctrl business multi 1 "+listSecteur.size());
 			if(listSecteur.size() == 0)
 				throw new SecteurException("Aucun résultat pour le secteur de nom commençant par "+pNom);
 			else {
@@ -238,6 +242,7 @@ public class SecteurManagerImpl extends AbstractDAOManager implements SecteurMan
 		return listSecteur;
 	}
 	
+	//--Getter et Setter--//
 	public DAOFactory getDaoFactory() {
 		return daoFactory;
 	}

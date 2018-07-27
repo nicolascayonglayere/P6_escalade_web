@@ -23,6 +23,9 @@ import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 import oc.P6.escalade.model.contract.emprunt.IntTopoEmprunt;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Implémentation de {@link TopoEmpruntManager}
  * @author nicolas
@@ -31,6 +34,7 @@ import oc.P6.escalade.model.contract.emprunt.IntTopoEmprunt;
 @Named
 public class TopoEmpruntManagerImpl extends AbstractDAOManager implements TopoEmpruntManager{
  	
+	static final Logger logger = LogManager.getLogger("ihm");
 	@Inject
 	private IntTopoEmprunt topoEmprunt;
 	@Inject
@@ -56,7 +60,7 @@ public class TopoEmpruntManagerImpl extends AbstractDAOManager implements TopoEm
 		topoEmpruntDao = daoFactory.getTopoEmpruntDao();
 		ArrayList<TopoEmprunt> listTopoEmprunt = new ArrayList<TopoEmprunt>();
 		try {
-			 listTopoEmprunt = topoEmpruntDao.getListTopoEmprunt(pId_utilisateur);
+			listTopoEmprunt = topoEmpruntDao.getListTopoEmprunt(pId_utilisateur);
 			TransactionStatus vTScommit = vTransactionStatus;
 			vTransactionStatus = null;
 			platformTransactionManager.commit(vTScommit);
@@ -80,12 +84,12 @@ public class TopoEmpruntManagerImpl extends AbstractDAOManager implements TopoEm
         TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
 		topoEmpruntDao = daoFactory.getTopoEmpruntDao();
 		topoDAO = daoFactory.getTopoManagerDao();
-		System.out.println("topo : "+topoDAO.find(pNom).getNomTopo()+" - "+topoDAO.find(pNom).getId());
+		logger.debug("topo : "+topoDAO.find(pNom).getNomTopo()+" - "+topoDAO.find(pNom).getId());
 		Topo vTopo = topoDAO.find(pNom);
 	   	try {
-	   		System.out.println("topoEmp id : "+topoEmpruntDao.find(vTopo.getId(), pEmprunteur.getId()).getId());
+	   		logger.debug("topoEmp id : "+topoEmpruntDao.find(vTopo.getId(), pEmprunteur.getId()).getId());
 	   		topoEmprunt = topoEmpruntDao.find(vTopo.getId(), pEmprunteur.getId());
-	   		System.out.println("CTRL "+topoEmprunt.getNom()+" - "+topoEmprunt.getEmprunteur().getPseudo()+" - "+topoEmprunt.getTopo().getNomTopo());
+	   		logger.debug("CTRL "+topoEmprunt.getNom()+" - "+topoEmprunt.getEmprunteur().getPseudo()+" - "+topoEmprunt.getTopo().getNomTopo());
 	   		TransactionStatus vTScommit = vTransactionStatus;
 	   		vTransactionStatus = null;
 	   		platformTransactionManager.commit(vTScommit);
@@ -93,7 +97,6 @@ public class TopoEmpruntManagerImpl extends AbstractDAOManager implements TopoEm
 	   		if (vTransactionStatus != null) { 
 	   			platformTransactionManager.rollback(vTransactionStatus);
 	   			topoEmprunt = null ;
-	   			//throw new Exception("Cet emprunt n'existe pas : NOM=" + pNom);
 	   			throw new UtilisateurException("Utilisateur inconnu : pseudo "+pEmprunteur.getPseudo());	
 	   		} 			
 	   	}
@@ -114,7 +117,7 @@ public class TopoEmpruntManagerImpl extends AbstractDAOManager implements TopoEm
 		topoEmpruntDao = daoFactory.getTopoEmpruntDao();
 		topoDAO = daoFactory.getTopoManagerDao();
 		userDAO = daoFactory.getUtilisateurManagerDAO();
-		System.out.println(topo.getNomTopo()+" - "+pEmprunteur.getPseudo());
+		logger.debug(topo.getNomTopo()+" - "+pEmprunteur.getPseudo());
 		
 		if(topoEmpruntDao.find(topo.getId(), pEmprunteur.getId()).getId() > 0) {
 			throw new RuntimeException("Vous avez deja emprunter ce topo.");
@@ -122,7 +125,7 @@ public class TopoEmpruntManagerImpl extends AbstractDAOManager implements TopoEm
 		else {
 			if(this.getNbExemplaire(topo) > 0) {
 				Calendar cal = Calendar.getInstance();
-				System.out.println(cal.getTime());
+				logger.debug(cal.getTime());
 				topoEmprunt.setDateEmprunt(cal.getTime());
 				cal.add(Calendar.DATE, 20);
 				topoEmprunt.setEmprunteur(pEmprunteur);
@@ -171,7 +174,7 @@ public class TopoEmpruntManagerImpl extends AbstractDAOManager implements TopoEm
 		int idTopo = topoDAO.find(pTopoEmprunt.getNom()).getId();
 		int idEmprunteur = userDAO.find(pEmprunteur.getPseudo()).getId();
 		Calendar cal = Calendar.getInstance();
-		System.out.println(pTopoEmprunt.getNom()+" - "+pEmprunteur.getPseudo()+" - "+topoEmpruntDao.find(idTopo, idEmprunteur).getId());
+		logger.debug(pTopoEmprunt.getNom()+" - "+pEmprunteur.getPseudo()+" - "+topoEmpruntDao.find(idTopo, idEmprunteur).getId());
 		try {
 			pTopoEmprunt.setId(topoEmpruntDao.find(idTopo, idEmprunteur).getId());
 			pTopoEmprunt.setDateRetour(cal.getTime());
@@ -185,13 +188,7 @@ public class TopoEmpruntManagerImpl extends AbstractDAOManager implements TopoEm
 	   	}finally {
 	   		if (vTransactionStatus != null) {
 	   			platformTransactionManager.rollback(vTransactionStatus);
-	      			try {
-	      				throw new Exception("Cet emprunt n'existe pas : NOM=" + pTopoEmprunt.getNom());
-	      				
-	      			} catch (Exception e) {
-	      				// TODO Auto-generated catch block
-	      				e.printStackTrace();
-	      			}	
+   				throw new RuntimeException("Cet emprunt n'existe pas : NOM=" + pTopoEmprunt.getNom());
 	   		} 			
 	   	}		
 	}
@@ -210,7 +207,7 @@ public class TopoEmpruntManagerImpl extends AbstractDAOManager implements TopoEm
 		int nbEx;
 		try {
 			nbEx = topoDAO.find(pTopo.getNomTopo()).getNbreEx() - topoEmpruntDao.getListTopoEmprunt(pTopo).size();
-			System.out.println("nbre ex : "+topoDAO.find(pTopo.getNomTopo()).getNbreEx()+" - "+topoEmpruntDao.getListTopoEmprunt(pTopo).size());
+			logger.debug("nbre ex : "+topoDAO.find(pTopo.getNomTopo()).getNbreEx()+" - "+topoEmpruntDao.getListTopoEmprunt(pTopo).size());
    			TransactionStatus vTScommit = vTransactionStatus;
 			vTransactionStatus = null;
 			platformTransactionManager.commit(vTScommit);
@@ -221,6 +218,7 @@ public class TopoEmpruntManagerImpl extends AbstractDAOManager implements TopoEm
 		return nbEx;
 	}
 
+	//--Getter et Setter
 	public PlatformTransactionManager getPlatformTransactionManager() {
 		return platformTransactionManager;
 	}

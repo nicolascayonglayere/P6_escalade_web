@@ -28,6 +28,9 @@ import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.topo.Voie;
 import oc.P6.escalade.model.contract.topo.IntSite;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Implémentation de {@link SiteManager}
  * @author nicolas
@@ -36,6 +39,7 @@ import oc.P6.escalade.model.contract.topo.IntSite;
 @Named
 public class SiteManagerImpl extends AbstractDAOManager implements SiteManager{
 
+	static final Logger logger = LogManager.getLogger("ihm");
 	@Inject
 	private IntSite site;
 	
@@ -99,7 +103,7 @@ public class SiteManagerImpl extends AbstractDAOManager implements SiteManager{
 		vDefinition.setTimeout(30); // 30 secondes
         TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
 		siteDAO = daoFactory.getSiteManagerDao();
-		System.out.println("CTRL "+pSite.getNomSite());
+		logger.debug("CTRL "+pSite.getNomSite());
 
 		try {
 			site = siteDAO.create(pSite);
@@ -155,18 +159,18 @@ public class SiteManagerImpl extends AbstractDAOManager implements SiteManager{
 		vDefinition.setTimeout(30); // 30 secondes
         TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
         siteDAO = daoFactory.getSiteManagerDao();
-        secteurDAO = daoFactory.getSecteurManagerDao();
-        voieDAO = daoFactory.getVoieManagerDao();
+        setSecteurDAO(daoFactory.getSecteurManagerDao());
+        setVoieDAO(daoFactory.getVoieManagerDao());
 		ArrayList<Site>listSite = new ArrayList<Site>(); 
 		
 		try {
 			listSite = siteDAO.rechercheMultiSite(pNom, pDiffMin, pDiffMax);
-			System.out.println("ctrl business multi 1 "+listSite.size());
+			logger.debug("ctrl business multi 1 "+listSite.size());
 			if(listSite.size() == 0)
 				throw new SiteException("Aucun résultat pour le site de nom commençant par "+pNom);
 			else {
 				for (Site si : listSite) {
-					System.out.println("ctrl business multi "+si.getId()+" - "+si.getListVoie().size());
+					logger.debug("ctrl business multi "+si.getId()+" - "+si.getListVoie().size());
 					if(topoEmpruntManagerImpl.getNbExemplaire(si.getTopo()) == 0) {
 						throw new SiteException("Il n'y a plus d'exemplaire disponible pour le topo : "+si.getTopo().getNomTopo());
 					}
@@ -190,7 +194,7 @@ public class SiteManagerImpl extends AbstractDAOManager implements SiteManager{
 		vDefinition.setTimeout(30); // 30 secondes
         TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
 		siteDAO = daoFactory.getSiteManagerDao();
-		System.out.println("CTRL "+pSite.getNomSite());
+		logger.debug("CTRL "+pSite.getNomSite());
 
 		try {
 			siteDAO.update(pSite);
@@ -236,7 +240,7 @@ public class SiteManagerImpl extends AbstractDAOManager implements SiteManager{
 		vDefinition.setTimeout(30); // 30 secondes
         TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
 		siteDAO = daoFactory.getSiteManagerDao();
-		System.out.println("CTRL "+pSite.getNomSite());
+		logger.debug("CTRL "+pSite.getNomSite());
 
 		try {
 			pSite.setId(siteDAO.find(pSite.getNomSite(), pSite.getTopo().getId()).getId());
@@ -270,6 +274,7 @@ public class SiteManagerImpl extends AbstractDAOManager implements SiteManager{
 		
 	}
 
+	//--Getter et Setter--//
 	public DAOFactory getDaoFactory() {
 		return daoFactory;
 	}
@@ -292,6 +297,30 @@ public class SiteManagerImpl extends AbstractDAOManager implements SiteManager{
 
 	public void setPlatformTransactionManager(PlatformTransactionManager platformTransactionManager) {
 		this.platformTransactionManager = platformTransactionManager;
+	}
+
+	public TopoManagerDao getTopoDAO() {
+		return topoDAO;
+	}
+
+	public void setTopoDAO(TopoManagerDao topoDAO) {
+		this.topoDAO = topoDAO;
+	}
+
+	public SecteurManagerDao getSecteurDAO() {
+		return secteurDAO;
+	}
+
+	public void setSecteurDAO(SecteurManagerDao secteurDAO) {
+		this.secteurDAO = secteurDAO;
+	}
+
+	public VoieManagerDao getVoieDAO() {
+		return voieDAO;
+	}
+
+	public void setVoieDAO(VoieManagerDao voieDAO) {
+		this.voieDAO = voieDAO;
 	}
 
 

@@ -1,12 +1,6 @@
 package oc.P6.escalade.business.impl.manager.topo;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -35,6 +29,9 @@ import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.topo.Voie;
 import oc.P6.escalade.model.contract.topo.IntTopo;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Implémentation de {@link TopoManager}
  * @author nicolas
@@ -43,6 +40,7 @@ import oc.P6.escalade.model.contract.topo.IntTopo;
 @Named
 public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 
+	static final Logger logger = LogManager.getLogger("ihm");
 	@Inject
 	private IntTopo topo;
 	
@@ -120,7 +118,7 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 		vDefinition.setTimeout(30); // 30 secondes
         TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
         topoDAO = daoFactory.getTopoManagerDao();
-        System.out.println(pNom);
+        logger.debug(pNom);
 		try {
 			topo = topoDAO.find(pNom);
 		    TransactionStatus vTScommit = vTransactionStatus;
@@ -148,17 +146,10 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 		vDefinition.setTimeout(30); // 30 secondes
         TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
         topoDAO = daoFactory.getTopoManagerDao();
-		System.out.println("CTRL "+pTopo.getNomTopo());
+		logger.debug("CTRL "+pTopo.getNomTopo());
 
 		try {
 			pTopo.setImage(pTopo.getNomTopo().replaceAll("\\p{Space}", ""));
-		//Path chemin = Paths.get("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\"+pTopo.getImage());
-		//try {
-		//	Files.createDirectories(chemin);
-		//} catch (IOException e) {
-		//	// TODO Auto-generated catch block
-		//	e.printStackTrace();
-		//}
 			pTopo.setConstruction(true);
 			topo = topoDAO.create(pTopo);
 			
@@ -187,7 +178,7 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 		vDefinition.setTimeout(30); // 30 secondes
         TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
         topoDAO = daoFactory.getTopoManagerDao();
-		System.out.println("CTRL "+pTopo.getNomTopo());
+		logger.debug("CTRL "+pTopo.getNomTopo());
 
 		try {
 			pTopo.setConstruction(false);
@@ -201,7 +192,6 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 		}finally {
 			if (vTransactionStatus != null) {
 				platformTransactionManager.rollback(vTransactionStatus);
-				//throw new TopoException("Le topo n'existe pas.");
 			} 			
 		}		
 	}
@@ -219,7 +209,7 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 		ArrayList<Topo>listTopo = new ArrayList<Topo>(); 
 		try {
 			listTopo = topoDAO.rechercherTopo(pNom) ;
-			System.out.println("business recherche "+pNom+" - "+listTopo.size());
+			logger.debug("business recherche "+pNom+" - "+listTopo.size());
 		    TransactionStatus vTScommit = vTransactionStatus;
 		    vTransactionStatus = null;
 		    platformTransactionManager.commit(vTScommit);
@@ -241,12 +231,12 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 		
 		try {
 			listTopo = topoDAO.rechercheMultiTopo(pNom, pDiffMin, pDiffMax);
-			System.out.println("ctrl business multi 1 "+listTopo.size());
+			logger.debug("ctrl business multi 1 "+listTopo.size());
 			if(listTopo.size() == 0)
 				throw new TopoException("Aucun résultat pour le topo de nom commençant par "+pNom);
 			else {
 				for (Topo t : listTopo) {
-					System.out.println("ctrl business multi "+t.getId()+" - "+t.getListVoie().size());
+					logger.debug("ctrl business multi "+t.getId()+" - "+t.getListVoie().size());
 					if(topoEmpruntManagerImpl.getNbExemplaire(t) == 0) {
 						throw new TopoException("Il n'y a plus d'exemplaire disponible pour le topo : "+t.getNomTopo());
 					}			
@@ -270,7 +260,7 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 		vDefinition.setTimeout(30); // 30 secondes
         TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
         topoDAO = daoFactory.getTopoManagerDao();
-		System.out.println("CTRL business "+pTopo.getNomTopo());
+		logger.debug("CTRL business "+pTopo.getNomTopo());
 
 		try {
 			pTopo.setId(topoDAO.find(pTopo.getNomTopo()).getId());
@@ -295,14 +285,6 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 			}
 			topoDAO.delete(pTopo);
 			
-		//Path chemin = Paths.get("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\"+pTopo.getImage());
-		//try {
-		//	Files.delete(chemin);
-		//} catch (IOException e) {
-		//	// TODO Auto-generated catch block
-		//	e.printStackTrace();
-		//}
-			
 		    TransactionStatus vTScommit = vTransactionStatus;
 		    vTransactionStatus = null;
 		    platformTransactionManager.commit(vTScommit);
@@ -315,6 +297,7 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 		
 	}
 
+	//--Getter et Setter--//
 	public DAOFactory getDaoFactory() {
 		return daoFactory;
 	}

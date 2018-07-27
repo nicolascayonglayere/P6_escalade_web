@@ -19,6 +19,10 @@ import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateur;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 import oc.P6.escalade.model.contract.utilisateur.IntCoordonneeUtilisateur;
 import oc.P6.escalade.model.contract.utilisateur.IntUtilisateur;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Implémentation de {@link CoordonneeUtilisateurManager}
  * @author nicolas
@@ -27,6 +31,7 @@ import oc.P6.escalade.model.contract.utilisateur.IntUtilisateur;
 @Named
 public class CoordonneeUtilisateurManagerImpl extends AbstractDAOManager implements CoordonneeUtilisateurManager{
 
+	static final Logger logger = LogManager.getLogger("ihm");
 	@Inject
 	private IntCoordonneeUtilisateur coordonnee;
 	@Inject
@@ -85,7 +90,7 @@ public class CoordonneeUtilisateurManagerImpl extends AbstractDAOManager impleme
 		vDefinition.setTimeout(30); // 30 secondes
         TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
  
-		System.out.println("CTRL coord "+pCoordinneeUtilisateur.getEmail()+" - "+pCoordinneeUtilisateur.getUtilisateur().getId());
+		logger.debug("CTRL coord "+pCoordinneeUtilisateur.getEmail()+" - "+pCoordinneeUtilisateur.getUtilisateur().getId());
         coordonneeDao = (CoordonneeUtilisateurDaoImpl) daoFactory.getCoordonneeUtilisateurDao();
 		try {
 			coordonneeDao.create(pCoordinneeUtilisateur);
@@ -114,7 +119,7 @@ public class CoordonneeUtilisateurManagerImpl extends AbstractDAOManager impleme
         TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
    
         coordonneeDao = (CoordonneeUtilisateurDaoImpl) daoFactory.getCoordonneeUtilisateurDao();
-        System.out.println("CTRL coord "+pCoordonneeUtilisateur.getEmail()+" - "+pCoordonneeUtilisateur.getId());
+        logger.debug("CTRL coord "+pCoordonneeUtilisateur.getEmail()+" - "+pCoordonneeUtilisateur.getId());
 		try {
 			coordonnee = coordonneeDao.update(pCoordonneeUtilisateur);
 			TransactionStatus vTScommit = vTransactionStatus;
@@ -143,7 +148,7 @@ public class CoordonneeUtilisateurManagerImpl extends AbstractDAOManager impleme
         TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
   
         coordonneeDao = (CoordonneeUtilisateurDaoImpl) daoFactory.getCoordonneeUtilisateurDao();
-		System.out.println("CTRL coord "+pCoordonneeUtilisateur.getEmail()+" - "+pCoordonneeUtilisateur.getUtilisateur().getId());
+		logger.debug("CTRL coord "+pCoordonneeUtilisateur.getEmail()+" - "+pCoordonneeUtilisateur.getUtilisateur().getId());
 		try {
 			pCoordonneeUtilisateur.setId(coordonneeDao.find(pCoordonneeUtilisateur.getUtilisateur()).getId());
 			coordonneeDao.delete(pCoordonneeUtilisateur);
@@ -159,7 +164,8 @@ public class CoordonneeUtilisateurManagerImpl extends AbstractDAOManager impleme
 		}
 		
 	}
-
+	
+	//--Getter et Setter--//
 	public IntUtilisateur getUtilisateur() {
 		return utilisateur;
 	}

@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
@@ -26,6 +24,9 @@ import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 import oc.P6.escalade.model.contract.utilisateur.IntCoordonneeUtilisateur;
 import oc.P6.escalade.model.contract.utilisateur.IntUtilisateur;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 /**
  * Classe UtilisateurManger implémentation de {@link UtilisateurManager}
  * @author nicolas
@@ -35,7 +36,7 @@ import oc.P6.escalade.model.contract.utilisateur.IntUtilisateur;
 public class UtilisateurManagerImpl extends AbstractDAOManager implements UtilisateurManager   {
 
     /** Logger pour la classe */
-    private static final Log LOGGER = LogFactory.getLog(UtilisateurManagerImpl.class);
+	static final Logger logger = LogManager.getLogger("ihm");
 
     @Inject
     private DAOFactoryImpl daoFactory;
@@ -65,8 +66,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
     	TopoEmpruntDao topoEmpDAO = (TopoEmpruntDaoImpl)daoFactory.getTopoEmpruntDao();
 
 	   	try {
-	        LOGGER.debug(userDAO.find(pPseudo).getPseudo());
-	        System.out.println(userDAO.find(pPseudo).getPseudo());
+	        logger.debug(userDAO.find(pPseudo).getPseudo());
 	       	
 	       	utilisateur = userDAO.find(pPseudo);
 	       	utilisateur.setListTopoEmprunt(topoEmpDAO.getListTopoEmprunt(utilisateur.getId()));
@@ -81,7 +81,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 			}
 	   	}
 
-    	//System.out.println("CTRL "+utilisateur.getPseudo()+" - "+utilisateur.getPassword()+" - "+utilisateur.getId());
+    	logger.debug("CTRL "+utilisateur.getPseudo()+" - "+utilisateur.getPassword()+" - "+utilisateur.getId());
     	return (Utilisateur)utilisateur;
         
         
@@ -95,7 +95,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		vDefinition.setTimeout(30); // 30 secondes
         TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
-  		System.out.println("CTRL "+pUtilisateur.getPseudo());
+  		logger.debug("CTRL "+pUtilisateur.getPseudo());
   		
 		try {
 			userDAO = (UtilisateurDaoImpl) daoFactory.getUtilisateurManagerDAO();
@@ -191,7 +191,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 		vDefinition.setTimeout(30); // 30 secondes
         TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
            
-		System.out.println("CTRL "+pUtilisateur.getPseudo());
+		logger.debug("CTRL "+pUtilisateur.getPseudo());
 		userDAO = (UtilisateurDaoImpl) daoFactory.getUtilisateurManagerDAO();
 			try {
 				userDAO.delete(pUtilisateur);
@@ -222,7 +222,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
     		TopoEmpruntDao topoEmpDAO = (TopoEmpruntDaoImpl)daoFactory.getTopoEmpruntDao();
     		ArrayList<Utilisateur> listUtilisateur = userDAO.getList(pPseudo);
     		for (Utilisateur u : listUtilisateur) {
-    			System.out.println(userDAO.find(u.getPseudo()).getId());
+    			logger.debug(userDAO.find(u.getPseudo()).getId());
     			u.setListTopoEmprunt(topoEmpDAO.getListTopoEmprunt(userDAO.find(u.getPseudo()).getId()));
     		}			
 		    TransactionStatus vTScommit = vTransactionStatus;
@@ -251,7 +251,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
      	//--chercher l'utilisateur ds la bdd
 		userDAO = (UtilisateurDaoImpl) daoFactory.getUtilisateurManagerDAO();
     	if(userDAO.findPass(pPassword, pPseudo) != null) { 
-        	System.out.println(userDAO.findPass(pPassword, pPseudo).getPseudo());
+        	logger.debug(userDAO.findPass(pPassword, pPseudo).getPseudo());
         	try {
     			
     			utilisateur = userDAO.findPass(pPassword, pPseudo);
@@ -292,7 +292,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 		vDefinition.setTimeout(30); // 30 secondes
         TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
          
-		System.out.println("CTRL "+pUtilisateur.getPseudo());
+		logger.debug("CTRL "+pUtilisateur.getPseudo());
 		userDAO = (UtilisateurDaoImpl) daoFactory.getUtilisateurManagerDAO();
 		try {
 			pUtilisateur.setId_Role(4);
@@ -323,7 +323,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
         TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
          
 		userDAO = (UtilisateurDaoImpl) daoFactory.getUtilisateurManagerDAO();
-		System.out.println("CTRL "+pUtilisateur.getPseudo());
+		logger.debug("CTRL "+pUtilisateur.getPseudo());
 
 		try {
 			utilisateur = userDAO.update(pUtilisateur);
@@ -354,7 +354,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 		vDefinition.setTimeout(30); // 30 secondes
         TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
         
-		System.out.println("CTRL "+pUtilisateur.getPseudo());
+		logger.debug("CTRL "+pUtilisateur.getPseudo());
 		userDAO = (UtilisateurDaoImpl) daoFactory.getUtilisateurManagerDAO();
 		try {
 			userDAO.update(pUtilisateur);
@@ -372,7 +372,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 		
 	}
 	
-	
+	//--Getter et Setter--//
 	public DAOFactoryImpl getDaoFactory() {
 		return daoFactory;
 	}
