@@ -22,7 +22,6 @@ import oc.P6.escalade.consumer.DAO.contract.manager.topo.TopoManagerDao;
 import oc.P6.escalade.consumer.DAO.impl.manager.AbstractDAO;
 import oc.P6.escalade.consumer.DAO.impl.rowmapper.TopoRowMapper;
 import oc.P6.escalade.model.bean.exception.TopoException;
-import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.topo.Voie;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
@@ -30,6 +29,11 @@ import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Implémentation de {@link TopoManagerDao}
+ * @author nicolas
+ *
+ */
 @Named("topoDao")
 @Scope("prototype")
 public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
@@ -39,8 +43,11 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 
 	@Inject
 	TopoRowMapper topoRowMapper;
-	static final Logger logger = LogManager.getLogger("ihm");
+	static final Logger logger = LogManager.getLogger();
 	
+	/**
+	 * Méthode pour créer un {@link Topo} donné en paramètre dans la base de donnée
+	 */
 	@Override
 	public Topo create(Topo pTopo) throws TopoException {
 		String vSQL = "INSERT INTO topo (nom, id_utilisateur, nombre_exemplaires, description, longitude, latitude, image, construction) VALUES (:nom, :id, :nbreEx, :description, :longitude, :latitude, :image, :construction)";
@@ -61,6 +68,7 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 	        vJdbcTemplate.update(vSQL, vParams, keyHolder, new String[] { "id_topo" });
 	        pTopo.setId(keyHolder.getKey().intValue());
 	    } catch (DuplicateKeyException vEx) {
+	    	//vEx.printStackTrace();
 	        logger.debug("Le topo existe déjà ! topo=" + pTopo.getNomTopo());
 	        throw new TopoException("Le topo existe déjà ! topo=" + pTopo.getNomTopo());
 	        //return false;
@@ -70,6 +78,9 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 		return pTopo;
 	}
 
+	/**
+	 * Méthode pour supprimer un {@link Topo} donné en paramètre dans la base de donnée
+	 */
 	@Override
 	public boolean delete(Topo pTopo) throws TopoException {
 		String vSQL = "DELETE FROM topo WHERE id_topo = :id_topo";
@@ -81,7 +92,7 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 	        vJdbcTemplate.update(vSQL, vParams);
 	    } catch (DataAccessException vEx) {
 	    	logger.debug("Le topo n'existe pas ! topo=" + pTopo.getNomTopo());
-	        vEx.printStackTrace();
+	        //vEx.printStackTrace();
 	        throw new TopoException("Le topo n'existe pas ! topo=" + pTopo.getNomTopo());
 	        
 	    }
@@ -91,6 +102,9 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 		
 	}
 
+	/**
+	 * Méthode pour modifier un {@link Topo} donné en paramètre dans la base de donnée
+	 */
 	@Override
 	public boolean update(Topo pTopo) throws TopoException {
 		String vSQL = "UPDATE topo SET nom = :nom, nombre_exemplaires = :nbreEx, description = :description, longitude = :longitude, latitude = :latitude, construction = :construction "
@@ -109,6 +123,7 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 	    try {
 	        vJdbcTemplate.update(vSQL, vParams);
 	    } catch (DuplicateKeyException vEx) {
+	    	//vEx.printStackTrace();
 	        logger.debug("Erreur modif ! topo=" + pTopo.getNomTopo());
 	        throw new TopoException("Erreur modif ! topo=" + pTopo.getNomTopo());
 	        //return false;
@@ -118,6 +133,9 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 		return true;
 	}
 
+	/**
+	 * Méthode pour obtenir le {@link Topo}  de nom pNomdonné en paramètre dans la base de donnée
+	 */
 	@Override
 	public Topo find(String pNom) {
 		String vSQL = "SELECT * FROM topo WHERE nom = :nom ";
@@ -136,6 +154,9 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 		return topo;
 	}
 
+	/**
+	 * Méthode pour obtenir le {@link Topo} d'id pId donné en paramètre dans la base de donnée
+	 */
 	@Override
 	public Topo find(int pId) {
 		String vSQL = "SELECT * FROM topo WHERE id_topo = :id_topo ";
@@ -154,6 +175,9 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 		return topo;
 	}
 	
+	/**
+	 * Méthode pour obtenir la liste des {@link Topo} dans la base de donnée
+	 */
 	@Override
 	public ArrayList<Topo> listerTopo() {		
 		ArrayList<Topo> listeTopo = new ArrayList<Topo>();
@@ -164,6 +188,9 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 		return listeTopo;
 	}
 
+	/**
+	 * Méthode pour obtenir le {@link Topo} de nom commençant par pNom donné en paramètre dans la base de donnée
+	 */
 	@Override
 	public ArrayList<Topo> rechercherTopo(String pNom) {
 		System.out.println("ctrl DAO "+pNom);
@@ -177,6 +204,9 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 		return vListTopo;
 	}
 
+	/**
+	 * Méthode pour obtenir la liste des {@link Topo} d'auteur nommé pNom et en construction donné en paramètre dans la base de donnée
+	 */
 	@Override
 	public ArrayList<Topo> listerTopo(String pNom) {
 		ArrayList<Topo> listeTopo = new ArrayList<Topo>();
@@ -190,6 +220,9 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 		return listeTopo;
 	}
 
+	/**
+	 * Méthode pour obtenir la liste des {@link Topo} de nom commençant par pNom et contenant des {@link Voie} d'un intervalle de difficulté donné en paramètre dans la base de donnée
+	 */
 	@Override
 	public ArrayList<Topo> rechercheMultiTopo(String pNom, String pDiffMin, String pDiffMax) {
 		ArrayList<Topo> listeTopo = new ArrayList<Topo>();
@@ -221,7 +254,6 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 					listVoie.add(daoFacto.getVoieManagerDao().find(rs.getInt("id_voie")));
 				}
 				vTopo.setListVoie(listVoie);
-				//listVoie.add()
 				return vTopo;
 
 			}

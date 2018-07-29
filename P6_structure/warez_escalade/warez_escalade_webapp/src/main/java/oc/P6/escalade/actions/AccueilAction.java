@@ -11,6 +11,9 @@ import java.util.Iterator;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.opensymphony.xwork2.ActionSupport;
 
 import oc.P6.escalade.WebappHelper.GestionFichierProperties;
@@ -28,6 +31,7 @@ public class AccueilAction extends ActionSupport{
 	/**
 	 * 
 	 */
+	static final Logger logger = LogManager.getLogger();
 	private static final long serialVersionUID = 1L;
 	@Inject
 	private ManagerFactory managerFactory;
@@ -40,28 +44,26 @@ public class AccueilAction extends ActionSupport{
 	public String execute() {
 		GestionFichierProperties gfp = new GestionFichierProperties();
 		listTopo = managerFactory.getTopoManager().getListTopo();
-		//Path chemin;
+
 		String img;
 		for (Topo t : listTopo) {
-			System.out.println("image : "+t.getImage());
+			logger.debug("image : "+t.getImage());
 			Path chemin = Paths.get(gfp.lireProp().getProperty("chemin.upload"), t.getImage());
-					//"D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\", t.getImage());
 			img = "";
 			try (DirectoryStream<Path> stream = Files.newDirectoryStream(chemin)){ 
       	      Iterator<Path> iterator = stream.iterator();
       	      while(iterator.hasNext()) {
       	        Path p = iterator.next();
-      	        System.out.println(p.getFileName().toString());
+      	        logger.debug(p.getFileName().toString());
       	        if(p.getFileName().toString().equals("imageCouv.JPG")) {
-      	        	//imageId = t.getImage()+"\\"+p.getFileName().toString();
       	        	img = t.getImage()+"\\"+p.getFileName().toString();
-      	        	System.out.println("accueil "+img);
+      	        	logger.debug("accueil "+img);
       	        	t.setImage(img);
       	        }
       	      }
       	    } catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+      	    	logger.debug(e.getMessage());
+				//e.printStackTrace();
 			}
 		}
 		return ActionSupport.SUCCESS;

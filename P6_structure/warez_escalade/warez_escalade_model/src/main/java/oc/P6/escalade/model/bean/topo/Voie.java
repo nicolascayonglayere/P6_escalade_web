@@ -5,7 +5,7 @@ import javax.inject.Named;
 import oc.P6.escalade.model.contract.topo.IntVoie;
 
 /**
- * Objet métier représentant une voie d'un topo
+ * Objet métier représentant une voie implémente {@link IntVoie}
  * @author nicolas
  *
  */

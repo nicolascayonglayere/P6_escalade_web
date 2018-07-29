@@ -29,6 +29,11 @@ import oc.P6.escalade.model.bean.topo.Voie;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Implémentation de {@link SiteManagerDAO}
+ * @author nicolas
+ *
+ */
 @Named
 public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 	@Inject
@@ -39,12 +44,13 @@ public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 	SiteRowMapper siteRowMapper;
 	static final Logger logger = LogManager.getLogger("ihm");
 	
+	/**
+	 * Méthode pour créer un {@link Site} donné en paramètre dans la base de donnée
+	 */
 	@Override
 	public Site create(Site pSite) throws SiteException {
 		String vSQL = "INSERT INTO site (nom, description, id_topo) VALUES (:nom, :description, :id_topo)";
-		//Topo topo = topoDAO.find(pSite.getTopo().getNomTopo());
 		KeyHolder keyHolder = new GeneratedKeyHolder();
-
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
 		vParams.addValue("nom", pSite.getNomSite(), Types.VARCHAR);
@@ -56,6 +62,7 @@ public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 	        vJdbcTemplate.update(vSQL, vParams, keyHolder, new String[] { "id_site" });
 	        pSite.setId(keyHolder.getKey().intValue());
 	    } catch (DuplicateKeyException vEx) {
+	    	//vEx.printStackTrace();
 	        logger.debug("Le site existe déjà ! site=" + pSite.getNomSite()+" dans le topo "+pSite.getTopo().getNomTopo());
 	        throw new SiteException("Le site existe déjà ! site=" + pSite.getNomSite()+" dans le topo "+pSite.getTopo().getNomTopo());
 	        //return false;
@@ -65,6 +72,9 @@ public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 		return pSite;
 	}
 
+	/**
+	 * Méthode pour supprimer un {@link Site} donné en paramètre dans la base de donnée
+	 */
 	@Override
 	public boolean delete(Site pSite) throws SiteException {
 		String vSQL = "DELETE FROM site WHERE id_site = :id_site";
@@ -76,7 +86,7 @@ public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 	       vJdbcTemplate.update(vSQL, vParams);
 	   } catch (DataAccessException vEx) {
 	       logger.debug("Le site n'existe pas ! site=" + pSite.getNomSite());
-	       vEx.printStackTrace();
+	       //vEx.printStackTrace();
 	       throw new SiteException("Le site n'existe pas ! site=" + pSite.getNomSite());
 	       //return false;
 	   }
@@ -85,6 +95,9 @@ public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 		return true;
 	}
 
+	/**
+	 * Méthode pour modifier un {@link Site} donné en paramètre dans la base de donnée
+	 */
 	@Override
 	public boolean update(Site pSite) throws SiteException {
 		String vSQL = "UPDATE site SET nom = :nom, description = :description, id_topo = :id_topo WHERE id_site = :id_site";
@@ -101,6 +114,7 @@ public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 	    try {
 	        vJdbcTemplate.update(vSQL, vParams);
 	    } catch (DuplicateKeyException vEx) {
+	    	//vEx.printStackTrace();
 	        logger.debug("Erreur modif ! site=" + pSite.getNomSite());
 	        throw new SiteException("Erreur modif ! site=" + pSite.getNomSite());
 	        //return false;
@@ -110,6 +124,9 @@ public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 		return true;
 	}
 
+	/**
+	 * Méthode pour trouver un {@link Site} de nom pNom donné en paramètre dans la base de donnée
+	 */
 	@Override
 	public ArrayList<Site> find(String pNom) {
 		String vSQL = "SELECT * FROM site WHERE nom = :nom ";
@@ -121,6 +138,9 @@ public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 		return ((ArrayList<Site>)vJdbcTemplate.query(vSQL,vParams,siteRowMapper));
 	}
 
+	/**
+	 * Méthode pour obtenir la liste des {@link Site} de {@link Topo} d'id donné en paramètre dans la base de donnée
+	 */
 	@Override
 	public ArrayList<Site> find(int pId) {
 
@@ -133,6 +153,9 @@ public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 		
 	}
 
+	/**
+	 * Méthode pour obtenir la liste des {@link Site} de nom pNom etdu {@link Topo} donnés en paramètre dans la base de donnée
+	 */
 	@Override
 	public Site find(String pNom, int pIdTopo) {
 		String vSQL = "SELECT * FROM site WHERE id_topo = :id_topo AND nom = :nom";
@@ -151,6 +174,9 @@ public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 		return site;
 	}
 
+	/**
+	 * Méthode pour obtenir le {@link Site} d'id donné en paramètre dans la base de donnée
+	 */
 	@Override
 	public Site get(int pId) {
 		String vSQL = "SELECT * FROM site WHERE id_site = :id_site";
@@ -168,6 +194,9 @@ public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 		return site;
 	}
 
+	/**
+	 * Méthode pour obtenir la liste des {@link Site} de nom commençant par pNom donné en paramètre dans la base de donnée
+	 */
 	@Override
 	public ArrayList<Site> rechercheSite(String pNom) {
 
@@ -183,6 +212,9 @@ public class SiteDaoImpl extends AbstractDAO implements SiteManagerDAO{
 
 	}
 
+	/**
+	 * Méthode pour obtenir la liste des {@link Site} de nom pNom et contenant des {@link Voie} d'un intervalle de difficulté donné en paramètre dans la base de donnée
+	 */
 	@Override
 	public ArrayList<Site> rechercheMultiSite(String pNom, String pDiffMin, String pDiffMax) {
 		ArrayList<Site> listeSite = new ArrayList<Site>();

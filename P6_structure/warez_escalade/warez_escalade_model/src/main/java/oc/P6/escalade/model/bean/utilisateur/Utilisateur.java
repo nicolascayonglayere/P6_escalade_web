@@ -15,7 +15,7 @@ import oc.P6.escalade.model.contract.utilisateur.IntUtilisateur;
 
 
 /**
- * Classe représentant un Utilsateur
+ * Classe représentant un Utilisateur implémente {@link IntUtilisateur}
  */
 @Named("utilisateur")
 @Scope("prototype")
@@ -29,7 +29,6 @@ public class Utilisateur implements IntUtilisateur{
     private String password;
     private CoordonneeUtilisateur coordonnee;
     private int id;
-    //private RoleUtilisateur statut;
     private int id_role;
     private String role;
     private ArrayList<TopoEmprunt> listTopoEmprunt;

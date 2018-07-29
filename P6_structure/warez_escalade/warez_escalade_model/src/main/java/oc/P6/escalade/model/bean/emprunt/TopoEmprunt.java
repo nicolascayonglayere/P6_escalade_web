@@ -10,7 +10,7 @@ import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 import oc.P6.escalade.model.contract.emprunt.IntTopoEmprunt;
 /**
- * Objet métier TopoEmprunt
+ * Objet métier TopoEmprunt implémente {@link IntTopoEmprunt}
  * @author nicolas
  *
  */

@@ -11,6 +11,11 @@ import org.springframework.jdbc.core.RowMapper;
 import oc.P6.escalade.consumer.DAO.DAOFactory;
 import oc.P6.escalade.model.bean.topo.Topo;
 
+/**
+ * Classe RowMapper pour {@link TopoDaoImpl}
+ * @author nicolas
+ *
+ */
 @Named
 public class TopoRowMapper implements RowMapper<Topo> {
 

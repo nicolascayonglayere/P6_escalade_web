@@ -10,6 +10,9 @@ import java.util.Iterator;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.opensymphony.xwork2.ActionSupport;
 
 import oc.P6.escalade.WebappHelper.GestionFichierProperties;
@@ -31,6 +34,7 @@ public class GoTopoAction extends ActionSupport {
 	/**
 	 * 
 	 */
+	static final Logger logger = LogManager.getLogger();
 	private static final long serialVersionUID = 1L;
 	@Inject
 	private ManagerFactory managerFactory;	
@@ -46,15 +50,14 @@ public class GoTopoAction extends ActionSupport {
 	private ArrayList<Voie> listVoie = new ArrayList<Voie>();
 	private ArrayList<String>listImage;
 	private ArrayList<CommentaireTopo> listCommentaire;
-	private String[] listLieux = {"topo", "site", "secteur"};
 	private String latitude, longitude;
 		
 	/**
 	 * Méthode qui envoie les données nécessaires à la jsp
 	 */
 	public String execute() throws Exception {
-		//--recupe le nom du topo dans la requete
-		System.out.println(nomTopo);
+		//--construction du topo 
+		logger.debug(nomTopo);
 		topo = (Topo) managerFactory.getTopoManager().getTopo(nomTopo);
 
         if (topo != null) {
@@ -62,26 +65,22 @@ public class GoTopoAction extends ActionSupport {
     		latitude = String.valueOf(topo.getLatitude()).replace(',', '.');
     		longitude = String.valueOf(topo.getLongitude()).replace(',', '.');
 
-        	
+    		//--gestion des images
     		repoId = topo.getImage();
-    		//System.out.println(topo.getImage());
-     		//File repertoire = new File("webapp\\assets\\images\\"+topo.getImage());
     		GestionFichierProperties gfp = new GestionFichierProperties();
     		Path chemin = Paths.get(gfp.lireProp().getProperty("chemin.upload"), topo.getImage());
-    				//"D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\", topo.getImage());
-    		//File repertoire = new File("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\"+topo.getImage());//
-    		//System.out.println(repertoire.getPath()+" - "+repertoire.isDirectory());//+" - "+repertoire.listFiles().length);
     		listImage = new ArrayList<String>();
     	    try (DirectoryStream<Path> stream = Files.newDirectoryStream(chemin)){ 
     	      Iterator<Path> iterator = stream.iterator();
     	      while(iterator.hasNext()) {
     	        Path p = iterator.next();
-    	        System.out.println(p);
+    	        logger.debug(p);
     	        listImage.add(repoId+"\\"+p.getFileName().toString());
     	        imageId = listImage.get(0);
     	      }
     	    } 
-    		//System.out.println(imageId);        	
+
+    	    //--construction du topo et de ses sites/secteurs/voies
         	listSite = (ArrayList<Site>) managerFactory.getSiteManager().getSite(topo);
         	for (Site s : listSite) {
         		listSecteur.addAll((ArrayList<Secteur>) managerFactory.getSecteurManager().getListSecteur(s));
@@ -91,6 +90,7 @@ public class GoTopoAction extends ActionSupport {
         			sect.setListVoie((ArrayList<Voie>) managerFactory.getVoieManager().getListVoie(sect));
         		}
         	}
+        	//--construction des commentaires
         	listCommentaire = managerFactory.getCommentaireTopoManager().getListValid(topo.getId());
        	
         	return SUCCESS;
@@ -102,9 +102,7 @@ public class GoTopoAction extends ActionSupport {
     }
 	
 	//--Getter et Setter--//
-	public String[] getDefaultLieux(){
-		return new String [] {"topo"};
-	}
+
 	public ManagerFactory getManagerFactory() {
 		return managerFactory;
 	}
@@ -177,12 +175,6 @@ public class GoTopoAction extends ActionSupport {
 	}
 	public void setRepoId(String repoId) {
 		this.repoId = repoId;
-	}
-	public String[] getListLieux() {
-		return listLieux;
-	}
-	public void setListLieux(String[] listLieux) {
-		this.listLieux = listLieux;
 	}
 		
 	public ArrayList<Site> getListSite() {

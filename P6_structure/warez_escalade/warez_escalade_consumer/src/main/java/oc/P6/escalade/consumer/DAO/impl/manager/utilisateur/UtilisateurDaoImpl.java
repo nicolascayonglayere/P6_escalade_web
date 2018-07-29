@@ -25,13 +25,21 @@ import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Implémentation de {@link UtilisateurManagerDAO}
+ * @author nicolas
+ *
+ */
 @Named("userDAO")
 public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManagerDAO  {
 	
-	static final Logger logger = LogManager.getLogger("ihm");
+	static final Logger logger = LogManager.getLogger();
     @Inject
 	UtilisateurRowMapper vRowMapper;
-
+    
+    /**
+     * Méthode pour créer le {@link Utilisateur} donné en paramètre dans la base de donnée
+     */
 	@Override
 	public Utilisateur create(Utilisateur pUtilisateur) throws UtilisateurException {
 		
@@ -50,17 +58,20 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 	        vJdbcTemplate.update(vSQL, vParams, keyHolder, new String[] { "id_utilisateur" });
 	        pUtilisateur.setId(keyHolder.getKey().intValue());
 	    } catch (DuplicateKeyException vEx) {
-	        logger.debug("L'utilisateur existe déjà ! pseudo=" + pUtilisateur.getPseudo());
+	    	//vEx.printStackTrace();
+	    	logger.debug("L'utilisateur existe déjà ! pseudo=" + pUtilisateur.getPseudo());
 	        //return pUtilisateur;
 	        throw new UtilisateurException("L'utilisateur existe déjà ! pseudo=" + pUtilisateur.getPseudo());
-	        //vEx.printStackTrace();
+	        
 	        
 	    }
-	    
 	    
 		return pUtilisateur;
 	}
 
+	/**
+	 * Méthode pour supprimer le {@link Utilisateur} donné en paramètre dans la base de donnée
+	 */
 	@Override
 	public boolean delete(Utilisateur pUtilisateur) throws UtilisateurException {
 		String vSQL = "DELETE FROM utilisateur WHERE id_utilisateur = :id_utilisateur";
@@ -72,7 +83,7 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 	        vJdbcTemplate.update(vSQL, vParams);
 	    } catch (DataAccessException vEx) {
 	        logger.debug("L'utilisateur n'existe pas ! pseudo=" + pUtilisateur.getPseudo());
-	        vEx.printStackTrace();
+	        //vEx.printStackTrace();
 	        throw new UtilisateurException("L'utilisateur n'existe pas ! pseudo=" + pUtilisateur.getPseudo());
 	        //return false;
 	    }
@@ -81,6 +92,9 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 		return true;
 	}
 
+	/**
+	 * Méthode pour modifier le {@link Utilisateur} donné en paramètre dans la base de donnée
+	 */
 	@Override
 	public Utilisateur update(Utilisateur pUtilisateur) throws UtilisateurException {
 		String vSQL = "UPDATE utilisateur SET pseudo = :pseudo, password_utilisateur = :password, id_role = :id_role WHERE id_utilisateur = :id_utilisateur";
@@ -96,15 +110,18 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 	        vJdbcTemplate.update(vSQL, vParams);
 	    } catch (DuplicateKeyException vEx) {
 	        logger.debug("Le pseudo existe déjà ! pseudo=" + pUtilisateur.getPseudo());
-	        vEx.printStackTrace();
+	        //vEx.printStackTrace();
 	        throw new UtilisateurException("Le pseudo existe deja ! pseudo=" + pUtilisateur.getPseudo());
 	    }    
 	    
 		return pUtilisateur;
 	}
-
+	
+	/**
+	 * Méthode pour trouver le {@link Utilisateur} de pseudo pPseudo donné en paramètre dans la base de donnée
+	 */
 	@Override
-	public Utilisateur find(String pPseudo) {//--id_role ?
+	public Utilisateur find(String pPseudo) {
 		String vSQL = "SELECT * FROM utilisateur INNER JOIN role_utilisateur ON utilisateur.id_role = role_utilisateur.id_role WHERE pseudo = :pseudo ";
 
         NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
@@ -118,6 +135,9 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 		return user;
 	}
 
+	/**
+	 * Méthode pour trouver le {@link Utilisateur} d'id pId donné en paramètre dans la base de donnée
+	 */
 	@Override
 	public Utilisateur find(int pId) {
 		String vSQL = "SELECT * FROM utilisateur INNER JOIN role_utilisateur ON utilisateur.id_role = role_utilisateur.id_role WHERE id_utilisateur = :id";
@@ -136,6 +156,9 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 		return user;
 	}
 
+	/**
+	 * Méthode pour obtenir la liste des {@link Utilisateur} de {@link Role} d'id pId donné en paramètre dans la base de donnée
+	 */
 	@Override
 	public ArrayList<Utilisateur> getList(int pIdRole) {
 		ArrayList<Utilisateur> vListRole = new ArrayList<Utilisateur>();
@@ -164,6 +187,9 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 		return vListRole;
 	}
 
+	/**
+	 * Méthode pour obtenir la liste des {@link Utilisateur} dont le pseudo commence par pPseudo donné en paramètre dans la base de donnée
+	 */
 	@Override
 	public ArrayList<Utilisateur> getList(String pPseudo) {
 		ArrayList<Utilisateur> vListUtilisateur = new ArrayList<Utilisateur>();
@@ -176,6 +202,9 @@ public class UtilisateurDaoImpl extends AbstractDAO implements UtilisateurManage
 		return vListUtilisateur;
 	}
 
+	/**
+	 * Méthode pour trouver le {@link Utilisateur} de pseudo pPseudo et de mot de passe pPassword donnés en paramètre dans la base de donnée
+	 */
 	@Override
 	public Utilisateur findPass(String pPassword, String pPseudo) {
 		String vSQL = "SELECT * FROM utilisateur INNER JOIN role_utilisateur ON utilisateur.id_role = role_utilisateur.id_role WHERE  password_utilisateur = :password AND pseudo = :pseudo; ";

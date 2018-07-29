@@ -36,7 +36,7 @@ import org.apache.logging.log4j.Logger;
 public class UtilisateurManagerImpl extends AbstractDAOManager implements UtilisateurManager   {
 
     /** Logger pour la classe */
-	static final Logger logger = LogManager.getLogger("ihm");
+	static final Logger logger = LogManager.getLogger();
 
     @Inject
     private DAOFactoryImpl daoFactory;
@@ -56,7 +56,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
      * Méthode retournant {@link Utilisateur} dont le pseudo est donné en paramètre
      */
     @Override
-    public Utilisateur getUtilisateur(String pPseudo) throws UtilisateurException{//throws NotFoundException {
+    public Utilisateur getUtilisateur(String pPseudo) throws UtilisateurException{
 		DefaultTransactionDefinition vDefinition = new DefaultTransactionDefinition();
 		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		vDefinition.setTimeout(30); // 30 secondes
@@ -193,18 +193,18 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
            
 		logger.debug("CTRL "+pUtilisateur.getPseudo());
 		userDAO = (UtilisateurDaoImpl) daoFactory.getUtilisateurManagerDAO();
-			try {
-				userDAO.delete(pUtilisateur);
-				
-			    TransactionStatus vTScommit = vTransactionStatus;
-			    vTransactionStatus = null;
-			    platformTransactionManager.commit(vTScommit);
-			} finally {
-				if (vTransactionStatus != null) {
-					platformTransactionManager.rollback(vTransactionStatus);
-					throw new UtilisateurException("L'utilisateur n'existe pas : "+pUtilisateur.getPseudo()+".");
-			    }
-			}
+		try {
+			userDAO.delete(pUtilisateur);
+			
+		    TransactionStatus vTScommit = vTransactionStatus;
+		    vTransactionStatus = null;
+		    platformTransactionManager.commit(vTScommit);
+		} finally {
+			if (vTransactionStatus != null) {
+				platformTransactionManager.rollback(vTransactionStatus);
+				throw new UtilisateurException("L'utilisateur n'existe pas : "+pUtilisateur.getPseudo()+".");
+		    }
+		}
 	}
 	
 	/**
@@ -273,11 +273,11 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 				throw new Exception("Utilisateur non trouvé : PSEUDO=" + utilisateur.getPseudo());
 				
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.debug(e.getMessage());
+				//e.printStackTrace();
 			}
     	}
-    	//System.out.println("CTRL "+utilisateur.getPseudo()+" - "+utilisateur.getPassword()+" - "+utilisateur.getId());
+    	logger.debug("CTRL "+utilisateur.getPseudo()+" - "+utilisateur.getPassword()+" - "+utilisateur.getId());
     	return (Utilisateur)utilisateur;
 	}
 
@@ -302,6 +302,8 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 		    platformTransactionManager.commit(vTScommit);
 		    
 		}catch (UtilisateurException e){
+			logger.debug(e.getMessage());
+			//e.printStackTrace();
 			throw new UtilisateurException("L'utilisateur "+pUtilisateur.getPseudo()+" n'existe pas.");
 		}finally {
 			if (vTransactionStatus != null) {
@@ -332,7 +334,8 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 			vTransactionStatus = null;
 			platformTransactionManager.commit(vTScommit);				
 		}catch (UtilisateurException e) {
-			e.printStackTrace();
+			logger.debug(e.getMessage());
+			//e.printStackTrace();
 			throw new UtilisateurException("Le pseudo existe deja ! pseudo=" + pUtilisateur.getPseudo());			
 		} finally {
 			if (vTransactionStatus != null) {
@@ -363,6 +366,8 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 		    vTransactionStatus = null;
 		    platformTransactionManager.commit(vTScommit);
 		}catch (UtilisateurException e) { 
+			logger.debug(e.getMessage());
+			//e.printStackTrace();
 			throw new UtilisateurException("L'utilisateur n'existe pas. "+pUtilisateur.getPseudo());
 		}finally {
 			if (vTransactionStatus != null) {

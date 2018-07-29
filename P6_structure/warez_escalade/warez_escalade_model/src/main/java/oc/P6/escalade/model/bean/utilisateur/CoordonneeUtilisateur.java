@@ -5,7 +5,7 @@ import javax.inject.Named;
 import oc.P6.escalade.model.contract.utilisateur.IntCoordonneeUtilisateur;
 
 /**
- * Objet métier représentant les coordonnées d'un utilisateur
+ * Objet métier représentant les coordonnées d'un {@link Utilisateur} , implémente {@link IntCoordonneeUtilisateur}
  * @author nicolas
  *
  */

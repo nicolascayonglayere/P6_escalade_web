@@ -14,6 +14,11 @@ import oc.P6.escalade.model.bean.emprunt.TopoEmprunt;
 import oc.P6.escalade.model.bean.exception.UtilisateurException;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
+/**
+ * Classe action asynchrone qui renvoie la liste des {@link TopoEmprunt} de le {@link Utilisateur} en session
+ * @author nicolas
+ *
+ */
 public class BilanEmpruntAjax extends ActionSupport implements SessionAware {
 
 	/**

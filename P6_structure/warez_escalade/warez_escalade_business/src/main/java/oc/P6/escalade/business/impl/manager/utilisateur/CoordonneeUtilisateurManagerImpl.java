@@ -31,7 +31,7 @@ import org.apache.logging.log4j.Logger;
 @Named
 public class CoordonneeUtilisateurManagerImpl extends AbstractDAOManager implements CoordonneeUtilisateurManager{
 
-	static final Logger logger = LogManager.getLogger("ihm");
+	static final Logger logger = LogManager.getLogger();
 	@Inject
 	private IntCoordonneeUtilisateur coordonnee;
 	@Inject
@@ -76,7 +76,7 @@ public class CoordonneeUtilisateurManagerImpl extends AbstractDAOManager impleme
     	else {
 			throw new UtilisateurException("Utilisateur inconnu");
     	}
-     	System.out.println("CTRL "+coordonnee.getId()+" - "+coordonnee.getEmail());
+     	logger.debug("CTRL "+coordonnee.getId()+" - "+coordonnee.getEmail());
     	return (CoordonneeUtilisateur) coordonnee;
 	}
 
@@ -126,7 +126,8 @@ public class CoordonneeUtilisateurManagerImpl extends AbstractDAOManager impleme
 			vTransactionStatus = null;
 			platformTransactionManager.commit(vTScommit);
 		}catch (CoordonneeUtilisateurException e) {
-			e.printStackTrace();
+			logger.debug(e.getMessage());
+			//e.printStackTrace();
 			throw new CoordonneeUtilisateurException(e.getMessage());
 		}finally {
 			if (vTransactionStatus != null) { 

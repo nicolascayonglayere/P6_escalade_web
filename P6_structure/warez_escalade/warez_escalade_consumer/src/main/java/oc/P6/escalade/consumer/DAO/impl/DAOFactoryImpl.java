@@ -18,6 +18,11 @@ import oc.P6.escalade.consumer.DAO.contract.manager.utilisateur.RoleDao;
 import oc.P6.escalade.consumer.DAO.contract.manager.utilisateur.UtilisateurManagerDAO;
 import oc.P6.escalade.consumer.DAO.impl.manager.utilisateur.UtilisateurDaoImpl;
 
+/**
+ * Implémentation de DAOFactory et ses différentes méthodes d'accès aux objets DAO.
+ * @author nicolas
+ *
+ */
 @Named("daoFactory")
 public class DAOFactoryImpl implements DAOFactory {
 	@Inject

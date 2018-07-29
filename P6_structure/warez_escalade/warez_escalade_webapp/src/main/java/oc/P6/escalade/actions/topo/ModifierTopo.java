@@ -58,7 +58,9 @@ public class ModifierTopo extends ActionSupport implements SessionAware {
 	private ArrayList<String>listImage;
 	private ArrayList<CommentaireTopo> listCommentaire;
 	private Map<String, Object> session;
-	static final Logger logger = LogManager.getLogger("ihm");
+	private String latitude;
+	private String longitude;
+	static final Logger logger = LogManager.getLogger();
 
 	/**
 	 * Méthode qui effectue la modification
@@ -77,12 +79,8 @@ public class ModifierTopo extends ActionSupport implements SessionAware {
 				topo.setImage(((Topo)session.get("topoModif")).getImage());
 	    		repoId = topo.getImage();
 	    		logger.debug("repositary : "+topo.getImage());
-	     		//File repertoire = new File("webapp\\assets\\images\\"+topo.getImage());
 	    		GestionFichierProperties gfp = new GestionFichierProperties();
 	    		Path chemin = Paths.get(gfp.lireProp().getProperty("chemin.upload"), topo.getImage());
-	    				//"D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\", topo.getImage());
-	    		//File repertoire = new File("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\"+topo.getImage());//
-	    		//System.out.println(repertoire.getPath()+" - "+repertoire.isDirectory());//+" - "+repertoire.listFiles().length);
 	    		listImage = new ArrayList<String>();
 	    	    try (DirectoryStream<Path> stream = Files.newDirectoryStream(chemin)){ 
 	    	      Iterator<Path> iterator = stream.iterator();
@@ -93,10 +91,13 @@ public class ModifierTopo extends ActionSupport implements SessionAware {
 	    	        imageId = listImage.get(0);
 	    	      }
 	    	    } catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.debug(e.getMessage());
+					//e.printStackTrace();
 				} 
-	    		//System.out.println(imageId);        	
+	        	//--conversion des coordonnees GPS
+	    		setLatitude(String.valueOf(topo.getLatitude()).replace(',', '.'));
+	    		setLongitude(String.valueOf(topo.getLongitude()).replace(',', '.'));
+	    		
 	        	listSite = (ArrayList<Site>) managerFactory.getSiteManager().getSite(topo);
 	        	for (Site s : listSite) {
 	        		listSecteur.addAll((ArrayList<Secteur>) managerFactory.getSecteurManager().getListSecteur(s));
@@ -112,19 +113,19 @@ public class ModifierTopo extends ActionSupport implements SessionAware {
 				return ActionSupport.SUCCESS;
 			} catch (TopoException e1) {
 				addActionMessage(e1.getMessage());
-				e1.printStackTrace();
+				//e1.printStackTrace();
 				return ActionSupport.INPUT;
 			} catch (SiteException e2) {
 				addActionMessage(e2.getMessage());
-				e2.printStackTrace();
+				//e2.printStackTrace();
 				return ActionSupport.INPUT;
 			} catch (SecteurException e3) {
 				addActionMessage(e3.getMessage());
-				e3.printStackTrace();
+				//e3.printStackTrace();
 				return ActionSupport.INPUT;
 			} catch (VoieException e4) {
 				addActionMessage(e4.getMessage());
-				e4.printStackTrace();
+				//e4.printStackTrace();
 				return ActionSupport.INPUT;
 			}	
 		}
@@ -140,7 +141,7 @@ public class ModifierTopo extends ActionSupport implements SessionAware {
 			return ActionSupport.SUCCESS;
 		} catch (TopoException e) {
 			addActionMessage(e.getMessage());
-			e.printStackTrace();
+			//e.printStackTrace();
 			return ActionSupport.INPUT;
 		}
 
@@ -238,6 +239,22 @@ public class ModifierTopo extends ActionSupport implements SessionAware {
 
 	public void setListImage(ArrayList<String> listImage) {
 		this.listImage = listImage;
+	}
+
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
 	}
 	
 }

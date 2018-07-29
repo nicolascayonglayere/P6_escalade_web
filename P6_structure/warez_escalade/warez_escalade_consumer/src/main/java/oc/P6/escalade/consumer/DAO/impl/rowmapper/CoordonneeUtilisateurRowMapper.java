@@ -11,6 +11,11 @@ import org.springframework.jdbc.core.RowMapper;
 import oc.P6.escalade.consumer.DAO.DAOFactory;
 import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateur;
 
+/**
+ * Classe RowMapper pour {@link CoordonneeUtilisateurDaoImpl}
+ * @author nicolas
+ *
+ */
 @Named
 public class CoordonneeUtilisateurRowMapper implements RowMapper<CoordonneeUtilisateur> {
 

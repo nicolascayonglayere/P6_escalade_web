@@ -4,6 +4,11 @@ import javax.inject.Named;
 
 import oc.P6.escalade.model.contract.utilisateur.IntRole;
 
+/**
+ * Objet métier représentant le role des {@link Utilisateur} , implémente {@link IntRole}
+ * @author nicolas
+ *
+ */
 @Named
 public class Role implements IntRole{
 

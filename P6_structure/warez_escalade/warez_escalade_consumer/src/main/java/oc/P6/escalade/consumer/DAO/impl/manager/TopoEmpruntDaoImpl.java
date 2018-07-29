@@ -8,6 +8,7 @@ import javax.inject.Named;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -30,7 +31,7 @@ public class TopoEmpruntDaoImpl extends AbstractDAO implements TopoEmpruntDao{
 	@Inject
 	TopoEmpruntRowMapper topoEmpruntRowMapper;
 	
-	static final Logger logger = LogManager.getLogger("ihm");
+	static final Logger logger = LogManager.getLogger();
 	/**
 	 * Méthode de création dans la base de donnée du {@link TopoEmprunt} donné en paramètre
 	 */
@@ -49,7 +50,8 @@ public class TopoEmpruntDaoImpl extends AbstractDAO implements TopoEmpruntDao{
 	        vJdbcTemplate.update(vSQL, vParams, keyHolder, new String[] { "id_topo_emprunt" });
 	        pTopoEmprunt.setId(keyHolder.getKey().intValue());
 	    } catch (DuplicateKeyException vEx) {
-	        vEx.printStackTrace();
+	    	logger.debug(vEx.getMessage());
+	        //vEx.printStackTrace();
 	        throw new RuntimeException("Le topo ne peut etre emprunter 2 fois ! topo=" + pTopoEmprunt.getTopo().getNomTopo());	        
 	    }
 	    
@@ -70,8 +72,8 @@ public class TopoEmpruntDaoImpl extends AbstractDAO implements TopoEmpruntDao{
 	    
 	    try {
 	        vJdbcTemplate.update(vSQL, vParams);
-	    } catch (Exception vEx) {
-	        //System.out.println("Erreur ! topo=" + pTopoEmprunt.getTopo().getNomTopo());
+	    } catch (DataAccessException vEx) {
+	    	//vEx.printStackTrace();
 	        logger.debug("Erreur ! topo=" + pTopoEmprunt.getTopo().getNomTopo());
 	        return false;
 	    }

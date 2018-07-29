@@ -7,6 +7,8 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -29,6 +31,7 @@ public class RechercheUtilisateurAction extends ActionSupport {
 	/**
 	 * 
 	 */
+	static final Logger logger = LogManager.getLogger();
 	private static final long serialVersionUID = 1L;
 	@Inject
 	private ManagerFactory managerFactory;
@@ -41,12 +44,12 @@ public class RechercheUtilisateurAction extends ActionSupport {
 	 * Méthode qui retourne le résultat de la recherche d'un {@link Utilisateur}
 	 */
 	public String execute() {
-		System.out.println(utilisateur.getPseudo());
+		logger.debug(utilisateur.getPseudo());
 		try {
 			listUtilisateur = managerFactory.getUtilisateurManager().getListUtilisateur(utilisateur.getPseudo());
 		} catch (UtilisateurException e) {
 			addActionMessage(e.getMessage());
-			e.printStackTrace();
+			//e.printStackTrace();
 			return ActionSupport.INPUT;
 		}
 		for(Role r : managerFactory.getRoleManager().getListRole()) {

@@ -11,6 +11,11 @@ import org.springframework.jdbc.core.RowMapper;
 import oc.P6.escalade.consumer.DAO.DAOFactory;
 import oc.P6.escalade.model.bean.topo.Secteur;
 
+/**
+ * Classe RowMapper pour {@link SecteurDaoImpl}
+ * @author nicolas
+ *
+ */
 @Named
 public class SecteurRowMapper implements RowMapper<Secteur> {
 

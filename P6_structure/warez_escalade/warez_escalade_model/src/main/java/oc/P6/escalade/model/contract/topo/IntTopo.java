@@ -2,6 +2,11 @@ package oc.P6.escalade.model.contract.topo;
 
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
+/**
+ * Interface du POJO {@link Topo}
+ * @author nicolas
+ *
+ */
 public interface IntTopo {
 
 	int getId();

@@ -32,7 +32,7 @@ import org.apache.logging.log4j.Logger;
 @Named
 public class VoieManagerImpl extends AbstractDAOManager implements VoieManager{
 
-	static final Logger logger = LogManager.getLogger("ihm");
+	static final Logger logger = LogManager.getLogger();
 	@Inject
 	private IntVoie voie;
 	@Inject
@@ -64,6 +64,7 @@ public class VoieManagerImpl extends AbstractDAOManager implements VoieManager{
 		    vTransactionStatus = null;
 		    platformTransactionManager.commit(vTScommit);
 		}catch(VoieException e){
+			logger.debug(e.getMessage());
 			throw new VoieException("Aucune voie pour le secteur : "+pSecteur.getNomSecteur());
 		}finally {
 			if (vTransactionStatus != null) { 
@@ -150,7 +151,7 @@ public class VoieManagerImpl extends AbstractDAOManager implements VoieManager{
 		voieDao = daoFactory.getVoieManagerDao();
 
 		try {
-		voie = voieDao.find(pNom, pSecteur.getId());
+			voie = voieDao.find(pNom, pSecteur.getId());
 		
 			TransactionStatus vTScommit = vTransactionStatus;
 			vTransactionStatus = null;

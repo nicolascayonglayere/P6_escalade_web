@@ -14,6 +14,11 @@ import oc.P6.escalade.model.bean.emprunt.TopoEmprunt;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
+/**
+ * Classe RowMapper pour  {@link TopoEmpruntDaoImpl}
+ * @author nicolas
+ *
+ */
 @Named
 public class TopoEmpruntRowMapper implements RowMapper<TopoEmprunt>{
 

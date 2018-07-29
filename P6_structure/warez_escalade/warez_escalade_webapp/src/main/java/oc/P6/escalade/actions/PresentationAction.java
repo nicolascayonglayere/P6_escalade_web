@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.opensymphony.xwork2.ActionSupport;
 
 
@@ -24,7 +27,7 @@ public class PresentationAction extends ActionSupport{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+	static final Logger logger = LogManager.getLogger();
 	@Inject
 	private ManagerFactory managerFactory;
 	private ArrayList<Utilisateur> listAdmin;
@@ -49,11 +52,11 @@ public class PresentationAction extends ActionSupport{
 	
 	//--Getter et Setter--//
 	public ManagerFactory getManagerFactory() {
-		System.out.println("trace getmanagerFacto");
+		logger.debug("trace getmanagerFacto");
 		return managerFactory;
 	}
 	public void setManagerFactory(ManagerFactory managerFactory) {
-		System.out.println("trace setManagerFacto");
+		logger.debug("trace setManagerFacto");
 		this.managerFactory = managerFactory;
 	}
 	public ArrayList<Utilisateur> getListAdmin() {

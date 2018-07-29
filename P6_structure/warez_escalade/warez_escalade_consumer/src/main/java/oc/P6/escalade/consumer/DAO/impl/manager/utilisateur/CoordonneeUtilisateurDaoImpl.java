@@ -24,15 +24,23 @@ import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Implémentation de {@link CoordonneeUtilisateurDao}
+ * @author nicolas
+ *
+ */
 @Named("coordonneeUtilisateurDao")
 public class CoordonneeUtilisateurDaoImpl extends AbstractDAO implements CoordonneeUtilisateurDao{
 	
-	static final Logger logger = LogManager.getLogger("ihm");
+	static final Logger logger = LogManager.getLogger();
 	@Inject
 	private UtilisateurManagerDAO userDAO;
 	@Inject
 	CoordonneeUtilisateurRowMapper coordonneeUtilisateurRowMapper;
 	
+	/**
+	 * Méthode pour créer les {@link CoordonneeUtilisateur} donnée en paramètre dans la base de donnée
+	 */
 	@Override
 	public CoordonneeUtilisateur create(CoordonneeUtilisateur pCoordonneeUtilisateur) throws CoordonneeUtilisateurException {
 		String vSQLCoordonnee = "INSERT INTO coordonnee_utilisateur (email, adresse_postale, id_utilisateur) VALUES (:email, :adresse, :idUtilisateur)";
@@ -49,13 +57,15 @@ public class CoordonneeUtilisateurDaoImpl extends AbstractDAO implements Coordon
 	        pCoordonneeUtilisateur.setId(keyHolder.getKey().intValue());
 	    } catch (DuplicateKeyException vEx) {
 	        logger.debug("Coordonnee invalide email=" + pCoordonneeUtilisateur.getEmail());
-	        vEx.printStackTrace();
+	        //vEx.printStackTrace();
 	        throw new CoordonneeUtilisateurException("Coordonnee invalide email=" + pCoordonneeUtilisateur.getEmail());
-	        //return pCoordonneeUtilisateur;
 	    }
 		return pCoordonneeUtilisateur;
 	}
 
+	/**
+	 * Méthode pour supprimer les {@link CoordonneeUtilisateur} donnée en paramètre dans la base de donnée
+	 */
 	@Override
 	public boolean delete(CoordonneeUtilisateur pCoordonneeUtilisateur) throws CoordonneeUtilisateurException {
 		String vSQL = "DELETE FROM coordonnee_utilisateur WHERE id_coordonnee = :id_coordonnee";
@@ -68,7 +78,7 @@ public class CoordonneeUtilisateurDaoImpl extends AbstractDAO implements Coordon
 	        vJdbcTemplate.update(vSQL, vParams);
 	    } catch (DataAccessException vEx) {
 	        logger.debug("ERREUR pseudo=" + pCoordonneeUtilisateur.getUtilisateur().getPseudo());
-	        vEx.printStackTrace();
+	        //vEx.printStackTrace();
 	        throw new CoordonneeUtilisateurException("ERREUR pseudo=" + pCoordonneeUtilisateur.getUtilisateur().getPseudo());
 	        //return false;
 	    }
@@ -77,6 +87,9 @@ public class CoordonneeUtilisateurDaoImpl extends AbstractDAO implements Coordon
 		return true;
 	}
 
+	/**
+	 * Méthode pour modifier les {@link CoordonneeUtilisateur} donnée en paramètre dans la base de donnée
+	 */
 	@Override
 	public CoordonneeUtilisateur update(CoordonneeUtilisateur pCoordonneeUtilisateur) throws CoordonneeUtilisateurException {
 		String vSQL = "UPDATE coordonnee_utilisateur SET email = :email, adresse_postale = :adresse WHERE id_coordonnee = :id_coordonnee";
@@ -91,12 +104,13 @@ public class CoordonneeUtilisateurDaoImpl extends AbstractDAO implements Coordon
 	        vJdbcTemplate.update(vSQL, vParams);
 	    } catch (DuplicateKeyException vEx) {
 	        logger.debug("l'email existe deja" + pCoordonneeUtilisateur.getEmail());
-	        vEx.printStackTrace();
+	        //vEx.printStackTrace();
 	        throw new CoordonneeUtilisateurException("l'email existe deja : " + pCoordonneeUtilisateur.getEmail());
 	    }
     
 		return pCoordonneeUtilisateur;
 	}
+	
 	/**
 	 * Méthode pour obtenir les {@link CoordonneeUtilisateur} de l {@link Utilisateur} donné en paramètre dans la base de donnée
 	 */

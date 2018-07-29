@@ -6,6 +6,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
@@ -30,6 +32,7 @@ public class SupprimerUserAction extends ActionSupport implements SessionAware, 
 	/**
 	 * 
 	 */
+	static final Logger logger = LogManager.getLogger();
 	private static final long serialVersionUID = 1L;
 	@Inject
 	private ManagerFactory managerFactory;	
@@ -44,7 +47,7 @@ public class SupprimerUserAction extends ActionSupport implements SessionAware, 
 	 */
 	public String execute() {
 		utilisateur = (Utilisateur) session.get("utilisateur");
-		System.out.println("pseudo : "+utilisateur.getPseudo());
+		logger.debug("pseudo : "+utilisateur.getPseudo());
 
 		try {
 			coordonneeUtilisateur = managerFactory.getCoordonneeUtilisateurManager().getCoordonnee(utilisateur.getId());
@@ -56,11 +59,11 @@ public class SupprimerUserAction extends ActionSupport implements SessionAware, 
 			return ActionSupport.SUCCESS;
 		} catch (UtilisateurException e) {
 			addActionMessage(e.getMessage());
-			e.printStackTrace();
+			//e.printStackTrace();
 			return ActionSupport.INPUT;
 		}catch (CoordonneeUtilisateurException e2) {
 			addActionMessage(e2.getMessage());
-			e2.printStackTrace();
+			//e2.printStackTrace();
 			return ActionSupport.INPUT;
 		}
 

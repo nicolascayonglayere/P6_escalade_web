@@ -3,6 +3,9 @@ package oc.P6.escalade.actions.topo;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.opensymphony.xwork2.ActionSupport;
 
 import oc.P6.escalade.business.contract.ManagerFactory;
@@ -25,6 +28,7 @@ public class SupprimerVoie extends ActionSupport {
 	/**
 	 * 
 	 */
+	static final Logger logger = LogManager.getLogger();
 	private static final long serialVersionUID = 1L;
 	@Inject
 	private ManagerFactory managerFactory;
@@ -35,7 +39,7 @@ public class SupprimerVoie extends ActionSupport {
 	 */
 	public String execute() {
 		try {
-			System.out.println(nomVoie+" - "+nomSecteur+" - "+nomSite+" - "+nomTopo);
+			logger.debug(nomVoie+" - "+nomSecteur+" - "+nomSite+" - "+nomTopo);
 			Topo topo = managerFactory.getTopoManager().getTopo(nomTopo);
 			Site site = managerFactory.getSiteManager().getSite(nomSite, topo);
 			Secteur secteur = managerFactory.getSecteurManager().getSecteur(nomSecteur, site);
@@ -45,19 +49,19 @@ public class SupprimerVoie extends ActionSupport {
 			return ActionSupport.SUCCESS;
 		}catch (TopoException e2) {
 			addActionMessage(e2.getMessage());
-			e2.printStackTrace();
+			//e2.printStackTrace();
 			return ActionSupport.INPUT;
 		} catch (SiteException e3) {
 			addActionMessage(e3.getMessage());
-			e3.printStackTrace();
+			//e3.printStackTrace();
 			return ActionSupport.INPUT;
 		} catch (SecteurException e4) {
 			addActionMessage(e4.getMessage());
-			e4.printStackTrace();
+			//e4.printStackTrace();
 			return ActionSupport.INPUT;
 		} catch (VoieException e5) {
 			addActionMessage (e5.getMessage());
-			e5.printStackTrace();
+			//e5.printStackTrace();
 			return ActionSupport.INPUT;
 		} 
 	}

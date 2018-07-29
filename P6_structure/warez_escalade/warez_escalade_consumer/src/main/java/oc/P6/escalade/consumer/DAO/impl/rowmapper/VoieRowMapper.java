@@ -12,6 +12,11 @@ import oc.P6.escalade.consumer.DAO.DAOFactory;
 import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Voie;
 
+/**
+ * Classe RowMapper pour {@link VoieDaoImpl}
+ * @author nicolas
+ *
+ */
 @Named
 public class VoieRowMapper implements RowMapper<Voie> {
 

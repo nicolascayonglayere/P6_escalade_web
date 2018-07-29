@@ -12,6 +12,8 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -34,6 +36,7 @@ public class ContactAction extends ActionSupport {
 	/**
 	 * 
 	 */
+	static final Logger logger = LogManager.getLogger();
 	private static final long serialVersionUID = 1L;
 	@Inject 
 	private ManagerFactory managerFactory;
@@ -48,24 +51,23 @@ public class ContactAction extends ActionSupport {
 	 * Méthode qui gère le message à envoyer et qui l'envoie
 	 */
 	public String execute() {
-		System.out.println("CTRL contact "+coordonneeUtilisateur.getEmail());
+		logger.debug("CTRL contact "+coordonneeUtilisateur.getEmail());
 	      String vReturn = SUCCESS;
 		try {
 			to = managerFactory.getCoordonneeUtilisateurManager().getCoordonnee(
 					managerFactory.getUtilisateurManager().getListAdmin().get(0).getId()).getEmail();
 		} catch (UtilisateurException e1) {
 			addActionMessage(e1.getMessage());
-			e1.printStackTrace();
+			//e1.printStackTrace();
 			vReturn = ActionSupport.INPUT;
 		} catch (CoordonneeUtilisateurException e2) {
 			addActionMessage(e2.getMessage());
-			e2.printStackTrace();
+			//e2.printStackTrace();
 			vReturn = ActionSupport.INPUT;
 		}
 
 	    try {
 	    	properties = gfp.lireProp();
-		    System.out.println("SimpleEmail Start");
 	
 	       Session session = Session.getDefaultInstance(properties, 
 	      	new javax.mail.Authenticator() {
@@ -87,7 +89,7 @@ public class ContactAction extends ActionSupport {
 	      } catch(Exception e) {
 	         vReturn = INPUT;
 	         addActionMessage("Echec de l'envoi du message");
-	         e.printStackTrace();
+	         //e.printStackTrace();
 	      }
 	      return vReturn;
 

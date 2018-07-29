@@ -3,6 +3,8 @@ package oc.P6.escalade.actions.utilisateur;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -23,6 +25,7 @@ public class ModifRoleUtilisateur extends ActionSupport {
 	/**
 	 * 
 	 */
+	static final Logger logger = LogManager.getLogger();
 	private static final long serialVersionUID = 1L;
 	@Inject
 	private ManagerFactory managerFactory;
@@ -36,7 +39,7 @@ public class ModifRoleUtilisateur extends ActionSupport {
 	 * Méthode qui modifie le role de l'utilisateur
 	 */
 	public String execute() {
-		System.out.println(checkMe+" - "+selectedRole+" - "+id);
+		logger.debug(checkMe+" - "+selectedRole+" - "+id);
 		try {
 			utilisateur = managerFactory.getUtilisateurManager().getUtilisateur(checkMe);
 			utilisateur.setId_Role(selectedRole);
@@ -45,7 +48,7 @@ public class ModifRoleUtilisateur extends ActionSupport {
 			return ActionSupport.SUCCESS;
 		} catch (UtilisateurException e) {
 			addActionMessage(e.getMessage());
-			e.printStackTrace();
+			//e.printStackTrace();
 			return ActionSupport.INPUT;
 		}
 	}

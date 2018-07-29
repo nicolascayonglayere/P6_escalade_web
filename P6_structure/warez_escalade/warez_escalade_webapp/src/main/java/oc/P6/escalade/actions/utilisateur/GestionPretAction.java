@@ -5,6 +5,8 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -26,7 +28,9 @@ public class GestionPretAction extends ActionSupport implements SessionAware {
 
 	/**
 	 * 
+	 *
 	 */
+	static final Logger logger = LogManager.getLogger();
 	private static final long serialVersionUID = 1L;
 	@Inject
 	private ManagerFactory managerFactory;
@@ -43,7 +47,7 @@ public class GestionPretAction extends ActionSupport implements SessionAware {
 	 */
 	public String retourner() {
 		utilisateur = (Utilisateur) session.get("utilisateur");
-		System.out.println("nom topo retourner "+nom+" nom emprunteur "+pseudo);
+		logger.debug("nom topo retourner "+nom+" nom emprunteur "+pseudo);
 		TopoEmprunt vTopoEmp;
 		try {
 			vTopoEmp = managerFactory.getTopoEmpruntManager().getTopoEmprunt(nom, utilisateur);
@@ -53,7 +57,7 @@ public class GestionPretAction extends ActionSupport implements SessionAware {
 			return ActionSupport.SUCCESS;
 		} catch (UtilisateurException e) {
 			addActionMessage(e.getMessage());
-			e.printStackTrace();
+			//e.printStackTrace();
 			return ActionSupport.INPUT;
 		}
 	}
@@ -63,7 +67,7 @@ public class GestionPretAction extends ActionSupport implements SessionAware {
 	 * @return
 	 */
 	public String emprunter() {
-		System.out.println("emprunt : "+nom);
+		logger.debug("emprunt : "+nom);
 		utilisateur = (Utilisateur) session.get("utilisateur");
 		Topo vTopo;
 		if (checkMe != null)
@@ -87,11 +91,11 @@ public class GestionPretAction extends ActionSupport implements SessionAware {
 			}
 		} catch (TopoException e) {
 			addActionMessage(e.getMessage());
-			e.printStackTrace();
+			//e.printStackTrace();
 			return ActionSupport.INPUT;
 		} catch (RuntimeException e1) {
 			addActionMessage(e1.getMessage());
-			e1.printStackTrace();
+			//e1.printStackTrace();
 			return ActionSupport.INPUT;
 		}
 

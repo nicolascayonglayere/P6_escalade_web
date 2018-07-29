@@ -34,7 +34,7 @@ import org.apache.logging.log4j.Logger;
 @Named
 public class TopoEmpruntManagerImpl extends AbstractDAOManager implements TopoEmpruntManager{
  	
-	static final Logger logger = LogManager.getLogger("ihm");
+	static final Logger logger = LogManager.getLogger();
 	@Inject
 	private IntTopoEmprunt topoEmprunt;
 	@Inject

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -31,6 +33,7 @@ public class PartirGrimper extends ActionSupport {
 	/**
 	 * 
 	 */
+	static final Logger logger = LogManager.getLogger();
 	private static final long serialVersionUID = 1L;
 	private ArrayList<String> listDiff= new ArrayList<String>();
 	private boolean checkMeTopo, checkMeSite, checkMeSecteur, checkMeVoie;
@@ -58,7 +61,7 @@ public class PartirGrimper extends ActionSupport {
 	 * Méthode qui envoie le résultat de la recherche selon les critères reçus.
 	 */
 	public String execute() {
-		System.out.println("rech multi : "+nom+" - "+selectedMin+" - "+checkMeTopo+" - "+checkMeSite);
+		logger.debug("rech multi : "+nom+" - "+selectedMin+" - "+checkMeTopo+" - "+checkMeSite);
 		listTopo = new ArrayList<Topo>();
 		listSite = new ArrayList<Site>();
 		listSecteur = new ArrayList<Secteur>();
@@ -68,7 +71,7 @@ public class PartirGrimper extends ActionSupport {
 		if (checkMeTopo) {
 			try {
 				listTopo = managerFactory.getTopoManager().rechercheMultiTopo(nom, selectedMin, selectedMax);
-				System.out.println(listTopo.size());
+				logger.debug(listTopo.size());
 				for (Topo t : listTopo) {
 					if(t.getListVoie().size() > 0) {
 							listVoie.addAll(t.getListVoie());
@@ -78,7 +81,7 @@ public class PartirGrimper extends ActionSupport {
 				vResult = ActionSupport.SUCCESS;
 			} catch (TopoException e1) {
 				addActionMessage(e1.getMessage());
-				e1.printStackTrace();
+				//e1.printStackTrace();
 				vResult = ActionSupport.INPUT;
 			}
 	
@@ -86,7 +89,7 @@ public class PartirGrimper extends ActionSupport {
 		if(checkMeSite) {
 			try {
 				listSite = managerFactory.getSiteManager().rechercheMultiSite(nom, selectedMin, selectedMax);
-				System.out.println(listSite.size());
+				logger.debug(listSite.size());
 				for(Site si : listSite) {
 					if(si.getListVoie().size() > 0) {
 						listVoie.addAll(si.getListVoie());
@@ -97,7 +100,7 @@ public class PartirGrimper extends ActionSupport {
 				vResult = ActionSupport.SUCCESS;
 			} catch (SiteException e2) {
 				addActionMessage(e2.getMessage());
-				e2.printStackTrace();
+				//e2.printStackTrace();
 				vResult = ActionSupport.INPUT;
 			}
 	
@@ -105,7 +108,7 @@ public class PartirGrimper extends ActionSupport {
 		if(checkMeSecteur) {
 			try {
 				listSecteur = managerFactory.getSecteurManager().rechercheMultiSecteur(nom, selectedMin, selectedMax);
-				System.out.println(listSecteur.size());
+				logger.debug(listSecteur.size());
 				for(Secteur se : listSecteur) {
 					if(se.getListVoie().size() > 0) {
 						listVoie.addAll(se.getListVoie());
@@ -116,14 +119,14 @@ public class PartirGrimper extends ActionSupport {
 				vResult = ActionSupport.SUCCESS;
 			}catch (SecteurException e3) {
 				addActionMessage(e3.getMessage());
-				e3.printStackTrace();
+				//e3.printStackTrace();
 				vResult = ActionSupport.INPUT;
 			}
 		}
 		if (checkMeVoie) {
 			try {
 				listVoie = managerFactory.getVoieManager().rechercheMultiVoie(nom, selectedMin, selectedMax);
-				System.out.println(listVoie.size());
+				logger.debug(listVoie.size());
 				listTopo.add(listVoie.get(0).getSecteur().getSite().getTopo());
 				for (Voie v : listVoie) {
 					Topo vTopo = v.getSecteur().getSite().getTopo();
@@ -134,7 +137,7 @@ public class PartirGrimper extends ActionSupport {
 				vResult = ActionSupport.SUCCESS;
 			}catch(VoieException e4) {
 				addActionMessage(e4.getMessage());
-				e4.printStackTrace();
+				//e4.printStackTrace();
 				vResult = ActionSupport.INPUT;					
 			}
 		}

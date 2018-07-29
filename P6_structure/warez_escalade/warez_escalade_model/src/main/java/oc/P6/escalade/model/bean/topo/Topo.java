@@ -8,7 +8,7 @@ import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 import oc.P6.escalade.model.contract.topo.IntTopo;
 
 /**
- * Objet métier représentant un topo
+ * Objet métier représentant un topo implémente {@link IntTopo}
  * @author nicolas
  *
  */

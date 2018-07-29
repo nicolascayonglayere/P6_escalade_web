@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import oc.P6.escalade.model.bean.emprunt.TopoEmprunt;
 import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateur;
 
+/**
+ * Interface du POJO {@link Utilisateur}
+ * @author nicolas
+ *
+ */
 public interface IntUtilisateur {
 
 	int getId();

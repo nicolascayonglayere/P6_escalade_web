@@ -1,18 +1,27 @@
 package oc.P6.escalade.interceptor;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.opensymphony.xwork2.Action;
-import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.Interceptor;
 import com.opensymphony.xwork2.interceptor.ValidationAware;
 
+/**
+ * Classe Interceptor qui annule tous {@link CommentaireTopo} vulgaire
+ * @author nicolas
+ *
+ */
 public class CommentaireInterceptor implements Interceptor {
 
 	/**
 	 * 
 	 */
+	static final Logger logger = LogManager.getLogger();
 	private static final long serialVersionUID = 1L;
-	private String[] motsClefs = {"merde", "bite"};
+	private String[] motsClefs = {"grossierté"};
 	@Override
 	public void destroy() {
 		// TODO Auto-generated method stub
@@ -29,16 +38,16 @@ public class CommentaireInterceptor implements Interceptor {
 	public String intercept(ActionInvocation invocation) throws Exception {
 		String message = invocation.getInvocationContext().getParameters().get("commentaireTopo.message").getValue();
 		System.out.println("intercept "+message);
+		logger.debug("intercept "+message);
 		String vResult = "";
 		//ici je souhaite filtrer les messages injurieux, qui contiennent des string non souhaitees
 		if(message != null) {
-			for (String s :motsClefs) {
-				if (knuthMorrisPratt(s, message) < 0)
+			for (String s : motsClefs) {
+				if(!StringUtils.containsAny(message, s))
 					vResult = invocation.invoke(); 			
 				else {
 					addActionError(invocation, "Merci de rester courtois !");
 					vResult =  Action.INPUT;
-					break;
 				}
 			}
 		}
@@ -55,62 +64,4 @@ public class CommentaireInterceptor implements Interceptor {
 			((ValidationAware) action).addActionError(message);
 		}
 	}
-	
-	/** 
-	* Recherche d'un motif avec l'algorithme de Knuth, Morris et Pratt.
-	* @param pattern motif à rechercher
-	* @param text texte dans lequel le motif est recherché
-	* @return position de la première occurrence si le motif a au moins
-	 une occurrence dans le texte et -1 sinon.
-	*/
-	    
-		static int knuthMorrisPratt(String pattern, String text) {
-			int m = pattern.length();// Longueur du motif
-			int n = text.length();	// Longueur du texte
-			int[] r = new int[m];	// Fonction de suppléance
-			int i;			// Position dans le motif
-			int j;			// Position dans le texte
-			// Calcul de la fonction de suppléance r
-			// Pour tout i > 0, r[i] est la longueur du bord maximal compatible du prefixe de longueur i du motif.  Rappelons qu'un bord d'un préfixe est compatible 
-			//si son occurrence préfixe est suivie d'une lettre différente de la lettre qui suit le préfixe.
-			r[0] = i = -1;
-			for (j = 1; j < m; j++) {
-		    // Ici i = s[j-1]
-				while (i >= 0 && pattern.charAt(i) != pattern.charAt(j-1)) {
-					i = r[i];
-					i++;
-					// Ici i = s[j]
-					if (pattern.charAt(i) != pattern.charAt(j))
-						r[j] = i;
-					else
-						r[j] = r[i];
-				}
-				// Recherche du motif
-				i = 0;
-				j = 0;
-				while (i < m && j < n) {
-					if (pattern.charAt(i) == text.charAt(j)) {
-			// Si les deux caractères coïncident,	les deux curseurs avancent d'une position vers la droite.
-						j++;
-						i++;
-					} 
-					else {
-						// La nouvelle version prend en compte l'absence de bord compatible c'est-à-dire le cas r[i] == -1
-						if (r[i] == -1) {
-							i = 0;
-							j++;
-						} 
-						else
-							i = r[i];
-					}
-				}
-			}
-			if (i == m) 
-		    // Occurrence trouvée en position j-i
-				return j-i;
-			else
-		    // Aucune occurrence
-				return -1;
-			
-		}
 }

@@ -14,6 +14,8 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
 
@@ -45,6 +47,7 @@ public class CommenterAction extends ActionSupport implements SessionAware{
 	/**
 	 * 
 	 */
+	static final Logger logger = LogManager.getLogger();
 	private static final long serialVersionUID = 1L;
 	@Inject
 	private Utilisateur utilisateur;
@@ -57,20 +60,22 @@ public class CommenterAction extends ActionSupport implements SessionAware{
 	private String imageId;
 	private String repoId;
 	private ArrayList<Site> listSite;
-	private ArrayList<Secteur> listSecteur;
-	private ArrayList<Voie> listVoie;
+	private ArrayList<Secteur> listSecteur = new ArrayList<Secteur>();
+	private ArrayList<Voie> listVoie = new ArrayList<Voie>();
 	private ArrayList<String>listImage;
 	private ArrayList<CommentaireTopo> listCommentaire;
-	private Map<String, Object> session; 
+	private Map<String, Object> session;
+	private String latitude;
+	private String longitude; 
 	
 	/**
 	 * Méthode qui récupère le commentaire et qui envoie les données nécessaires à la jsp topo.jsp
 	 */
 	public String execute() {
-		System.out.println(((Utilisateur) session.get("utilisateur")).getPseudo());
+		logger.debug(((Utilisateur) session.get("utilisateur")).getPseudo());
 		utilisateur = (Utilisateur) (session.get("utilisateur"));
-		System.out.println("comentaire du topo "+topo.getNomTopo()+" - "+utilisateur.getPseudo()+" - "+commentaireTopo.getMessage());
-		//utilisateur = managerFactory.getUtilisateurManager().getUtilisateur(utilisateur.getPseudo());
+		logger.debug("comentaire du topo "+topo.getNomTopo()+" - "+utilisateur.getPseudo()+" - "+commentaireTopo.getMessage());
+
 		try {
 			topo = managerFactory.getTopoManager().getTopo(topo.getNomTopo());
 		} catch (TopoException e1) {
@@ -78,29 +83,28 @@ public class CommenterAction extends ActionSupport implements SessionAware{
 			e1.printStackTrace();
 			return ActionSupport.INPUT;
 		}
+    	//--conversion des coordonnees GPS
+		setLatitude(String.valueOf(topo.getLatitude()).replace(',', '.'));
+		setLongitude(String.valueOf(topo.getLongitude()).replace(',', '.'));
 		
+		//--Gestion des images
 		repoId = topo.getImage();
-		//System.out.println(topo.getImage());
- 		//File repertoire = new File("webapp\\assets\\images\\"+topo.getImage());
 		GestionFichierProperties gfp = new GestionFichierProperties();
 		Path chemin = Paths.get(gfp.lireProp().getProperty("chemin.upload"), topo.getImage());
-				//"D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\", topo.getImage());
-		//File repertoire = new File("D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\"+topo.getImage());//
-		//System.out.println(repertoire.getPath()+" - "+repertoire.isDirectory());//+" - "+repertoire.listFiles().length);
 		listImage = new ArrayList<String>();
 	    try (DirectoryStream<Path> stream = Files.newDirectoryStream(chemin)){ 
 	      Iterator<Path> iterator = stream.iterator();
 	      while(iterator.hasNext()) {
 	        Path p = iterator.next();
-	        System.out.println(p);
+	        logger.debug(p);
 	        listImage.add(repoId+"\\"+p.getFileName().toString());
 	        setImageId(listImage.get(0));
 	      }
 	    } catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.debug(e.getMessage());
+			//e.printStackTrace();
 		} 
-		//System.out.println(imageId);        	
+		//--Gestion du topo et de ses sites/secteurs/voies        	
     	try {
 			listSite = (ArrayList<Site>) managerFactory.getSiteManager().getSite(topo);
 	    	for (Site s : listSite) {
@@ -113,18 +117,19 @@ public class CommenterAction extends ActionSupport implements SessionAware{
 	    	}
 		} catch (SiteException e3) {
 			addActionMessage(e3.getMessage());
-			e3.printStackTrace();
+			//e3.printStackTrace();
 			return ActionSupport.INPUT;
 		} catch (SecteurException e4) {
 			addActionMessage(e4.getMessage());
-			e4.printStackTrace();
+			//e4.printStackTrace();
 			return ActionSupport.INPUT;
 		} catch (VoieException e5) {
 			addActionMessage(e5.getMessage());
-			e5.printStackTrace();
+			//e5.printStackTrace();
 			return ActionSupport.INPUT;
 		}
 
+    	//--construction du commentaire et envoi au modérateur
     	try {
 			listCommentaire = managerFactory.getCommentaireTopoManager().getListValid(topo.getId());
 			if(!(commentaireTopo.getMessage()==(null))) {
@@ -143,11 +148,11 @@ public class CommenterAction extends ActionSupport implements SessionAware{
 			}
 		} catch (TopoException e5) {
 			addActionMessage(e5.getMessage());
-			e5.printStackTrace();
+			//e5.printStackTrace();
 			return ActionSupport.INPUT;			
 		} catch (CommentaireTopoException e6) {
 			addActionMessage(e6.getMessage());
-			e6.printStackTrace();
+			//e6.printStackTrace();
 			return ActionSupport.INPUT;
 		}
 		
@@ -242,5 +247,21 @@ public class CommenterAction extends ActionSupport implements SessionAware{
 	}
 	public void setCommentaireTopo(CommentaireTopo commentaireTopo) {
 		this.commentaireTopo = commentaireTopo;
+	}
+
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
 	}
 }

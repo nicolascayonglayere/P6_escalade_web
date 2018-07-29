@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -30,6 +32,7 @@ public class RechercheTopo extends ActionSupport {
 	/**
 	 * 
 	 */
+	static final Logger logger = LogManager.getLogger();
 	private static final long serialVersionUID = 1L;
 	@Inject
 	ManagerFactory managerFactory;
@@ -46,7 +49,7 @@ public class RechercheTopo extends ActionSupport {
 	public String execute() {
 
 			try {
-				System.out.println("recherche "+topo.getNomTopo());
+				logger.debug("recherche "+topo.getNomTopo());
 				listTopo = managerFactory.getTopoManager().rechercheTopo(topo.getNomTopo());
 				for (Topo t : listTopo) {
 					listSite.addAll(managerFactory.getSiteManager().getSite(t));
@@ -61,19 +64,19 @@ public class RechercheTopo extends ActionSupport {
 					listVoie.addAll(managerFactory.getVoieManager().getListVoie(se));
 					se.setListVoie(managerFactory.getVoieManager().getListVoie(se));
 				}
-				System.out.println(listTopo.size());
+				logger.debug(listTopo.size());
 				return ActionSupport.SUCCESS;
 			} catch (SiteException e3) {
 				addActionMessage(e3.getMessage());
-				e3.printStackTrace();
+				//e3.printStackTrace();
 				return ActionSupport.SUCCESS;
 			} catch (SecteurException e4) {
 				addActionMessage(e4.getMessage());
-				e4.printStackTrace();
+				//e4.printStackTrace();
 				return ActionSupport.SUCCESS;
 			} catch (VoieException e5) {
 				addActionMessage(e5.getMessage());
-				e5.printStackTrace();
+				//e5.printStackTrace();
 				return ActionSupport.SUCCESS;
 			}
 
@@ -82,13 +85,13 @@ public class RechercheTopo extends ActionSupport {
 	 * Méthode qui récupère le nom du {@link Topo} recherché
 	 */
 	public String input() {
-		System.out.println(nomTopo);
+		logger.debug(nomTopo);
 		try {
 			topo = managerFactory.getTopoManager().getTopo(nomTopo);
 			return ActionSupport.SUCCESS;
 		} catch (TopoException e) {
 			addActionMessage(e.getMessage());
-			e.printStackTrace();
+			//e.printStackTrace();
 			return ActionSupport.INPUT;
 		}
 

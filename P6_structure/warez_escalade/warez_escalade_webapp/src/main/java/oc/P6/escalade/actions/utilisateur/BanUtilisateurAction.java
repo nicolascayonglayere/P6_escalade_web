@@ -4,6 +4,8 @@ package oc.P6.escalade.actions.utilisateur;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.context.annotation.Scope;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -24,6 +26,7 @@ public class BanUtilisateurAction extends ActionSupport {
 	/**
 	 * 
 	 */
+	static final Logger logger = LogManager.getLogger();
 	private static final long serialVersionUID = 1L;
 	@Inject
 	private ManagerFactory managerFactory;
@@ -34,14 +37,14 @@ public class BanUtilisateurAction extends ActionSupport {
 	 * Méthode pour bannir un {@link Utilisateur}
 	 */
 	public String execute() {
-		System.out.println(checkMe);
+		logger.debug(checkMe);
 		try {
 			utilisateur = managerFactory.getUtilisateurManager().getUtilisateur(checkMe);
 			managerFactory.getUtilisateurManager().banUtilisateur(utilisateur);
 			addActionMessage("Vous avez banni l'utilisateur "+utilisateur.getPseudo());
 			return ActionSupport.SUCCESS;
 		} catch (UtilisateurException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			addActionMessage(e.getMessage());
 			return ActionSupport.INPUT;
 		}

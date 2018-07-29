@@ -12,6 +12,8 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -39,6 +41,7 @@ public class FinaliserTopo extends ActionSupport implements SessionAware {
 	/**
 	 * 
 	 */
+	static final Logger logger = LogManager.getLogger();
 	private static final long serialVersionUID = 1L;
 	@Inject
 	private ManagerFactory managerFactory;
@@ -48,9 +51,11 @@ public class FinaliserTopo extends ActionSupport implements SessionAware {
 	private String imageId;
 	private ArrayList<Site> listSite;
 	private ArrayList<Secteur> listSecteur = new ArrayList<Secteur>();
-	private ArrayList<Voie> listVoie;
+	private ArrayList<Voie> listVoie = new ArrayList<Voie>();
 	private ArrayList<CommentaireTopo> listCommentaire;
 	private ArrayList<String>listImage;
+	private String latitude;
+	private String longitude;
 	
 
 	/**
@@ -67,6 +72,10 @@ public class FinaliserTopo extends ActionSupport implements SessionAware {
 			
 			managerFactory.getTopoManager().modifTopo(topo);
 
+        	//--conversion des coordonnees GPS
+    		setLatitude(String.valueOf(topo.getLatitude()).replace(',', '.'));
+    		setLongitude(String.valueOf(topo.getLongitude()).replace(',', '.'));
+    		
 			nomTopo = topo.getNomTopo();
 			listSite = (ArrayList<Site>) managerFactory.getSiteManager().getSite(topo);
         	for (Site s : listSite) {
@@ -85,38 +94,36 @@ public class FinaliserTopo extends ActionSupport implements SessionAware {
 			
 			GestionFichierProperties gfp = new GestionFichierProperties();
     		Path chemin = Paths.get(gfp.lireProp().getProperty("chemin.upload"), topo.getImage());
-    				//"D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_webapp\\src\\main\\webapp\\assets\\images\\", topo.getImage());
-    		
-    		//System.out.println(repertoire.getPath()+" - "+repertoire.isDirectory());//+" - "+repertoire.listFiles().length);
     		listImage = new ArrayList<String>();
     	    try (DirectoryStream<Path> stream = Files.newDirectoryStream(chemin)){ 
 	    	      Iterator<Path> iterator = stream.iterator();
 	    	      while(iterator.hasNext()) {
 	    	        Path p = iterator.next();
-	    	        System.out.println(p);
+	    	        logger.debug(p);
 	    	        listImage.add(topo.getImage()+"\\"+p.getFileName().toString());
 	    	        setImageId(listImage.get(0));
 	    	     }
     	    } catch (IOException e) {
-				e.printStackTrace();
+    	    	logger.debug(e.getMessage());
+				//e.printStackTrace();
 			}
 			addActionMessage("La construction du topo"+topo.getNomTopo()+" est terminée.");
 			return ActionSupport.SUCCESS;
 		} catch (TopoException e1) {
 			addActionMessage(e1.getMessage());
-			e1.printStackTrace();
+			//e1.printStackTrace();
 			return ActionSupport.INPUT;
 		} catch (SiteException e2) {
 			addActionMessage(e2.getMessage());
-			e2.printStackTrace();
+			//e2.printStackTrace();
 			return ActionSupport.INPUT;
 		} catch (SecteurException e3) {
 			addActionMessage(e3.getMessage());
-			e3.printStackTrace();
+			//e3.printStackTrace();
 			return ActionSupport.INPUT;
 		} catch (VoieException e4) {
 			addActionMessage(e4.getMessage());
-			e4.printStackTrace();
+			//e4.printStackTrace();
 			return ActionSupport.INPUT;
 		}		
 	}
@@ -179,6 +186,22 @@ public class FinaliserTopo extends ActionSupport implements SessionAware {
 	}
 	public void setManagerFactory(ManagerFactory managerFactory) {
 		this.managerFactory = managerFactory;
+	}
+
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
 	}
 	
 }

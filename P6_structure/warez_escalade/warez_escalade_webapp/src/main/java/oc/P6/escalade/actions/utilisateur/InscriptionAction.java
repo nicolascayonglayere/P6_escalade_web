@@ -5,6 +5,8 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -29,6 +31,7 @@ public class InscriptionAction extends ActionSupport implements SessionAware {
 	/**
 	 * 
 	 */
+	static final Logger logger = LogManager.getLogger();
 	private static final long serialVersionUID = 1L;
 	@Inject
 	private ManagerFactory managerFactory;
@@ -41,7 +44,7 @@ public class InscriptionAction extends ActionSupport implements SessionAware {
 	 * @return
 	 */
 	public String creerUser() {
-		System.out.println("pseudo : "+utilisateur.getPseudo());
+		logger.debug("pseudo : "+utilisateur.getPseudo());
 		
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		String hashedPassword = passwordEncoder.encode(utilisateur.getPassword());
@@ -50,14 +53,14 @@ public class InscriptionAction extends ActionSupport implements SessionAware {
 		try {
 			utilisateur = managerFactory.getUtilisateurManager().creerUtilisateur(utilisateur);
 		} catch (UtilisateurException e) {
-			System.out.println(e.getMessage());
-			e.printStackTrace();
+			logger.debug(e.getMessage());
+			//e.printStackTrace();
 			addActionMessage(e.getMessage());
 			addFieldError("utilisateur.pseudo", "Veuillez choisir un autre pseudo.");
 			return ActionSupport.INPUT;
 		} catch (CoordonneeUtilisateurException ex) {
-			System.out.println(ex.getMessage());
-			ex.printStackTrace();
+			logger.debug(ex.getMessage());
+			//ex.printStackTrace();
 			addActionMessage(ex.getMessage());
 			addFieldError("coordonnee.email", "Veuillez choisir un autre email.");
 			return ActionSupport.INPUT;			

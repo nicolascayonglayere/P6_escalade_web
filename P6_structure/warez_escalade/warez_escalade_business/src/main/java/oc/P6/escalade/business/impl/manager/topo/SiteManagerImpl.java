@@ -39,7 +39,7 @@ import org.apache.logging.log4j.Logger;
 @Named
 public class SiteManagerImpl extends AbstractDAOManager implements SiteManager{
 
-	static final Logger logger = LogManager.getLogger("ihm");
+	static final Logger logger = LogManager.getLogger();
 	@Inject
 	private IntSite site;
 	
@@ -254,11 +254,11 @@ public class SiteManagerImpl extends AbstractDAOManager implements SiteManager{
 					daoFactory.getSecteurManagerDao().delete(s);
 				}
 			} catch (VoieException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SecteurException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.debug(e.getMessage());
+				//e.printStackTrace();
+			} catch (SecteurException e1) {
+				logger.debug(e1.getMessage());
+				//e1.printStackTrace();
 			}
 			siteDAO.delete(pSite);
 		    TransactionStatus vTScommit = vTransactionStatus;

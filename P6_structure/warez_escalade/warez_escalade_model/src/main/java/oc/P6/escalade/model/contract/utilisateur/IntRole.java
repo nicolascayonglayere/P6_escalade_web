@@ -1,5 +1,10 @@
 package oc.P6.escalade.model.contract.utilisateur;
 
+/**
+ * Interface du POJO {@link Role}
+ * @author nicolas
+ *
+ */
 public interface IntRole {
 
 	String getRole();

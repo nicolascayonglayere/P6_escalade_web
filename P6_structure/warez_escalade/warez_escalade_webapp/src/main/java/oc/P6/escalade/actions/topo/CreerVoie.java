@@ -6,6 +6,8 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
 
@@ -14,7 +16,6 @@ import com.opensymphony.xwork2.ActionSupport;
 import oc.P6.escalade.business.contract.ManagerFactory;
 import oc.P6.escalade.model.bean.exception.SecteurException;
 import oc.P6.escalade.model.bean.exception.SiteException;
-import oc.P6.escalade.model.bean.exception.TopoException;
 import oc.P6.escalade.model.bean.exception.VoieException;
 import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Site;
@@ -34,6 +35,7 @@ public class CreerVoie extends ActionSupport implements SessionAware {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	static final Logger logger = LogManager.getLogger();
 	@Inject
 	private ManagerFactory managerFactory;
 	private Voie voie;
@@ -53,16 +55,16 @@ public class CreerVoie extends ActionSupport implements SessionAware {
 	 */
 	public String execute() {
 		try {
-			System.out.println("trace creation voie");
+			logger.debug("trace creation voie");
 			if ((Topo)session.get("topo") != null) {
 				topo = (Topo)session.get("topo");
 			}
 			if((Secteur)session.get("secteur") != null) {
 				secteur = (Secteur)session.get("secteur");
 			}
-			System.out.println(secteur.getNomSecteur()+" - "+topo.getNomTopo());
+			logger.debug(secteur.getNomSecteur()+" - "+topo.getNomTopo());
 			voie.setSecteur(secteur);
-			System.out.println(voie.getNomVoie()+" - "+voie.getCotation());
+			logger.debug(voie.getNomVoie()+" - "+voie.getCotation());
 			voie = managerFactory.getVoieManager().creerVoie(voie);
 			
 			for (Site s : managerFactory.getSiteManager().getSite(topo)) {
@@ -76,15 +78,15 @@ public class CreerVoie extends ActionSupport implements SessionAware {
 			return ActionSupport.SUCCESS;			
 		}catch (SiteException e3) {
 			addActionMessage(e3.getMessage());
-			e3.printStackTrace();
+			//e3.printStackTrace();
 			return ActionSupport.INPUT;
 		} catch (VoieException e5) {
 			addActionMessage (e5.getMessage());
-			e5.printStackTrace();
+			//e5.printStackTrace();
 			return ActionSupport.INPUT;
 		} catch (SecteurException e7) {
 			addActionMessage (e7.getMessage());
-			e7.printStackTrace();
+			//e7.printStackTrace();
 			return ActionSupport.INPUT;
 		} 
 

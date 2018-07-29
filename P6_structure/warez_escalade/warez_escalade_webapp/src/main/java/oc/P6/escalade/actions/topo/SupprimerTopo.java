@@ -8,6 +8,8 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -33,6 +35,7 @@ public class SupprimerTopo extends ActionSupport implements SessionAware{
 	/**
 	 * 
 	 */
+	static final Logger logger = LogManager.getLogger();
 	private static final long serialVersionUID = 1L;
 	@Inject
 	private ManagerFactory managerFactory;
@@ -52,7 +55,7 @@ public class SupprimerTopo extends ActionSupport implements SessionAware{
 	public String execute() {
 		GestionFichierProperties gfp = new GestionFichierProperties();
 		try {
-			System.out.println(nomTopo);
+			logger.debug(nomTopo);
 			Topo topo = managerFactory.getTopoManager().getTopo(nomTopo);
 			managerFactory.getTopoManager().supprimerTopo(topo);
 			gfp.supprimerImg(Paths.get(gfp.lireProp().getProperty("chemin.upload"), topo.getImage()));
@@ -60,19 +63,19 @@ public class SupprimerTopo extends ActionSupport implements SessionAware{
 			return ActionSupport.SUCCESS;
 		}catch (TopoException e2) {
 			addActionMessage(e2.getMessage());
-			e2.printStackTrace();
+			//e2.printStackTrace();
 			return ActionSupport.INPUT;
 		} catch (VoieException e3) {
 			addActionMessage(e3.getMessage());
-			e3.printStackTrace();
+			//e3.printStackTrace();
 			return ActionSupport.INPUT;
 		} catch (SecteurException e4) {
 			addActionMessage(e4.getMessage());
-			e4.printStackTrace();
+			//e4.printStackTrace();
 			return ActionSupport.INPUT;
 		} catch (SiteException e5) {
 			addActionMessage(e5.getMessage());
-			e5.printStackTrace();
+			//e5.printStackTrace();
 			return ActionSupport.INPUT;
 		}
 	}
@@ -81,8 +84,8 @@ public class SupprimerTopo extends ActionSupport implements SessionAware{
 	 * Méthode qui récupère le {@link Topo} a supprimer
 	 */
 	public String input() {
-		System.out.println("input "+checkMe);
-		System.out.println(checkMe);
+		logger.debug("input "+checkMe);
+
 		try {
 			topo = managerFactory.getTopoManager().getTopo(checkMe);
 	
@@ -102,19 +105,19 @@ public class SupprimerTopo extends ActionSupport implements SessionAware{
 			return ActionSupport.SUCCESS;
 		} catch (TopoException e1) {
 			addActionMessage(e1.getMessage());
-			e1.printStackTrace();
+			//e1.printStackTrace();
 			return ActionSupport.SUCCESS;
 		} catch (SiteException e2) {
 			addActionMessage(e2.getMessage());
-			e2.printStackTrace();
+			//e2.printStackTrace();
 			return ActionSupport.SUCCESS;
 		} catch (SecteurException e3) {
 			addActionMessage(e3.getMessage());
-			e3.printStackTrace();
+			//e3.printStackTrace();
 			return ActionSupport.SUCCESS;
 		} catch (VoieException e4) {
 			addActionMessage(e4.getMessage());
-			e4.printStackTrace();
+			//e4.printStackTrace();
 			return ActionSupport.SUCCESS;
 		}
 		

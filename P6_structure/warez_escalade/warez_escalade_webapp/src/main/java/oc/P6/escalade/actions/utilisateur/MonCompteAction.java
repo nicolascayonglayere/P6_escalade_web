@@ -6,6 +6,8 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -30,6 +32,7 @@ public class MonCompteAction extends ActionSupport implements SessionAware{
 	/**
 	 * 
 	 */
+	static final Logger logger = LogManager.getLogger();
 	private static final long serialVersionUID = 1L;
 	@Inject
 	private ManagerFactory managerFactory;
@@ -47,18 +50,18 @@ public class MonCompteAction extends ActionSupport implements SessionAware{
 	public String execute() {
 		int idRole = 0;
 		String username1 = ((Utilisateur) session.get("utilisateur")).getPseudo();
-		System.out.println("Compte de "+username1);
+		logger.debug("Compte de "+username1);
 		utilisateur = (Utilisateur) session.get("utilisateur");
 		try {
 			listTopoEmprunt = managerFactory.getTopoEmpruntManager().getListTopoEmprunt(utilisateur.getId());
 			coordonneeUtilisateur = managerFactory.getCoordonneeUtilisateurManager().getCoordonnee(utilisateur.getId());
 		} catch (CoordonneeUtilisateurException e ) {
 			addActionMessage(e.getMessage());
-			e.printStackTrace();
+			//e.printStackTrace();
 			return ActionSupport.INPUT;
 		} catch (UtilisateurException e1) {
 			addActionMessage(e1.getMessage());
-			e1.printStackTrace();
+			//e1.printStackTrace();
 			return ActionSupport.INPUT;
 		}
 		idRole = utilisateur.getId_Role();
@@ -67,13 +70,13 @@ public class MonCompteAction extends ActionSupport implements SessionAware{
 				listTopoConstr = managerFactory.getTopoManager().getListTopoConstr(utilisateur.getPseudo());
 			} catch (UtilisateurException e2) {
 				addActionMessage(e2.getMessage());
-				e2.printStackTrace();
+				//e2.printStackTrace();
 				return ActionSupport.INPUT;
 			}
 		}
 		if(idRole == 2)
 			listCommentaire = managerFactory.getCommentaireTopoManager().getListCommentaireTopo();
-		System.out.println("Compte : "+username1+" - "+utilisateur.getRole()+" - "+utilisateur.getNom()+" - "+listTopoEmprunt.size()+" - "+coordonneeUtilisateur.getEmail());
+		logger.debug("Compte : "+username1+" - "+utilisateur.getRole()+" - "+utilisateur.getNom()+" - "+listTopoEmprunt.size()+" - "+coordonneeUtilisateur.getEmail());
 		return SUCCESS;
 	}
 

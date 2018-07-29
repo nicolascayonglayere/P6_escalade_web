@@ -6,6 +6,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
@@ -28,6 +30,8 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
 	/**
 	 * 
 	 */
+	
+	static final Logger logger = LogManager.getLogger();
 	@Inject
 	private ManagerFactory managerFactory;
 	private static final long serialVersionUID = 1L;
@@ -51,12 +55,12 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
 	 */
 	public String logOut() {
 		String username1 = ((Utilisateur) this.session.get("utilisateur")).getPseudo();
-		System.out.println("deco - "+username1);
+		logger.debug("deco - "+username1);
 		try {
 			utilisateur = managerFactory.getUtilisateurManager().getUtilisateur(username1);
 		} catch (UtilisateurException e) {
 			addActionMessage(e.getMessage());
-			e.printStackTrace();
+			//e.printStackTrace();
 			return ActionSupport.INPUT;
 		}
 		session.remove("utilisateur");
@@ -71,11 +75,11 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
 	 */
 	public String loginRegisterUser() {
 		String vResult="";
-		System.out.println(utilisateur.getPseudo()+" - "+utilisateur.getPassword());
+		logger.debug(utilisateur.getPseudo()+" - "+utilisateur.getPassword());
 		Utilisateur vUser;
 		try {
 			vUser = managerFactory.getUtilisateurManager().getUtilisateur(utilisateur.getPseudo());
-			System.out.println("mdp : "+vUser.getPassword());
+			logger.debug("mdp : "+vUser.getPassword());
 			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 			if(!(vUser.getRole().equals("banni"))) {
@@ -94,7 +98,7 @@ public class LoginAction extends ActionSupport implements SessionAware, ServletR
 			}
 		} catch (UtilisateurException e) {
 			addActionMessage(e.getMessage());
-			e.printStackTrace();
+			//e.printStackTrace();
 			vResult = ActionSupport.LOGIN;
 		}
 

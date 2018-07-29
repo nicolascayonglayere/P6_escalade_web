@@ -5,6 +5,11 @@ import java.util.Date;
 import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
+/**
+ * Interface de {@link TopoEmprunt} 
+ * @author nicolas
+ *
+ */
 public interface IntTopoEmprunt {
 
 	int getId();

@@ -9,6 +9,11 @@ import org.springframework.jdbc.core.RowMapper;
 
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
+/**
+ * Classe RowMapper pour {@link UtilisateurDaoImpl}
+ * @author nicolas
+ *
+ */
 @Named
 public class UtilisateurRowMapper implements RowMapper<Utilisateur> {
 

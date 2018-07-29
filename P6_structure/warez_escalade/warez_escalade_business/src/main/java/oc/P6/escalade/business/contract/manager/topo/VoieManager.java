@@ -3,7 +3,6 @@ package oc.P6.escalade.business.contract.manager.topo;
 import java.util.ArrayList;
 
 import oc.P6.escalade.model.bean.exception.SecteurException;
-import oc.P6.escalade.model.bean.exception.SiteException;
 import oc.P6.escalade.model.bean.exception.VoieException;
 import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Voie;

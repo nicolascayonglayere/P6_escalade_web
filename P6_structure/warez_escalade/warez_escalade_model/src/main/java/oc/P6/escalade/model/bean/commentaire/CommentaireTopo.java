@@ -8,9 +8,16 @@ import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 import oc.P6.escalade.model.contract.commentaire.IntCommentaireTopo;
 
+/**
+ * Implémentation de {@link IntCommentaireTopo}
+ * @author nicolas
+ *
+ */
 @Named("commentaireTopo")
 public class CommentaireTopo implements IntCommentaireTopo{
-
+	/**
+	 * Attributs 
+	 */
 	private Topo topo;
 	private int id;
 	private Utilisateur auteur;
@@ -18,10 +25,10 @@ public class CommentaireTopo implements IntCommentaireTopo{
 	private String message;
 	private boolean validation;
 	
-	public CommentaireTopo() {
-		super();
-	}
 
+	/**
+	 * Getter et Setter
+	 */
 	public Topo getTopo() {
 		return topo;
 	}

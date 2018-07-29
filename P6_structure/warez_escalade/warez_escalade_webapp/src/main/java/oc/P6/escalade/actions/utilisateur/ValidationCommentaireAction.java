@@ -3,6 +3,9 @@ package oc.P6.escalade.actions.utilisateur;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.opensymphony.xwork2.ActionSupport;
 
 import oc.P6.escalade.business.contract.ManagerFactory;
@@ -20,7 +23,7 @@ public class ValidationCommentaireAction extends ActionSupport {
 	/**
 	 * 
 	 */
-	
+	static final Logger logger = LogManager.getLogger();
 	private static final long serialVersionUID = 1L;
 	@Inject
 	private ManagerFactory managerFactory;
@@ -34,8 +37,7 @@ public class ValidationCommentaireAction extends ActionSupport {
 	 * @return 
 	 */
 	public String valider() {
-		//System.out.println(commentaireTopo.getAuteur().getPseudo()+" - "+commentaireTopo.getTopo().getNomTopo());
-		System.out.println(pseudo+" - "+nomTopo+" - "+message);
+		logger.debug(pseudo+" - "+nomTopo+" - "+message);
 		try {
 			commentaireTopo = managerFactory.getCommentaireTopoManager().getCommentaireTopo(nomTopo, pseudo, message);
 			managerFactory.getCommentaireTopoManager().modifCommentaireTopo(commentaireTopo);
@@ -43,7 +45,7 @@ public class ValidationCommentaireAction extends ActionSupport {
 			return ActionSupport.SUCCESS;
 		} catch (CommentaireTopoException e) {
 			addActionMessage(e.getMessage());
-			e.printStackTrace();
+			//e.printStackTrace();
 			return ActionSupport.INPUT;
 		}
 
@@ -54,7 +56,7 @@ public class ValidationCommentaireAction extends ActionSupport {
 	 * @return
 	 */
 	public String rejeter() {
-		System.out.println(pseudo+" - "+nomTopo+" - "+message);
+		logger.debug(pseudo+" - "+nomTopo+" - "+message);
 		try {
 			commentaireTopo = managerFactory.getCommentaireTopoManager().getCommentaireTopo(nomTopo, pseudo, message);
 			managerFactory.getCommentaireTopoManager().deleteCommentaireTopo(commentaireTopo);
@@ -62,7 +64,7 @@ public class ValidationCommentaireAction extends ActionSupport {
 			return ActionSupport.SUCCESS;
 		} catch (CommentaireTopoException e) {
 			addActionMessage(e.getMessage());
-			e.printStackTrace();
+			//e.printStackTrace();
 			return ActionSupport.INPUT;
 		}
 

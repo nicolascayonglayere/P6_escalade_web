@@ -11,6 +11,8 @@ import java.util.Map;
 
 import javax.inject.Named;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
 
@@ -31,7 +33,7 @@ public class UploadAction extends ActionSupport implements SessionAware {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+	static final Logger logger = LogManager.getLogger();
 	
 	private ArrayList<File> upload = new ArrayList<File>();
 	private ArrayList<String> uploadFileName = new ArrayList<String>();
@@ -52,9 +54,9 @@ public class UploadAction extends ActionSupport implements SessionAware {
 			nomDuTopo = ((Topo)session.get("topo")).getNomTopo().replaceAll("\\p{Space}", "");
 		else
 			nomDuTopo = ((String)session.get("topoModif"));
-		System.out.println(nomDuTopo);
-		System.out.println("\n\n upload1");
-		System.out.println("files:");
+		logger.debug(nomDuTopo);
+		logger.debug("\n\n upload1");
+		logger.debug("files:");
 		
 		for (File u : upload) {
 			nomImg = uploadFileName.get(upload.indexOf(u));
@@ -73,16 +75,6 @@ public class UploadAction extends ActionSupport implements SessionAware {
 		Path cheminRenomme = Paths.get(chemin+"\\"+nomDuTopo, "imageCouv.JPG");
 		Files.move(paths.get(0), cheminRenomme, StandardCopyOption.REPLACE_EXISTING);
 
-		
-		System.out.println("filenames:");
-		for (String n : uploadFileName) {
-			System.out.println("*** " + n);
-		}
-		System.out.println("content types:");
-		for (String c : uploadContentType) {
-			System.out.println("*** " + c);
-		}
-		System.out.println("\n\n");
  	   return ActionSupport.SUCCESS;
 	}
 	
@@ -90,7 +82,7 @@ public class UploadAction extends ActionSupport implements SessionAware {
 	 * Méthode qui récupère le nom du {@link Topo} pour le traiter
 	 */
 	public String input() {
-		System.out.println(nomTopo);
+		logger.debug(nomTopo);
 		if(((Topo)session.get("topo")) == null)
 			this.session.put("topoModif", nomTopo.replaceAll("\\p{Space}", ""));
 		return ActionSupport.SUCCESS;

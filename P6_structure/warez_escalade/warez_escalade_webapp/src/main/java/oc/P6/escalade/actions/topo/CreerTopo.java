@@ -8,6 +8,8 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
 
@@ -31,6 +33,7 @@ public class CreerTopo extends ActionSupport implements SessionAware{
 	/**
 	 * 
 	 */
+	static final Logger logger = LogManager.getLogger();
 	private static final long serialVersionUID = 1L;
 	@Inject
 	private ManagerFactory managerFactory;
@@ -45,10 +48,8 @@ public class CreerTopo extends ActionSupport implements SessionAware{
 	 */
 	public String execute() {
 		GestionFichierProperties gfp = new GestionFichierProperties();
-		System.out.println("trace");
 		utilisateur = (Utilisateur)session.get("utilisateur");
-
-		System.out.println(topo.getNomTopo());
+		logger.debug(topo.getNomTopo());
 
 		try {
 			topo.setAuteur(utilisateur);
@@ -60,7 +61,7 @@ public class CreerTopo extends ActionSupport implements SessionAware{
 			return ActionSupport.SUCCESS;
 		} catch (TopoException e) {
 			addActionMessage(e.getMessage());
-			e.printStackTrace();
+			//e.printStackTrace();
 			return ActionSupport.INPUT;
 		}
 	}

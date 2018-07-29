@@ -7,7 +7,7 @@ import javax.inject.Named;
 import oc.P6.escalade.model.contract.topo.IntSite;
 
 /**
- * Objet métier représentant un site d'un topo
+ * Objet métier représentant un site implémente {@link IntSite}
  * @author nicolas
  *
  */

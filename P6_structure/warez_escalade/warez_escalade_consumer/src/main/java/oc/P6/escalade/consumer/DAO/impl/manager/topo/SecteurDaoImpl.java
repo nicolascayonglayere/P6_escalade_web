@@ -47,7 +47,7 @@ public class SecteurDaoImpl extends AbstractDAO implements SecteurManagerDao{
 	
 	@Inject
 	SecteurRowMapper secteurRowMapper;
-	static final Logger logger = LogManager.getLogger("ihm");
+	static final Logger logger = LogManager.getLogger();
 	/**
 	 * Méthode pour créer un {@link Secteur} donné en paramètre dans la base de donnée
 	 * @throws SecteurException 
@@ -69,7 +69,7 @@ public class SecteurDaoImpl extends AbstractDAO implements SecteurManagerDao{
 	        pSecteur.setId(keyHolder.getKey().intValue());
 	    } catch (DuplicateKeyException vEx) {
 	        logger.debug("Le secteur existe déjà ! secteur=" + pSecteur.getNomSecteur()+" dans le site "+pSecteur.getSite().getNomSite());
-	        vEx.printStackTrace();
+	        //vEx.printStackTrace();
 	        throw new SecteurException("Le secteur existe déjà ! secteur=" + pSecteur.getNomSecteur()+" dans le site "+pSecteur.getSite().getNomSite());
 	        //return false;
 	    }
@@ -93,7 +93,7 @@ public class SecteurDaoImpl extends AbstractDAO implements SecteurManagerDao{
 	       vJdbcTemplate.update(vSQL, vParams);
 	   } catch (DataAccessException vEx) {
 	       logger.debug("Le secteur n'existe pas ! secteur=" + pSecteur.getNomSecteur());
-	       vEx.printStackTrace();
+	       //vEx.printStackTrace();
 	       throw new SecteurException("Le secteur n'existe pas ! secteur=" + pSecteur.getNomSecteur());
 	       //return false;
 	   }
@@ -124,6 +124,7 @@ public class SecteurDaoImpl extends AbstractDAO implements SecteurManagerDao{
 	    try {
 	        vJdbcTemplate.update(vSQL, vParams);
 	    } catch (DuplicateKeyException vEx) {
+	    	//vEx.printStackTrace();
 	        logger.debug("Erreur modif ! secteur=" + pSecteur.getNomSecteur());
 	        throw new SecteurException("Erreur modif ! secteur=" + pSecteur.getNomSecteur());
 	        //return false;

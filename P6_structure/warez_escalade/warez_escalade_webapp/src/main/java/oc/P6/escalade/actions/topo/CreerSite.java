@@ -5,6 +5,8 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
 
@@ -28,6 +30,7 @@ public class CreerSite extends ActionSupport implements SessionAware {
 	/**
 	 * 
 	 */
+	static final Logger logger = LogManager.getLogger();
 	private static final long serialVersionUID = 1L;
 	@Inject
 	private ManagerFactory managerFactory;	
@@ -44,18 +47,16 @@ public class CreerSite extends ActionSupport implements SessionAware {
 		try {
 			if (((Topo)(session.get("topo"))).getNomTopo().length() > 0) {
 				topo = (Topo)session.get("topo");
-				//topo = managerFactory.getTopoManager().getTopo(nomTopo);
 			}
-			System.out.println("id_topo : "+topo.getId());
+			logger.debug("id_topo : "+topo.getId());
 			site.setTopo(topo);
 			site = managerFactory.getSiteManager().creerSite(site);
-			//site = managerFactory.getSiteManager().getSite(site.getNomSite(), topo);
 			addActionMessage("Le site "+site.getNomSite()+" a bien été crée.");
 			session.put("site", site);
 			return ActionSupport.SUCCESS;			
 		}catch (SiteException e3) {
 			addActionMessage(e3.getMessage());
-			e3.printStackTrace();
+			//e3.printStackTrace();
 			return ActionSupport.INPUT;
 		} 
 	}
@@ -64,13 +65,13 @@ public class CreerSite extends ActionSupport implements SessionAware {
 	 * Méthode qui récupère les données pour la création du {@link Site}
 	 */
 	public String input() {
-		System.out.println(topo.getNomTopo());
+		logger.debug(topo.getNomTopo());
 		try {
 			topo = managerFactory.getTopoManager().getTopo(topo.getNomTopo());
 			this.session.put("topo", topo);
 		} catch (TopoException e) {
 			addActionMessage(e.getMessage());
-			e.printStackTrace();
+			//e.printStackTrace();
 			return ActionSupport.INPUT;
 		}
 		return ActionSupport.SUCCESS;

@@ -6,7 +6,7 @@ import javax.inject.Named;
 
 import oc.P6.escalade.model.contract.topo.IntSecteur;
 /**
- * Objet métier représentant le secteur d'un topo
+ * Objet métier représentant le secteur implémente {@link IntSecteur}
  * @author nicolas
  *
  */

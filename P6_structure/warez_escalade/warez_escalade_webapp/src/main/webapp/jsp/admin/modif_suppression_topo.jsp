@@ -62,6 +62,15 @@
 										<s:submit class="btn btn-default" value="%{getText('bouton.ajouterImage')}"/>
 									</s:a>						
 								</li>
+								<s:if test="topo.construction">
+									<div class="dropdown-divider"></div>
+									<li class="nav-item active">
+										<s:a action="finaliser_topo" namespace="/jsp/utilisateur"  cssClass="nav-link">
+											<s:param name="nomTopo" value="topo.nomTopo"/>
+											<s:submit class="btn btn-default" value="%{getText('bouton.finaliser')}"/>
+										</s:a>						
+									</li>
+								</s:if>								
 							</ul>
 						</div>
 					</div>

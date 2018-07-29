@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.opensymphony.xwork2.ActionSupport;
 
 import oc.P6.escalade.business.contract.ManagerFactory;
@@ -14,6 +17,7 @@ public class SelectTopoAction extends ActionSupport {
 	/**
 	 * 
 	 */
+	static final Logger logger = LogManager.getLogger();
 	private static final long serialVersionUID = 1L;
 	@Inject
 	private ManagerFactory managerFactory;
@@ -21,9 +25,9 @@ public class SelectTopoAction extends ActionSupport {
 	
 
 	public String doListTopo() throws Exception {
-        //call Service class to store personBean's state in database
+        
 		listTopo = (ArrayList<Topo>) managerFactory.getTopoManager().getListTopo();
-        System.out.println(listTopo.get(0).getNomTopo());
+        logger.debug(listTopo.get(0).getNomTopo());
         return SUCCESS;
     }
 

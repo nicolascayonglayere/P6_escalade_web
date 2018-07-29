@@ -31,6 +31,9 @@ import oc.P6.escalade.model.bean.topo.Voie;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Implémentation de {@link VoieManagerDao}
+ */
 @Named
 public class VoieDaoImpl extends AbstractDAO implements VoieManagerDao{
 	@Inject
@@ -45,6 +48,9 @@ public class VoieDaoImpl extends AbstractDAO implements VoieManagerDao{
 	VoieRowMapper voieRowMapper;
 	static final Logger logger = LogManager.getLogger("ihm");
 	
+	/**
+	 *Méthode pour créer une {@link Voie} donnée en paramètre dans la base de donnée 
+	 */
 	@Override
 	public Voie create(Voie pVoie) throws VoieException {
 		logger.debug(pVoie.getNomVoie()+" - "+pVoie.getCotation());
@@ -66,7 +72,7 @@ public class VoieDaoImpl extends AbstractDAO implements VoieManagerDao{
 	        pVoie.setId(keyHolder.getKey().intValue());
 	    } catch (DuplicateKeyException vEx) {
 	        logger.debug("La voie existe déjà ! voie = " + pVoie.getNomVoie()+" dans le secteur d'Id "+pVoie.getSecteur().getId());
-	        vEx.printStackTrace();
+	        //vEx.printStackTrace();
 	        throw new VoieException("La voie existe déjà ! voie = " + pVoie.getNomVoie()+" dans le secteur d'Id "+pVoie.getSecteur().getId());
 	        //return false;
 	    }
@@ -75,6 +81,9 @@ public class VoieDaoImpl extends AbstractDAO implements VoieManagerDao{
 		return pVoie;
 	}
 
+	/**
+	 * Méthode pour supprimer une {@link Voie} donnée en paramètre dans la base de donnée
+	 */
 	@Override
 	public boolean delete(Voie pVoie) throws VoieException {
 		String vSQL = "DELETE FROM voie WHERE id_voie = :id_voie";
@@ -86,7 +95,7 @@ public class VoieDaoImpl extends AbstractDAO implements VoieManagerDao{
 	       vJdbcTemplate.update(vSQL, vParams);
 	   } catch (DataAccessException vEx) {
 	       logger.debug("La voie n'existe pas ! secteur=" + pVoie.getNomVoie());
-	       vEx.printStackTrace();
+	       //vEx.printStackTrace();
 	       throw new VoieException("La voie n'existe pas ! secteur=" + pVoie.getNomVoie());
 	       //return false;
 	   }
@@ -95,6 +104,9 @@ public class VoieDaoImpl extends AbstractDAO implements VoieManagerDao{
 		return true;
 	}
 
+	/**
+	 * Méthode pour modifier une {@link Voie} donnée en paramètre dans la base de donnée
+	 */
 	@Override
 	public boolean update(Voie pVoie) throws VoieException {
 		System.out.println(pVoie.getNomVoie()+" - "+pVoie.getCotation());
@@ -115,6 +127,7 @@ public class VoieDaoImpl extends AbstractDAO implements VoieManagerDao{
 	    try {
 	        vJdbcTemplate.update(vSQL, vParams);
 	    } catch (DuplicateKeyException vEx) {
+	    	//vEx.printStackTrace();
 	        logger.debug("La voie existe déjà ! voie=" + pVoie.getNomVoie()+" dans le secteur "+pVoie.getSecteur().getNomSecteur());
 	        throw new VoieException ("La voie existe déjà ! voie=" + pVoie.getNomVoie()+" dans le secteur "+pVoie.getSecteur().getNomSecteur());
 	        //return false;
@@ -124,6 +137,9 @@ public class VoieDaoImpl extends AbstractDAO implements VoieManagerDao{
 		return true;
 	}
 
+	/**
+	 * Méthode pour trouver la {@link Voie} d'id pId donné en paramètre dans la base de donnée
+	 */
 	@Override
 	public Voie find(int pId) {
 		String vSQL = "SELECT * FROM voie WHERE id_voie = :id_voie";
@@ -140,6 +156,9 @@ public class VoieDaoImpl extends AbstractDAO implements VoieManagerDao{
 		return voie;
 	}
 	
+	/**
+	 * Méthode pour trouver la {@link Voie} de nom pNom et dans le {@link Secteur} d'id pId donnés en paramètre dans la base de donnée
+	 */
 	@Override
 	public Voie find(String pNom, int pIdSecteur) {
 		String vSQL = "SELECT * FROM voie WHERE id_secteur = :id_secteur AND nom = :nom";
@@ -158,6 +177,9 @@ public class VoieDaoImpl extends AbstractDAO implements VoieManagerDao{
 		return voie;
 	}
 
+	/**
+	 * Méthode pour obtenir la liste des {@link Voie} du {@link Secteur} donné en paramètre dans la base de donnée
+	 */
 	@Override
 	public ArrayList<Voie> getlistVoie(Secteur pSecteur) throws VoieException {
 		ArrayList<Voie> listVoie = new ArrayList<Voie>();
@@ -173,14 +195,16 @@ public class VoieDaoImpl extends AbstractDAO implements VoieManagerDao{
 	
 	}
 
+	/**
+	 * Méthode pour obtenir la liste des {@link Voie} d'un intervalle de difficulté donné en paramètre dans la base de donnée
+	 */
 	@Override
 	public ArrayList<Voie> rechercheDiffVoie(String pDiffMin, String pDiffMax) {
 		ArrayList<Voie> listVoie = new ArrayList<Voie>();
 		String vSQL = "SELECT * FROM voie WHERE cotation < :cotationMax AND cotation > :cotationMin";
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
-		//System.out.println(pId+" - "+pDiffMin);
-        //vParams.addValue("id_secteur", pId, Types.INTEGER);
+		logger.debug(pDiffMax+" - "+pDiffMin);
         vParams.addValue("cotationMin", pDiffMin, Types.VARCHAR);
         vParams.addValue("cotationMax", pDiffMax, Types.VARCHAR);
         listVoie = (ArrayList<Voie>) vJdbcTemplate.query(vSQL, vParams, voieRowMapper);
@@ -188,6 +212,9 @@ public class VoieDaoImpl extends AbstractDAO implements VoieManagerDao{
 
 	}
 
+	/**
+	 * Méthode pour obtenir la liste des {@link Voie} d'un intervalle de difficulté  et de nom commençant par pNom donnés en paramètre dans la base de donnée
+	 */
 	@Override
 	public ArrayList<Voie> rechercheMultiVoie(String pNom, String pDiffMin, String pDiffMax) {
 		ArrayList<Voie> listeVoie = new ArrayList<Voie>();

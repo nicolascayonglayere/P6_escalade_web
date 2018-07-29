@@ -12,6 +12,11 @@ import oc.P6.escalade.consumer.DAO.DAOFactory;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
 
+/**
+ * Classe RowMapper pour {@link SiteDaoImpl}
+ * @author nicolas
+ *
+ */
 @Named
 public class SiteRowMapper implements RowMapper<Site> {
 

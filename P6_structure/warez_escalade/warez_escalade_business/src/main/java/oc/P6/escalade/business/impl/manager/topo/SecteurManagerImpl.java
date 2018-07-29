@@ -34,7 +34,7 @@ import org.apache.logging.log4j.Logger;
 @Named
 public class SecteurManagerImpl extends AbstractDAOManager implements SecteurManager{
 
-	static final Logger logger = LogManager.getLogger("ihm");
+	static final Logger logger = LogManager.getLogger();
 	@Inject
 	private IntSecteur secteur;
 	
@@ -213,9 +213,7 @@ public class SecteurManagerImpl extends AbstractDAOManager implements SecteurMan
 		vDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
 		vDefinition.setTimeout(30); // 30 secondes
         TransactionStatus vTransactionStatus = platformTransactionManager.getTransaction(vDefinition);
-        //siteDAO = daoFactory.getSiteManagerDao();
         secteurDAO = daoFactory.getSecteurManagerDao();
-        //voieDAO = daoFactory.getVoieManagerDao();
 		ArrayList<Secteur>listSecteur = new ArrayList<Secteur>(); 
 		
 		try {

@@ -14,6 +14,9 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Properties;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.opensymphony.xwork2.ActionSupport;
 
 
@@ -26,23 +29,19 @@ import com.opensymphony.xwork2.ActionSupport;
  *
  */
 public class GestionFichierProperties {
-	//static Logger logger = Logger.getLogger("ihm");
+	static final Logger logger = LogManager.getLogger();
 	
 	private File configFile;
-	//private File defautConfigFile;
 	private Properties prop;
 
 	private ObjectInputStream ois;
-	//private GestionFichierProperties gfp = new GestionFichierProperties();
+
 	/**
 	 * Constructeur sans parametre
 	 */
 	public GestionFichierProperties(){
-		//String cheminConfigFile = gfp.lireProp().getProperty("chemin.configFile");
-		//System.out.println(cheminConfigFile);
 		this.configFile = new File(
 				"D:\\Documents\\openclassrooms formation\\P6\\P6_escalade_web\\P6_structure\\warez_escalade\\warez_escalade_technical\\src\\data\\conf\\configMail.properties");
-		//this.defautConfigFile = new File("Ressources/Fichiers/defaut_config.properties");
 		this.prop = new Properties();
 	}
 
@@ -50,13 +49,13 @@ public class GestionFichierProperties {
 	public Properties lireProp() {
 		//--Si le fichier existe, on verifie s'il n'est pas vide auquel cas on le lit et on cree le contenu de notre liste de propritété
 		try {
-			System.out.println(configFile.exists());
+			logger.debug(configFile.exists());
 			if (configFile.exists()) {
 				if (configFile.length() !=0) {
 					InputStream ois = new FileInputStream(configFile);
 					this.prop.load(ois);
-					System.out.println("list proprietes recup sur le fichier lors de lecture : \n"+this.prop.toString());//Controle
-					//logger.info("list proprietes recup sur le fichier lors de lecture : \n"+this.prop.toString());
+					//System.out.println("list proprietes recup sur le fichier lors de lecture : \n"+this.prop.toString());//Controle
+					logger.debug("list proprietes recup sur le fichier lors de lecture : \n"+this.prop.toString());
 					ois.close();
 				}
 			}
@@ -81,7 +80,7 @@ public class GestionFichierProperties {
 	public void supprimerImg(Path pPath) {
 	       try (DirectoryStream<Path> stream = Files.newDirectoryStream(pPath)) {
 	           for (Path entry : stream) {
-	               System.out.println(entry);
+	               logger.debug(entry);
 	               Files.deleteIfExists(entry);
 	           }
 	           Files.delete(pPath);

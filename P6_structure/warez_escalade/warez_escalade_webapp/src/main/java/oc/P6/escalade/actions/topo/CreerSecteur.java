@@ -7,6 +7,8 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
 
@@ -32,7 +34,7 @@ public class CreerSecteur extends ActionSupport implements SessionAware {
 	/**
 	 * 
 	 */
-	
+	static final Logger logger = LogManager.getLogger();
 	private static final long serialVersionUID = 1L;
 	@Inject
 	private ManagerFactory managerFactory;	
@@ -54,35 +56,32 @@ public class CreerSecteur extends ActionSupport implements SessionAware {
 		try {
 			if (((Topo)(session.get("topo"))).getNomTopo().length() > 0) {
 				topo = (Topo)session.get("topo");
-				//topo = managerFactory.getTopoManager().getTopo(nomTopo);
 			}
 			if((Site)session.get("site") != null) {
 				site= (Site)session.get("site");
-				//site = managerFactory.getSiteManager().getSite(nomSite, topo);
 			}
 			
-				
-			System.out.println(site.getId());
+			logger.debug(site.getId());
 			secteur.setSite(site);
 			secteur = managerFactory.getSecteurManager().creerSecteur(secteur);
-			//listSite = managerFactory.getSiteManager().getSite(topo);
+			
 			for(Site s : managerFactory.getSiteManager().getSite(topo)) {
 				listSite.put(s.getId(), s.getNomSite());
 				for (Secteur se : managerFactory.getSecteurManager().getListSecteur(s))
 					listSecteur.put(se.getId(), se.getNomSecteur());
 			}			
 				
-			//secteur = managerFactory.getSecteurManager().getSecteur(secteur.getNomSecteur(), site);
+			
 			addActionMessage("Le secteur "+secteur.getNomSecteur()+" a bien été crée.");
 			session.put("secteur", secteur);
 			return ActionSupport.SUCCESS;			
 		}catch (SiteException e3) {
 			addActionMessage(e3.getMessage());
-			e3.printStackTrace();
+			//e3.printStackTrace();
 			return ActionSupport.INPUT;
 		} catch (SecteurException e4) {
 			addActionMessage(e4.getMessage());
-			e4.printStackTrace();
+			//e4.printStackTrace();
 			return ActionSupport.INPUT;
 		}
 	}
@@ -93,27 +92,24 @@ public class CreerSecteur extends ActionSupport implements SessionAware {
 	public String input() {
 		try {
 			if ((Topo)session.get("topo") == null) {
-				
-				
 				topo = managerFactory.getTopoManager().getTopo(topo.getNomTopo());
 				this.session.put("topo", topo);
-
 			}
 			else {
-				System.out.println("selection : "+selectedSite);
+				logger.debug("selection : "+selectedSite);
 				topo = (Topo)session.get("topo");
 				site = managerFactory.getSiteManager().getSite(selectedSite);
 				this.session.put("site", site);
 			}
-			System.out.println("input "+site.getId());
+			logger.debug("input "+site.getId());
 			return ActionSupport.SUCCESS;			
 		}catch (TopoException e2) {
 			addActionMessage(e2.getMessage());
-			e2.printStackTrace();
+			//e2.printStackTrace();
 			return ActionSupport.INPUT;
 		} catch (SiteException e3) {
 			addActionMessage(e3.getMessage());
-			e3.printStackTrace();
+			//e3.printStackTrace();
 			return ActionSupport.INPUT;
 		} 
 	}

@@ -33,7 +33,7 @@ import oc.P6.escalade.model.contract.commentaire.IntCommentaireTopo;
 @Named
 public class CommentaireTopoDaoImpl  extends AbstractDAO implements CommentaireTopoDao{
 	
-	static final Logger logger = LogManager.getLogger("ihm");
+	static final Logger logger = LogManager.getLogger();
 	@Inject
 	DAOFactory daoFacto;
 	@Inject
@@ -45,7 +45,6 @@ public class CommentaireTopoDaoImpl  extends AbstractDAO implements CommentaireT
 	@Override
 	public boolean create(CommentaireTopo pCommentaireTopo) throws CommentaireTopoException {
 		String vSQLCoordonnee = "INSERT INTO commentaire_topo (id_topo, id_utilisateur, date, commentaire, validation) VALUES (:id_topo, :id_utilisateur, :date, :commentaire, :validation)";
-		//--recuperer l'id de l'utilisateur
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
@@ -59,7 +58,7 @@ public class CommentaireTopoDaoImpl  extends AbstractDAO implements CommentaireT
 	        vJdbcTemplate.update(vSQLCoordonnee, vParams);
 	    } catch (DuplicateKeyException vEx) {
 	        logger.debug("erreur creation commentaire "+pCommentaireTopo.getAuteur().getNom());
-	        vEx.printStackTrace();
+	        //vEx.printStackTrace();
 	        throw new CommentaireTopoException("erreur creation commentaire "+pCommentaireTopo.getAuteur().getNom());
 	    }
 		return true;
@@ -79,9 +78,9 @@ public class CommentaireTopoDaoImpl  extends AbstractDAO implements CommentaireT
 	        vJdbcTemplate.update(vSQL, vParams);
 	    } catch (DataAccessException vEx) {
 	    	logger.debug("Le commentaire n'existe pas ! topo=" + pCommentaireTopo.getTopo().getNomTopo());
-	        vEx.printStackTrace();
+	        //vEx.printStackTrace();
 	        throw new CommentaireTopoException("Le commentaire n'existe pas ! topo=" + pCommentaireTopo.getTopo().getNomTopo());
-	        //return false;
+	
 	    }
 	    
 	    
@@ -110,6 +109,7 @@ public class CommentaireTopoDaoImpl  extends AbstractDAO implements CommentaireT
 	        vJdbcTemplate.update(vSQL, vParams);
 	    } catch (DuplicateKeyException vEx) {
 	        logger.debug("Erreur modif commentaire ! topo=" + pCommentaireTopo.getTopo().getNomTopo());
+	        //vEx.printStackTrace();
 	        throw new CommentaireTopoException("Erreur modif commentaire ! topo=" + pCommentaireTopo.getTopo().getNomTopo());
 	        //return false;
 	    }

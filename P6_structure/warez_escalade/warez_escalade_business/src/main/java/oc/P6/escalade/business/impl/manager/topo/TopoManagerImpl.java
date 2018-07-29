@@ -43,7 +43,7 @@ import org.apache.logging.log4j.Logger;
 @Named
 public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 
-	static final Logger logger = LogManager.getLogger("ihm");
+	static final Logger logger = LogManager.getLogger();
 	@Inject
 	private IntTopo topo;
 	
@@ -161,6 +161,7 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 		    platformTransactionManager.commit(vTScommit);
 		}catch (TopoException e) {
 			throw new TopoException("Le topo existe deja "+pTopo.getNomTopo());
+			//e.printStackTrace();
 		}finally {
 			if (vTransactionStatus != null) { 
 				platformTransactionManager.rollback(vTransactionStatus);
@@ -192,6 +193,7 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 		    platformTransactionManager.commit(vTScommit);
 		}catch (TopoException e){
 			throw new TopoException("Le nom ne peut pas être modifié de la sorte. Choisissez un autre nom de topo. "+pTopo.getNomTopo());
+			//e.printStackTrace();
 		}finally {
 			if (vTransactionStatus != null) {
 				platformTransactionManager.rollback(vTransactionStatus);
@@ -266,7 +268,7 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 		logger.debug("CTRL business "+pTopo.getNomTopo()+" - ID "+pTopo.getId());
 
 		try {
-			//pTopo.setId(topoDAO.find(pTopo.getNomTopo()).getId());
+			//--suppression dans l'ordre des voies, secteurs, sites
 			try {
 				for(Site si : daoFactory.getSiteManagerDao().find(pTopo.getId())) {
 					for (Secteur se : daoFactory.getSecteurManagerDao().getListeSecteur(si)) {
@@ -281,25 +283,26 @@ public class TopoManagerImpl extends AbstractDAOManager implements TopoManager {
 					daoFactory.getSiteManagerDao().delete(si);
 				}			
 			}catch (VoieException e1){
-				e1.printStackTrace();
+				logger.debug(e1.getMessage());
+				//e1.printStackTrace();
 			} catch (SecteurException e2) {
-				// TODO Auto-generated catch block
-				e2.printStackTrace();
+				logger.debug(e2.getMessage());
+				//e2.printStackTrace();
 			} catch (SiteException e3) {
-				// TODO Auto-generated catch block
-				e3.printStackTrace();
+				logger.debug(e3.getMessage());
+				//e3.printStackTrace();
 			}
-			
+			//--suppression des emprunts concernant ce topo
 			for (TopoEmprunt te : daoFactory.getTopoEmpruntDao().getListTopoEmprunt(pTopo)) {
 				daoFactory.getTopoEmpruntDao().delete(te);
 			}
-			
+			//--suppression des commentaires concernant ce topo
 			for (CommentaireTopo ct : daoFactory.getCommentaireTopoDao().listCommentaireTopo(pTopo.getId())) {
 				try {
 					daoFactory.getCommentaireTopoDao().delete(ct);
 				} catch (CommentaireTopoException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.debug(e.getMessage());
+					//e.printStackTrace();
 				}
 			}
 			topoDAO.delete(pTopo);

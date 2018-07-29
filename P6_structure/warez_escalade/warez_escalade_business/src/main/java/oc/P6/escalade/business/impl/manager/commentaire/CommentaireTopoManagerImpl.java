@@ -30,7 +30,7 @@ import org.apache.logging.log4j.Logger;
 public class CommentaireTopoManagerImpl extends AbstractDAOManager implements CommentaireTopoManager{
 
 	private IntCommentaireTopo commTopo;
-	static final Logger logger = LogManager.getLogger("ihm");
+	static final Logger logger = LogManager.getLogger();
 	@Inject
 	private CommentaireTopoDao commTopoDao;
 	@Inject

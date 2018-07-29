@@ -5,6 +5,8 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.context.annotation.Scope;
 
@@ -28,6 +30,7 @@ public class ModifierUserAction extends ActionSupport implements SessionAware {
 	/**
 	 * 
 	 */
+	static final Logger logger = LogManager.getLogger();
 	private static final long serialVersionUID = 1L;
 	@Inject
 	private ManagerFactory managerFactory;
@@ -42,13 +45,13 @@ public class ModifierUserAction extends ActionSupport implements SessionAware {
 	public String execute() {
 		String vResult = ActionSupport.INPUT;
 		Utilisateur vUser = (Utilisateur)session.get("utilisateur"); 
-		System.out.println(vUser.getId()+" - "+vUser.getId_Role());
+		logger.debug(vUser.getId()+" - "+vUser.getId_Role());
 		try {
 			vUser.setCoordonnee(managerFactory.getCoordonneeUtilisateurManager().getCoordonnee(vUser.getId()));
 
-			System.out.println("pseudo : "+utilisateur.getPseudo()+" - adresse "+coordonneeUtilisateur.getAdresse()+" - email "+coordonneeUtilisateur.getEmail());
-			System.out.println("email "+vUser.getCoordonnee().getEmail());
-			System.out.println("adresse "+vUser.getCoordonnee().getAdresse());
+			logger.debug("pseudo : "+utilisateur.getPseudo()+" - adresse "+coordonneeUtilisateur.getAdresse()+" - email "+coordonneeUtilisateur.getEmail());
+			logger.debug("email "+vUser.getCoordonnee().getEmail());
+			logger.debug("adresse "+vUser.getCoordonnee().getAdresse());
 			
 			utilisateur.setId(vUser.getId());
 			utilisateur.setCoordonnee(coordonneeUtilisateur);
@@ -68,16 +71,18 @@ public class ModifierUserAction extends ActionSupport implements SessionAware {
 		} catch (UtilisateurException e) {
 			addActionMessage(e.getMessage());
 			addFieldError("utilisateur.pseudo", e.getMessage());
-			e.printStackTrace();
+			logger.debug(e.getMessage());
+			//e.printStackTrace();
 			vResult = ActionSupport.INPUT;
 		} catch (CoordonneeUtilisateurException ex) {
 			addActionMessage(ex.getMessage());
 			addFieldError("coordonneeUtilisateur.email", ex.getMessage());
-			ex.printStackTrace();
+			logger.debug(ex.getMessage());
+			//ex.printStackTrace();
 			vResult = ActionSupport.INPUT;
 		}
 		
-		System.out.println(vResult);
+		logger.debug(vResult);
 		return vResult;
 	}
 
