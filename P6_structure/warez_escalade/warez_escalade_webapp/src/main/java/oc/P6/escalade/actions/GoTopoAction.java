@@ -43,10 +43,11 @@ public class GoTopoAction extends ActionSupport {
 	private String repoId;
 	private ArrayList<Site> listSite;
 	private ArrayList<Secteur> listSecteur = new ArrayList<Secteur>();
-	private ArrayList<Voie> listVoie;
+	private ArrayList<Voie> listVoie = new ArrayList<Voie>();
 	private ArrayList<String>listImage;
 	private ArrayList<CommentaireTopo> listCommentaire;
 	private String[] listLieux = {"topo", "site", "secteur"};
+	private String latitude, longitude;
 		
 	/**
 	 * Méthode qui envoie les données nécessaires à la jsp
@@ -55,7 +56,13 @@ public class GoTopoAction extends ActionSupport {
 		//--recupe le nom du topo dans la requete
 		System.out.println(nomTopo);
 		topo = (Topo) managerFactory.getTopoManager().getTopo(nomTopo);
+
         if (topo != null) {
+        	//--conversion des coordonnees GPS
+    		latitude = String.valueOf(topo.getLatitude()).replace(',', '.');
+    		longitude = String.valueOf(topo.getLongitude()).replace(',', '.');
+
+        	
     		repoId = topo.getImage();
     		//System.out.println(topo.getImage());
      		//File repertoire = new File("webapp\\assets\\images\\"+topo.getImage());
@@ -78,9 +85,10 @@ public class GoTopoAction extends ActionSupport {
         	listSite = (ArrayList<Site>) managerFactory.getSiteManager().getSite(topo);
         	for (Site s : listSite) {
         		listSecteur.addAll((ArrayList<Secteur>) managerFactory.getSecteurManager().getListSecteur(s));
-        		for (Secteur sect : listSecteur) { 
-        			listVoie = (ArrayList<Voie>) managerFactory.getVoieManager().getListVoie(sect);
-        			sect.setListVoie(listVoie);
+        		s.setListSecteur((ArrayList<Secteur>) managerFactory.getSecteurManager().getListSecteur(s));
+        		for (Secteur sect : s.getListSecteur()) { 
+        			listVoie.addAll((ArrayList<Voie>) managerFactory.getVoieManager().getListVoie(sect));
+        			sect.setListVoie((ArrayList<Voie>) managerFactory.getVoieManager().getListVoie(sect));
         		}
         	}
         	listCommentaire = managerFactory.getCommentaireTopoManager().getListValid(topo.getId());
@@ -182,5 +190,21 @@ public class GoTopoAction extends ActionSupport {
 	}
 	public void setListSite(ArrayList<Site> listSite) {
 		this.listSite = listSite;
+	}
+
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
 	}
 }

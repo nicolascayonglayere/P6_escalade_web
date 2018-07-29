@@ -104,9 +104,12 @@ public class CommenterAction extends ActionSupport implements SessionAware{
     	try {
 			listSite = (ArrayList<Site>) managerFactory.getSiteManager().getSite(topo);
 	    	for (Site s : listSite) {
-	    		listSecteur = (ArrayList<Secteur>) managerFactory.getSecteurManager().getListSecteur(s);
-	    		for (Secteur sect : listSecteur) 
-	    			setListVoie((ArrayList<Voie>) managerFactory.getVoieManager().getListVoie(sect));
+	    		listSecteur.addAll((ArrayList<Secteur>) managerFactory.getSecteurManager().getListSecteur(s));
+	    		s.setListSecteur((ArrayList<Secteur>) managerFactory.getSecteurManager().getListSecteur(s));
+	    		for (Secteur sect : s.getListSecteur()) {
+	    			listVoie.addAll((ArrayList<Voie>) managerFactory.getVoieManager().getListVoie(sect));
+	    			sect.setListVoie((ArrayList<Voie>) managerFactory.getVoieManager().getListVoie(sect));	    			
+	    		} 
 	    	}
 		} catch (SiteException e3) {
 			addActionMessage(e3.getMessage());

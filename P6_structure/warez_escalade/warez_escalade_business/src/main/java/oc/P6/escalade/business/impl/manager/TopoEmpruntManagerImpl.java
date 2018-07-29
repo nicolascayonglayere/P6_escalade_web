@@ -117,9 +117,9 @@ public class TopoEmpruntManagerImpl extends AbstractDAOManager implements TopoEm
 		topoEmpruntDao = daoFactory.getTopoEmpruntDao();
 		topoDAO = daoFactory.getTopoManagerDao();
 		userDAO = daoFactory.getUtilisateurManagerDAO();
-		logger.debug(topo.getNomTopo()+" - "+pEmprunteur.getPseudo());
+		logger.debug(topo.getId()+" - "+pEmprunteur.getPseudo());
 		
-		if(topoEmpruntDao.find(topo.getId(), pEmprunteur.getId()).getId() > 0) {
+		if(topoEmpruntDao.find(topo.getId(), pEmprunteur.getId()) != null) {
 			throw new RuntimeException("Vous avez deja emprunter ce topo.");
 		}
 		else {

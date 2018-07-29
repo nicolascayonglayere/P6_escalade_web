@@ -101,9 +101,10 @@ public class ModifierSecteur extends ActionSupport implements SessionAware{
 	        	listSite = (ArrayList<Site>) managerFactory.getSiteManager().getSite(secteur.getSite().getTopo());
 	        	for (Site s : listSite) {
 	        		listSecteur.addAll((ArrayList<Secteur>) managerFactory.getSecteurManager().getListSecteur(s));
-	        		for (Secteur sect : listSecteur) { 
-	        			listVoie = (ArrayList<Voie>) managerFactory.getVoieManager().getListVoie(sect);
-	        			sect.setListVoie(listVoie);
+	        		s.setListSecteur((ArrayList<Secteur>) managerFactory.getSecteurManager().getListSecteur(s));
+	        		for (Secteur sect : s.getListSecteur()) { 
+	        			listVoie.addAll((ArrayList<Voie>) managerFactory.getVoieManager().getListVoie(sect));
+	        			sect.setListVoie((ArrayList<Voie>) managerFactory.getVoieManager().getListVoie(sect));
 	        		}
 	        	}
 	        	listCommentaire = managerFactory.getCommentaireTopoManager().getListValid(topo.getId());
