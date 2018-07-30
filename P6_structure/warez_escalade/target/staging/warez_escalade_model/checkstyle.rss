@@ -1,0 +1,530 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<rss version="0.91">
+  <channel>
+    <title>warez_escalade_model - Checkstyle report</title>
+    <link>http://maven.apache.org/warez_escalade_model</link>
+    <description>warez_escalade_model - Checkstyle report</description>
+    <language>en-us</language>
+    <copyright>&#169;2018</copyright>
+    <item>
+      <title>File: 34,
+             Errors: 1069,
+             Warnings: 0,
+             Infos: 70
+      </title>
+            <link>http://maven.apache.org/warez_escalade_model/checkstyle.html</link>
+      <description>
+        <p>Click <a href="http://maven.apache.org/warez_escalade_model/checkstyle.html">here</a> for the full Checkstyle report.</p>
+
+        <table summary="Files" boder="1">
+          <thead>
+            <tr>
+              <th>Files</th>
+              <th style="width:30px;"><abbr title="Info">I</abbr></th>
+              <th style="width:30px;"><abbr title="Warning">W</abbr></th>
+              <th style="width:30px;"><abbr title="Error">E</abbr></th>
+            </tr>
+          </thead>
+          <tbody>
+                          <tr>
+                <td>
+                  <a href="http://maven.apache.org/warez_escalade_model/checkstyle.html#oc.P6.escalade.model.bean.exception.SecteurException.java">oc/P6/escalade/model/bean/exception/SecteurException.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  9
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://maven.apache.org/warez_escalade_model/checkstyle.html#oc.P6.escalade.model.bean.commentaire.CommentaireVoie.java">oc/P6/escalade/model/bean/commentaire/CommentaireVoie.java</a>
+                </td>
+                <td>
+                  1
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  14
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://maven.apache.org/warez_escalade_model/checkstyle.html#oc.P6.escalade.model.contract.utilisateur.IntRole.java">oc/P6/escalade/model/contract/utilisateur/IntRole.java</a>
+                </td>
+                <td>
+                  1
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  8
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://maven.apache.org/warez_escalade_model/checkstyle.html#oc.P6.escalade.model.bean.utilisateur.Utilisateur.java">oc/P6/escalade/model/bean/utilisateur/Utilisateur.java</a>
+                </td>
+                <td>
+                  9
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  57
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://maven.apache.org/warez_escalade_model/checkstyle.html#oc.P6.escalade.model.contract.commentaire.IntCommentaireSecteur.java">oc/P6/escalade/model/contract/commentaire/IntCommentaireSecteur.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  15
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://maven.apache.org/warez_escalade_model/checkstyle.html#oc.P6.escalade.model.bean.exception.SiteException.java">oc/P6/escalade/model/bean/exception/SiteException.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  9
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://maven.apache.org/warez_escalade_model/checkstyle.html#oc.P6.escalade.model.contract.commentaire.IntCommentaireSite.java">oc/P6/escalade/model/contract/commentaire/IntCommentaireSite.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  15
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://maven.apache.org/warez_escalade_model/checkstyle.html#oc.P6.escalade.model.contract.commentaire.IntCommentaireVoie.java">oc/P6/escalade/model/contract/commentaire/IntCommentaireVoie.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  15
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://maven.apache.org/warez_escalade_model/checkstyle.html#oc.P6.escalade.model.bean.commentaire.CommentaireSecteur.java">oc/P6/escalade/model/bean/commentaire/CommentaireSecteur.java</a>
+                </td>
+                <td>
+                  1
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  14
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://maven.apache.org/warez_escalade_model/checkstyle.html#oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateur.java">oc/P6/escalade/model/bean/utilisateur/CoordonneeUtilisateur.java</a>
+                </td>
+                <td>
+                  5
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  45
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://maven.apache.org/warez_escalade_model/checkstyle.html#oc.P6.escalade.model.contract.topo.IntVoie.java">oc/P6/escalade/model/contract/topo/IntVoie.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  23
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://maven.apache.org/warez_escalade_model/checkstyle.html#oc.P6.escalade.model.contract.utilisateur.IntCoordonneeUtilisateur.java">oc/P6/escalade/model/contract/utilisateur/IntCoordonneeUtilisateur.java</a>
+                </td>
+                <td>
+                  1
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  16
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://maven.apache.org/warez_escalade_model/checkstyle.html#oc.P6.escalade.model.contract.utilisateur.IntUtilisateur.java">oc/P6/escalade/model/contract/utilisateur/IntUtilisateur.java</a>
+                </td>
+                <td>
+                  3
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  31
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://maven.apache.org/warez_escalade_model/checkstyle.html#oc.P6.escalade.model.bean.topo.Topo.java">oc/P6/escalade/model/bean/topo/Topo.java</a>
+                </td>
+                <td>
+                  13
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  118
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://maven.apache.org/warez_escalade_model/checkstyle.html#oc.P6.escalade.model.bean.topo.Voie.java">oc/P6/escalade/model/bean/topo/Voie.java</a>
+                </td>
+                <td>
+                  7
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  73
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://maven.apache.org/warez_escalade_model/checkstyle.html#oc.P6.escalade.model.bean.exception.TopoException.java">oc/P6/escalade/model/bean/exception/TopoException.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  10
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://maven.apache.org/warez_escalade_model/checkstyle.html#oc.P6.escalade.model.bean.exception.UtilisateurException.java">oc/P6/escalade/model/bean/exception/UtilisateurException.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  10
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://maven.apache.org/warez_escalade_model/checkstyle.html#oc.P6.escalade.model.bean.topo.Secteur.java">oc/P6/escalade/model/bean/topo/Secteur.java</a>
+                </td>
+                <td>
+                  5
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  113
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://maven.apache.org/warez_escalade_model/checkstyle.html#oc.P6.escalade.model.bean.utilisateur.Role.java">oc/P6/escalade/model/bean/utilisateur/Role.java</a>
+                </td>
+                <td>
+                  2
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  24
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://maven.apache.org/warez_escalade_model/checkstyle.html#oc.P6.escalade.model.bean.impl.ModelManagerFactoryImpl.java">oc/P6/escalade/model/bean/impl/ModelManagerFactoryImpl.java</a>
+                </td>
+                <td>
+                  1
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  83
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://maven.apache.org/warez_escalade_model/checkstyle.html#oc.P6.escalade.model.contract.commentaire.IntCommentaireTopo.java">oc/P6/escalade/model/contract/commentaire/IntCommentaireTopo.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  18
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://maven.apache.org/warez_escalade_model/checkstyle.html#oc.P6.escalade.model.bean.exception.VoieException.java">oc/P6/escalade/model/bean/exception/VoieException.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  9
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://maven.apache.org/warez_escalade_model/checkstyle.html#oc.P6.escalade.model.bean.commentaire.Commentaire.java">oc/P6/escalade/model/bean/commentaire/Commentaire.java</a>
+                </td>
+                <td>
+                  4
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  34
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://maven.apache.org/warez_escalade_model/checkstyle.html#oc.P6.escalade.model.contract.topo.IntSecteur.java">oc/P6/escalade/model/contract/topo/IntSecteur.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  16
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://maven.apache.org/warez_escalade_model/checkstyle.html#oc.P6.escalade.model.bean.topo.Site.java">oc/P6/escalade/model/bean/topo/Site.java</a>
+                </td>
+                <td>
+                  5
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  65
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://maven.apache.org/warez_escalade_model/checkstyle.html#oc.P6.escalade.model.bean.exception.CommentaireTopoException.java">oc/P6/escalade/model/bean/exception/CommentaireTopoException.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  9
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://maven.apache.org/warez_escalade_model/checkstyle.html#oc.P6.escalade.model.bean.commentaire.CommentaireTopo.java">oc/P6/escalade/model/bean/commentaire/CommentaireTopo.java</a>
+                </td>
+                <td>
+                  5
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  53
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://maven.apache.org/warez_escalade_model/checkstyle.html#oc.P6.escalade.model.contract.topo.IntTopo.java">oc/P6/escalade/model/contract/topo/IntTopo.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  27
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://maven.apache.org/warez_escalade_model/checkstyle.html#oc.P6.escalade.model.bean.exception.CoordonneeUtilisateurException.java">oc/P6/escalade/model/bean/exception/CoordonneeUtilisateurException.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  10
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://maven.apache.org/warez_escalade_model/checkstyle.html#oc.P6.escalade.model.contract.ModelManagerFactory.java">oc/P6/escalade/model/contract/ModelManagerFactory.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  27
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://maven.apache.org/warez_escalade_model/checkstyle.html#oc.P6.escalade.model.contract.emprunt.IntTopoEmprunt.java">oc/P6/escalade/model/contract/emprunt/IntTopoEmprunt.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  18
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://maven.apache.org/warez_escalade_model/checkstyle.html#oc.P6.escalade.model.bean.emprunt.TopoEmprunt.java">oc/P6/escalade/model/bean/emprunt/TopoEmprunt.java</a>
+                </td>
+                <td>
+                  6
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  55
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://maven.apache.org/warez_escalade_model/checkstyle.html#oc.P6.escalade.model.bean.commentaire.CommentaireSite.java">oc/P6/escalade/model/bean/commentaire/CommentaireSite.java</a>
+                </td>
+                <td>
+                  1
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  14
+                </td>
+              </tr>
+                          <tr>
+                <td>
+                  <a href="http://maven.apache.org/warez_escalade_model/checkstyle.html#oc.P6.escalade.model.contract.topo.IntSite.java">oc/P6/escalade/model/contract/topo/IntSite.java</a>
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  0
+                </td>
+                <td>
+                  12
+                </td>
+              </tr>
+                      </tbody>
+        </table>
+        
+      </description>
+    </item>
+  </channel>
+</rss>
+
