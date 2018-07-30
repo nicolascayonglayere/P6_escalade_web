@@ -193,7 +193,7 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 	 */
 	@Override
 	public ArrayList<Topo> rechercherTopo(String pNom) {
-		System.out.println("ctrl DAO "+pNom);
+		logger.debug("ctrl DAO "+pNom);
 		ArrayList<Topo> vListTopo = new ArrayList<Topo>();
 		String vSQL = "SELECT * FROM topo WHERE topo.nom LIKE :nom";
         NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
@@ -235,11 +235,13 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 		vParams.addValue("nom", pNom+"%", Types.VARCHAR);
 		vParams.addValue("cotationMin", pDiffMin, Types.VARCHAR);
 		vParams.addValue("cotationMax", pDiffMax, Types.VARCHAR);
-		
+		ArrayList<Voie>listVoie = new ArrayList<Voie>();
+		//Topo vTopo;
 		RowMapper<Topo> vRowMapperTopo = new RowMapper<Topo>() {
 
 			@Override
 			public Topo mapRow(ResultSet rs, int rowNum) throws SQLException {
+				//listeTopo.add(new Topo(rs.getString("nom")));//--comparer avec le contenu de listeTopo
 				Topo vTopo = new Topo(rs.getString("nom"));
 				vTopo.setId(rs.getInt("id_topo"));
 				vTopo.setAuteur(daoFacto.getUtilisateurManagerDAO().find(rs.getInt("id_utilisateur")));
@@ -249,8 +251,9 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 				vTopo.setDescription(rs.getString("description"));
 				vTopo.setNbreEx(rs.getInt("nombre_exemplaires"));
 				vTopo.setConstruction(rs.getBoolean("construction"));
-				ArrayList<Voie>listVoie = new ArrayList<Voie>();
+
 				while (rs.next()) {
+					System.out.println("bcle "+rs.getInt("id_voie"));
 					listVoie.add(daoFacto.getVoieManagerDao().find(rs.getInt("id_voie")));
 				}
 				vTopo.setListVoie(listVoie);
@@ -259,9 +262,9 @@ public class TopoDaoImpl extends AbstractDAO implements TopoManagerDao {
 			}
 			
 		};
-       
+		//vTopo.setListVoie(listVoie);
 		listeTopo = (ArrayList<Topo>) vJdbcTemplate.query(vSQL, vParams, vRowMapperTopo);
-		logger.debug("ctrl rech multi dao : "+listeTopo.size());
+		logger.error("ctrl rech multi dao : "+listeTopo.size());
 		return listeTopo;
 	}
 

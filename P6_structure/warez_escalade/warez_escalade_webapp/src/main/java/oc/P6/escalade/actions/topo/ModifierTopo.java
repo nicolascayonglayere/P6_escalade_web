@@ -54,7 +54,7 @@ public class ModifierTopo extends ActionSupport implements SessionAware {
 	private String repoId;
 	private ArrayList<Site> listSite;
 	private ArrayList<Secteur> listSecteur = new ArrayList<Secteur>();
-	private ArrayList<Voie> listVoie;
+	private ArrayList<Voie> listVoie = new ArrayList<Voie>();
 	private ArrayList<String>listImage;
 	private ArrayList<CommentaireTopo> listCommentaire;
 	private Map<String, Object> session;

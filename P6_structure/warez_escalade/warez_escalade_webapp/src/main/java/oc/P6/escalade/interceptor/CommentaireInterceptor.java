@@ -43,7 +43,7 @@ public class CommentaireInterceptor implements Interceptor {
 		//ici je souhaite filtrer les messages injurieux, qui contiennent des string non souhaitees
 		if(message != null) {
 			for (String s : motsClefs) {
-				if(!StringUtils.containsAny(message, s))
+				if(!(message.contains(s)))
 					vResult = invocation.invoke(); 			
 				else {
 					addActionError(invocation, "Merci de rester courtois !");

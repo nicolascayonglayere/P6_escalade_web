@@ -17,6 +17,7 @@ import oc.P6.escalade.consumer.DAO.impl.DAOFactoryImpl;
 import oc.P6.escalade.consumer.DAO.impl.manager.TopoEmpruntDaoImpl;
 import oc.P6.escalade.consumer.DAO.impl.manager.utilisateur.CoordonneeUtilisateurDaoImpl;
 import oc.P6.escalade.consumer.DAO.impl.manager.utilisateur.UtilisateurDaoImpl;
+import oc.P6.escalade.model.bean.emprunt.TopoEmprunt;
 import oc.P6.escalade.model.bean.exception.CoordonneeUtilisateurException;
 import oc.P6.escalade.model.bean.exception.UtilisateurException;
 import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateur;
@@ -45,7 +46,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
     private IntUtilisateur utilisateur;
     @Inject
     private IntCoordonneeUtilisateur coordonneeUtilisateur;
-    
+    private TopoEmpruntDaoImpl topoEmpruntdao;
     private UtilisateurDaoImpl userDAO; 
     private CoordonneeUtilisateurDaoImpl coordonneeDAO;
     @Inject
@@ -193,7 +194,12 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
            
 		logger.debug("CTRL "+pUtilisateur.getPseudo());
 		userDAO = (UtilisateurDaoImpl) daoFactory.getUtilisateurManagerDAO();
+		topoEmpruntdao = (TopoEmpruntDaoImpl) daoFactory.getTopoEmpruntDao();
 		try {
+			for (TopoEmprunt te : topoEmpruntdao.getListTopoEmprunt(pUtilisateur.getId())) {
+				topoEmpruntdao.delete(te);
+			}
+			
 			userDAO.delete(pUtilisateur);
 			
 		    TransactionStatus vTScommit = vTransactionStatus;
@@ -395,6 +401,12 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 	}
 	public void setCoordonneeUtilisateur(IntCoordonneeUtilisateur coordonneeUtilisateur) {
 		this.coordonneeUtilisateur = coordonneeUtilisateur;
+	}
+	public TopoEmpruntDaoImpl getTopoEmpruntdao() {
+		return topoEmpruntdao;
+	}
+	public void setTopoEmpruntdao(TopoEmpruntDaoImpl topoEmpruntdao) {
+		this.topoEmpruntdao = topoEmpruntdao;
 	}
 
 

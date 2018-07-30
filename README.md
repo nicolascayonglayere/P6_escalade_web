@@ -1,4 +1,4 @@
-# P6_escalade_web par Nicolas Cayon-Glayère 
+﻿# P6_escalade_web par Nicolas Cayon-Glayère 
 
 Vous trouverez ici mon travail sur ce projet.
 
@@ -23,5 +23,5 @@ dans le module technical :
 -> chemin du fichier récupérant les log : src/main/resources/log4j2.xml
 -> chemin de stockage des images : src/data/conf/configMail.properties; la propriete se nomme chemin.upload.
 
--- Configuration de l'envoie de mail -- 
+-- Configuration de l'envoi de mail -- 
 dans le module technical, dans le fichier src/data/conf/configMail.properties, vous trouverez les différentes propriétés à modifier pour affecter un compte pour l'envoi de mail.

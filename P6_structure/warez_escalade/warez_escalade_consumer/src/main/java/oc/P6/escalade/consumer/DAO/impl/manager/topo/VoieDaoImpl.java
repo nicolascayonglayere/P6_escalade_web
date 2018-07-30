@@ -109,7 +109,7 @@ public class VoieDaoImpl extends AbstractDAO implements VoieManagerDao{
 	 */
 	@Override
 	public boolean update(Voie pVoie) throws VoieException {
-		System.out.println(pVoie.getNomVoie()+" - "+pVoie.getCotation());
+		logger.debug(pVoie.getNomVoie()+" - "+pVoie.getCotation());
 		String vSQL = "UPDATE voie SET nom = :nom, cotation = :cotation, hauteur = :hauteur, nombre_longueur = :nbLongueur, nombre_point = :nbPoint, id_secteur = :id_secteur, description = :description "
 				+ " WHERE id_voie = :id_voie";
 
@@ -186,7 +186,7 @@ public class VoieDaoImpl extends AbstractDAO implements VoieManagerDao{
 		String vSQL = "SELECT * FROM voie WHERE id_secteur = :id_secteur";
 		NamedParameterJdbcTemplate vJdbcTemplate = new NamedParameterJdbcTemplate(getDataSource());
 		MapSqlParameterSource vParams = new MapSqlParameterSource();
-		System.out.println(pSecteur.getNomSecteur()+" - "+pSecteur.getId());
+		logger.debug(pSecteur.getNomSecteur()+" - "+pSecteur.getId());
         vParams.addValue("id_secteur", pSecteur.getId(), Types.INTEGER);
         listVoie = (ArrayList<Voie>) vJdbcTemplate.query(vSQL, vParams, voieRowMapper);
 
