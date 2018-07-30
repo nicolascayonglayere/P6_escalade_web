@@ -26,9 +26,9 @@ import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 	     * @param pPseudo le pseudo de l'Utilisateur
 	     * @return Le {@link Utilisateur}
 	     * @throws UtilisateurException 
-	     * @throws NotFoundException Si l'Utilisateur n'est pas trouvé
+	     * @throws UtilisateurException Si l'Utilisateur n'est pas trouvé
 	     */
-	    Utilisateur getUtilisateur(String pPseudo) throws UtilisateurException; //throws NotFoundException;
+	    Utilisateur getUtilisateur(String pPseudo) throws UtilisateurException; 
 	    
 	    /**
 	     * Renvoie l'{@link Utilisateur} demandé pour l'authentification
@@ -75,6 +75,7 @@ import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 	     * Modifie le {@link Utilisateur} donné en paramètre 
 	     * @param pUtilisateur
 	     * @return {@link Utilisateur}
+	     * @throws UtilisateurException 
 	     */
 	    Utilisateur modifierUtilisateur(Utilisateur pUtilisateur) throws UtilisateurException;
 	    

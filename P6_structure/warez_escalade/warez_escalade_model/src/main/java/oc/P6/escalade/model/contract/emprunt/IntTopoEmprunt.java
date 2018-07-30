@@ -6,7 +6,7 @@ import oc.P6.escalade.model.bean.topo.Topo;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
 /**
- * Interface de {@link TopoEmprunt} 
+ * Interface de TopoEmprunt 
  * @author nicolas
  *
  */

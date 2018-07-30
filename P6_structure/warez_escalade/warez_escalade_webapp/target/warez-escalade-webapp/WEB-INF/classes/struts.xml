@@ -232,7 +232,9 @@
         
         <!-- action pour commenter un topo -->
         <action name="commenter" class="oc.P6.escalade.actions.CommenterAction" method="execute">
-		    <interceptor-ref name="commentaireStack"/>
+		    <interceptor-ref name="commentaireStack" >
+		   		<param name="params.excludeParams">dojo..*,^struts..*,^session..*,^request..*,^application..*,^servlet(Request|Response)..*,parameters...*,submit,token,struts.token.name</param>
+		   	</interceptor-ref>        
         	<result name="input">/jsp/topo.jsp</result>
 			<result name="success">/jsp/topo.jsp</result>
         </action>      

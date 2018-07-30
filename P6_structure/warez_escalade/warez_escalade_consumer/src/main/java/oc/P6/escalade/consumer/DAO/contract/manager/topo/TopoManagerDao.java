@@ -38,14 +38,14 @@ public interface TopoManagerDao {
 	
 	/**
 	 * Méthode pour trouver le {@link Topo} dont le nom est donné en paramètre dans la base de donnée
-	 * @param pTopo
+	 * @param pNom
 	 * @return {@link Topo}
 	 */
 	Topo find(String pNom);
 	
 	/**
 	 * Méthode pour trouver le {@link Topo} dont l'id est donné en paramètre dans la base de donnée
-	 * @param pTopo
+	 * @param pId
 	 * @return {@link Topo}
 	 */	
 	Topo find(int pId);

@@ -1,6 +1,6 @@
 package oc.P6.escalade.model.bean.exception;
 /**
- * Classe SiteException qui transporte les message d'exceptions concernant les {@link Site}
+ * Classe SiteException qui transporte les message d'exceptions concernant les Site
  * @author nicolas
  *
  */

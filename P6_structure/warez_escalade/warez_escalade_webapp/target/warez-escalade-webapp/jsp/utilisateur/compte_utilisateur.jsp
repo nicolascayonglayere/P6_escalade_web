@@ -29,104 +29,109 @@
 						<s:actionmessage/>
 					</div>	
 					
-					<div >		
-					<!-- pour les modérateurs, une liste des commentaires à valider -->
-					<s:if test="%{utilisateur.role == 'moderateur'}">
-						<s:iterator value="listCommentaire" var="commentaireTopo">
-							<ul>
-								<li>
-									<i class="fas fa-user"> <s:property value="#commentaireTopo.auteur.pseudo"/></i>
-									<s:property value="#commentaireTopo.message"/>
-									<s:property value="#commentaireTopo.topo.nomTopo"/>
-									<s:a action="valider_commentaire" namespace="/jsp/utilisateur">
-										<s:param name="nomTopo" value="#commentaireTopo.topo.nomTopo"/>
-										<s:param name="pseudo" value="#commentaireTopo.auteur.pseudo"/>
-										<s:param name="message" value="#commentaireTopo.message"/>
-										<s:submit class="btn btn-default" value="%{getText('bouton.valider')}"/>
-						    		</s:a>
-									<s:a action="rejeter_commentaire" namespace="/jsp/utilisateur">
-										<s:param name="nomTopo" value="#commentaireTopo.topo.nomTopo"/>
-						    			<s:param name="message" value="#commentaireTopo.message"/>
-						    			<s:param name="pseudo" value="#commentaireTopo.auteur.pseudo"/>								
-										<s:submit class="btn btn-default" value="%{getText('bouton.rejeter')}"/>
-						    		</s:a>				    		
-								</li>
-							</ul>
-						</s:iterator>
-					</s:if>
-					</div>
+
+					<div class="col-lg-3">
 					<!-- pour les admin, des liens vers les actions réservées -->
-					<s:elseif test="%{utilisateur.role =='administrateur'}">
+					<s:if test="%{utilisateur.role =='administrateur'}">
 						<div class="navbar navbar-expand-md navbar-light " id="menuTopUser">
-							<div class="container  ">
-							<div class="collapse navbar-collapse"  >
-								<ul class="navbar-nav mr-auto flex-column ">
-									<h4 id="titre" class="dropdown-header"><s:text name="%{getText('compteUser.utilisateur')}"/></h4>
-									<li class="nav-item active">
-										<s:a action="go_modifUser" namespace="/jsp/utilisateur"  cssClass="nav-link">
-											<s:text name="compteUser.modifUser"/>
-							    		</s:a>							
-									</li>							
-									<li class="nav-item active">
-										<s:a action="go_ban" namespace="/jsp/utilisateur"  cssClass="nav-link">
-											<s:text name="compteUser.ban"/>
-							    		</s:a>							
-									</li>
-									<!-- Un séparateur -->
-									<div class="dropdown-divider"></div>
-									<h4 id="titre" class="dropdown-header"><s:text name="%{getText('compteUser.topo')}"/></h4>
-									<li class="nav-item active">
-							    		<s:a action="go_creerTopo" namespace="/jsp/utilisateur"  cssClass="nav-link">
-							    			<s:text name="compteUser.creerTopo"/>
-							    		</s:a>							
-									</li>
-									<li class="nav-item active">
-							    		<s:a action="go_chercherTopo" namespace="/jsp/utilisateur"  cssClass="nav-link">
-							    			<s:text name="compteUser.modifTopo"/>
-							    		</s:a>							
-									</li>
-									<!--  <li class="nav-item active">
-							    		<s:a action="go_chercherTopo" namespace="/jsp/utilisateur"  cssClass="nav-link">
-							    			<s:text name="compteUser.supprTopo"/>
-							    		</s:a>							
-									</li>-->							
-			    				</ul>			
-							</div>
+							<div class="container ">
+								<div class="collapse navbar-collapse"  >
+									<ul class="navbar-nav mr-auto flex-column ">
+										<h4 id="titre" class="dropdown-header"><s:text name="%{getText('compteUser.utilisateur')}"/></h4>
+										<li class="nav-item active">
+											<s:a action="go_modifUser" namespace="/jsp/utilisateur" cssClass="nav-link">
+												<s:text name="compteUser.modifUser"/>
+								    		</s:a>							
+										</li>							
+										<li class="nav-item active">
+											<s:a action="go_ban" namespace="/jsp/utilisateur" cssClass="nav-link">
+												<s:text name="compteUser.ban"/>
+								    		</s:a>							
+										</li>
+										<!-- Un séparateur -->
+										<div class="dropdown-divider"></div>
+										<h4 id="titre" class="dropdown-header"><s:text name="%{getText('compteUser.topo')}"/></h4>
+										<li class="nav-item active">
+								    		<s:a action="go_creerTopo" namespace="/jsp/utilisateur" cssClass="nav-link">
+								    			<s:text name="compteUser.creerTopo"/>
+								    		</s:a>							
+										</li>
+										<li class="nav-item active">
+								    		<s:a action="go_chercherTopo" namespace="/jsp/utilisateur" cssClass="nav-link">
+								    			<s:text name="compteUser.modifTopo"/>
+								    		</s:a>							
+										</li>
+										<!--  <li class="nav-item active">
+								    		<s:a action="go_chercherTopo" namespace="/jsp/utilisateur"  cssClass="nav-link">
+								    			<s:text name="compteUser.supprTopo"/>
+								    		</s:a>							
+										</li>-->							
+				    				</ul>			
+								</div>
 							</div>
 						</div>
-				</div>
-				<div class="row">	
+					</s:if>
+					</div>
+					<div class="col-lg-12">		
+						<!-- pour les modérateurs, une liste des commentaires à valider -->
+						<s:if test="%{utilisateur.role == 'moderateur'}">
+							<s:iterator value="listCommentaire" var="commentaireTopo">
+								<ul>
+									<li>
+										<i class="fas fa-user"> <s:property value="#commentaireTopo.auteur.pseudo"/></i>
+										<s:property value="#commentaireTopo.message"/>
+										<s:property value="#commentaireTopo.topo.nomTopo"/>
+										<s:a action="valider_commentaire" namespace="/jsp/utilisateur">
+											<s:param name="nomTopo" value="#commentaireTopo.topo.nomTopo"/>
+											<s:param name="pseudo" value="#commentaireTopo.auteur.pseudo"/>
+											<s:param name="message" value="#commentaireTopo.message"/>
+											<s:submit class="btn btn-default" value="%{getText('bouton.valider')}"/>
+							    		</s:a>
+										<s:a action="rejeter_commentaire" namespace="/jsp/utilisateur">
+											<s:param name="nomTopo" value="#commentaireTopo.topo.nomTopo"/>
+							    			<s:param name="message" value="#commentaireTopo.message"/>
+							    			<s:param name="pseudo" value="#commentaireTopo.auteur.pseudo"/>								
+											<s:submit class="btn btn-default" value="%{getText('bouton.rejeter')}"/>
+							    		</s:a>				    		
+									</li>
+								</ul>
+							</s:iterator>
+						</s:if>
+					</div>
+				</div>	
 						<div class="col-lg-12">
+							<s:if test="%{utilisateur.role =='administrateur'}">
 							<!-- un recap des topo en cours de creation -->
-							<h4 id="titre"><s:text name="%{getText('compteUser.creation')}"/></h4>
-							<table class="table table-bordered table-striped">
-									<thead>
-										<tr class="table-primary">
-											<th><s:text name="compteUser.nom"/></th>
-											<th><s:text name="compteUser.topo"/></th>
-										</tr>
-									</thead>
-									<s:iterator value="listTopoConstr" var="topo">
-										<tr>
-									    	<td style="text-align:left;"><s:property value="#topo.auteur.pseudo"/></td>
-									    	<td style="text-align:right;"><s:property value="#topo.nomTopo" /></td>
-									    	<td>
-									    		<s:a action="recap_topo" namespace="/jsp/utilisateur">
-									    			<!--<s:param name="nomTopo" value="#topo.nomTopo"/>-->
-									    			<s:submit class="btn btn-default" value="%{getText('bouton.modifier')}">
-									    				<s:param name="nomTopo" value="#topo.nomTopo"/>
-									    			</s:submit>
-									    		</s:a>	
-									    	</td>
-									   	</tr>
-								 	</s:iterator>
-							</table>
+								<h4 id="titre"><s:text name="compteUser.creation"/></h4>
+								<table class="table table-bordered table-striped">
+										<thead>
+											<tr class="table-primary">
+												<th><s:text name="compteUser.nom"/></th>
+												<th><s:text name="compteUser.topo"/></th>
+											</tr>
+										</thead>
+										<s:iterator value="listTopoConstr" var="topo">
+											<tr>
+										    	<td style="text-align:left;"><s:property value="#topo.auteur.pseudo"/></td>
+										    	<td style="text-align:right;"><s:property value="#topo.nomTopo" /></td>
+										    	<td>
+										    		<s:a action="recap_topo" namespace="/jsp/utilisateur">
+										    			<!--<s:param name="nomTopo" value="#topo.nomTopo"/>-->
+										    			<s:submit class="btn btn-default" value="%{getText('bouton.modifier')}">
+										    				<s:param name="nomTopo" value="#topo.nomTopo"/>
+										    			</s:submit>
+										    		</s:a>	
+										    	</td>
+										   	</tr>
+									 	</s:iterator>
+								</table>
+							</s:if>
 						</div>				
-					</s:elseif>
-				</div>
+						
 				
-				<div>	
-					<h4 id="titre"><s:text name="%{getText('compteUser.emprunt')}"/></h4>
+				
+				<div class="col-lg-12">	
+					<h4 id="titre"><s:text name="compteUser.emprunt"/></h4>
 					
 					<!-- un tab recapitulatif des topos emrpuntés (historique tot ou partiel ?)-->
 					<table class="table table-bordered table-striped">

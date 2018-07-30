@@ -46,7 +46,8 @@ public interface VoieManagerDao {
 	
 	/**
 	 * Méthode pour obtenir la {@link Voie} de nom pNom du {@link secteur} d'id pId dans la base de donnée
-	 * @param pVoie
+	 * @param pNom
+	 * @param pIdSecteur
 	 * @return {@link Voie}
 	 */
 	Voie find(String pNom, int pIdSecteur);

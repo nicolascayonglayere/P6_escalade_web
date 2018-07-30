@@ -39,7 +39,8 @@ public interface SecteurManagerDao {
 	
 	/**
 	 * Méthode pour trouver un {@link Secteur} nommé pNom dans le {@link Site} d'id donné en paramètre dans la base de donnée
-	 * @param pSecteur
+	 * @param pNom
+	 * @param pIdSite
 	 * @return {@link Secteur}
 	 */
 	Secteur find(String pNom, int pIdSite);

@@ -3,7 +3,7 @@ package oc.P6.escalade.model.contract.topo;
 import oc.P6.escalade.model.bean.topo.Site;
 
 /**
- * Interface du POJO {@link Secteur}
+ * Interface du POJO Secteur
  * @author nicolas
  *
  */

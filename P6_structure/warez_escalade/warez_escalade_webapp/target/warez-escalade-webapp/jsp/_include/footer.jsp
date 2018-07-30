@@ -63,7 +63,7 @@
 			//$("bouton").click(
 				function bilanEmprunt(){
 					//e.preventDefault();
-					var url = "<s:url action="jsp/ajax_listEmprunt"/>";
+					var url = "<s:url action="jsp/ajax_listEmprunt" namespace="/jsp"/>";
 					
 					console.log(url);
 	

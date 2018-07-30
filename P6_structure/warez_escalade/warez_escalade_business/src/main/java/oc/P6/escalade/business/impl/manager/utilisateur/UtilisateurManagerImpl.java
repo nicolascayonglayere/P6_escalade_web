@@ -354,7 +354,7 @@ public class UtilisateurManagerImpl extends AbstractDAOManager implements Utilis
 	}
 	/**
 	 * Méthode qui modifie le role de {@link Utilisateur} donné en paramètre
-	 * @throws Exception 
+	 * @throws UtilisateurException 
 	 */
 	@Override
 	public void modifierRoleUtilisateur(Utilisateur pUtilisateur) throws UtilisateurException {

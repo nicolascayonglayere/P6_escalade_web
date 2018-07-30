@@ -18,14 +18,14 @@ public interface TopoManager {
 
 	/**
 	 * Retourne la liste des {@link Topo}
-	 * @return
+	 * @return la liste des {@link Topo}
 	 */
 	ArrayList<Topo> getListTopo();
 	
 	/**
 	 * Retourne la liste des {@link Topo} en construction d'après le nom de l'auteur donné en paramètre
 	 * @param pNom
-	 * @return
+	 * @return la liste des {@link Topo} en construction
 	 * @throws UtilisateurException 
 	 */
 	ArrayList<Topo> getListTopoConstr(String pNom) throws UtilisateurException;
@@ -41,6 +41,7 @@ public interface TopoManager {
 	/**
 	 * Crée le {@link Topo} donné en paramètre
 	 * @param pTopo
+	 * @return le {@link Topo} cree
 	 * @throws TopoException 
 	 */
 	Topo creerTopo(Topo pTopo) throws TopoException;
@@ -65,7 +66,7 @@ public interface TopoManager {
 	 * @param pDiffMin
 	 * @param pDiffMax
 	 * @throws TopoException 
-	 * @returnla liste des {@link Topo}
+	 * @return la liste des {@link Topo}
 	 */
 	ArrayList<Topo> rechercheMultiTopo(String pNom, String pDiffMin, String pDiffMax) throws TopoException;
 	

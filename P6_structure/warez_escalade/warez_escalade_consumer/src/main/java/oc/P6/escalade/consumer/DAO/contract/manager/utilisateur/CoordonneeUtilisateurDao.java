@@ -12,7 +12,7 @@ import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 public interface CoordonneeUtilisateurDao {
 
 	/**
-	 * Méthode pour créer les {@link Coordonneeutilisateur} données en paramètre dans la base de donnée
+	 * Méthode pour créer les {@link CoordonneeUtilisateur} données en paramètre dans la base de donnée
 	 * @param pCoordonneeUtilisateur
 	 * @return les {@link CoordonneeUtilisateur} créees dans la base de donnée
 	 * @throws CoordonneeUtilisateurException 
@@ -20,15 +20,14 @@ public interface CoordonneeUtilisateurDao {
 	CoordonneeUtilisateur create(CoordonneeUtilisateur pCoordonneeUtilisateur) throws CoordonneeUtilisateurException;
 
 	/**
-	 * Méthode pour supprimer les {@link Coordonneeutilisateur} données en paramètre dans la base de donnée
+	 * Méthode pour supprimer les {@link CoordonneeUtilisateur} données en paramètre dans la base de donnée
 	 * @param pCoordonneeUtilisateur
-	 * @return
 	 * @throws CoordonneeUtilisateurException 
 	 */
 	boolean delete (CoordonneeUtilisateur pCoordonneeUtilisateur) throws CoordonneeUtilisateurException;
 	
 	/**
-	 * Méthode pour modifier l'adresse des {@link Coordonneeutilisateur} données en paramètre dans la base de donnée
+	 * Méthode pour modifier l'adresse des {@link CoordonneeUtilisateur} données en paramètre dans la base de donnée
 	 * @param pCoordonneeUtilisateur
 	 * @return les {@link CoordonneeUtilisateur} modifiées dans la base de donnée
 	 * @throws CoordonneeUtilisateurException 
@@ -36,8 +35,8 @@ public interface CoordonneeUtilisateurDao {
 	CoordonneeUtilisateur update (CoordonneeUtilisateur pCoordonneeUtilisateur) throws CoordonneeUtilisateurException;
 	
 	/**
-	 * Méthode pour obtenir les {@link Coordonneeutilisateur} de {@link Utilisateur} donné en paramètre dans la base de donnée
-	 * @param pCoordonneeUtilisateur
+	 * Méthode pour obtenir les {@link CoordonneeUtilisateur} de {@link Utilisateur} donné en paramètre dans la base de donnée
+	 * @param pAuteur
 	 * @return {@link CoordonneeUtilisateur}
 	 */
 	CoordonneeUtilisateur find(Utilisateur pAuteur);

@@ -23,10 +23,7 @@ public class CoordonneeUtilisateur implements IntCoordonneeUtilisateur {
 	 */
 	public CoordonneeUtilisateur() {}
 
-	/**
-	 * Getter et Setter
-	 * @return
-	 */
+	//--Getter et Setter--//
 	public int getId() {
 		return id;
 	}

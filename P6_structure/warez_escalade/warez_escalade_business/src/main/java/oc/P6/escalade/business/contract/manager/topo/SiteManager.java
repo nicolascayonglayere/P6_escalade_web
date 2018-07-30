@@ -3,7 +3,6 @@ package oc.P6.escalade.business.contract.manager.topo;
 import java.util.ArrayList;
 
 import oc.P6.escalade.model.bean.exception.SiteException;
-import oc.P6.escalade.model.bean.exception.TopoException;
 import oc.P6.escalade.model.bean.topo.Site;
 import oc.P6.escalade.model.bean.topo.Topo;
 
@@ -15,7 +14,7 @@ import oc.P6.escalade.model.bean.topo.Topo;
 public interface SiteManager {
 	/**
 	 * Retourne la liste des {@link Site}
-	 * @return
+	 * @return la liste des {@link Site}
 	 */
 	ArrayList<Site> getListSite();
 	
@@ -32,7 +31,6 @@ public interface SiteManager {
 	 * Retroune la liste des {@link Site} du {@link Topo} donné en paramètre
 	 * @param pTopo
 	 * @return la liste des {@link Site}
-	 * @throws TopoException 
 	 * @throws SiteException 
 	 */
 	ArrayList<Site> getSite (Topo pTopo) throws SiteException;

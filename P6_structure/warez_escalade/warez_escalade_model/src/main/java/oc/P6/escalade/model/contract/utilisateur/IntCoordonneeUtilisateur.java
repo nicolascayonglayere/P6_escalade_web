@@ -3,7 +3,7 @@ package oc.P6.escalade.model.contract.utilisateur;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
 /**
- * Interface du POJO {@link CoordonneeUtilisateur}
+ * Interface du POJO CoordonneeUtilisateur
  * @author nicolas
  *
  */

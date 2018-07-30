@@ -3,7 +3,7 @@ package oc.P6.escalade.model.contract.topo;
 import oc.P6.escalade.model.bean.utilisateur.Utilisateur;
 
 /**
- * Interface du POJO {@link Topo}
+ * Interface du POJO Topo
  * @author nicolas
  *
  */

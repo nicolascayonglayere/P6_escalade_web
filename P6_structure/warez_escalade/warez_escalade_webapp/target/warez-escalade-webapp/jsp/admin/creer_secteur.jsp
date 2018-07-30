@@ -19,8 +19,8 @@
 		<div id="blocPge">
 			<s:actionmessage/>
 			<div class="container text-center">
-				<h1 id="titre"><s:text name="creerTopo.topo"/> <s:property value="topo.nomTopo"/></h1>
-				<h4 id="titre"><s:text name="creerTopo.site"/> <s:property value="site.nomSite"/></h4>
+				<h1 id="titre"><s:text name="creerTopo.topo"/> <s:property value="#request.topo.nomTopo"/></h1>
+				<h4 id="titre"><s:text name="creerTopo.site"/> <s:property value="#request.site.nomSite"/></h4>
 				<h4 id="titre"><s:text name="creerTopo.titreSecteur"/></h4>
 					<s:form action="creer_secteur" cssClass="form-vertical" namespace="/jsp/utilisateur">
 						<s:textfield name="secteur.nomSecteur" placeholder="nom du secteur" label="%{getText('form.nomSecteur')}" requiredLabel="true"/>

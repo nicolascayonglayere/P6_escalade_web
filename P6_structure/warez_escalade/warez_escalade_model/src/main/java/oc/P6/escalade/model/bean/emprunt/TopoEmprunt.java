@@ -34,10 +34,7 @@ public class TopoEmprunt implements IntTopoEmprunt{
 		return id;
 	}
 
-	/**
-	 * Getter et Setter
-	 * @param id
-	 */
+	//--Getter et Setter
 	public void setId(int id) {
 		this.id = id;
 	}

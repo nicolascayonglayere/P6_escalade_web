@@ -1,7 +1,7 @@
 package oc.P6.escalade.model.bean.exception;
 
 /**
- * Classe CommentaireTopoException qui transporte les message d'exceptions concernant les {@link CommentaireTopo}
+ * Classe CommentaireTopoException qui transporte les message d'exceptions concernant les CommentaireTopo
  * @author nicolas
  *
  */

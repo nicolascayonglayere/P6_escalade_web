@@ -12,7 +12,7 @@ import oc.P6.escalade.model.bean.utilisateur.CoordonneeUtilisateur;
 public interface CoordonneeUtilisateurManager {
 
 	/**
-	 * Renvoie les {@link CoordonneeUtilisateur} de {@link Utilisateur} d'id pId
+	 * Renvoie les {@link CoordonneeUtilisateur} de {@link utilisateur} d'id pId
 	 * @param pId
 	 * @return {@link CoordonneeUtilisateur}
 	 * @throws CoordonneeUtilisateurException 
@@ -22,21 +22,21 @@ public interface CoordonneeUtilisateurManager {
 	
 	/**
 	 * Cree les {@link CoordonneeUtilisateur} donnee en parametre
-	 * @param pCoordinneeUtilisateur
+	 * @param pCoordonneeUtilisateur
 	 * @throws CoordonneeUtilisateurException 
 	 */
 	void creerCoordonnee(CoordonneeUtilisateur pCoordonneeUtilisateur) throws CoordonneeUtilisateurException;
 
 	/**
 	 * Modifie les {@link CoordonneeUtilisateur} donnee en parametre
-	 * @param pCoordinneeUtilisateur
+	 * @param pCoordonneeUtilisateur
 	 * @return les {@link CoordonneeUtilisateur} modifiée
 	 */
 	CoordonneeUtilisateur modifier(CoordonneeUtilisateur pCoordonneeUtilisateur) throws CoordonneeUtilisateurException;
 	
 	/**
 	 * Supprimme les {@link CoordonneeUtilisateur} donnee en parametre
-	 * @param pCoordinneeUtilisateur
+	 * @param pCoordonneeUtilisateur
 	 * @throws CoordonneeUtilisateurException 
 	 */
 	void supprimerCoordonnee(CoordonneeUtilisateur pCoordonneeUtilisateur) throws CoordonneeUtilisateurException;

@@ -15,7 +15,6 @@ import oc.P6.escalade.business.contract.manager.topo.VoieManager;
 import oc.P6.escalade.business.impl.manager.TopoEmpruntManagerImpl;
 import oc.P6.escalade.consumer.DAO.DAOFactory;
 import oc.P6.escalade.consumer.DAO.contract.manager.topo.VoieManagerDao;
-import oc.P6.escalade.model.bean.exception.SecteurException;
 import oc.P6.escalade.model.bean.exception.VoieException;
 import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Voie;
@@ -47,7 +46,6 @@ public class VoieManagerImpl extends AbstractDAOManager implements VoieManager{
 	
 	/**
 	 * Méthode pour obtenir la liste des {@link Voie} du {@link Secteur} donné en paramètre
-	 * @throws SecteurException 
 	 * @throws VoieException 
 	 */
 	@Override

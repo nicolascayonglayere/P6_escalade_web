@@ -3,7 +3,6 @@ package oc.P6.escalade.business.contract.manager.topo;
 import java.util.ArrayList;
 
 import oc.P6.escalade.model.bean.exception.SecteurException;
-import oc.P6.escalade.model.bean.exception.SiteException;
 import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Site;
 
@@ -17,7 +16,6 @@ public interface SecteurManager {
 	 * Retourne la liste des {@link Secteur} du {@link Site} donné en paramètre
 	 * @param pSite
 	 * @return la liste des {@link Secteur}
-	 * @throws SiteException 
 	 * @throws SecteurException 
 	 */
 	ArrayList<Secteur> getListSecteur(Site pSite) throws SecteurException;

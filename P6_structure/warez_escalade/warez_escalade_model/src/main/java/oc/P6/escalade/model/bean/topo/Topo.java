@@ -39,11 +39,8 @@ public class Topo implements IntTopo{
 	}
 
 
-	/**
-	 * Getter et Setter
-	 * @param nom
-	 */
-
+	
+	//-- Getter et Setter--//
 	public int getId() {
 		return id;
 	}

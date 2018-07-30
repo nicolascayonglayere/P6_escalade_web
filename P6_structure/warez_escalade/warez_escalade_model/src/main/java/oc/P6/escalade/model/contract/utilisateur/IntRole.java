@@ -1,7 +1,7 @@
 package oc.P6.escalade.model.contract.utilisateur;
 
 /**
- * Interface du POJO {@link Role}
+ * Interface du POJO Role
  * @author nicolas
  *
  */

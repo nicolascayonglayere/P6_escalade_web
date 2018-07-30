@@ -18,20 +18,15 @@
 
 	<div id="blocPge">
 		<div class="container">
-			
 			<s:actionmessage/>		
-			<s:set var="vTopo">${topo.nomTopo}</s:set>
-			<div id="vLatitude"><s:property value="topo.latitude"/></div>
-			<div id="vLongitude"><s:property value="topo.longitude"/></div>
 			<div class="row">
-				<div class="col-sm">
+				<div class="col-lg-12">
 					<h1 id="titre"><s:property value="topo.nomTopo"/></h1>
-					<p><s:property value="topo.description"/></br></p>
-					<s:iterator value="listSite" var="site">
-						<h3 id="titre"><s:property value="#site.nomSite"/></h3>
-						<p><s:property value="#site.description"/></p>				
-					</s:iterator>
-			
+					<div class="row text-center">
+						<div class="col-lg-6"><s:text name="topo.latitude"/><div id="vLatitude"> <s:property value="latitude"/></div></div>
+						<div class="col-lg-6"><s:text name="topo.longitude"/><div id="vLongitude"> <s:property value="longitude"/></div></div>
+					</div>
+					<p><s:property value="topo.description"/></br></p>			
 				</div>
 			</div>
 			
@@ -86,52 +81,55 @@
 				<div id="map" class="col-sm"></div>			
 			</div>
 			
-
+				<div >	
+			<s:iterator value="listSite" var="site">
+				<h3 id="titre"><s:property value="#site.nomSite"/></h3>
+				<p><s:property value="#site.description"/></p>				
 			
-			<!-- tableau voie/secteur -->
-			<div class="row">
-				<div class="col-sm">
-					<table>
-						<s:iterator value="listSecteur" var="secteur">
-							<tr class="table-primary">
-								<td style="text-align:center;">
-									<s:text name="topo.secteur"/> <s:property value="#secteur.nomSecteur"/>
-									<p><s:property value="#secteur.description"/></p>
-								</td>
-								
-							</tr>
-							<tr>
-								<td>
-									<table class="table table-bordered table-striped">
-										<thead>
-											<tr class="table-primary">
-												<th><s:text name="topo.nom"/></th>
-												<th><s:text name="topo.cotation"/></th>
-												<th><s:text name="topo.hauteur"/></th>
-												<th><s:text name="topo.longueur"/></th>
-												<th><s:text name="topo.point"/></th>
-												<th><s:text name="topo.description"/></th>
-											</tr>
-										</thead>
-											<s:iterator value="#secteur.listVoie" var="voie">
-												<tr>
-											    	<td style="text-align:left;"><s:property value="#voie.nomVoie"/></td>
-											    	<td style="text-align:right;"><s:property value="#voie.cotation" /></td>
-											    	<td style="text-align:right;"><s:property value="#voie.hauteur" /></td>
-											    	<td style="text-align:right;"><s:property value="#voie.nbLgueur" /></td>
-											    	<td style="text-align:right;"><s:property value="#voie.nbPoint" /></td>
-											    	<td style="text-align:left;"><s:property value="#voie.description" /></td>
-											   	</tr>
-										 	</s:iterator>
-									</table>					
-								</td>
-							</tr>
-						</s:iterator>
-					</table>				
+				<!-- tableau voie/secteur -->
+				<div class="row">
+					<div class="col-lg-12">
+						<table>
+							<s:iterator value="#site.listSecteur" var="secteur">
+								<tr class="table-primary">
+									<td style="text-align:center;">
+										<s:text name="topo.secteur"/> <s:property value="#secteur.nomSecteur"/>
+										<p><s:property value="#secteur.description"/></p>
+									</td>
+									
+								</tr>
+								<tr>
+									<td>
+										<table class="table table-bordered table-striped">
+											<thead>
+												<tr class="table-primary">
+													<th><s:text name="topo.nom"/></th>
+													<th><s:text name="topo.cotation"/></th>
+													<th><s:text name="topo.hauteur"/></th>
+													<th><s:text name="topo.longueur"/></th>
+													<th><s:text name="topo.point"/></th>
+													<th><s:text name="topo.description"/></th>
+												</tr>
+											</thead>
+												<s:iterator value="#secteur.listVoie" var="voie">
+													<tr>
+												    	<td style="text-align:left;"><s:property value="#voie.nomVoie"/></td>
+												    	<td style="text-align:right;"><s:property value="#voie.cotation" /></td>
+												    	<td style="text-align:right;"><s:property value="#voie.hauteur" /></td>
+												    	<td style="text-align:right;"><s:property value="#voie.nbLgueur" /></td>
+												    	<td style="text-align:right;"><s:property value="#voie.nbPoint" /></td>
+												    	<td style="text-align:left;"><s:property value="#voie.description" /></td>
+												   	</tr>
+											 	</s:iterator>
+										</table>					
+									</td>
+								</tr>
+							</s:iterator>
+						</table>				
+					</div>
 				</div>
-			</div>
-
-		
+			</s:iterator>
+				</div>		
 			<!-- commentaire Topo/secteur/site -->
 			<s:if test="listCommentaire">
 				<s:iterator value="listCommentaire" var="commentaireTopo">
@@ -181,7 +179,7 @@
 	      function initMap() {
 	    	var lat = (document.getElementById('vLatitude').innerHTML);
 	    	var longi = (document.getElementById('vLongitude').innerHTML);
-	        var monTopo = new google.maps.LatLng(45.311, 5.624);
+	        var monTopo = new google.maps.LatLng(lat, longi);
 			console.log(lat);
 			console.log(longi);
 	        var map = new google.maps.Map(document.getElementById('map'), {
@@ -205,23 +203,23 @@
 	      function createInfoWindowContent(latLng, zoom) {
 	        var scale = 1 << zoom;
 	
-	        var worldCoordinate = project(latLng);
+	        //var worldCoordinate = project(latLng);
 	
-	        var pixelCoordinate = new google.maps.Point(
-	            Math.floor(worldCoordinate.x * scale),
-	            Math.floor(worldCoordinate.y * scale));
+	        //var pixelCoordinate = new google.maps.Point(
+	           // Math.floor(worldCoordinate.x * scale),
+	            //Math.floor(worldCoordinate.y * scale));
 	
-	        var tileCoordinate = new google.maps.Point(
-	            Math.floor(worldCoordinate.x * scale / TILE_SIZE),
-	            Math.floor(worldCoordinate.y * scale / TILE_SIZE));
+	        //var tileCoordinate = new google.maps.Point(
+	            //Math.floor(worldCoordinate.x * scale / TILE_SIZE),
+	            //Math.floor(worldCoordinate.y * scale / TILE_SIZE));
 	
 	        return [
 	          'monTopo, IL',
 	          'LatLng: ' + latLng,
 	          'Zoom level: ' + zoom,
-	          'World Coordinate: ' + worldCoordinate,
-	          'Pixel Coordinate: ' + pixelCoordinate,
-	          'Tile Coordinate: ' + tileCoordinate
+	          //'World Coordinate: ' + worldCoordinate,
+	          //'Pixel Coordinate: ' + pixelCoordinate,
+	          //'Tile Coordinate: ' + tileCoordinate
 	        ].join('<br>');
 	      }
 	
@@ -239,12 +237,6 @@
 	            TILE_SIZE * (0.5 - Math.log((1 + siny) / (1 - siny)) / (4 * Math.PI)));
 	      }
 	    </script>
-		
-		<!-- script de la modale commentaire -->	    
-		<script type="text/javascript">
-	    $('#btCommVoie').click(function(){
-	    	$('#myCommModal').modal('show');
-	    });	    
-		</script>	    	  	
+		    	  	
 	</body>
 </html>

@@ -1,7 +1,7 @@
 package oc.P6.escalade.model.bean.exception;
 
 /**
- * Classe UtilisateurException qui transporte les message d'exceptions concernant les {@link Utilisateur}
+ * Classe UtilisateurException qui transporte les message d'exceptions concernant les  Utilisateur
  * @author nicolas
  *
  */

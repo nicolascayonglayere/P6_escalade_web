@@ -1,7 +1,7 @@
 package oc.P6.escalade.model.bean.exception;
 
 /**
- * Classe CoordonneUtilisateurException qui transporte les message d'exceptions concernant les {@link CoordonneeUtilisateur}
+ * Classe CoordonneUtilisateurException qui transporte les message d'exceptions concernant les CoordonneeUtilisateur
  * @author nicolas
  *
  */

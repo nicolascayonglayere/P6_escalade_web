@@ -39,14 +39,14 @@ public interface SiteManagerDAO {
 	
 	/**
 	 * Méthode pour obtenir la liste des {@link Site} d'un {@link Topo} dont le nom est donné en paramètre dans la base de donnée
-	 * @param pSite
+	 * @param pNom
 	 * @return la liste des {@link Site}
 	 */
 	ArrayList<Site> find(String pNom);
 	
 	/**
 	 * Méthode pour obtenir la liste des {@link Site} d'un {@link Topo} dont l'id est donné en paramètre dans la base de donnée
-	 * @param pSite
+	 * @param pId
 	 * @return la liste des {@link Site}
 	 */
 	ArrayList<Site> find(int pId);
@@ -74,10 +74,10 @@ public interface SiteManagerDAO {
 	 * @return {@link Site}
 	 */
 	Site find(String pNom, int pIdTopo);
+	
 	/**
 	 * Méthode pour trouver le {@link Site}	d'id pId dans la base de donnée
-	 * @param pNom
-	 * @param pIdTopo
+	 * @param pId
 	 * @return {@link Site}
 	 */
 	Site get(int pId);

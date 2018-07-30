@@ -38,14 +38,14 @@ public interface UtilisateurManagerDAO {
 	
 	/**
 	 * Méthode pour obtenir un {@link Utilisateur} avec son pseudo donné en paramètre dans la base de donnée
-	 * @param pUtilisateur
+	 * @param pPseudo
 	 * @return {@link Utilisateur}
 	 */	
 	Utilisateur find(String pPseudo);
 	
 	/**
 	 * Méthode pour obtenir un {@link Utilisateur} avec son id donné en paramètre dans la base de donnée
-	 * @param pUtilisateur
+	 * @param pId
 	 * @return {@link Utilisateur}
 	 */
 	Utilisateur find(int pId);
@@ -53,7 +53,8 @@ public interface UtilisateurManagerDAO {
 	/**
 	 * Méthode pour obtenir un {@link Utilisateur} avec son pseudo et son mot de passe donnés en paramètre dans la base de donnée
 	 * Objectif authentification
-	 * @param pUtilisateur
+	 * @param pPassword
+	 * @param pPseudo 
 	 * @return {@link Utilisateur}
 	 */
 	Utilisateur findPass(String pPassword, String pPseudo);

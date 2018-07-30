@@ -2,7 +2,6 @@ package oc.P6.escalade.business.contract.manager.topo;
 
 import java.util.ArrayList;
 
-import oc.P6.escalade.model.bean.exception.SecteurException;
 import oc.P6.escalade.model.bean.exception.VoieException;
 import oc.P6.escalade.model.bean.topo.Secteur;
 import oc.P6.escalade.model.bean.topo.Voie;
@@ -18,13 +17,14 @@ public interface VoieManager {
 	 * Renvoie la liste des {@link Voie} du {@link Secteur} donné en paramètre
 	 * @param pSecteur
 	 * @return la liste des {@link Voie} du {@link Secteur} pSecteur
-	 * @throws SecteurException 
 	 * @throws VoieException 
 	 */
 	ArrayList<Voie> getListVoie(Secteur pSecteur) throws VoieException;
 	
 	/**
 	 * Renvoie la {@link Voie} du {@link Secteur} donné en paramètre
+	 * @param pNom 
+	 * @param pSecteur
 	 * @return {@link Voie}
 	 * @throws VoieException 
 	 */
@@ -32,15 +32,16 @@ public interface VoieManager {
 	
 	/**
 	 * Renvoie la {@link Voie} d'id donné en paramètre
-	 * @param pId
+	 * @param pId id de la {@link Voie}
 	 * @return {@link Voie}
 	 */
 	Voie getVoie(int pId);
 	
 	/**
 	 * Cree la {@link Voie} donnée en paramètre
-	 * @param pVoie
+	 * @param pVoie à creer
 	 * @throws VoieException 
+	 * @return {@link Voie}
 	 */
 	Voie creerVoie(Voie pVoie) throws VoieException;
 	

@@ -26,9 +26,7 @@ public class CommentaireTopo implements IntCommentaireTopo{
 	private boolean validation;
 	
 
-	/**
-	 * Getter et Setter
-	 */
+	//--Getter et Setter--//
 	public Topo getTopo() {
 		return topo;
 	}

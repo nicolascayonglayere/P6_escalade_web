@@ -50,10 +50,7 @@ public class Utilisateur implements IntUtilisateur{
     }
 
 
-	/**
-	 * Getter et Setter
-	 * @return
-	 */
+    //--Getter et Setter--//
     public String getPseudo() {
         return pseudo;
     }

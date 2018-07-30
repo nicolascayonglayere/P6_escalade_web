@@ -29,10 +29,7 @@ public class Secteur implements IntSecteur {
 			this.nomSecteur = pNom;
 		}
 
-		/**
-		 * Getter et Setter
-		 * @return
-		 */
+		//--Getter et Setter--//
 		@Override
 		public int getId() {
 			return id;

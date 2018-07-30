@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import oc.P6.escalade.model.bean.commentaire.CommentaireTopo;
 import oc.P6.escalade.model.bean.exception.CommentaireTopoException;
-import oc.P6.escalade.model.bean.topo.Secteur;
 
 /**
  * Interface CommentaireTopoDao et ses méthodes interagissant avec la base de donnée

@@ -30,10 +30,7 @@ public class Voie implements IntVoie{
 		this.nomVoie = pNom;
 	}
 
-	/**
-	 * Getter et Setter
-	 * @return
-	 */
+	//--Getter et Setter--//
 	public int getId() {
 		return id;
 	}
