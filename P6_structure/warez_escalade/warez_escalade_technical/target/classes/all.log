@@ -1,0 +1,54 @@
+2018-07-31 10:50:05.380 [ContainerBackgroundProcessor[StandardEngine[Catalina]]] DEBUG oc.P6.escalade.actions.images.ImageAction - constructeur ImageAction
+2018-07-31 10:50:05.380 [ContainerBackgroundProcessor[StandardEngine[Catalina]]] DEBUG oc.P6.escalade.actions.images.ImageAction - constructeur ImageAction
+2018-07-31 10:50:06.586 [http-nio-8080-exec-6] DEBUG oc.P6.escalade.actions.utilisateur.LoginAction - yogj - admin
+2018-07-31 10:50:06.586 [http-nio-8080-exec-6] DEBUG oc.P6.escalade.actions.utilisateur.LoginAction - yogj - admin
+2018-07-31 10:50:06.627 [http-nio-8080-exec-6] DEBUG oc.P6.escalade.business.impl.manager.utilisateur.UtilisateurManagerImpl - yogj
+2018-07-31 10:50:06.627 [http-nio-8080-exec-6] DEBUG oc.P6.escalade.business.impl.manager.utilisateur.UtilisateurManagerImpl - yogj
+2018-07-31 10:50:06.647 [http-nio-8080-exec-6] DEBUG oc.P6.escalade.business.impl.manager.utilisateur.UtilisateurManagerImpl - CTRL yogj - $2a$10$PkyNIKEAqbMrZNeQ/QPRyeOV0gB.Q3LFxdjU94YlqUCzj.BhwVaVa - 1
+2018-07-31 10:50:06.647 [http-nio-8080-exec-6] DEBUG oc.P6.escalade.business.impl.manager.utilisateur.UtilisateurManagerImpl - CTRL yogj - $2a$10$PkyNIKEAqbMrZNeQ/QPRyeOV0gB.Q3LFxdjU94YlqUCzj.BhwVaVa - 1
+2018-07-31 10:50:06.647 [http-nio-8080-exec-6] DEBUG oc.P6.escalade.actions.utilisateur.LoginAction - mdp : $2a$10$PkyNIKEAqbMrZNeQ/QPRyeOV0gB.Q3LFxdjU94YlqUCzj.BhwVaVa
+2018-07-31 10:50:06.647 [http-nio-8080-exec-6] DEBUG oc.P6.escalade.actions.utilisateur.LoginAction - mdp : $2a$10$PkyNIKEAqbMrZNeQ/QPRyeOV0gB.Q3LFxdjU94YlqUCzj.BhwVaVa
+2018-07-31 10:50:06.769 [http-nio-8080-exec-10] DEBUG oc.P6.escalade.consumer.DAO.impl.manager.utilisateur.UtilisateurDaoImpl - 1
+2018-07-31 10:50:06.769 [http-nio-8080-exec-10] DEBUG oc.P6.escalade.consumer.DAO.impl.manager.utilisateur.UtilisateurDaoImpl - 1
+2018-07-31 10:50:06.770 [http-nio-8080-exec-10] DEBUG oc.P6.escalade.consumer.DAO.impl.manager.utilisateur.UtilisateurDaoImpl - 1
+2018-07-31 10:50:06.770 [http-nio-8080-exec-10] DEBUG oc.P6.escalade.consumer.DAO.impl.manager.utilisateur.UtilisateurDaoImpl - 1
+2018-07-31 10:50:06.771 [http-nio-8080-exec-10] DEBUG oc.P6.escalade.actions.AccueilAction - image : falaisedevoreppe
+2018-07-31 10:50:06.771 [http-nio-8080-exec-10] DEBUG oc.P6.escalade.actions.AccueilAction - image : falaisedevoreppe
+2018-07-31 10:50:06.771 [http-nio-8080-exec-10] DEBUG oc.P6.escalade.WebappHelper.GestionFichierProperties - true
+2018-07-31 10:50:06.771 [http-nio-8080-exec-10] DEBUG oc.P6.escalade.WebappHelper.GestionFichierProperties - true
+2018-07-31 10:50:06.772 [http-nio-8080-exec-10] DEBUG oc.P6.escalade.WebappHelper.GestionFichierProperties - list proprietes recup sur le fichier lors de lecture : 
+{mail.adresse=nicolas.cayon.glayere@gmail.com, mail.smtp.port=465, mail.smtp.socketFactory.port=465, mail.smtp.socketFactory.class=javax.net.ssl.SSLSocketFactory, mail.smtp.auth=true, mail.smtp.host=smtp.gmail.com, mail.pass=8p8tyFD4, chemin.upload=D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\webapp\assets\images}
+2018-07-31 10:50:06.772 [http-nio-8080-exec-10] DEBUG oc.P6.escalade.WebappHelper.GestionFichierProperties - list proprietes recup sur le fichier lors de lecture : 
+{mail.adresse=nicolas.cayon.glayere@gmail.com, mail.smtp.port=465, mail.smtp.socketFactory.port=465, mail.smtp.socketFactory.class=javax.net.ssl.SSLSocketFactory, mail.smtp.auth=true, mail.smtp.host=smtp.gmail.com, mail.pass=8p8tyFD4, chemin.upload=D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\webapp\assets\images}
+2018-07-31 10:50:06.772 [http-nio-8080-exec-10] DEBUG oc.P6.escalade.actions.AccueilAction - imageCouv.JPG
+2018-07-31 10:50:06.772 [http-nio-8080-exec-10] DEBUG oc.P6.escalade.actions.AccueilAction - imageCouv.JPG
+2018-07-31 10:50:06.772 [http-nio-8080-exec-10] DEBUG oc.P6.escalade.actions.AccueilAction - accueil falaisedevoreppe\imageCouv.JPG
+2018-07-31 10:50:06.772 [http-nio-8080-exec-10] DEBUG oc.P6.escalade.actions.AccueilAction - accueil falaisedevoreppe\imageCouv.JPG
+2018-07-31 10:50:06.772 [http-nio-8080-exec-10] DEBUG oc.P6.escalade.actions.AccueilAction - P1160733.JPG
+2018-07-31 10:50:06.772 [http-nio-8080-exec-10] DEBUG oc.P6.escalade.actions.AccueilAction - P1160733.JPG
+2018-07-31 10:50:06.772 [http-nio-8080-exec-10] DEBUG oc.P6.escalade.actions.AccueilAction - secteurdroite.JPG
+2018-07-31 10:50:06.772 [http-nio-8080-exec-10] DEBUG oc.P6.escalade.actions.AccueilAction - secteurdroite.JPG
+2018-07-31 10:50:06.772 [http-nio-8080-exec-10] DEBUG oc.P6.escalade.actions.AccueilAction - secteurgauche.JPG
+2018-07-31 10:50:06.772 [http-nio-8080-exec-10] DEBUG oc.P6.escalade.actions.AccueilAction - secteurgauche.JPG
+2018-07-31 10:50:06.772 [http-nio-8080-exec-10] DEBUG oc.P6.escalade.actions.AccueilAction - image : Blocsdespucelles
+2018-07-31 10:50:06.772 [http-nio-8080-exec-10] DEBUG oc.P6.escalade.actions.AccueilAction - image : Blocsdespucelles
+2018-07-31 10:50:06.772 [http-nio-8080-exec-10] DEBUG oc.P6.escalade.WebappHelper.GestionFichierProperties - true
+2018-07-31 10:50:06.772 [http-nio-8080-exec-10] DEBUG oc.P6.escalade.WebappHelper.GestionFichierProperties - true
+2018-07-31 10:50:06.772 [http-nio-8080-exec-10] DEBUG oc.P6.escalade.WebappHelper.GestionFichierProperties - list proprietes recup sur le fichier lors de lecture : 
+{mail.adresse=nicolas.cayon.glayere@gmail.com, mail.smtp.port=465, mail.smtp.socketFactory.port=465, mail.smtp.socketFactory.class=javax.net.ssl.SSLSocketFactory, mail.smtp.auth=true, mail.smtp.host=smtp.gmail.com, mail.pass=8p8tyFD4, chemin.upload=D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\webapp\assets\images}
+2018-07-31 10:50:06.772 [http-nio-8080-exec-10] DEBUG oc.P6.escalade.WebappHelper.GestionFichierProperties - list proprietes recup sur le fichier lors de lecture : 
+{mail.adresse=nicolas.cayon.glayere@gmail.com, mail.smtp.port=465, mail.smtp.socketFactory.port=465, mail.smtp.socketFactory.class=javax.net.ssl.SSLSocketFactory, mail.smtp.auth=true, mail.smtp.host=smtp.gmail.com, mail.pass=8p8tyFD4, chemin.upload=D:\Documents\openclassrooms formation\P6\P6_escalade_web\P6_structure\warez_escalade\warez_escalade_webapp\src\main\webapp\assets\images}
+2018-07-31 10:50:06.773 [http-nio-8080-exec-10] DEBUG oc.P6.escalade.actions.AccueilAction - Capture2.JPG
+2018-07-31 10:50:06.773 [http-nio-8080-exec-10] DEBUG oc.P6.escalade.actions.AccueilAction - Capture2.JPG
+2018-07-31 10:50:06.773 [http-nio-8080-exec-10] DEBUG oc.P6.escalade.actions.AccueilAction - imageCouv.JPG
+2018-07-31 10:50:06.773 [http-nio-8080-exec-10] DEBUG oc.P6.escalade.actions.AccueilAction - imageCouv.JPG
+2018-07-31 10:50:06.773 [http-nio-8080-exec-10] DEBUG oc.P6.escalade.actions.AccueilAction - accueil Blocsdespucelles\imageCouv.JPG
+2018-07-31 10:50:06.773 [http-nio-8080-exec-10] DEBUG oc.P6.escalade.actions.AccueilAction - accueil Blocsdespucelles\imageCouv.JPG
+2018-07-31 10:50:07.055 [http-nio-8080-exec-4] DEBUG oc.P6.escalade.actions.images.ImageAction - constructeur ImageAction
+2018-07-31 10:50:07.055 [http-nio-8080-exec-4] DEBUG oc.P6.escalade.actions.images.ImageAction - constructeur ImageAction
+2018-07-31 10:50:07.081 [http-nio-8080-exec-4] DEBUG oc.P6.escalade.actions.images.ImageAction - imageId falaisedevoreppe\imageCouv.JPG
+2018-07-31 10:50:07.081 [http-nio-8080-exec-4] DEBUG oc.P6.escalade.actions.images.ImageAction - imageId falaisedevoreppe\imageCouv.JPG
+2018-07-31 10:50:07.081 [http-nio-8080-exec-4] DEBUG oc.P6.escalade.WebappHelper.GestionFichierProperties - true
+2018-07-31 10:50:07.081 [http-nio-8080-exec-4] DEBUG oc.P6.escalade.WebappHelper.GestionFichierProperties - true
+2018-07-31 10:50:07.081 [http-nio-8080-exec-4] DEBUG oc.P6.escalade.WebappHelper.GestionFichierProperties - list proprietes recup sur le fichier lors de lecture : 
+{mail.adresse=nicolas.cayon.glayere@gmail.com, mail.smtp.port=465, mail.smtp.socketFactory.port=465, mail.smtp.socketFactory.class=javax.net.ssl.SSLSocketFactory, mail.smtp.auth=true, mail.smtp.host=smtp.gm

@@ -9,6 +9,18 @@
 		</File>
     </Appenders>
     <Loggers>
+    	<!-- == Logger pour Struts == -->
+		<Logger name="com.opensymphony.xwork2.*" level="warn">
+			<AppenderRef ref="MyFile" />
+		</Logger>
+		<Logger name="org.apache.struts2*" level="warn">
+			<AppenderRef ref="MyFile" />
+		</Logger>
+		<!-- == Logger par module == -->
+		<Logger name="oc.P6.escalade" level="debug">
+			<AppenderRef ref="MyFile" />
+			<AppenderRef ref="Console"/>
+		</Logger>
         <Root level="error">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="MyFile"/>
