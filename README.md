@@ -29,3 +29,6 @@ dans le module technical :
 
 -- Configuration de l'envoi de mail -- 
 dans le module technical, dans le fichier src/data/conf/configMail.properties, vous trouverez les différentes propriétés à modifier pour affecter un compte pour l'envoi de mail.
+
+-- Lien vers dossier GitHub --
+https://github.com/nicolascayonglayere/P6_escalade_web 

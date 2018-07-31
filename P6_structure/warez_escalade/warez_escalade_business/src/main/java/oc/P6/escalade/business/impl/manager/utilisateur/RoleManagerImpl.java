@@ -10,13 +10,14 @@ import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
+import oc.P6.escalade.business.contract.manager.AbstractDAOManager;
 import oc.P6.escalade.business.contract.manager.utilisateur.RoleManager;
 import oc.P6.escalade.consumer.DAO.impl.DAOFactoryImpl;
 import oc.P6.escalade.model.bean.utilisateur.Role;
 
 
 @Named
-public class RoleManagerImpl implements RoleManager {
+public class RoleManagerImpl extends AbstractDAOManager implements RoleManager {
 
     @Inject
     private DAOFactoryImpl daoFactory;

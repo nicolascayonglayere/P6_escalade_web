@@ -167,11 +167,11 @@
 
 		
 		
-		
-	  	<script  src="https://code.jquery.com/jquery-3.3.1.min.js"  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="  crossorigin="anonymous"></script>
+		<%@include file="_include/footer.jsp" %>
+	  	
 	  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 	  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-	  	<%@include file="_include/footer.jsp" %>
+	  	
 	  	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBW9tdPhwEC0knxkB11uwv1p8ehQpB3BaY&callback=initMap"></script>
 		
 		<!-- les scripts google Map API -->

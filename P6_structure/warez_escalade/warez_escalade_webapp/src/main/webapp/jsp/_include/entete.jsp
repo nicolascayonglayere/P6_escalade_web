@@ -11,11 +11,12 @@
       			<div class="container align-items-center">
       				<!--  <div class="row align-items-center">-->
       					
-						<!-- <div class="navbar-header">-->
+						<!--  <div class="navbar-header">-->
+							
 	      					<s:a class="navbar-brand" action="homeAction" namespace="/"><s:text name="entete.titre"/></s:a>	
-	      				<!--  </div>-->
+	      				<!--  </div>--> 
 	      			
-			      		<div class="collapse navbar-collapse"  >
+			      		<div class="collapse navbar-collapse" id="maBarreMenuTop" >
 				      		<ul class="navbar-nav mr-auto nav-fill">
 					     	   <li class="hidden"><a href="#page-top"></a></li>
 					     	   <li class="nav-item active">

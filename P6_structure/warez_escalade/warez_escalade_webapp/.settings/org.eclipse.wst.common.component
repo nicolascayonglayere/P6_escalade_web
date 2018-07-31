@@ -4,16 +4,16 @@
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
-        <dependent-module archiveName="warez_escalade_business-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/warez_escalade_business/warez_escalade_business">
+        <dependent-module archiveName="warez_escalade_business-1.1-RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/warez_escalade_business/warez_escalade_business">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="warez_escalade_consumer-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/warez_escalade_consumer/warez_escalade_consumer">
+        <dependent-module archiveName="warez_escalade_consumer-1.1-RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/warez_escalade_consumer/warez_escalade_consumer">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="warez_escalade_model-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/warez_escalade_model/warez_escalade_model">
+        <dependent-module archiveName="warez_escalade_model-1.1-RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/warez_escalade_model/warez_escalade_model">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="warez_escalade_technical-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/warez_escalade_technical/warez_escalade_technical">
+        <dependent-module archiveName="warez_escalade_technical-1.1-RELEASE.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/warez_escalade_technical/warez_escalade_technical">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="java-output-path" value="/warez_escalade_webapp/target/classes"/>
