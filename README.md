@@ -6,7 +6,7 @@ Vous trouverez ici mon travail sur ce projet.
 le dossier P6_BDD contient le script de creation des tables de la base de donnée postgreSQL
 		-> creation_tables_v3.sql
 	le script d'insertion d'un jeu de données
-		-> insertion.sql
+		-> insertion.sql (Mots de passe : yogj - admin ; nico - modo ; ben - user ; ban - user)
 	le script pour purger les tables
 		-> purge_tables.sql
 	le modèle physique de données
